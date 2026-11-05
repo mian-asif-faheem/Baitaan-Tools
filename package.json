@@ -1,0 +1,14 @@
+{
+  "name": "baitaan-tools",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev:root": "pnpm --filter @bt/site-root dev",
+    "dev:es": "pnpm --filter @bt/site-es dev",
+    "dev:pt": "pnpm --filter @bt/site-pt dev",
+    "dev:ar": "pnpm --filter @bt/site-ar dev",
+    "build": "pnpm -r --filter \"./sites/*\" build",
+    "test": "pnpm --filter @bt/tools test"
+  }
+}

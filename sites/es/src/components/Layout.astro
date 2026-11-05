@@ -1,0 +1,15 @@
+---
+import BaseLayout from "@bt/ui/BaseLayout.astro";
+import t from "../i18n/es.json";
+import "../global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  alternates?: Record<string, string>;
+}
+const { title, description, alternates } = Astro.props;
+---
+<BaseLayout site="es" {title} {description} {alternates} nav={t.nav} footer={t.footer} footerNote={t.footerNote}>
+  <slot />
+</BaseLayout>

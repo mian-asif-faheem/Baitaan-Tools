@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@bt/ui/BaseLayout.astro";
+import "../global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const footer = [
+  { href: "/about/", label: "About" },
+  { href: "/privacy/", label: "Privacy" },
+  { href: "/contact/", label: "Contact" },
+];
+---
+<BaseLayout site="root" {title} {description} {footer}>
+  <slot />
+</BaseLayout>

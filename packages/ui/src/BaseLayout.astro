@@ -1,0 +1,65 @@
+---
+import { SITES, type SiteKey } from "./sites";
+
+interface Props {
+  site: SiteKey;
+  title: string;
+  description: string;
+  /** Equivalent pages in other languages: { es: "/…", pt: "/…" } */
+  alternates?: Partial<Record<SiteKey, string>>;
+  nav?: { href: string; label: string }[];
+  footer?: { href: string; label: string }[];
+  footerNote?: string;
+}
+
+const { site, title, description, alternates = {}, nav = [], footer = [], footerNote = "" } = Astro.props;
+const s = SITES[site];
+const canonical = new URL(Astro.url.pathname, s.url).href;
+const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-XXXXXXXXXXXXXXXX
+---
+<!doctype html>
+<html lang={s.lang} dir={s.dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    {Object.entries(alternates).map(([k, path]) => (
+      <link rel="alternate" hreflang={SITES[k as SiteKey].lang} href={new URL(path!, SITES[k as SiteKey].url).href} />
+    ))}
+    {Object.keys(alternates).length > 0 && <link rel="alternate" hreflang={s.lang} href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#0f766e" />
+    {adClient && (
+      <script
+        is:inline
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
+        crossorigin="anonymous"
+      ></script>
+    )}
+  </head>
+  <body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
+    <header class="border-b border-stone-200 bg-white">
+      <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
+        <a href="/" class="font-semibold tracking-tight text-teal-800">{s.name}</a>
+        <nav class="flex gap-4 text-sm text-stone-600">
+          {nav.map((n) => <a class="hover:text-teal-800" href={n.href}>{n.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-3xl px-4 py-8">
+      <slot />
+    </main>
+    <footer class="border-t border-stone-200 bg-white text-sm text-stone-500">
+      <div class="mx-auto flex max-w-3xl flex-wrap gap-x-4 gap-y-2 px-4 py-6">
+        {footer.map((f) => <a class="hover:text-teal-800" href={f.href}>{f.label}</a>)}
+        <span class="ms-auto">© {new Date().getFullYear()} MAAF Studios{footerNote && ` · ${footerNote}`}</span>
+      </div>
+    </footer>
+  </body>
+</html>

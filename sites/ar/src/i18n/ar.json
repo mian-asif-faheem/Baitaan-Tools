@@ -1,0 +1,23 @@
+{
+  "nav": [{ "href": "/tahweel-altareekh/", "label": "تحويل التاريخ" }],
+  "footer": [
+    { "href": "/about/", "label": "من نحن" },
+    { "href": "/privacy/", "label": "سياسة الخصوصية" },
+    { "href": "mailto:salam@baitaandessigns.com", "label": "اتصل بنا" }
+  ],
+  "footerNote": "أدوات مجانية تعمل في متصفحك",
+  "conv": {
+    "toHijri": "من ميلادي إلى هجري",
+    "toGregorian": "من هجري إلى ميلادي",
+    "gregorianDate": "التاريخ الميلادي",
+    "day": "اليوم",
+    "month": "الشهر",
+    "year": "السنة",
+    "result": "النتيجة",
+    "hijriSuffix": "هـ",
+    "gregorianSuffix": "م",
+    "today": "اليوم",
+    "error": "هذا التاريخ غير موجود في تقويم أم القرى",
+    "note": "حسب تقويم أم القرى المعتمد في المملكة العربية السعودية. قد يختلف يوم واحد في بعض الدول حسب رؤية الهلال."
+  }
+}

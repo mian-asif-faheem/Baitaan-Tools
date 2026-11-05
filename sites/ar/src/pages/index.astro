@@ -1,0 +1,25 @@
+---
+import Layout from "../components/Layout.astro";
+
+const tools = [
+  { href: "/tahweel-altareekh/", name: "تحويل التاريخ من ميلادي إلى هجري", desc: "وبالعكس، حسب تقويم أم القرى", ready: true },
+  { href: "#", name: "حساب العمر بالهجري", desc: "", ready: false },
+  { href: "#", name: "حاسبة مكافأة نهاية الخدمة", desc: "", ready: false },
+  { href: "#", name: "حاسبة ضريبة القيمة المضافة", desc: "", ready: false },
+];
+---
+<!-- TODO (native review): all Arabic copy on this site. -->
+<Layout title="أدوات مجانية بالعربية | بيتان" description="أدوات وحاسبات مجانية تعمل في متصفحك دون تسجيل.">
+  <h1 class="text-3xl font-bold">أدوات مجانية دون تسجيل</h1>
+  <p class="mt-3 text-lg text-stone-600">حاسبات وأدوات تعمل في متصفحك. بياناتك لا تغادر جهازك.</p>
+  <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+    {tools.map((tool) => (
+      <li>
+        <a href={tool.href} class={`block rounded-xl border bg-white p-5 shadow-sm ${tool.ready ? "border-stone-200 hover:border-teal-700" : "pointer-events-none border-dashed border-stone-300 opacity-60"}`}>
+          <span class="block font-semibold">{tool.name}</span>
+          <span class="mt-1 block text-sm text-stone-500">{tool.ready ? tool.desc : "قريبًا"}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>

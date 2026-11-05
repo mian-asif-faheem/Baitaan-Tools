@@ -1,0 +1,40 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import SalarioLiquidoCalc from "../components/SalarioLiquidoCalc.tsx";
+---
+<Layout
+  title="Calculadora de salário líquido 2026 (CLT) | Baitaan"
+  description="Calcule seu salário líquido 2026 com as tabelas de INSS e IRRF e a nova isenção de IR até R$ 5 mil (Lei 15.270/2025). Grátis e sem cadastro."
+>
+  <ToolPage
+    heading="Calculadora de salário líquido 2026"
+    lead="Desde janeiro de 2026, quem ganha até R$ 5.000 por mês não paga Imposto de Renda na fonte. O desconto do INSS continua, de 7,5% a 14% por faixa."
+    updated="Atualizado: novembro de 2026"
+    sourcesHeading="Fontes"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15270.htm", label: "Lei nº 15.270/2025 (redução do IR)" },
+      { href: "https://www.gov.br/inss/", label: "INSS: tabela de contribuição 2026" },
+    ]}
+  >
+    <SalarioLiquidoCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>Como calcular o salário líquido</h2>
+      <p>Salário líquido = salário bruto − INSS − IRRF − outros descontos. O INSS é calculado faixa a faixa. O IR é calculado sobre o bruto menos o INSS e os dependentes (ou o desconto simplificado de R$ 607,20, o que for maior).</p>
+
+      <h2>Exemplos 2026</h2>
+      <ul>
+        <li>R$ 5.000: INSS R$ 501,51, IRRF zero, líquido R$ 4.498,49.</li>
+        <li>R$ 6.000: INSS R$ 641,51, IRRF R$ 385,10 depois da redução, líquido R$ 4.973,39.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Quem ganha entre R$ 5 mil e R$ 7.350</h2>
+      <p>Nessa faixa o imposto não é zerado, mas cai. A redução é de R$ 978,62 menos 13,3145% do salário. Acima de R$ 7.350 vale a tabela normal.</p>
+      <!-- TODO (native review): add FAQ from Google's "As pessoas também perguntam". -->
+    </Fragment>
+  </ToolPage>
+</Layout>

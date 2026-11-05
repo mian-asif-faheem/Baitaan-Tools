@@ -1,0 +1,40 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import AguinaldoCalc from "../components/AguinaldoCalc.tsx";
+---
+<Layout
+  title="Calculadora de aguinaldo 2026 (México) | Baitaan"
+  description="Calcula tu aguinaldo 2026 según tu salario y los días trabajados. Mínimo legal de 15 días, art. 87 de la Ley Federal del Trabajo. Gratis y sin registro."
+>
+  <ToolPage
+    heading="Calculadora de aguinaldo 2026"
+    lead="El aguinaldo mínimo en México es de 15 días de salario por año completo trabajado, y se paga proporcional si trabajaste menos tiempo."
+    updated="Actualizado: noviembre de 2026"
+    sources={[{ href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Ley Federal del Trabajo, artículo 87" }]}
+  >
+    <AguinaldoCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>¿Cómo se calcula el aguinaldo?</h2>
+      <p>Multiplica tu salario diario por los días de aguinaldo (mínimo 15). Si no trabajaste el año completo, divide el resultado entre 365 y multiplícalo por los días que sí trabajaste.</p>
+      <p><strong>Fórmula:</strong> salario diario × días de aguinaldo × días trabajados ÷ 365.</p>
+
+      <h2>Ejemplo</h2>
+      <p>Con un salario mensual de $12,000, el salario diario es $400. Si trabajaste 182 días: 400 × 15 × 182 ÷ 365 = <strong>$2,991.78</strong>.</p>
+
+      <h2>¿Cuándo se paga?</h2>
+      <p>La empresa debe pagarlo antes del 20 de diciembre.</p>
+
+      <AdSlot slot="0000000000" />
+
+      <h2>Preguntas frecuentes</h2>
+      <!-- TODO (native review): add 5–8 questions from Google's "Más preguntas" for "aguinaldo 2026". -->
+      <ul>
+        <li>¿El aguinaldo paga impuestos? Está exento hasta 30 veces la UMA diaria; el excedente paga ISR.</li>
+        <li>¿Me toca aguinaldo si renuncié? Sí, la parte proporcional se incluye en tu finiquito.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,0 +1,24 @@
+---
+import Layout from "../components/Layout.astro";
+
+const tools = [
+  { href: "/calculadora-aguinaldo/", name: "Calculadora de aguinaldo", desc: "México · cuánto te toca según días trabajados", ready: true },
+  { href: "#", name: "Calculadora de finiquito y liquidación", desc: "México · Ley Federal del Trabajo", ready: false },
+  { href: "#", name: "Calculadora de sueldo neto (ISR e IMSS)", desc: "México", ready: false },
+  { href: "#", name: "Foto tamaño infantil y carnet", desc: "Recorta y ajusta tu foto al tamaño exacto", ready: false },
+];
+---
+<Layout title="Herramientas gratis en español | Baitaan" description="Calculadoras laborales y herramientas gratuitas que funcionan en tu navegador, sin registro.">
+  <h1 class="text-3xl font-bold tracking-tight">Herramientas gratis, sin registro</h1>
+  <p class="mt-3 text-lg text-stone-600">Calculadoras laborales y utilidades que funcionan en tu navegador. Tus datos nunca salen de tu dispositivo.</p>
+  <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+    {tools.map((tool) => (
+      <li>
+        <a href={tool.href} class={`block rounded-xl border bg-white p-5 shadow-sm ${tool.ready ? "border-stone-200 hover:border-teal-700" : "pointer-events-none border-dashed border-stone-300 opacity-60"}`}>
+          <span class="block font-semibold">{tool.name}</span>
+          <span class="mt-1 block text-sm text-stone-500">{tool.ready ? tool.desc : "Próximamente"}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>

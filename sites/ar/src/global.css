@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/600.css";
+@source "../../../packages/ui/src";
+
+@theme {
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
+}
+
+/* Arabic reads better with a little more line height. */
+body {
+  line-height: 1.75;
+}

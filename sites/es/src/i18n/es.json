@@ -1,0 +1,22 @@
+{
+  "nav": [{ "href": "/calculadora-aguinaldo/", "label": "Aguinaldo" }],
+  "footer": [
+    { "href": "/acerca/", "label": "Acerca de" },
+    { "href": "/privacidad/", "label": "Privacidad" },
+    { "href": "mailto:hola@baitaandessigns.com", "label": "Contacto" }
+  ],
+  "footerNote": "Herramientas gratis que funcionan en tu navegador",
+  "aguinaldo": {
+    "salaryType": "¿Cómo conoces tu salario?",
+    "monthly": "Mensual",
+    "daily": "Diario",
+    "salary": "Salario (MXN)",
+    "daysWorked": "Días trabajados en el año",
+    "aguinaldoDays": "Días de aguinaldo que da tu empresa",
+    "minNote": "La ley exige mínimo 15 días.",
+    "result": "Tu aguinaldo estimado",
+    "fullYear": "Si trabajaste el año completo",
+    "dailyUsed": "Salario diario usado",
+    "disclaimer": "Monto bruto estimado. No incluye la retención de ISR sobre la parte que exceda 30 UMA."
+  }
+}

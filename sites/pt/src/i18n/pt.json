@@ -1,0 +1,24 @@
+{
+  "nav": [{ "href": "/calculadora-salario-liquido/", "label": "Salário líquido" }],
+  "footer": [
+    { "href": "/sobre/", "label": "Sobre" },
+    { "href": "/privacidade/", "label": "Privacidade" },
+    { "href": "mailto:ola@baitaandessigns.com", "label": "Contato" }
+  ],
+  "footerNote": "Ferramentas grátis que rodam no seu navegador",
+  "net": {
+    "gross": "Salário bruto (R$)",
+    "dependents": "Dependentes",
+    "other": "Outros descontos (R$)",
+    "otherHint": "Vale-transporte, plano de saúde etc.",
+    "result": "Salário líquido",
+    "inss": "INSS",
+    "irBase": "Base do IR",
+    "irTable": "IR pela tabela",
+    "irReduction": "Redução da Lei 15.270",
+    "irrf": "IRRF",
+    "otherLine": "Outros descontos",
+    "simplified": "desconto simplificado aplicado",
+    "disclaimer": "Simulação com as tabelas de 2026. Não substitui o holerite oficial nem a orientação de um contador."
+  }
+}

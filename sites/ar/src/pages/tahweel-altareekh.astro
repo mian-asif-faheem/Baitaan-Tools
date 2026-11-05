@@ -1,0 +1,31 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import HijriConverter from "../components/HijriConverter.tsx";
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title="تحويل التاريخ من ميلادي إلى هجري وبالعكس | بيتان"
+  description="حوّل أي تاريخ من الميلادي إلى الهجري أو من الهجري إلى الميلادي حسب تقويم أم القرى. مجاني ودون تسجيل."
+>
+  <ToolPage
+    heading="تحويل التاريخ الهجري والميلادي"
+    lead="اختر الاتجاه وأدخل التاريخ لتحصل على التاريخ المقابل واسم اليوم فورًا، حسب تقويم أم القرى."
+    updated="آخر تحديث: نوفمبر 2026"
+    sourcesHeading="المصادر"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "تقويم أم القرى" }]}
+  >
+    <HijriConverter client:load />
+
+    <Fragment slot="guide">
+      <h2>ما هو تقويم أم القرى؟</h2>
+      <p>تقويم أم القرى هو التقويم الهجري الرسمي في المملكة العربية السعودية. يُحسب مسبقًا اعتمادًا على الحسابات الفلكية، لذلك قد يختلف بداية الشهر بيوم واحد في الدول التي تعتمد رؤية الهلال.</p>
+
+      <h2>لماذا يختلف عدد أيام الشهر الهجري؟</h2>
+      <p>الشهر الهجري 29 أو 30 يومًا، والسنة الهجرية نحو 354 يومًا، أي أقصر من السنة الميلادية بنحو 11 يومًا.</p>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+    </Fragment>
+  </ToolPage>
+</Layout>

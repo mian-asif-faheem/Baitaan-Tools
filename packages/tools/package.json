@@ -1,0 +1,17 @@
+{
+  "name": "@bt/tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./mx": "./src/mx/index.ts",
+    "./br": "./src/br/index.ts",
+    "./hijri": "./src/hijri/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^5.1.0"
+  }
+}
