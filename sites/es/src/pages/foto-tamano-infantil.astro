@@ -1,0 +1,51 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PhotoTool from "@bt/ui/PhotoTool.tsx";
+import { PRESETS_MX_ES } from "@bt/ui/photo-presets";
+import t from "../i18n/es.json";
+---
+<Layout
+  title="Foto tamaño infantil, pasaporte y credencial online gratis | Baitaan"
+  description="Recorta tu foto al tamaño infantil (2.5 × 3 cm), pasaporte, credencial, título o DNI y descarga una hoja lista para imprimir. Gratis, sin registro y sin subir tu foto."
+>
+  <ToolPage
+    heading="Foto tamaño infantil y otros tamaños"
+    lead="Sube una foto con tu celular, ajústala al tamaño que necesitas y descarga una hoja de 10 × 15 cm o tamaño carta lista para imprimir. Tu foto no sale de tu dispositivo."
+    updated="Actualizado: noviembre de 2026"
+  >
+    <PhotoTool client:visible presets={PRESETS_MX_ES} t={t.photo} sheets={["10x15", "carta"]} />
+
+    <Fragment slot="guide">
+      <h2>Tamaños de foto más usados</h2>
+      <ul>
+        <li><strong>Infantil:</strong> 2.5 × 3 cm. Escuelas, credenciales y trámites.</li>
+        <li><strong>Pasaporte:</strong> 3.5 × 4.5 cm. Visas y documentos de muchos países.</li>
+        <li><strong>Credencial:</strong> 3.5 × 5 cm.</li>
+        <li><strong>Título o cédula:</strong> 6 × 9 cm.</li>
+        <li><strong>DNI y pasaporte de España:</strong> 2.6 × 3.2 cm.</li>
+        <li><strong>Visa de Estados Unidos:</strong> 5 × 5 cm (2 × 2 pulgadas).</li>
+      </ul>
+      <p>Para el pasaporte mexicano no necesitas llevar foto: la Secretaría de Relaciones Exteriores la toma en la oficina.</p>
+
+      <h2>Cómo imprimir tus fotos</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Elige «Hoja para imprimir» de 10 × 15 cm si vas a imprimir en una tienda de revelado, o «Carta» para tu impresora.</li>
+        <li>Al imprimir, elige tamaño real o 100 %. No uses «ajustar a la página», porque cambia la medida.</li>
+        <li>Recorta por las líneas grises.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" />
+
+      <h2>Consejos para que te acepten la foto</h2>
+      <ul>
+        <li>Fondo blanco o claro, sin sombras.</li>
+        <li>De frente, con la cara descubierta y expresión neutral.</li>
+        <li>Sin lentes oscuros ni gorra.</li>
+        <li>Buena luz de frente: junto a una ventana funciona bien.</li>
+      </ul>
+      <p>Cada institución puede pedir algo distinto (fondo blanco o color, con o sin lentes). Revisa sus requisitos antes de imprimir.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

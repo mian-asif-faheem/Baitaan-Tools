@@ -36,3 +36,8 @@ export function aguinaldo({ dailySalary, daysWorked, aguinaldoDays = 15 }: Aguin
 
 /** Monthly salary to daily salary, using the 30-day month common in payroll. */
 export const monthlyToDaily = (monthly: number) => round2(monthly / 30);
+
+export { MX_2026 } from "./rates-2026";
+export { vacationDays, vacaciones, vacationTable } from "./vacaciones";
+export { isrMensual, factorIntegracion, sueldoNeto } from "./sueldo-neto";
+export { finiquito, type Motivo, type FiniquitoResult } from "./finiquito";

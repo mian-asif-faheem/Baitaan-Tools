@@ -1,0 +1,40 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PdfCompressTool from "@bt/ui/PdfCompressTool.tsx";
+import t from "../i18n/es.json";
+---
+<Layout
+  title="Comprimir PDF a 1 MB o 2 MB gratis, sin subir tu archivo | Baitaan"
+  description="Reduce el tamaño de tu PDF a 1 MB, 2 MB o el tamaño que necesites para subirlo a portales de gobierno, escuelas o empleos. Funciona en tu navegador: tu archivo no se sube."
+>
+  <ToolPage
+    heading="Comprimir PDF a 1 MB"
+    lead="Elige tu PDF y el tamaño máximo que te pide el portal. La herramienta lo reduce en tu navegador, sin subirlo a ningún servidor."
+    updated="Actualizado: noviembre de 2026"
+  >
+    <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="es-MX" />
+
+    <Fragment slot="guide">
+      <h2>¿Para qué sirve?</h2>
+      <p>Muchos portales limitan el tamaño de los archivos: solicitudes de empleo, inscripciones escolares, becas y trámites en línea suelen pedir PDF de 1 MB o 2 MB como máximo. Los documentos escaneados con el celular casi siempre pesan más.</p>
+
+      <h2>Cómo funciona</h2>
+      <p>La herramienta convierte cada página en una imagen JPG de buena calidad y arma un PDF nuevo. Empieza con la calidad más alta y la baja poco a poco hasta llegar al tamaño que elegiste.</p>
+      <p>Funciona mejor con documentos escaneados, fotos de identificaciones y comprobantes. En un PDF con texto digital, el texto ya no se podrá seleccionar después de comprimir.</p>
+
+      <AdSlot slot="0000000000" />
+
+      <h2>Consejos</h2>
+      <ul>
+        <li>Si tu archivo tiene muchas páginas y no llega a 1 MB, quita las páginas que no te piden.</li>
+        <li>Escanea en blanco y negro o en escala de grises cuando el documento no necesite color.</li>
+        <li>Revisa el PDF comprimido antes de enviarlo: los números y firmas deben leerse bien.</li>
+      </ul>
+
+      <h2>¿Es seguro?</h2>
+      <p>Sí. Tu PDF se procesa en tu propio dispositivo y no se envía a nuestros servidores. Puedes comprobarlo: elige tu archivo, desconecta internet y pulsa «Comprimir». La herramienta sigue funcionando.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

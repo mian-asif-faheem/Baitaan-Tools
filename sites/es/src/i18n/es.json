@@ -1,11 +1,24 @@
 {
-  "nav": [{ "href": "/calculadora-aguinaldo/", "label": "Aguinaldo" }],
+  "nav": [
+    { "href": "/calculadora-finiquito/", "label": "Finiquito" },
+    { "href": "/calculadora-sueldo-neto/", "label": "Sueldo neto" },
+    { "href": "/foto-tamano-infantil/", "label": "Fotos" },
+    { "href": "/comprimir-pdf/", "label": "PDF" }
+  ],
   "footer": [
     { "href": "/acerca/", "label": "Acerca de" },
     { "href": "/privacidad/", "label": "Privacidad" },
     { "href": "mailto:hola@baitaandessigns.com", "label": "Contacto" }
   ],
   "footerNote": "Herramientas gratis que funcionan en tu navegador",
+  "common": {
+    "monthly": "Mensual",
+    "daily": "Diario",
+    "salaryType": "¿Cómo conoces tu salario?",
+    "salaryMxn": "Salario bruto (MXN)",
+    "frontera": "Trabajo en la Zona Libre de la Frontera Norte",
+    "dailyUsed": "Salario diario usado"
+  },
   "aguinaldo": {
     "salaryType": "¿Cómo conoces tu salario?",
     "monthly": "Mensual",
@@ -17,6 +30,98 @@
     "result": "Tu aguinaldo estimado",
     "fullYear": "Si trabajaste el año completo",
     "dailyUsed": "Salario diario usado",
-    "disclaimer": "Monto bruto estimado. No incluye la retención de ISR sobre la parte que exceda 30 UMA."
+    "disclaimer": "Monto bruto estimado. El aguinaldo está exento de ISR hasta 30 UMA ($3,519.30 en 2026); el excedente paga impuesto."
+  },
+  "finiquito": {
+    "motivo": "¿Cómo terminó tu trabajo?",
+    "renuncia": "Renuncié",
+    "despidoInjustificado": "Me despidieron sin causa justificada",
+    "despidoJustificado": "Me despidieron con causa justificada",
+    "start": "Fecha de ingreso",
+    "end": "Último día de trabajo",
+    "unpaid": "Días trabajados que no te han pagado",
+    "pendingVac": "Días de vacaciones de años anteriores que no tomaste",
+    "aguinaldoDays": "Días de aguinaldo (mínimo 15)",
+    "prima": "Prima vacacional (%, mínimo 25)",
+    "veinte": "Incluir 20 días por año (el patrón se niega a reinstalarte, o rescindiste por culpa del patrón)",
+    "resultTotal": "Total estimado",
+    "finiquitoTitle": "Finiquito",
+    "liquidacionTitle": "Indemnización (liquidación)",
+    "service": "Antigüedad",
+    "years": "años",
+    "sdi": "Salario diario integrado",
+    "days": "días",
+    "lines": {
+      "salarioPendiente": "Salario pendiente",
+      "aguinaldo": "Aguinaldo proporcional",
+      "vacaciones": "Vacaciones",
+      "primaVacacional": "Prima vacacional",
+      "tresMeses": "3 meses de salario (art. 50, fr. III)",
+      "veinteDias": "20 días por año (art. 50, fr. II)",
+      "primaAntiguedad": "Prima de antigüedad (art. 162)"
+    },
+    "noLiquidacion": "Al renunciar con menos de 15 años de antigüedad no te corresponde indemnización ni prima de antigüedad.",
+    "disclaimer": "Montos brutos estimados. Tu empresa retiene ISR sobre la parte gravable. Si te despidieron, tienes 2 meses para demandar; acude a la PROFEDET (gratis)."
+  },
+  "neto": {
+    "gross": "Sueldo bruto mensual (MXN)",
+    "factor": "Factor de integración",
+    "factorHint": "1.0493 corresponde a las prestaciones mínimas de ley en el primer año.",
+    "other": "Otros descuentos (MXN)",
+    "otherHint": "Infonavit, Fonacot, caja de ahorro…",
+    "result": "Sueldo neto mensual",
+    "isrBefore": "ISR según la tarifa",
+    "subsidio": "Subsidio para el empleo",
+    "isr": "ISR retenido",
+    "imss": "Cuotas IMSS",
+    "otherLine": "Otros descuentos",
+    "perQuincena": "Por quincena",
+    "minWage": "Ganas el salario mínimo: no se te retiene ISR y tu patrón paga tus cuotas del IMSS.",
+    "disclaimer": "Estimación con la tarifa mensual de ISR 2026 y la UMA vigente desde febrero de 2026. Tu recibo puede variar según tus prestaciones y el periodo de pago."
+  },
+  "vacaciones": {
+    "completed": "Años cumplidos en la empresa",
+    "prima": "Prima vacacional (%, mínimo 25)",
+    "result": "Te corresponden",
+    "days": "días de vacaciones",
+    "pay": "Pago de vacaciones",
+    "prima2": "Prima vacacional",
+    "total": "Total",
+    "table": "Días por año de antigüedad",
+    "year": "Año",
+    "disclaimer": "Según el artículo 76 de la Ley Federal del Trabajo, vigente desde 2023."
+  },
+  "photo": {
+    "choose": "Elige tu foto",
+    "drop": "o arrástrala aquí",
+    "size": "Tamaño",
+    "zoom": "Acercar",
+    "dragHint": "Arrastra la foto para centrar tu cara.",
+    "sheet": "Hoja para imprimir",
+    "sheetNone": "Solo una foto",
+    "copies": "fotos por hoja",
+    "download": "Descargar",
+    "another": "Cambiar foto",
+    "privacy": "Tu foto no sale de tu dispositivo: todo se procesa en tu navegador.",
+    "printNote": "Imprime al 100 % (tamaño real), sin «ajustar a la página».",
+    "error": "No se pudo abrir la imagen. Prueba con JPG o PNG."
+  },
+  "pdf": {
+    "choose": "Elige tu PDF",
+    "drop": "o arrástralo aquí",
+    "target": "Tamaño máximo",
+    "custom": "Otro (MB)",
+    "compress": "Comprimir",
+    "working": "Comprimiendo… página",
+    "of": "de",
+    "original": "Original",
+    "result": "Comprimido",
+    "download": "Descargar PDF",
+    "another": "Otro PDF",
+    "privacy": "Tu archivo no sale de tu dispositivo: todo se procesa en tu navegador.",
+    "note": "Para reducir el tamaño, cada página se convierte en imagen. El texto ya no se podrá seleccionar ni copiar.",
+    "already": "Tu PDF ya pesa menos que el tamaño elegido.",
+    "tooBig": "No fue posible llegar a ese tamaño sin que el texto deje de leerse. Este es el resultado más pequeño legible.",
+    "error": "No se pudo abrir el PDF. Puede estar dañado o protegido con contraseña."
   }
 }

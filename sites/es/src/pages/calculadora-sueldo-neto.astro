@@ -1,0 +1,106 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import SueldoNetoCalc from "../components/SueldoNetoCalc.tsx";
+import { MX_2026, sueldoNeto } from "@bt/tools/mx";
+
+const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+const pct = (r: number) => `${(r * 100).toLocaleString("es-MX", { maximumFractionDigits: 3 })} %`;
+const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ monthlyGross: g }));
+---
+<Layout
+  title="Calculadora de sueldo neto 2026 (ISR e IMSS) | Baitaan"
+  description="Calcula tu sueldo neto mensual 2026 en México: ISR con la tarifa del SAT, subsidio para el empleo y cuotas del IMSS. Gratis y sin registro."
+  alternates={{ pt: "/calculadora-salario-liquido/" }}
+>
+  <ToolPage
+    heading="Calculadora de sueldo neto 2026"
+    lead="Tu sueldo neto es tu sueldo bruto menos el ISR y las cuotas del IMSS. Si ganas hasta $11,492.66 al mes, el subsidio para el empleo reduce tu ISR en hasta $535.65."
+    updated="Actualizado: noviembre de 2026 · Tarifa ISR 2026, UMA $117.31"
+    sources={[
+      { href: "https://www.sat.gob.mx/", label: "SAT: Anexo 8 de la Resolución Miscelánea Fiscal 2026" },
+      { href: "https://www.inegi.org.mx/temas/uma/", label: "INEGI: valor de la UMA 2026" },
+      { href: "https://www.imss.gob.mx/", label: "IMSS: cuotas obrero-patronales" },
+    ]}
+  >
+    <SueldoNetoCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>Cómo se calcula el sueldo neto</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li><strong>ISR:</strong> busca tu sueldo bruto mensual en la tarifa del SAT. Al excedente sobre el límite inferior aplica el porcentaje de tu renglón y suma la cuota fija.</li>
+        <li><strong>Subsidio para el empleo:</strong> si ganas hasta $11,492.66, resta $535.65 a tu ISR. El subsidio nunca se paga en efectivo: si es mayor que tu ISR, tu ISR queda en cero.</li>
+        <li><strong>IMSS:</strong> multiplica tu salario base de cotización (salario diario × factor de integración) por los porcentajes del trabajador y por 30.4 días.</li>
+        <li>Resta el ISR y el IMSS a tu sueldo bruto.</li>
+      </ol>
+
+      <h2>Ejemplos 2026</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-start text-stone-500">
+              <th class="py-2 text-start font-medium">Sueldo bruto</th>
+              <th class="py-2 text-end font-medium">ISR</th>
+              <th class="py-2 text-end font-medium">IMSS</th>
+              <th class="py-2 text-end font-medium">Sueldo neto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {examples.map((r) => (
+              <tr class="border-t border-stone-200">
+                <td class="py-2 tabular-nums">{mxn.format(r.monthlyGross)}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.isr)}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.imss)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{mxn.format(r.net)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-stone-500">Con el factor de integración mínimo de ley (1.0493). En $10,000 ya está restado el subsidio.</p>
+
+      <AdSlot slot="0000000000" />
+
+      <h2>Tarifa mensual de ISR 2026</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Límite inferior</th>
+              <th class="py-2 text-end font-medium">Cuota fija</th>
+              <th class="py-2 text-end font-medium">% sobre el excedente</th>
+            </tr>
+          </thead>
+          <tbody>
+            {MX_2026.isrMonthly.map((r) => (
+              <tr class="border-t border-stone-200">
+                <td class="py-1.5 tabular-nums">{mxn.format(r.lower)}</td>
+                <td class="py-1.5 text-end tabular-nums">{mxn.format(r.fixed)}</td>
+                <td class="py-1.5 text-end tabular-nums">{pct(r.rate)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Cuotas del IMSS que paga el trabajador</h2>
+      <ul>
+        <li>Prestaciones en dinero: 0.25 %</li>
+        <li>Gastos médicos de pensionados: 0.375 %</li>
+        <li>Invalidez y vida: 0.625 %</li>
+        <li>Cesantía en edad avanzada y vejez: 1.125 %</li>
+        <li>Enfermedad y maternidad: 0.40 % solo sobre la parte del salario diario que supera 3 UMA ($351.93)</li>
+      </ul>
+      <p>En total, la mayoría de las personas paga entre 2.4 % y 2.8 % de su sueldo al IMSS.</p>
+
+      <h2>Preguntas frecuentes</h2>
+      <h3 class="font-semibold text-stone-900">¿Si gano el salario mínimo me quitan ISR?</h3>
+      <p>No. Quien gana solo el salario mínimo ($315.04 diarios en 2026) no paga ISR, y su patrón cubre sus cuotas del IMSS.</p>
+      <h3 class="font-semibold text-stone-900">¿Cómo calculo mi sueldo neto quincenal?</h3>
+      <p>Divide el resultado mensual entre dos. Tu recibo puede variar unos pesos porque las empresas calculan la quincena con 15 o 15.2 días.</p>
+      <h3 class="font-semibold text-stone-900">¿Qué es el factor de integración?</h3>
+      <p>Es el número que convierte tu salario diario en salario base de cotización, sumando la parte diaria de aguinaldo y prima vacacional. Si tu empresa da más prestaciones, tu factor es mayor.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

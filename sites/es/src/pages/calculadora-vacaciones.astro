@@ -1,0 +1,48 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import VacacionesCalc from "../components/VacacionesCalc.tsx";
+---
+<Layout
+  title="Calculadora de vacaciones y prima vacacional 2026 (México) | Baitaan"
+  description="Cuántos días de vacaciones te tocan según tu antigüedad y cuánto es tu prima vacacional, con las vacaciones dignas de la Ley Federal del Trabajo. Gratis y sin registro."
+>
+  <ToolPage
+    heading="Calculadora de vacaciones y prima vacacional"
+    lead="Desde 2023, en México te tocan 12 días de vacaciones en tu primer año, 2 más por cada año hasta llegar a 20, y después 2 más cada 5 años. Además recibes una prima vacacional de al menos 25 %."
+    updated="Actualizado: noviembre de 2026"
+    sources={[{ href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Ley Federal del Trabajo, arts. 76–81" }]}
+  >
+    <VacacionesCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>Cuántos días de vacaciones te tocan</h2>
+      <p>El artículo 76 de la Ley Federal del Trabajo fija el mínimo. Tu empresa puede darte más, pero nunca menos.</p>
+      <ul>
+        <li>1.er año: 12 días · 2.º: 14 · 3.º: 16 · 4.º: 18 · 5.º: 20</li>
+        <li>Años 6 a 10: 22 días · 11 a 15: 24 · 16 a 20: 26 · 21 a 25: 28 · 26 a 30: 30</li>
+      </ul>
+
+      <h2>Cómo se calcula la prima vacacional</h2>
+      <p>Multiplica tu salario diario por tus días de vacaciones y luego por 25 % (o el porcentaje mayor que dé tu empresa).</p>
+      <p><strong>Ejemplo:</strong> con $12,000 al mes ($400 diarios) y 3 años cumplidos, estás en tu cuarto año: 18 días. Pago de vacaciones: 400 × 18 = $7,200. Prima vacacional: 25 % de $7,200 = <strong>$1,800</strong>.</p>
+
+      <AdSlot slot="0000000000" />
+
+      <h2>Reglas que conviene conocer</h2>
+      <ul>
+        <li>Al menos 12 de tus días de vacaciones deben ser seguidos; el resto lo puedes repartir como prefieras (art. 78).</li>
+        <li>Las vacaciones se dan dentro de los 6 meses siguientes a cada aniversario (art. 81).</li>
+        <li>No se pueden cambiar por dinero mientras sigas trabajando (art. 79). Solo se pagan al terminar la relación laboral, como parte de tu finiquito.</li>
+        <li>La prima vacacional está exenta de ISR hasta 15 UMA ($1,759.65 en 2026).</li>
+      </ul>
+
+      <h2>Preguntas frecuentes</h2>
+      <h3 class="font-semibold text-stone-900">¿Los días son naturales o laborables?</h3>
+      <p>Laborables: no cuentan tus días de descanso ni los festivos.</p>
+      <h3 class="font-semibold text-stone-900">¿Qué pasa con las vacaciones que no tomé si renuncio?</h3>
+      <p>Te las deben pagar en tu finiquito, junto con su prima vacacional. Puedes calcularlo en la <a class="text-teal-800 underline" href="/calculadora-finiquito/">calculadora de finiquito</a>.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

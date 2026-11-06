@@ -20,11 +20,14 @@ Every tool runs in the visitor's browser. There is no server and no database.
 ```
 packages/
   tools/   Pure TypeScript logic shared by all sites, with tests
-    src/mx/     Mexico: aguinaldo
+    src/mx/     Mexico: aguinaldo, finiquito/liquidación, sueldo neto (ISR + subsidio + IMSS), vacaciones
+                rates-2026.ts holds ISR tarifa, UMA, minimum wage, subsidio, IMSS rates
     src/br/     Brazil: INSS, salário líquido (Lei 15.270/2025), 13º
                 rates-2026.ts holds the yearly tables
     src/hijri/  Umm al-Qura Hijri <-> Gregorian, Hijri age (uses the browser's Intl calendar)
   ui/      BaseLayout (lang, dir, canonical, hreflang, AdSense), ToolPage, AdSlot, sites.ts
+    src/tools/  Shared browser tools with translatable strings: PhotoTool (document photos + print
+                sheets at 300 dpi), PdfCompressTool (pdf.js + pdf-lib, loaded only when used)
 sites/
   root/ es/ pt/ ar/   Each: astro.config.mjs, src/i18n/<lang>.json, src/components, src/pages
 ```
@@ -33,7 +36,7 @@ sites/
 
 ```bash
 pnpm install
-pnpm test          # calculator tests (19 so far)
+pnpm test          # calculator tests (38 so far)
 pnpm dev:es        # or dev:root, dev:pt, dev:ar
 pnpm build         # builds all four sites into sites/*/dist
 ```
@@ -71,7 +74,7 @@ Then replace each `<AdSlot slot="0000000000" />` with real ad unit IDs. Turn on 
 ## Yearly maintenance (every January)
 
 - Brazil: update `packages/tools/src/br/rates-2026.ts` (copy to `rates-2027.ts`) from the new INSS ordinance and Receita Federal table; update the tests with new published examples.
-- Mexico: check the minimum aguinaldo rules and the UMA value if ISR is added.
+- Mexico: update `packages/tools/src/mx/rates-2026.ts`: ISR tarifa (Anexo 8 RMF), minimum wage (CONASAMI, 1 January), UMA (INEGI, 1 February), subsidio para el empleo decree. Re-run the tests against new published examples.
 - Update the "last updated" line on every tool page.
 
 ## Before applying to AdSense
