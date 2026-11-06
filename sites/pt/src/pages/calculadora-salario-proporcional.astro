@@ -1,0 +1,45 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import ProporcionalCalc from "../components/ProporcionalCalc.tsx";
+---
+<Layout
+  title="Calculadora de salário proporcional e desconto de faltas | Baitaan"
+  description="Calcule o salário proporcional aos dias trabalhados no mês de admissão ou demissão, e o desconto de faltas com a perda do DSR. Grátis e sem cadastro."
+>
+  <ToolPage
+    heading="Calculadora de salário proporcional"
+    lead="Para saber o salário de parte do mês, divida o salário por 30 e multiplique pelos dias trabalhados. Cada falta sem justificativa desconta um dia e também o descanso remunerado daquela semana."
+    updated="Atualizado: novembro de 2026"
+    sourcesHeading="Fontes"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l0605.htm", label: "Lei 605/1949, art. 6º (perda do repouso por falta)" },
+    ]}
+  >
+    <ProporcionalCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>Quando usar</h2>
+      <ul>
+        <li>No mês em que você começou a trabalhar.</li>
+        <li>No mês da demissão (é o saldo de salário da rescisão).</li>
+        <li>Para conferir o desconto de faltas no holerite.</li>
+      </ul>
+
+      <h2>Exemplos</h2>
+      <ul>
+        <li>Salário de R$ 3.000, admitido no dia 19 de um mês: trabalhou 12 dias. R$ 3.000 ÷ 30 × 12 = <strong>R$ 1.200,00</strong>.</li>
+        <li>Salário de R$ 3.000 com 1 falta sem justificativa: desconto de R$ 100 pela falta e R$ 100 pelo DSR da semana. <strong>Salário: R$ 2.800,00</strong>.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Por que 30 dias?</h2>
+      <p>Para quem recebe por mês, a folha de pagamento usa o mês comercial de 30 dias, seja o mês de 28, 30 ou 31 dias. Algumas empresas usam os dias do calendário; confira no seu holerite.</p>
+
+      <h2>Faltas que não podem ser descontadas</h2>
+      <p>A CLT (art. 473) lista faltas justificadas que não geram desconto, como até 2 dias por falecimento de parente próximo, 3 dias por casamento e os dias de doação de sangue (1 por ano) ou de alistamento eleitoral. Atestados médicos também abonam a falta.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

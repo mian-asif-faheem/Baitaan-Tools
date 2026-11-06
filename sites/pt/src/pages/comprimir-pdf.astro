@@ -1,0 +1,41 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PdfCompressTool from "@bt/ui/PdfCompressTool.tsx";
+import t from "../i18n/pt.json";
+---
+<Layout
+  title="Comprimir PDF para 1 MB ou 2 MB grátis, sem enviar o arquivo | Baitaan"
+  description="Diminua o tamanho do PDF para 1 MB, 2 MB ou o limite que o site pede: Enem, vestibular, concursos, gov.br e vagas de emprego. Funciona no seu navegador."
+  alternates={{ es: "/comprimir-pdf/" }}
+>
+  <ToolPage
+    heading="Comprimir PDF para 1 MB"
+    lead="Escolha o PDF e o tamanho máximo pedido pelo site. A ferramenta reduz o arquivo no seu navegador, sem enviar para nenhum servidor."
+    updated="Atualizado: novembro de 2026"
+  >
+    <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="pt-BR" />
+
+    <Fragment slot="guide">
+      <h2>Para que serve</h2>
+      <p>Inscrições em concursos, vestibulares, bolsas, vagas de emprego e serviços públicos costumam limitar o tamanho dos arquivos a 1 MB ou 2 MB. Documentos escaneados pelo celular quase sempre passam disso.</p>
+
+      <h2>Como funciona</h2>
+      <p>Cada página vira uma imagem JPG de boa qualidade e um PDF novo é montado. A ferramenta começa na qualidade mais alta e vai baixando até chegar ao tamanho escolhido.</p>
+      <p>Funciona melhor com documentos escaneados, fotos de RG e CNH e comprovantes. Num PDF com texto digital, o texto não poderá mais ser selecionado depois.</p>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Dicas</h2>
+      <ul>
+        <li>Se o arquivo tem muitas páginas, envie só as pedidas.</li>
+        <li>Para juntar RG, CPF e comprovante num arquivo só, use a ferramenta <a class="text-teal-800 underline" href="/juntar-pdf/">juntar PDF</a> e depois comprima.</li>
+        <li>Abra o PDF comprimido antes de enviar e confira se números e assinaturas estão legíveis.</li>
+      </ul>
+
+      <h2>É seguro?</h2>
+      <p>Sim. O PDF é processado no seu aparelho e não é enviado para nossos servidores. Para conferir: escolha o arquivo, desligue a internet e toque em «Comprimir». A ferramenta continua funcionando.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

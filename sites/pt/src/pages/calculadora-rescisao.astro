@@ -1,0 +1,92 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import RescisaoCalc from "../components/RescisaoCalc.tsx";
+---
+<Layout
+  title="Calculadora de rescisão trabalhista 2026 (CLT) | Baitaan"
+  description="Calcule sua rescisão 2026: sem justa causa, pedido de demissão, acordo ou justa causa. Saldo de salário, aviso prévio, 13º, férias, multa de 40% do FGTS. Grátis e sem cadastro."
+  alternates={{ es: "/calculadora-finiquito/" }}
+>
+  <ToolPage
+    heading="Calculadora de rescisão trabalhista 2026"
+    lead="Na demissão sem justa causa você recebe saldo de salário, aviso prévio, 13º e férias proporcionais com 1/3, além da multa de 40% sobre o FGTS. No pedido de demissão não há multa nem saque do FGTS."
+    updated="Atualizado: novembro de 2026 · Tabelas de INSS e IR de 2026"
+    sourcesHeading="Fontes"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm", label: "CLT, arts. 477, 484-A e 487" },
+      { href: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm", label: "Lei 12.506/2011 (aviso prévio proporcional)" },
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l8036consol.htm", label: "Lei 8.036/1990 (FGTS), art. 18" },
+    ]}
+  >
+    <RescisaoCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>O que você recebe em cada tipo de rescisão</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Verba</th>
+              <th class="px-1.5 py-2 text-center font-medium">Sem justa causa</th>
+              <th class="px-1.5 py-2 text-center font-medium">Pedido</th>
+              <th class="px-1.5 py-2 text-center font-medium">Acordo</th>
+              <th class="px-1.5 py-2 text-center font-medium">Justa causa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Saldo de salário</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Aviso prévio indenizado</td><td class="px-1.5 text-center">Integral</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Metade</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">13º proporcional</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Férias proporcionais + 1/3</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Férias vencidas + 1/3</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Multa do FGTS</td><td class="px-1.5 text-center">40%</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">20%</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Saque do FGTS</td><td class="px-1.5 text-center">100%</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">80%</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Seguro-desemprego</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Não</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Como calcular, passo a passo</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li><strong>Saldo de salário:</strong> salário ÷ 30 × dias trabalhados no último mês.</li>
+        <li><strong>Aviso prévio:</strong> 30 dias mais 3 dias por ano completo de trabalho, até 90 dias (Lei 12.506/2011). Quando é indenizado, esses dias também contam como tempo de serviço.</li>
+        <li><strong>13º proporcional:</strong> salário ÷ 12 × meses trabalhados no ano. O mês conta quando você trabalhou 15 dias ou mais.</li>
+        <li><strong>Férias proporcionais:</strong> salário ÷ 12 × meses desde o último aniversário de admissão, mais 1/3.</li>
+        <li><strong>Férias vencidas:</strong> um salário por período completo não tirado, mais 1/3.</li>
+        <li><strong>Multa do FGTS:</strong> 40% sobre todos os depósitos do contrato, incluindo os do mês da rescisão.</li>
+      </ol>
+
+      <h2>Exemplo: demissão sem justa causa</h2>
+      <p>Salário de R$ 3.000, admissão em 1º/03/2024 e último dia em 15/08/2026, com um período de férias vencido e R$ 7.200 de FGTS. São 2 anos completos, então o aviso é de 36 dias, o que leva o contrato até 20 de setembro.</p>
+      <ul>
+        <li>Saldo de salário (15 dias): R$ 1.500,00</li>
+        <li>Aviso prévio (36 dias): R$ 3.600,00</li>
+        <li>13º proporcional (9/12): R$ 2.250,00</li>
+        <li>Férias proporcionais (7/12) + 1/3: R$ 2.333,33</li>
+        <li>Férias vencidas + 1/3: R$ 4.000,00</li>
+        <li>INSS sobre saldo e 13º: −R$ 290,69</li>
+        <li><strong>Líquido: R$ 13.392,64</strong>, mais a multa do FGTS de R$ 3.115,20, num total de R$ 16.507,84.</li>
+      </ul>
+      <p>No pedido de demissão, nas mesmas condições, o 13º cai para 8/12 e as férias para 6/12, não há aviso nem multa, e se o aviso não for cumprido a empresa pode descontar R$ 3.000.</p>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Prazos</h2>
+      <ul>
+        <li>A empresa deve pagar a rescisão em até 10 dias corridos após o fim do contrato (art. 477, § 6º). Se atrasar, deve uma multa de um salário.</li>
+        <li>O seguro-desemprego pode ser pedido do 7º ao 120º dia após a demissão.</li>
+        <li>Você tem até 2 anos depois do fim do contrato para entrar com uma ação trabalhista.</li>
+      </ul>
+
+      <h2>Perguntas frequentes</h2>
+      <h3 class="font-semibold text-stone-900">A rescisão tem desconto de IR?</h3>
+      <p>Só o saldo de salário e o 13º pagam INSS e IR. Aviso prévio indenizado, férias indenizadas e a multa do FGTS são isentos. Com a redução do IR de 2026, quem ganha até R$ 5.000 normalmente não tem desconto de IR.</p>
+      <h3 class="font-semibold text-stone-900">Onde vejo meu saldo do FGTS?</h3>
+      <p>No aplicativo FGTS da Caixa. A multa é calculada sobre todos os depósitos feitos durante o contrato, mesmo que você já tenha usado parte do saldo, como no saque-aniversário.</p>
+      <h3 class="font-semibold text-stone-900">O que é o acordo do art. 484-A?</h3>
+      <p>Desde a Reforma Trabalhista de 2017, empresa e empregado podem encerrar o contrato em comum acordo. Você recebe metade do aviso indenizado e 20% de multa, saca 80% do FGTS e não tem direito ao seguro-desemprego.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,0 +1,73 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import DecimoCalc from "../components/DecimoCalc.tsx";
+import { decimoTerceiro } from "@bt/tools/br";
+
+const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTerceiro({ monthlySalary: s, monthsWorked: 12 }) }));
+---
+<Layout
+  title="Calculadora de 13º salário 2026: 1ª e 2ª parcela | Baitaan"
+  description="Calcule o 13º salário 2026: valor da 1ª parcela, descontos de INSS e IR na 2ª parcela com a isenção até R$ 5 mil, e 13º proporcional. Grátis e sem cadastro."
+  alternates={{ es: "/calculadora-aguinaldo/" }}
+>
+  <ToolPage
+    heading="Calculadora de 13º salário 2026"
+    lead="A 1ª parcela do 13º é metade do valor, sem descontos, paga até 30 de novembro. A 2ª parcela, até 20 de dezembro, já vem com o INSS e o IR do 13º inteiro. Em 2026, quem tem 13º de até R$ 5.000 não paga IR."
+    updated="Atualizado: novembro de 2026"
+    sourcesHeading="Fontes"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l4090.htm", label: "Lei 4.090/1962 (13º salário)" },
+      { href: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15270.htm", label: "Lei 15.270/2025, art. 3-A, § 3º (redução também no 13º)" },
+    ]}
+  >
+    <DecimoCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>Como calcular o 13º</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Divida o salário por 12 e multiplique pelos meses trabalhados no ano. Conta o mês com 15 dias ou mais de trabalho.</li>
+        <li>A 1ª parcela é metade desse valor.</li>
+        <li>Na 2ª parcela, desconte o INSS sobre o 13º inteiro e o IR, que é calculado separado do salário.</li>
+      </ol>
+
+      <h2>Exemplos 2026 (ano completo, sem dependentes)</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Salário</th>
+              <th class="py-2 text-end font-medium">1ª parcela</th>
+              <th class="py-2 text-end font-medium">INSS</th>
+              <th class="py-2 text-end font-medium">IR</th>
+              <th class="py-2 text-end font-medium">2ª parcela</th>
+            </tr>
+          </thead>
+          <tbody>
+            {examples.map((r) => (
+              <tr class="border-t border-stone-200">
+                <td class="py-2 tabular-nums">{brl.format(r.s)}</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.firstInstallment)}</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.inss)}</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.irrf)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{brl.format(r.secondInstallment)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Perguntas frequentes</h2>
+      <h3 class="font-semibold text-stone-900">A isenção do IR até R$ 5 mil vale para o 13º?</h3>
+      <p>Sim. A Lei 15.270/2025 diz expressamente que a redução também se aplica ao IR do 13º salário. Entre R$ 5.000 e R$ 7.350 o imposto é reduzido; acima disso vale a tabela normal.</p>
+      <h3 class="font-semibold text-stone-900">Horas extras entram no 13º?</h3>
+      <p>Sim. A média mensal de horas extras, comissões e adicionais do ano entra no cálculo.</p>
+      <h3 class="font-semibold text-stone-900">Fui demitido. Recebo 13º?</h3>
+      <p>Sim, o proporcional entra na rescisão, exceto na demissão por justa causa. Veja na <a class="text-teal-800 underline" href="/calculadora-rescisao/">calculadora de rescisão</a>.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

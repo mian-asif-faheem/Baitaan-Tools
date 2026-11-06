@@ -1,0 +1,54 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import HorasExtrasCalc from "../components/HorasExtrasCalc.tsx";
+---
+<Layout
+  title="Calculadora de horas extras e adicional noturno 2026 | Baitaan"
+  description="Calcule horas extras de 50% e 100%, adicional noturno com hora reduzida e o reflexo no DSR. Para jornadas de 44, 40, 36 e 30 horas. Grátis e sem cadastro."
+>
+  <ToolPage
+    heading="Calculadora de horas extras e adicional noturno"
+    lead="A hora extra vale pelo menos 50% a mais que a hora normal, e o trabalho noturno entre 22h e 5h tem adicional de 20%. Além disso, as horas extras aumentam o valor do seu descanso semanal remunerado (DSR)."
+    updated="Atualizado: novembro de 2026"
+    sourcesHeading="Fontes"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm", label: "CLT, arts. 59 e 73" },
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l0605.htm", label: "Lei 605/1949 (repouso semanal remunerado)" },
+    ]}
+  >
+    <HorasExtrasCalc client:load />
+
+    <Fragment slot="guide">
+      <h2>Como calcular a hora extra</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li><strong>Valor da hora:</strong> salário ÷ divisor da jornada. Para 44 h semanais o divisor é 220; para 40 h, 200.</li>
+        <li><strong>Hora extra:</strong> valor da hora × 1,5 (50%) ou × 2 (100%, em domingos e feriados).</li>
+        <li><strong>DSR:</strong> some as horas extras e o adicional noturno, divida pelos dias úteis do mês e multiplique pelos domingos e feriados.</li>
+      </ol>
+
+      <h2>Exemplo</h2>
+      <p>Salário de R$ 2.200 com jornada de 44 h: a hora vale R$ 10 e a hora extra de 50%, R$ 15. Com 10 horas extras em dias úteis e 4 num domingo, num mês de 25 dias úteis e 5 domingos e feriados:</p>
+      <ul>
+        <li>Horas extras 50%: 10 × R$ 15 = R$ 150,00</li>
+        <li>Horas extras 100%: 4 × R$ 20 = R$ 80,00</li>
+        <li>DSR: R$ 230 ÷ 25 × 5 = R$ 46,00</li>
+        <li><strong>Total: R$ 276,00</strong></li>
+      </ul>
+
+      <h2>Adicional noturno e hora reduzida</h2>
+      <p>Para trabalhadores urbanos, o horário noturno vai das 22h às 5h. Cada hora noturna conta como 52 minutos e 30 segundos, então 7 horas de relógio valem 8 horas. O adicional é de pelo menos 20% sobre a hora normal: no exemplo acima, 8 × R$ 2 = R$ 16 por noite.</p>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Perguntas frequentes</h2>
+      <h3 class="font-semibold text-stone-900">Quantas horas extras posso fazer por dia?</h3>
+      <p>Até 2 horas por dia (art. 59 da CLT), salvo exceções previstas em lei ou acordo.</p>
+      <h3 class="font-semibold text-stone-900">O adicional pode ser maior que 50%?</h3>
+      <p>Sim. Muitas convenções coletivas preveem 60%, 70% ou mais. Informe o percentual do seu sindicato na calculadora.</p>
+      <h3 class="font-semibold text-stone-900">Hora extra tem desconto?</h3>
+      <p>Sim. O valor entra no salário do mês e paga INSS e IR junto com ele.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

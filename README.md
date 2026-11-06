@@ -22,12 +22,14 @@ packages/
   tools/   Pure TypeScript logic shared by all sites, with tests
     src/mx/     Mexico: aguinaldo, finiquito/liquidación, sueldo neto (ISR + subsidio + IMSS), vacaciones
                 rates-2026.ts holds ISR tarifa, UMA, minimum wage, subsidio, IMSS rates
-    src/br/     Brazil: INSS, salário líquido (Lei 15.270/2025), 13º
+    src/br/     Brazil: INSS + IRRF with the Lei 15.270/2025 reduction (core.ts), salário líquido,
+                rescisão (4 types), férias, 13º, horas extras + adicional noturno, salário proporcional
                 rates-2026.ts holds the yearly tables
     src/hijri/  Umm al-Qura Hijri <-> Gregorian, Hijri age (uses the browser's Intl calendar)
   ui/      BaseLayout (lang, dir, canonical, hreflang, AdSense), ToolPage, AdSlot, sites.ts
     src/tools/  Shared browser tools with translatable strings: PhotoTool (document photos + print
-                sheets at 300 dpi), PdfCompressTool (pdf.js + pdf-lib, loaded only when used)
+                sheets at 300 dpi), PdfCompressTool (pdf.js + pdf-lib, loaded only when used),
+                MergePdfTool (PDFs + JPG/PNG, reorderable); form.tsx shared form controls
 sites/
   root/ es/ pt/ ar/   Each: astro.config.mjs, src/i18n/<lang>.json, src/components, src/pages
 ```
@@ -36,7 +38,7 @@ sites/
 
 ```bash
 pnpm install
-pnpm test          # calculator tests (38 so far)
+pnpm test          # calculator tests (60 so far)
 pnpm dev:es        # or dev:root, dev:pt, dev:ar
 pnpm build         # builds all four sites into sites/*/dist
 ```

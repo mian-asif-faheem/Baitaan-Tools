@@ -1,0 +1,44 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PhotoTool from "@bt/ui/PhotoTool.tsx";
+import { PRESETS_BR } from "@bt/ui/photo-presets";
+import t from "../i18n/pt.json";
+---
+<Layout
+  title="Foto 3x4 online grátis: recorte e imprima em casa | Baitaan"
+  description="Faça sua foto 3x4 no celular: recorte no tamanho certo e baixe uma folha 10x15 ou A4 pronta para imprimir. Grátis, sem cadastro e sem enviar sua foto."
+  alternates={{ es: "/foto-tamano-infantil/" }}
+>
+  <ToolPage
+    heading="Foto 3x4 online"
+    lead="Escolha uma foto do celular, ajuste o rosto no quadro e baixe uma folha 10x15 com várias fotos 3x4 para imprimir na papelaria ou em casa."
+    updated="Atualizado: novembro de 2026"
+  >
+    <PhotoTool client:visible presets={PRESETS_BR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="foto" />
+
+    <Fragment slot="guide">
+      <h2>Onde a foto 3x4 é usada</h2>
+      <p>Carteirinha de escola e de faculdade, crachás, fichas de cadastro, matrícula, carteira de clubes e muitos documentos de empresas. Confira sempre o pedido do órgão, porque muitos documentos oficiais hoje tiram a foto na hora.</p>
+
+      <h2>Como imprimir</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Escolha a folha 10x15 para imprimir em papel fotográfico na papelaria ou num quiosque de fotos.</li>
+        <li>Para imprimir em casa, escolha A4.</li>
+        <li>Na impressão, use tamanho real ou 100%, sem «ajustar à página».</li>
+        <li>Recorte pelas linhas cinza.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Dicas para uma boa foto</h2>
+      <ul>
+        <li>Fundo branco ou claro, sem sombras.</li>
+        <li>Rosto de frente, sem óculos escuros, boné ou chapéu.</li>
+        <li>Luz natural de frente, perto de uma janela.</li>
+        <li>Celular na altura dos olhos, a cerca de um metro.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,0 +1,40 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import MergePdfTool from "@bt/ui/MergePdfTool.tsx";
+import t from "../i18n/pt.json";
+---
+<Layout
+  title="Juntar PDF grátis: una PDFs e fotos num arquivo só | Baitaan"
+  description="Junte vários PDFs e fotos (JPG e PNG) num único arquivo, na ordem que você quiser. Ideal para RG, CPF e comprovantes. Grátis e sem enviar seus documentos."
+>
+  <ToolPage
+    heading="Juntar PDF"
+    lead="Escolha os PDFs e fotos, coloque na ordem certa e baixe tudo num único PDF. Seus documentos não saem do seu aparelho."
+    updated="Atualizado: novembro de 2026"
+  >
+    <MergePdfTool client:visible t={t.merge} outputName="documentos.pdf" locale="pt-BR" />
+
+    <Fragment slot="guide">
+      <h2>Quando usar</h2>
+      <p>Muitos sites pedem todos os documentos num arquivo só: RG, CPF, comprovante de residência e diploma para matrícula, inscrição ou admissão num emprego.</p>
+
+      <h2>Como usar</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Toque em «Escolha os PDFs» e selecione os arquivos. Fotos JPG e PNG viram uma página A4 cada.</li>
+        <li>Use as setas para mudar a ordem.</li>
+        <li>Toque em «Juntar PDFs» e baixe o arquivo.</li>
+        <li>Se o site tiver limite de tamanho, passe o resultado pela ferramenta <a class="text-teal-800 underline" href="/comprimir-pdf/">comprimir PDF</a>.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" label="Publicidade" />
+
+      <h2>Perguntas frequentes</h2>
+      <h3 class="font-semibold text-stone-900">O texto do PDF continua selecionável?</h3>
+      <p>Sim. Ao juntar, as páginas são copiadas como estão, sem perda de qualidade.</p>
+      <h3 class="font-semibold text-stone-900">Funciona com PDF protegido por senha?</h3>
+      <p>Não. Remova a senha antes, no aplicativo em que o PDF foi criado.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

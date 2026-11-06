@@ -10,7 +10,9 @@
     "./sites": "./src/sites.ts",
     "./PhotoTool.tsx": "./src/tools/PhotoTool.tsx",
     "./PdfCompressTool.tsx": "./src/tools/PdfCompressTool.tsx",
-    "./photo-presets": "./src/tools/photo-presets.ts"
+    "./photo-presets": "./src/tools/photo-presets.ts",
+    "./form": "./src/form.tsx",
+    "./MergePdfTool.tsx": "./src/tools/MergePdfTool.tsx"
   },
   "dependencies": {
     "pdf-lib": "1.17.1",
