@@ -1,0 +1,46 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import Countdown from "../components/Countdown.tsx";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+import { toGregorian } from "@bt/tools/hijri";
+
+const next = nextHijriOccurrence(12, 10);
+const y = next.hijri.year;
+const gYear = next.gregorian.getUTCFullYear();
+const fmt = new Intl.DateTimeFormat("ar-u-nu-latn", { day: "numeric", month: "long", weekday: "long", timeZone: "UTC" });
+const arafah = fmt.format(toGregorian({ year: y, month: 12, day: 9 }));
+const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title={`كم باقي على عيد الأضحى ${y} (${gYear})؟ ويوم عرفة | بيتان`}
+  description={`عد تنازلي حتى عيد الأضحى ${y} هـ (10 ذو الحجة)، مع موعد يوم عرفة المتوقع حسب تقويم أم القرى.`}
+>
+  <ToolPage
+    heading={`كم باقي على عيد الأضحى ${y}؟`}
+    lead={`عيد الأضحى يوم 10 ذو الحجة، ويسبقه يوم عرفة في 9 ذو الحجة. هذا الموعد المتوقع لعام ${y} هـ حسب تقويم أم القرى.`}
+    updated="يُحدَّث العد تلقائيًا كل ثانية"
+  >
+    <Countdown client:load month={12} day={10} name="عيد الأضحى" />
+
+    <Fragment slot="guide">
+      <h2>أيام الحج المتوقعة لعام {y} هـ</h2>
+      <ul>
+        <li>يوم التروية (8 ذو الحجة): {tarwiyah}</li>
+        <li>يوم عرفة (9 ذو الحجة): {arafah}</li>
+        <li>عيد الأضحى (10 ذو الحجة): {fmt.format(next.gregorian)}</li>
+      </ul>
+      <p>تُعلن المحكمة العليا في السعودية بداية ذي الحجة بعد تحرّي الهلال، وقد تختلف هذه المواعيد يومًا واحدًا.</p>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+
+      <h2>مواعيد قريبة</h2>
+      <ul>
+        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
+        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-alfitr/">كم باقي على عيد الفطر</a></li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

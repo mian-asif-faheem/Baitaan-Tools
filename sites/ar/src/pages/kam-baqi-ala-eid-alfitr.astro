@@ -1,0 +1,40 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import Countdown from "../components/Countdown.tsx";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+
+const next = nextHijriOccurrence(10, 1);
+const y = next.hijri.year;
+const gYear = next.gregorian.getUTCFullYear();
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title={`كم باقي على عيد الفطر ${y} (${gYear})؟ العد التنازلي | بيتان`}
+  description={`عد تنازلي بالأيام والساعات حتى عيد الفطر ${y} هـ (1 شوال)، والموعد المتوقع حسب تقويم أم القرى.`}
+>
+  <ToolPage
+    heading={`كم باقي على عيد الفطر ${y}؟`}
+    lead={`عيد الفطر هو أول أيام شهر شوال. هذا موعده المتوقع لعام ${y} هـ حسب تقويم أم القرى، ويُعلن رسميًا بعد تحرّي هلال شوال مساء 29 رمضان.`}
+    updated="يُحدَّث العد تلقائيًا كل ثانية"
+  >
+    <Countdown client:load month={10} day={1} name="عيد الفطر" />
+
+    <Fragment slot="guide">
+      <h2>إجازة عيد الفطر</h2>
+      <p>تُعلن الجهات الرسمية في كل دولة مواعيد إجازة العيد للقطاعين العام والخاص قبل رمضان أو خلاله. راجع إعلان وزارة الموارد البشرية في بلدك.</p>
+
+      <h2>زكاة الفطر</h2>
+      <p>تُخرج زكاة الفطر قبل صلاة العيد، ويجوز إخراجها قبل العيد بيوم أو يومين. وقدرها صاع من غالب قوت البلد عن كل فرد.</p>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+
+      <h2>مواعيد قريبة</h2>
+      <ul>
+        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
+        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

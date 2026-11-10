@@ -25,7 +25,10 @@ packages/
     src/br/     Brazil: INSS + IRRF with the Lei 15.270/2025 reduction (core.ts), salário líquido,
                 rescisão (4 types), férias, 13º, horas extras + adicional noturno, salário proporcional
                 rates-2026.ts holds the yearly tables
-    src/hijri/  Umm al-Qura Hijri <-> Gregorian, Hijri age (uses the browser's Intl calendar)
+    src/hijri/  Umm al-Qura Hijri <-> Gregorian, Hijri age (uses the browser's Intl calendar);
+                dates.ts: date difference, Gulf working days, next Ramadan/Eid (countdowns)
+    src/gulf/   End-of-service: Saudi Arabia (arts. 84-87) and UAE (art. 51); GCC VAT; zakat
+    src/text/   Word/character counts that handle Arabic diacritics
   ui/      BaseLayout (lang, dir, canonical, hreflang, AdSense), ToolPage, AdSlot, sites.ts
     src/tools/  Shared browser tools with translatable strings: PhotoTool (document photos + print
                 sheets at 300 dpi), PdfCompressTool (pdf.js + pdf-lib, loaded only when used),
@@ -38,7 +41,7 @@ sites/
 
 ```bash
 pnpm install
-pnpm test          # calculator tests (60 so far)
+pnpm test          # calculator tests (95 so far)
 pnpm dev:es        # or dev:root, dev:pt, dev:ar
 pnpm build         # builds all four sites into sites/*/dist
 ```
@@ -77,6 +80,7 @@ Then replace each `<AdSlot slot="0000000000" />` with real ad unit IDs. Turn on 
 
 - Brazil: update `packages/tools/src/br/rates-2026.ts` (copy to `rates-2027.ts`) from the new INSS ordinance and Receita Federal table; update the tests with new published examples.
 - Mexico: update `packages/tools/src/mx/rates-2026.ts`: ISR tarifa (Anexo 8 RMF), minimum wage (CONASAMI, 1 January), UMA (INEGI, 1 February), subsidio para el empleo decree. Re-run the tests against new published examples.
+- Gulf: check VAT rates and any change to end-of-service rules. Countdown pages roll over to the next Hijri year by themselves, but the page titles are set at build time, so rebuild after each Ramadan and Eid.
 - Update the "last updated" line on every tool page.
 
 ## Before applying to AdSense

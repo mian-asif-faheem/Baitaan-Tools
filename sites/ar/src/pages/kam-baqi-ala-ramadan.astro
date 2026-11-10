@@ -1,0 +1,43 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import Countdown from "../components/Countdown.tsx";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+
+const next = nextHijriOccurrence(9, 1);
+const y = next.hijri.year;
+const gYear = next.gregorian.getUTCFullYear();
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title={`كم باقي على رمضان ${y} (${gYear})؟ العد التنازلي | بيتان`}
+  description={`عد تنازلي بالأيام والساعات حتى أول أيام شهر رمضان ${y} هـ، والموعد المتوقع حسب تقويم أم القرى.`}
+>
+  <ToolPage
+    heading={`كم باقي على رمضان ${y}؟`}
+    lead={`يبدأ شهر رمضان ${y} هـ حسب تقويم أم القرى في التاريخ الظاهر أدناه، ويُعلن الموعد الرسمي بعد تحرّي رؤية الهلال مساء 29 شعبان.`}
+    updated="يُحدَّث العد تلقائيًا كل ثانية"
+  >
+    <Countdown client:load month={9} day={1} name="رمضان" />
+
+    <Fragment slot="guide">
+      <h2>كيف يُحدَّد أول رمضان؟</h2>
+      <p>في السعودية تتحرى المحكمة العليا رؤية الهلال مساء يوم 29 من شعبان. فإن رُئي الهلال كان اليوم التالي أول رمضان، وإلا أُكمل شعبان ثلاثين يومًا. لذلك قد يتقدم الموعد الفعلي أو يتأخر يومًا عن تقويم أم القرى.</p>
+
+      <h2>مواعيد قريبة</h2>
+      <ul>
+        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-alfitr/">كم باقي على عيد الفطر</a></li>
+        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+
+      <h2>استعد لرمضان</h2>
+      <ul>
+        <li>احسب زكاة مالك مبكرًا مع <a class="text-teal-800 underline" href="/hasibat-azzakat/">حاسبة الزكاة</a>، فكثيرون يُخرجونها في رمضان.</li>
+        <li>حوّل أي تاريخ بين الهجري والميلادي مع <a class="text-teal-800 underline" href="/tahweel-altareekh/">محوّل التاريخ</a>.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -43,5 +43,12 @@ export function layout(sheetW: number, sheetH: number, w: number, h: number, gap
   const rows = Math.max(0, Math.floor((sheetH - 2 * margin + gap) / (h + gap)));
   const usedW = cols * w + (cols - 1) * gap;
   const usedH = rows * h + (rows - 1) * gap;
-  return { cols, rows, count: cols * rows, x0: (sheetW - usedW) / 2, y0: (sheetH - usedH) / 2, gap };
+  return { cols, rows, count: cols * rows, x0: (sheetW - usedW) / 2, y0: (sheetH - usedH) / 2, gap, sheetW, sheetH };
+}
+
+/** Try the sheet both ways round and keep the orientation that fits more photos. */
+export function bestLayout(sheetW: number, sheetH: number, w: number, h: number) {
+  const a = layout(sheetW, sheetH, w, h);
+  const b = layout(sheetH, sheetW, w, h);
+  return b.count > a.count ? b : a;
 }

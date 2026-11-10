@@ -1,0 +1,41 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PhotoTool from "@bt/ui/PhotoTool.tsx";
+import { PRESETS_AR } from "@bt/ui/photo-presets";
+import t from "../i18n/ar.json";
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title="تغيير مقاس الصورة 4×6 للطباعة مجانًا | بيتان"
+  description="قص صورتك بمقاس 4×6 أو 3.5×4.5 أو 5×5 سم، ونزّل ورقة جاهزة للطباعة بمقاس 10×15 أو A4. مجاني ودون رفع صورتك."
+>
+  <ToolPage
+    heading="مقاس الصورة للطباعة"
+    lead="اختر صورة من جوالك، وضع وجهك في الإطار، ونزّل ورقة 10×15 أو A4 فيها عدة نسخ بالمقاس المطلوب، جاهزة للطباعة."
+    updated="آخر تحديث: نوفمبر 2026"
+  >
+    <PhotoTool client:visible presets={PRESETS_AR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="photo" />
+
+    <Fragment slot="guide">
+      <h2>المقاسات المتاحة</h2>
+      <ul>
+        <li><strong>4 × 6 سم:</strong> المقاس الشائع في المعاملات في السعودية والخليج.</li>
+        <li><strong>3.5 × 4.5 سم:</strong> مقاس الصور في كثير من التأشيرات والوثائق الدولية.</li>
+        <li><strong>5 × 5 سم:</strong> مقاس التأشيرة الأمريكية (2 × 2 بوصة).</li>
+      </ul>
+      <p>تحقق دائمًا من متطلبات الجهة المطلوبة، فكثير من الوثائق الرسمية تلتقط الصورة في مكتب الخدمة.</p>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+
+      <h2>نصائح لصورة مقبولة</h2>
+      <ul>
+        <li>خلفية بيضاء أو فاتحة دون ظلال.</li>
+        <li>الوجه بالكامل ظاهر وموجّه للأمام.</li>
+        <li>إضاءة طبيعية من الأمام، بجانب نافذة مثلًا.</li>
+        <li>عند الطباعة اختر الحجم الفعلي 100%، ثم قص على الخطوط الرمادية.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

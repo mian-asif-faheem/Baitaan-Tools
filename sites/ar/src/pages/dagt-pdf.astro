@@ -1,0 +1,37 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PdfCompressTool from "@bt/ui/PdfCompressTool.tsx";
+import t from "../i18n/ar.json";
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title="ضغط ملف PDF إلى 1 ميغا أو أقل مجانًا | بيتان"
+  description="قلّل حجم ملف PDF إلى 1 أو 2 ميغابايت أو الحجم الذي تطلبه المنصة، دون رفع الملف إلى أي خادم. مجاني ودون تسجيل."
+>
+  <ToolPage
+    heading="ضغط ملف PDF"
+    lead="اختر الملف والحجم الأقصى الذي تطلبه المنصة، وتقوم الأداة بتصغيره داخل متصفحك دون رفعه إلى أي خادم."
+    updated="آخر تحديث: نوفمبر 2026"
+  >
+    <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="ar-SA-u-nu-latn" />
+
+    <Fragment slot="guide">
+      <h2>متى تحتاجها؟</h2>
+      <p>كثير من المنصات الحكومية والجامعات وبوابات التوظيف تحدد حجم المرفقات بـ 1 أو 2 ميغابايت، بينما تتجاوز الملفات الممسوحة بالجوال هذا الحجم غالبًا.</p>
+
+      <h2>كيف تعمل؟</h2>
+      <p>تحوّل الأداة كل صفحة إلى صورة JPG بجودة جيدة ثم تبني ملف PDF جديدًا، وتبدأ بأعلى جودة ثم تخفضها تدريجيًا حتى تصل إلى الحجم المطلوب. وتناسب أكثر المستندات الممسوحة وصور الهويات.</p>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+
+      <h2>نصائح</h2>
+      <ul>
+        <li>احذف الصفحات غير المطلوبة إذا كان الملف طويلًا.</li>
+        <li>لدمج الهوية والشهادة في ملف واحد استخدم <a class="text-teal-800 underline" href="/damj-pdf/">دمج PDF</a> ثم اضغط الناتج.</li>
+        <li>افتح الملف المضغوط قبل إرساله وتأكد أن الأرقام والتواقيع واضحة.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

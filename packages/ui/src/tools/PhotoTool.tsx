@@ -3,7 +3,7 @@
  * Everything runs in the browser with Canvas; nothing is uploaded.
  */
 import { useEffect, useRef, useState } from "preact/hooks";
-import { DPI, SHEETS, cmToPx, layout, type PhotoPreset } from "./photo-presets";
+import { DPI, SHEETS, bestLayout, cmToPx, type PhotoPreset } from "./photo-presets";
 
 export interface PhotoStrings {
   choose: string;
@@ -98,13 +98,13 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
   };
 
   const sheet = SHEETS.find((s) => s.id === sheetId);
-  const grid = sheet ? layout(sheet.w, sheet.h, preset.w, preset.h) : null;
+  const grid = sheet ? bestLayout(sheet.w, sheet.h, preset.w, preset.h) : null;
 
   const renderSheet = (photo: HTMLCanvasElement): HTMLCanvasElement => {
     if (!sheet || !grid) return photo;
     const c = document.createElement("canvas");
-    c.width = cmToPx(sheet.w);
-    c.height = cmToPx(sheet.h);
+    c.width = cmToPx(grid.sheetW);
+    c.height = cmToPx(grid.sheetH);
     const ctx = c.getContext("2d")!;
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, c.width, c.height);
@@ -258,7 +258,7 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
             {SHEETS.filter((s) => sheets.includes(s.id)).map((s) => (
               <option value={s.id}>
                 {s.label}
-                {` · ${layout(s.w, s.h, preset.w, preset.h).count} ${t.copies}`}
+                {` · ${bestLayout(s.w, s.h, preset.w, preset.h).count} ${t.copies}`}
               </option>
             ))}
           </select>

@@ -1,0 +1,37 @@
+---
+import Layout from "../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import MergePdfTool from "@bt/ui/MergePdfTool.tsx";
+import t from "../i18n/ar.json";
+---
+<!-- TODO (native review): Arabic copy. -->
+<Layout
+  title="دمج ملفات PDF والصور في ملف واحد مجانًا | بيتان"
+  description="ادمج عدة ملفات PDF وصور JPG وPNG في ملف PDF واحد بالترتيب الذي تريده، دون رفع مستنداتك. مجاني ودون تسجيل."
+>
+  <ToolPage
+    heading="دمج ملفات PDF"
+    lead="اختر الملفات والصور، ورتّبها كما تريد، ونزّلها في ملف PDF واحد. مستنداتك لا تغادر جهازك."
+    updated="آخر تحديث: نوفمبر 2026"
+  >
+    <MergePdfTool client:visible t={t.merge} outputName="documents.pdf" locale="ar-SA-u-nu-latn" />
+
+    <Fragment slot="guide">
+      <h2>متى تحتاجها؟</h2>
+      <p>تطلب منصات التقديم غالبًا رفع المستندات في ملف واحد: الهوية والجواز والشهادات وخطاب التعريف.</p>
+
+      <h2>طريقة الاستخدام</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>اختر الملفات. تصبح كل صورة JPG أو PNG صفحة A4.</li>
+        <li>استخدم الأسهم لتغيير الترتيب.</li>
+        <li>اضغط «دمج الملفات» ثم نزّل الملف.</li>
+        <li>إذا كان الحجم كبيرًا فاستخدم <a class="text-teal-800 underline" href="/dagt-pdf/">ضغط PDF</a>.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" label="إعلان" />
+
+      <p>ينسخ الدمج الصفحات كما هي دون أي فقد في الجودة، ويبقى النص قابلًا للتحديد. ولا تعمل الأداة مع الملفات المحمية بكلمة مرور.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

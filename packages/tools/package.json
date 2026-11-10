@@ -6,7 +6,10 @@
   "exports": {
     "./mx": "./src/mx/index.ts",
     "./br": "./src/br/index.ts",
-    "./hijri": "./src/hijri/index.ts"
+    "./hijri": "./src/hijri/index.ts",
+    "./gulf": "./src/gulf/index.ts",
+    "./hijri-dates": "./src/hijri/dates.ts",
+    "./text": "./src/text/index.ts"
   },
   "scripts": {
     "test": "vitest run"
