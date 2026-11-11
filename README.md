@@ -20,7 +20,7 @@ Every tool runs in the visitor's browser. There is no server and no database.
 - **English on every language site.** Each page of `es.`, `pt.` and `ar.` has an English twin at `/en/<same slug>/` (English pages on `ar.` are left-to-right). The native language is the default; the language button in the header switches between the two versions of the same page and saves the choice in the `bt_lang` cookie, so returning visitors land on their language. Search engines see both versions linked with `hreflang`. 404 pages never redirect.
 - **Light and dark theme.** The first visit follows the browser/OS setting; the sun/moon button overrides it and saves `bt_theme`.
 - **Cookie consent.** A banner asks once (Accept all / Reject / Customise) and stores `bt_consent` for 6 months. Google Consent Mode v2 starts as denied, so Analytics and AdSense store nothing until the visitor accepts. "Cookie settings" in every footer reopens it.
-- All three cookies are set on `.baitaandessigns.com`, so choices carry across the hub and the subdomains.
+- `bt_theme` and `bt_consent` are set on `.baitaandessigns.com`, so they carry across the hub and the subdomains. `bt_lang` is per subdomain: English on `es.` doesn't switch `pt.` or `ar.` to English.
 - The shell lives in `packages/ui/src/BaseLayout.astro` and `ConsentBanner.astro`; dark colours are in `packages/ui/src/theme.css`.
 
 ## Layout

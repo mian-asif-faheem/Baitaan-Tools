@@ -2,11 +2,11 @@
 /**
  * Shared page shell for every Baitaan site.
  * - Theme: light/dark from the `bt_theme` cookie, else the browser setting (prefers-color-scheme).
- * - Language: each page lists its language versions; the `bt_lang` cookie remembers the choice
+ * - Language: each page lists its language versions; the `bt_lang` cookie (per subdomain) remembers the choice
  *   and sends returning visitors to their language (never on 404 pages, never for crawlers
  *   without cookies).
  * - Consent: Google Consent Mode v2 defaults to denied; the banner stores the choice in
- *   `bt_consent` and updates Google's tags. Cookies are shared across *.baitaandessigns.com.
+ *   `bt_consent` and updates Google's tags. bt_theme and bt_consent are shared across *.baitaandessigns.com.
  */
 import { SITES, type SiteKey } from "./sites";
 import ConsentBanner from "./ConsentBanner.astro";
@@ -86,12 +86,14 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
           var m = document.cookie.match("(?:^|; )" + n + "=([^;]*)");
           return m ? decodeURIComponent(m[1]) : null;
         }
-        function set(n, v, days) {
-          var host = location.hostname;
-          var domain = /(^|\.)baitaandessigns\.com$/.test(host) ? "; Domain=.baitaandessigns.com" : "";
+        var shared = /(^|\.)baitaandessigns\.com$/.test(location.hostname) ? "; Domain=.baitaandessigns.com" : "";
+        // Theme and consent are shared by all subdomains; `local` cookies (the language) belong to this subdomain only.
+        function set(n, v, days, local) {
           var secure = location.protocol === "https:" ? "; Secure" : "";
-          document.cookie = n + "=" + encodeURIComponent(v) + "; Max-Age=" + days * 86400 + "; Path=/; SameSite=Lax" + domain + secure;
+          document.cookie = n + "=" + encodeURIComponent(v) + "; Max-Age=" + days * 86400 + "; Path=/; SameSite=Lax" + (local ? "" : shared) + secure;
         }
+        // bt_lang used to be shared by all subdomains: remove that old copy so only this subdomain's choice is read.
+        if (shared) document.cookie = "bt_lang=; Max-Age=0; Path=/" + shared;
         window.btCookie = { get: get, set: set };
 
         // Theme: saved choice, else the browser's setting.
@@ -240,7 +242,7 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
         // Language links remember the choice.
         document.querySelectorAll("[data-bt-lang]").forEach(function (a) {
           a.addEventListener("click", function () {
-            c.set("bt_lang", a.getAttribute("data-bt-lang"), 365);
+            c.set("bt_lang", a.getAttribute("data-bt-lang"), 365, true);
           });
         });
       })();
