@@ -1,0 +1,142 @@
+# Build, test and deploy all four sites to cPanel over FTPS on every push to main.
+#
+# Repository secrets (Settings → Secrets and variables → Actions → Secrets):
+#   FTP_SERVER     e.g. ftp.baitaandessigns.com, or the server hostname from cPanel
+#   FTP_USERNAME   e.g. deploy@baitaandessigns.com
+#   FTP_PASSWORD
+#
+# Optional repository variables (same page → Variables), each folder ending in "/".
+# Paths are relative to the FTP account's home folder:
+#   FTP_DIR_ROOT   default public_html/
+#   FTP_DIR_ES     default es.baitaandessigns.com/
+#   FTP_DIR_PT     default pt.baitaandessigns.com/
+#   FTP_DIR_AR     default ar.baitaandessigns.com/
+#   FTP_PROTOCOL   default ftps (use ftp only if the host has no FTPS)
+#   FTP_PORT       default 21
+#   FTP_SECURITY   default strict (set loose only if FTPS fails with a certificate error)
+#   PUBLIC_ADSENSE_CLIENT   ca-pub-… once AdSense approves the site; empty means no ads
+#
+# Until the three secrets exist, the workflow still builds and tests, and skips deployment.
+
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-cpanel
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HAS_FTP: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: pnpm/action-setup@v6.0.0
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Test calculators
+        run: pnpm test
+
+      - name: Build all sites
+        run: pnpm build
+        env:
+          # Ads stay off until this repository variable is set (after AdSense approval).
+          PUBLIC_ADSENSE_CLIENT: ${{ vars.PUBLIC_ADSENSE_CLIENT }}
+
+      - name: Check build output
+        run: |
+          for s in root es pt ar; do
+            test -f "sites/$s/dist/index.html" || { echo "::error::sites/$s/dist/index.html missing"; exit 1; }
+            test -f "sites/$s/dist/.htaccess" || { echo "::error::sites/$s/dist/.htaccess missing"; exit 1; }
+            test -f "sites/$s/dist/404.html" || { echo "::error::sites/$s/dist/404.html missing"; exit 1; }
+            echo "$s: $(find "sites/$s/dist" -type f | wc -l) files"
+          done
+
+      - name: Deployment skipped
+        if: env.HAS_FTP != 'true'
+        run: |
+          echo "::notice::FTP secrets are not set, so nothing was uploaded. Add FTP_SERVER, FTP_USERNAME and FTP_PASSWORD to deploy."
+
+      - name: Deploy baitaandessigns.com
+        if: env.HAS_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          port: ${{ vars.FTP_PORT || 21 }}
+          security: ${{ vars.FTP_SECURITY || 'strict' }}
+          local-dir: sites/root/dist/
+          server-dir: ${{ vars.FTP_DIR_ROOT || 'public_html/' }}
+          log-level: minimal
+
+      - name: Deploy es.baitaandessigns.com
+        if: env.HAS_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          port: ${{ vars.FTP_PORT || 21 }}
+          security: ${{ vars.FTP_SECURITY || 'strict' }}
+          local-dir: sites/es/dist/
+          server-dir: ${{ vars.FTP_DIR_ES || 'es.baitaandessigns.com/' }}
+          log-level: minimal
+
+      - name: Deploy pt.baitaandessigns.com
+        if: env.HAS_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          port: ${{ vars.FTP_PORT || 21 }}
+          security: ${{ vars.FTP_SECURITY || 'strict' }}
+          local-dir: sites/pt/dist/
+          server-dir: ${{ vars.FTP_DIR_PT || 'pt.baitaandessigns.com/' }}
+          log-level: minimal
+
+      - name: Deploy ar.baitaandessigns.com
+        if: env.HAS_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          port: ${{ vars.FTP_PORT || 21 }}
+          security: ${{ vars.FTP_SECURITY || 'strict' }}
+          local-dir: sites/ar/dist/
+          server-dir: ${{ vars.FTP_DIR_AR || 'ar.baitaandessigns.com/' }}
+          log-level: minimal
+
+      - name: Summary
+        if: env.HAS_FTP == 'true'
+        run: |
+          {
+            echo "### Deployed"
+            echo "- https://baitaandessigns.com"
+            echo "- https://es.baitaandessigns.com"
+            echo "- https://pt.baitaandessigns.com"
+            echo "- https://ar.baitaandessigns.com"
+          } >> "$GITHUB_STEP_SUMMARY"

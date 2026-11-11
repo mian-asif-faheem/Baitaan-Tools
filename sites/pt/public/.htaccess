@@ -1,0 +1,64 @@
+# Baitaan Tools: static site served by Apache or LiteSpeed (cPanel).
+# The same file is used by all four sites (root, es, pt, ar). Keep them identical.
+
+# Serve the static index.html even if an old WordPress index.php is still in the folder.
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS (also works behind a proxy or CDN that sets X-Forwarded-Proto).
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # www.example.com → example.com
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # Old WordPress URLs: send wp-admin, wp-login and feeds home instead of a 404.
+  RewriteRule ^(wp-admin|wp-login\.php|wp-content|feed)(/.*)?$ https://%{HTTP_HOST}/ [L,R=301,NC]
+</IfModule>
+
+# Correct types for module scripts (the PDF tools' worker is .mjs) and fonts.
+<IfModule mod_mime.c>
+  AddType text/javascript .mjs
+  AddType font/woff2 .woff2
+  AddType font/woff .woff
+  AddType image/svg+xml .svg
+  AddCharset utf-8 .html .css .js .mjs .xml .txt
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/xml text/xml image/svg+xml text/plain
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Pages: always check for a new version, so updates show at once.
+  <FilesMatch "\.(html|xml|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  # Built assets have a content hash in their names, so they can be cached for a year.
+  <FilesMatch "\.(css|js|mjs|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(svg|png|ico|jpg|webp)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+# Keep deployment bookkeeping and dotfiles private.
+<FilesMatch "^\.">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>

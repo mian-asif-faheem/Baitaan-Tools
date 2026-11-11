@@ -11,7 +11,7 @@ Free, ad-supported tool sites in Spanish, Portuguese (Brazil) and Arabic, on sub
 
 ## Stack
 
-Astro 7 (static output) · Preact 11 islands for the tools · Tailwind CSS 4 · TypeScript · pnpm workspaces · Vitest · Cloudflare Pages.
+Astro 7 (static output) · Preact 11 islands for the tools · Tailwind CSS 4 · TypeScript · pnpm workspaces · Vitest · GitHub Actions → cPanel (FTPS).
 
 Every tool runs in the visitor's browser. There is no server and no database.
 
@@ -55,24 +55,31 @@ pnpm build         # builds all four sites into sites/*/dist
 5. Mark it ready on the site's index page.
 6. Send the page for native-speaker review before indexing.
 
-## Deploying to Cloudflare Pages
+## Deploying (cPanel, automatic)
 
-1. Push this repo to GitHub.
-2. Move baitaandessigns.com DNS to Cloudflare (remove the old WordPress records).
-3. Create four Pages projects from the repo, one per site:
-   - Build command: `pnpm install && pnpm --filter @bt/site-es build` (change the site name)
-   - Build output directory: `sites/es/dist`
-   - Environment variable: `NODE_VERSION=22`
-4. Add the custom domain for each project (`baitaandessigns.com`, `es.`, `pt.`, `ar.`).
-5. Verify `baitaandessigns.com` as a Domain property in Search Console and submit each site's `sitemap-index.xml`.
+Every push to `main` runs `.github/workflows/deploy.yml`: install, test, build all four sites, then upload each one over FTPS. Only changed files are uploaded; a `.ftp-deploy-sync-state.json` file in each folder tracks what is on the server (the `.htaccess` hides it from visitors).
+
+### One-time setup
+
+1. **cPanel → Domains:** create `es.baitaandessigns.com`, `pt.baitaandessigns.com` and `ar.baitaandessigns.com`. Note each one's document root.
+2. **Back up and remove WordPress** from `public_html` (files and database). The `.htaccess` already serves `index.html` before `index.php`, but old files would stay public.
+3. **cPanel → FTP Accounts:** create e.g. `deploy@baitaandessigns.com` with its directory set to your home folder (clear the suggested `public_html/deploy` path), so it can reach all four document roots.
+4. **GitHub → Settings → Secrets and variables → Actions:**
+   - Secrets: `FTP_SERVER` (FTP server name shown in cPanel's FTP Accounts → Configure FTP Client), `FTP_USERNAME`, `FTP_PASSWORD`.
+   - Variables, only if your folders differ from the defaults: `FTP_DIR_ROOT` (`public_html/`), `FTP_DIR_ES` (`es.baitaandessigns.com/`), `FTP_DIR_PT`, `FTP_DIR_AR`. Paths are relative to the FTP account's home folder and must end in `/`. If cPanel put a subdomain under `public_html`, use e.g. `public_html/es.baitaandessigns.com/`.
+5. **GitHub → Actions → Deploy to cPanel → Run workflow** for the first deploy.
+6. **cPanel → SSL/TLS Status → Run AutoSSL** so all four domains get certificates.
+7. **Search Console:** verify `baitaandessigns.com` as a Domain property (DNS TXT record) and submit each site's `sitemap-index.xml`.
+
+If FTPS fails with a certificate error, use the server's own hostname as `FTP_SERVER`, or set the variable `FTP_SECURITY` to `loose`. If the host has no FTPS, set `FTP_PROTOCOL` to `ftp`.
+
+### Server rules
+
+Each site has the same `public/.htaccess` (keep the four copies identical): HTTPS and www redirects, `index.html` before `index.php`, the 404 page, the `.mjs` type for the PDF worker, compression, security headers, one-year caching for hashed assets, and blocked dotfiles. Tested on Apache 2.4.
 
 ## Turning on ads
 
-Ads render nothing until this is set. After AdSense approves `baitaandessigns.com`, add this environment variable to each Pages project and redeploy:
-
-```
-PUBLIC_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX
-```
+Ads render nothing until this is set. After AdSense approves `baitaandessigns.com`, add a **repository variable** `PUBLIC_ADSENSE_CLIENT` = `ca-pub-XXXXXXXXXXXXXXXX` in GitHub and re-run the workflow.
 
 Then replace each `<AdSlot slot="0000000000" />` with real ad unit IDs. Turn on Google's consent message (AdSense → Privacy & messaging) for EU and UK visitors.
 
