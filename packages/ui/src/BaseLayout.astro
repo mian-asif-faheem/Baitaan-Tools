@@ -212,7 +212,9 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
         var media = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
         var meta = document.querySelector('meta[name="theme-color"]');
         function paint() {
-          if (meta) meta.setAttribute("content", doc.classList.contains("dark") ? "#1b1917" : "#0f766e");
+          // Browser bar: the site's card colour in dark mode, its brand colour in light mode.
+          var v = getComputedStyle(doc).getPropertyValue(doc.classList.contains("dark") ? "--color-white" : "--color-teal-700").trim();
+          if (meta && v) meta.setAttribute("content", v);
         }
         paint();
         requestAnimationFrame(function () { doc.classList.add("theme-ready"); });
