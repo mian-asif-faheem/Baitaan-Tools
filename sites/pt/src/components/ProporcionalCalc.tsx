@@ -33,7 +33,7 @@ export default function ProporcionalCalc({ lang = "pt" }: { lang?: Lang }) {
       <NumberField label={L.absences} value={abs} onInput={setAbs} min={0} step="1" />
       <NumberField label={L.weeks} value={weeks} onInput={setWeeks} min={0} max={5} step="1" />
       {r ? (
-        <Result class="sm:col-span-2" label={L.result} amount={brl.format(r.total)}>
+        <Result class="sm:col-span-2" label={L.result} value={r.total} format={brl.format}>
           <Rows
             rows={[
               { label: L.daily, value: brl.format(r.daily), muted: true },

@@ -57,7 +57,7 @@ export default function HorasExtrasCalc({ lang = "pt" }: { lang?: Lang }) {
       <NumberField label={L.restDays} value={rd} onInput={setRd} min={0} max={15} step="1" />
 
       {r ? (
-        <Result class="sm:col-span-2" label={L.result} amount={brl.format(r.total)}>
+        <Result class="sm:col-span-2" label={L.result} value={r.total} format={brl.format}>
           <span class="mt-1 block text-sm text-stone-600">
             {L.hourly}: {brl.format(r.hourly)} · {L.lines.he50}: {brl.format(r.overtimeRate)}/h
           </span>

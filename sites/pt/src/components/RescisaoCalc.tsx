@@ -88,7 +88,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
       </details>
 
       {r ? (
-        <Result class="sm:col-span-2" label={L.result} amount={brl.format(r.net)}>
+        <Result class="sm:col-span-2" label={L.result} value={r.net} format={brl.format}>
           <span class="mt-1 block text-sm text-stone-600">
             {L.service}: {r.yearsOfService} {L.years}
             {r.avisoDays > 0 && ` · ${L.avisoDays}: ${r.avisoDays} ${C.days}`}

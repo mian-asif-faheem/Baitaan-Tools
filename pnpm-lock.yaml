@@ -118,6 +118,9 @@ importers:
 
   sites/root:
     dependencies:
+      '@astrojs/preact':
+        specifier: ^6.1.1
+        version: 6.1.1(@babel/core@7.29.13)(@types/node@24.19.2)(jiti@2.7.0)(preact@11.1.1)(yaml@2.9.1)
       '@astrojs/sitemap':
         specifier: ^3.7.4
         version: 3.7.4
@@ -136,6 +139,9 @@ importers:
       astro:
         specifier: ^7.4.6
         version: 7.4.6(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)
+      preact:
+        specifier: ^11.1.1
+        version: 11.1.1(preact-render-to-string@6.8.2)
       tailwindcss:
         specifier: ^4.3.4
         version: 4.3.4

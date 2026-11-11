@@ -25,7 +25,7 @@ Every tool runs in the visitor's browser. There is no server and no database.
 
 ## Animation
 
-- **Home pages (es., ar.):** `Hero.astro` puts an animated aurora behind the heading, and the tool cards get a hover spotlight. Both are ported from [React Bits](https://github.com/DavidHDev/react-bits) to Preact/plain DOM (`packages/ui/src/fx/`). Licence: MIT + Commons Clause. Use on these websites is fine; the components may not be sold or redistributed on their own. Keep the licence header in each file.
+- **Home pages (all four sites):** `Hero.astro` puts an animated aurora behind the heading, and the tool cards get a hover spotlight. Both are ported from [React Bits](https://github.com/DavidHDev/react-bits) to Preact/plain DOM (`packages/ui/src/fx/`). Licence: MIT + Commons Clause. Use on these websites is fine; the components may not be sold or redistributed on their own. Keep the licence header in each file.
 - **Results:** pass `value` and `format` to `<Result>` instead of `amount` and the number counts up to the answer (`fx/CountUp.tsx`, our own; screen readers get only the final value).
 - The aurora loads after the page is idle, needs WebGL2, pauses off-screen and is static for "reduce motion". Its colours are `--hero-1..3` in each site's palette (`scripts/palettes.py`).
 - Keep animation off tool forms and ad slots.

@@ -39,7 +39,7 @@ export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
       <Check class="sm:col-span-2" label={L.reduction} checked={reduction} onChange={setReduction} />
 
       {r ? (
-        <Result class="sm:col-span-2" label={L.result} amount={brl.format(r.net)}>
+        <Result class="sm:col-span-2" label={L.result} value={r.net} format={brl.format}>
           <span class="mt-1 block text-sm text-stone-600">
             {L.entitled} {r.entitlement} {C.days}
             {r.daysSold > 0 && ` · ${L.split.replace("{rest}", String(r.restDays)).replace("{sold}", String(r.daysSold))}`}

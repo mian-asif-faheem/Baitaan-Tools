@@ -34,7 +34,7 @@ export default function DecimoCalc({ lang = "pt" }: { lang?: Lang }) {
       <NumberField label={C.dependents} value={deps} onInput={setDeps} min={0} step="1" />
 
       {r ? (
-        <Result class="sm:col-span-2" label={L.result} amount={brl.format(r.net)}>
+        <Result class="sm:col-span-2" label={L.result} value={r.net} format={brl.format}>
           <Rows
             rows={[
               { label: L.gross, value: brl.format(r.gross), muted: true },
