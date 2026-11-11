@@ -15,7 +15,9 @@
     "./MergePdfTool.tsx": "./src/tools/MergePdfTool.tsx",
     "./ConsentBanner.astro": "./src/ConsentBanner.astro",
     "./consent": "./src/consent.ts",
-    "./theme.css": "./src/theme.css"
+    "./theme.css": "./src/theme.css",
+    "./Hero.astro": "./src/Hero.astro",
+    "./fx/spotlight": "./src/fx/spotlight.ts"
   },
   "dependencies": {
     "pdf-lib": "1.17.1",

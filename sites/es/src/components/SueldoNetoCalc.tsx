@@ -34,7 +34,7 @@ export default function SueldoNetoCalc({ lang = "es" }: { lang?: Lang }) {
       <Check class="sm:col-span-2" label={C.frontera} checked={frontera} onChange={setFrontera} />
 
       {r ? (
-        <Result class="sm:col-span-2" label={L.result} amount={mxn.format(r.net)}>
+        <Result class="sm:col-span-2" label={L.result} value={r.net} format={mxn.format}>
           <span class="mt-1 block text-sm text-stone-600">
             {L.perQuincena}: {mxn.format(r.net / 2)}
           </span>

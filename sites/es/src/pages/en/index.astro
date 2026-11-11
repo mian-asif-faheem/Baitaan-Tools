@@ -1,4 +1,5 @@
 ---
+import Hero from "@bt/ui/Hero.astro";
 import Layout from "../../components/Layout.astro";
 
 const groups = [
@@ -31,8 +32,7 @@ const groups = [
 ];
 ---
 <Layout lang="en" title="Free tools for Mexico, in English | Baitaan" description="Free Mexican labor calculators and everyday tools that run in your browser, with no sign-up: finiquito, net pay, aguinaldo, ID photos and PDF compression.">
-  <h1 class="text-3xl font-bold tracking-tight">Free tools, no sign-up</h1>
-  <p class="mt-3 text-lg text-stone-600">Mexican labor calculators and everyday tools that run in your browser. Your data never leaves your device.</p>
+  <Hero title="Free tools, no sign-up" lead="Mexican labor calculators and everyday tools that run in your browser. Your data never leaves your device." />
   {groups.map((g) => (
     <section class="mt-10">
       <h2 class="text-sm font-semibold uppercase tracking-wide text-stone-500">{g.title}</h2>
@@ -41,7 +41,8 @@ const groups = [
           <li>
             <a
               href={tool.href}
-              class={`block h-full rounded-xl border bg-white p-5 shadow-sm ${g.soon ? "pointer-events-none border-dashed border-stone-300 opacity-60" : "border-stone-200 hover:border-teal-700"}`}
+              class={`block h-full rounded-xl border bg-white p-5 shadow-sm ${g.soon ? "pointer-events-none border-dashed border-stone-300 opacity-60" : "relative isolate overflow-hidden border-stone-200 hover:border-teal-700"}`}
+              data-spotlight={g.soon ? undefined : ""}
             >
               <span class="block font-semibold">{tool.name}</span>
               {tool.desc && <span class="mt-1 block text-sm text-stone-500">{tool.desc}</span>}
@@ -52,3 +53,8 @@ const groups = [
     </section>
   ))}
 </Layout>
+
+<script>
+  import { spotlightAll } from "@bt/ui/fx/spotlight";
+  spotlightAll();
+</script>

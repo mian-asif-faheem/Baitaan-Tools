@@ -98,7 +98,7 @@ export default function FiniquitoCalc({ lang = "es" }: { lang?: Lang }) {
       )}
 
       {r ? (
-        <Result class="sm:col-span-2" label={L.resultTotal} amount={mxn.format(r.total)}>
+        <Result class="sm:col-span-2" label={L.resultTotal} value={r.total} format={mxn.format}>
           <span class="mt-1 block text-sm text-stone-600">
             {L.service}: {r.yearsOfService.toLocaleString(locale(lang))} {L.years}
             {r.liquidacion.length > 0 && ` · ${L.sdi}: ${mxn.format(r.sdi)}`}

@@ -18,6 +18,12 @@
   --color-teal-900: #1e3a2e;
 }
 
+:root {
+  --hero-1: #c7cbb8;
+  --hero-2: #6b7f67;
+  --hero-3: #c7cbb8;
+}
+
 html.dark {
   --color-white: #14271e;
   --color-stone-50: #0f1f17;
@@ -35,4 +41,7 @@ html.dark {
   --color-teal-700: #a8c29f;
   --color-teal-800: #c4d6ba;
   --color-teal-900: #e4eedd;
+  --hero-1: #3e5a3f;
+  --hero-2: #6b7f67;
+  --hero-3: #1e3a2e;
 }

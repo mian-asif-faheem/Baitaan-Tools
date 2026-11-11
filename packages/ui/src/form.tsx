@@ -1,3 +1,4 @@
+import CountUp from "./fx/CountUp";
 import type { ComponentChildren } from "preact";
 
 export const fieldClass =
@@ -72,11 +73,24 @@ export function Check(props: { label: string; checked: boolean; onChange: (v: bo
   );
 }
 
-export function Result(props: { label: string; amount: string; children?: ComponentChildren; class?: string }) {
+/**
+ * The main answer box. Pass `value` and `format` (instead of a fixed `amount`) to have the
+ * number count up to the answer.
+ */
+export function Result(props: {
+  label: string;
+  amount?: string;
+  value?: number;
+  format?: (n: number) => string;
+  children?: ComponentChildren;
+  class?: string;
+}) {
   return (
     <output class={`block rounded-lg bg-teal-50 p-4 ${props.class ?? ""}`} aria-live="polite">
       <span class="block text-sm text-teal-900">{props.label}</span>
-      <span class="block text-3xl font-semibold tabular-nums text-teal-900">{props.amount}</span>
+      <span class="block text-3xl font-semibold tabular-nums text-teal-900">
+        {props.value !== undefined && props.format ? <CountUp value={props.value} format={props.format} /> : props.amount}
+      </span>
       {props.children}
     </output>
   );

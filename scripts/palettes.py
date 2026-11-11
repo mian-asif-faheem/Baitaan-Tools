@@ -7,11 +7,13 @@ import sys
 PALETTES = {
     "ar": {  # Gulf: forest green. Source: #0F1F17 #1E3A2E #3E5A3F #6B7F67 #C7CBB8 #3D4337
         "light": {
+            "hero": ["#c7cbb8", "#6b7f67", "#c7cbb8"],
             "white": "#ffffff",
             "stone": ["#f5f6f1", "#eceee6", "#dee1d5", "#c7cbb8", "#949b8c", "#5d6656", "#4a5244", "#3d4337", "#283024", "#0f1f17"],
             "teal": {"50": "#edf1ea", "100": "#d6dfd2", "700": "#3e5a3f", "800": "#2f4a33", "900": "#1e3a2e"},
         },
         "dark": {
+            "hero": ["#3e5a3f", "#6b7f67", "#1e3a2e"],
             "white": "#14271e",
             "stone": ["#0f1f17", "#1a2c23", "#2a3a31", "#3d4337", "#6b7f67", "#a3ac9c", "#b8bead", "#c7cbb8", "#dfe2d5", "#f1f3ec"],
             "teal": {"50": "#1e3a2e", "100": "#2b4a38", "700": "#a8c29f", "800": "#c4d6ba", "900": "#e4eedd"},
@@ -19,11 +21,13 @@ PALETTES = {
     },
     "es": {  # Mexico: deep violet. Source: #0E0B1D #2A1E4D #5A3B8C #8B7CC7 #C9C2E3 #3A3A52
         "light": {
+            "hero": ["#c9c2e3", "#8b7cc7", "#c9c2e3"],
             "white": "#ffffff",
             "stone": ["#f6f5fa", "#edebf5", "#dfdbee", "#c9c2e3", "#9590ae", "#615d79", "#4d4a66", "#3a3a52", "#24203a", "#0e0b1d"],
             "teal": {"50": "#f1eef9", "100": "#e0daf2", "700": "#5a3b8c", "800": "#4a2f78", "900": "#2a1e4d"},
         },
         "dark": {
+            "hero": ["#5a3b8c", "#8b7cc7", "#2a1e4d"],
             "white": "#17132b",
             "stone": ["#0e0b1d", "#1e1838", "#2c2747", "#3a3a52", "#6e6a8c", "#a5a0c1", "#bab4d6", "#c9c2e3", "#e0dcf0", "#f3f1fa"],
             "teal": {"50": "#2a1e4d", "100": "#3a2b66", "700": "#aa9ce2", "800": "#c9c2e3", "900": "#e6e1f7"},
@@ -49,8 +53,10 @@ for site, modes in PALETTES.items():
         out = [f"  --color-white: {p['white']};"]
         out += [f"  --color-stone-{s}: {v};" for s, v in zip(STEPS, p["stone"])]
         out += [f"  --color-teal-{s}: {v};" for s, v in p["teal"].items()]
+        out += [f"  --hero-{i}: {v};" for i, v in enumerate(p["hero"], 1)]
         return out
-    css += block("light") + ["}", "", "html.dark {"] + block("dark") + ["}", ""]
+    light = block("light")
+    css += [l for l in light if "--hero" not in l] + ["}", "", ":root {"] + [l for l in light if "--hero" in l] + ["}", "", "html.dark {"] + block("dark") + ["}", ""]
     open(f"sites/{site}/src/palette.css", "w").write("\n".join(css))
 
     for m, p in modes.items():

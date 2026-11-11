@@ -1,0 +1,58 @@
+---
+/**
+ * Home-page heading with the animated aurora behind it and a blur-in title.
+ * The aurora (React Bits port) loads after the page is idle; the text never waits for it.
+ */
+import HeroAurora from "./fx/HeroAurora";
+
+interface Props {
+  title: string;
+  lead: string;
+  /** Tighter letter spacing; off for Arabic, where it breaks the joined letters. */
+  tight?: boolean;
+}
+const { title, lead, tight = true } = Astro.props;
+const words = title.split(" ");
+---
+<section class="bt-hero relative isolate -mx-4 -mt-8 overflow-hidden px-4 pb-12 pt-20 sm:mx-0 sm:rounded-b-3xl">
+  <div class="bt-hero-glow absolute inset-0 -z-10" aria-hidden="true">
+    <HeroAurora client:idle />
+  </div>
+  <h1 class:list={["text-3xl font-bold sm:text-4xl", tight && "tracking-tight"]}>
+    {words.map((w, i) => (
+      <>
+        <span class="bt-word" style={`animation-delay:${Math.min(i, 8) * 55}ms`}>{w}</span>{i < words.length - 1 ? " " : ""}
+      </>
+    ))}
+  </h1>
+  <p class="bt-word mt-3 text-lg text-stone-600" style={`animation-delay:${Math.min(words.length, 8) * 55 + 60}ms`}>{lead}</p>
+</section>
+
+<style>
+  /* Static glow shown before the aurora loads, and where WebGL is unavailable. */
+  .bt-hero-glow {
+    background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--hero-2, #5eead4) 22%, transparent), transparent 70%);
+    /* Fade the aurora into the page so the cards below sit on a plain background. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+  }
+  .bt-word {
+    display: inline-block;
+    animation: bt-blur-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  p.bt-word {
+    display: block;
+  }
+  @keyframes bt-blur-in {
+    from {
+      opacity: 0.15;
+      filter: blur(8px);
+      transform: translateY(6px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-word {
+      animation: none;
+    }
+  }
+</style>

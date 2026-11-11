@@ -84,7 +84,7 @@ export default function EosCalc({ country, lang = "ar" }: { country: "sa" | "ae"
         <Result
           class="sm:col-span-2"
           label={L.result}
-          amount={cur.format(r.sa ? r.sa.award : r.ae!.gratuity)}
+          value={r.sa ? r.sa.award : r.ae!.gratuity} format={cur.format}
         >
           <span class="mt-1 block text-sm text-stone-600">
             {C.service}: {durationText(r.s.years, r.s.months, r.s.days, lang)}

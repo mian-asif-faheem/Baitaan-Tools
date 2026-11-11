@@ -48,7 +48,7 @@ export default function VatCalc({ initial = "sa" as Choice, lang = "ar" }: { ini
       />
       <NumberField class="sm:col-span-2" label={L.amount} value={amount} onInput={setAmount} min={0} />
       {r ? (
-        <Result class="sm:col-span-2" label={mode === "add" ? L.gross : L.net} amount={num.format(mode === "add" ? r.gross : r.net)}>
+        <Result class="sm:col-span-2" label={mode === "add" ? L.gross : L.net} value={mode === "add" ? r.gross : r.net} format={num.format}>
           <Rows
             rows={[
               { label: L.net, value: num.format(r.net) },

@@ -55,7 +55,7 @@ export default function ZakatCalc({ lang = "ar" }: { lang?: Lang }) {
         <NumberField class="sm:col-span-2" label={L.silverPrice} hint={L.priceHint} value={silverPrice} onInput={setSilverPrice} min={0} />
       )}
 
-      <Result class="sm:col-span-2" label={L.result} amount={r.nisabKnown ? num.format(r.zakat) : "—"}>
+      <Result class="sm:col-span-2" label={L.result} {...(r.nisabKnown ? { value: r.zakat, format: num.format } : { amount: "—" })}>
         <Rows
           rows={[
             { label: L.net, value: num.format(r.net) },
