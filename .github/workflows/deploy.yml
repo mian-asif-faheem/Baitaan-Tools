@@ -5,18 +5,21 @@
 #   FTP_USERNAME   e.g. deploy@baitaandessigns.com
 #   FTP_PASSWORD
 #
-# Optional repository variables (same page → Variables), each folder ending in "/".
-# Paths are relative to the FTP account's home folder:
-#   FTP_DIR_ROOT   default public_html/
-#   FTP_DIR_ES     default es.baitaandessigns.com/
-#   FTP_DIR_PT     default pt.baitaandessigns.com/
-#   FTP_DIR_AR     default ar.baitaandessigns.com/
+# Required repository variables (same page → Variables): the folder for each site,
+# relative to the FTP account's home folder, each ending in "/". There are no defaults on
+# purpose: this cPanel also hosts maafstudios.com in public_html, which must never be touched.
+#   FTP_DIR_ROOT   e.g. root/
+#   FTP_DIR_ES     e.g. es/
+#   FTP_DIR_PT     e.g. pt/
+#   FTP_DIR_AR     e.g. ar/
+#
+# Optional repository variables:
 #   FTP_PROTOCOL   default ftps (use ftp only if the host has no FTPS)
 #   FTP_PORT       default 21
 #   FTP_SECURITY   default strict (set loose only if FTPS fails with a certificate error)
 #   PUBLIC_ADSENSE_CLIENT   ca-pub-… once AdSense approves the site; empty means no ads
 #
-# Until the three secrets exist, the workflow still builds and tests, and skips deployment.
+# Until the secrets and folder variables exist, the workflow still builds and tests, and skips deployment.
 
 name: Deploy to cPanel
 
@@ -37,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      HAS_FTP: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' }}
+      HAS_FTP: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' && vars.FTP_DIR_ROOT != '' && vars.FTP_DIR_ES != '' && vars.FTP_DIR_PT != '' && vars.FTP_DIR_AR != '' }}
     steps:
       - uses: actions/checkout@v7.0.1
 
@@ -73,7 +76,23 @@ jobs:
       - name: Deployment skipped
         if: env.HAS_FTP != 'true'
         run: |
-          echo "::notice::FTP secrets are not set, so nothing was uploaded. Add FTP_SERVER, FTP_USERNAME and FTP_PASSWORD to deploy."
+          echo "::notice::Nothing was uploaded. Add the secrets FTP_SERVER, FTP_USERNAME, FTP_PASSWORD and the variables FTP_DIR_ROOT, FTP_DIR_ES, FTP_DIR_PT, FTP_DIR_AR to deploy."
+
+      - name: Refuse unsafe folders
+        if: env.HAS_FTP == 'true'
+        env:
+          DIRS: ${{ vars.FTP_DIR_ROOT }} ${{ vars.FTP_DIR_ES }} ${{ vars.FTP_DIR_PT }} ${{ vars.FTP_DIR_AR }}
+        run: |
+          for d in $DIRS; do
+            case "$d" in
+              */) ;;
+              *) echo "::error::Folder '$d' must end with /"; exit 1 ;;
+            esac
+            case "$d" in
+              public_html/|./|/|public_html/es*|public_html/pt*|public_html/ar*)
+                echo "::error::Folder '$d' is not allowed: public_html is maafstudios.com. Use a separate folder such as baitaan/root/."; exit 1 ;;
+            esac
+          done
 
       - name: Deploy baitaandessigns.com
         if: env.HAS_FTP == 'true'
@@ -86,7 +105,7 @@ jobs:
           port: ${{ vars.FTP_PORT || 21 }}
           security: ${{ vars.FTP_SECURITY || 'strict' }}
           local-dir: sites/root/dist/
-          server-dir: ${{ vars.FTP_DIR_ROOT || 'public_html/' }}
+          server-dir: ${{ vars.FTP_DIR_ROOT }}
           log-level: minimal
 
       - name: Deploy es.baitaandessigns.com
@@ -100,7 +119,7 @@ jobs:
           port: ${{ vars.FTP_PORT || 21 }}
           security: ${{ vars.FTP_SECURITY || 'strict' }}
           local-dir: sites/es/dist/
-          server-dir: ${{ vars.FTP_DIR_ES || 'es.baitaandessigns.com/' }}
+          server-dir: ${{ vars.FTP_DIR_ES }}
           log-level: minimal
 
       - name: Deploy pt.baitaandessigns.com
@@ -114,7 +133,7 @@ jobs:
           port: ${{ vars.FTP_PORT || 21 }}
           security: ${{ vars.FTP_SECURITY || 'strict' }}
           local-dir: sites/pt/dist/
-          server-dir: ${{ vars.FTP_DIR_PT || 'pt.baitaandessigns.com/' }}
+          server-dir: ${{ vars.FTP_DIR_PT }}
           log-level: minimal
 
       - name: Deploy ar.baitaandessigns.com
@@ -128,7 +147,7 @@ jobs:
           port: ${{ vars.FTP_PORT || 21 }}
           security: ${{ vars.FTP_SECURITY || 'strict' }}
           local-dir: sites/ar/dist/
-          server-dir: ${{ vars.FTP_DIR_AR || 'ar.baitaandessigns.com/' }}
+          server-dir: ${{ vars.FTP_DIR_AR }}
           log-level: minimal
 
       - name: Summary

@@ -4,7 +4,7 @@ Free, ad-supported tool sites in Spanish, Portuguese (Brazil) and Arabic, on sub
 
 | Site | Folder | Domain | Dev port |
 | --- | --- | --- | --- |
-| Hub (replaces the WordPress install) | `sites/root` | baitaandessigns.com | 4320 |
+| Hub | `sites/root` | baitaandessigns.com | 4320 |
 | Spanish | `sites/es` | es.baitaandessigns.com | 4321 |
 | Portuguese (Brazil) | `sites/pt` | pt.baitaandessigns.com | 4322 |
 | Arabic (right-to-left) | `sites/ar` | ar.baitaandessigns.com | 4323 |
@@ -59,19 +59,32 @@ pnpm build         # builds all four sites into sites/*/dist
 
 Every push to `main` runs `.github/workflows/deploy.yml`: install, test, build all four sites, then upload each one over FTPS. Only changed files are uploaded; a `.ftp-deploy-sync-state.json` file in each folder tracks what is on the server (the `.htaccess` hides it from visitors).
 
-### One-time setup
+### One-time setup (Hostlico cPanel, shared with maafstudios.com)
 
-1. **cPanel → Domains:** create `es.baitaandessigns.com`, `pt.baitaandessigns.com` and `ar.baitaandessigns.com`. Note each one's document root.
-2. **Back up and remove WordPress** from `public_html` (files and database). The `.htaccess` already serves `index.html` before `index.php`, but old files would stay public.
-3. **cPanel → FTP Accounts:** create e.g. `deploy@baitaandessigns.com` with its directory set to your home folder (clear the suggested `public_html/deploy` path), so it can reach all four document roots.
-4. **GitHub → Settings → Secrets and variables → Actions:**
-   - Secrets: `FTP_SERVER` (FTP server name shown in cPanel's FTP Accounts → Configure FTP Client), `FTP_USERNAME`, `FTP_PASSWORD`.
-   - Variables, only if your folders differ from the defaults: `FTP_DIR_ROOT` (`public_html/`), `FTP_DIR_ES` (`es.baitaandessigns.com/`), `FTP_DIR_PT`, `FTP_DIR_AR`. Paths are relative to the FTP account's home folder and must end in `/`. If cPanel put a subdomain under `public_html`, use e.g. `public_html/es.baitaandessigns.com/`.
-5. **GitHub → Actions → Deploy to cPanel → Run workflow** for the first deploy.
-6. **cPanel → SSL/TLS Status → Run AutoSSL** so all four domains get certificates.
-7. **Search Console:** verify `baitaandessigns.com` as a Domain property (DNS TXT record) and submit each site's `sitemap-index.xml`.
+`public_html` belongs to maafstudios.com. Baitaan's four sites live in their own folders next to it, and the deploy account can only see those folders:
 
-If FTPS fails with a certificate error, use the server's own hostname as `FTP_SERVER`, or set the variable `FTP_SECURITY` to `loose`. If the host has no FTPS, set `FTP_PROTOCOL` to `ftp`.
+```
+/home/<cpanel-user>/
+  public_html/        maafstudios.com (never touched)
+  baitaan/
+    root/             baitaandessigns.com
+    es/               es.baitaandessigns.com
+    pt/               pt.baitaandessigns.com
+    ar/               ar.baitaandessigns.com
+```
+
+1. **Point the domain at Hostlico.** At the registrar of baitaandessigns.com, set the nameservers from your Hostlico welcome email. Or keep your current DNS and point A records for `@`, `www`, `es`, `pt` and `ar` to the server IP shown in cPanel.
+2. **cPanel → Domains → Create a New Domain:** `baitaandessigns.com`, untick "Share document root", document root `baitaan/root`.
+3. **Create a New Domain** three more times: `es.baitaandessigns.com` → `baitaan/es`, `pt.baitaandessigns.com` → `baitaan/pt`, `ar.baitaandessigns.com` → `baitaan/ar`.
+4. **cPanel → FTP Accounts:** create `deploy@baitaandessigns.com` with directory `baitaan`. It can then reach only these four folders.
+5. **GitHub → Settings → Secrets and variables → Actions:**
+   - Secrets: `FTP_SERVER` (from FTP Accounts → Configure FTP Client), `FTP_USERNAME` (`deploy@baitaandessigns.com`), `FTP_PASSWORD`.
+   - Variables: `FTP_DIR_ROOT` = `root/`, `FTP_DIR_ES` = `es/`, `FTP_DIR_PT` = `pt/`, `FTP_DIR_AR` = `ar/`.
+6. **GitHub → Actions → Deploy to cPanel → Run workflow.**
+7. **cPanel → SSL/TLS Status → Run AutoSSL** once DNS points to the server.
+8. **Search Console:** verify `baitaandessigns.com` as a Domain property (DNS TXT record) and submit each site's `sitemap-index.xml`.
+
+The workflow uploads nothing until all four folder variables are set, and it refuses `public_html/` so maafstudios.com cannot be overwritten. If FTPS fails with a certificate error, use the server's own hostname as `FTP_SERVER`, or set the variable `FTP_SECURITY` to `loose`. If the host has no FTPS, set `FTP_PROTOCOL` to `ftp`.
 
 ### Server rules
 
