@@ -1,0 +1,40 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import Countdown from "../../components/Countdown.tsx";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+
+const next = nextHijriOccurrence(10, 1);
+const y = next.hijri.year;
+const gYear = next.gregorian.getUTCFullYear();
+---
+<Layout
+  lang="en"
+  title={`How long until Eid al-Fitr ${gYear} (${y} AH)? Countdown | Baitaan`}
+  description={`Countdown in days and hours to Eid al-Fitr ${y} AH (1 Shawwal), with the expected date from the Umm al-Qura calendar.`}
+>
+  <ToolPage
+    heading={`How long until Eid al-Fitr ${gYear}?`}
+    lead={`Eid al-Fitr is the first day of Shawwal. This is its expected date for ${y} AH under the Umm al-Qura calendar; it is announced officially after the Shawwal moon sighting on the evening of 29 Ramadan.`}
+    updated="The countdown updates every second"
+  >
+    <Countdown client:load month={10} day={1} name="Eid al-Fitr" lang="en" />
+
+    <Fragment slot="guide">
+      <h2>Eid al-Fitr holiday</h2>
+      <p>Each country's authorities announce the Eid holiday dates for the public and private sectors before or during Ramadan. Check the announcement from the human resources ministry in your country.</p>
+
+      <h2>Zakat al-Fitr</h2>
+      <p>Zakat al-Fitr is paid before the Eid prayer, and may be paid one or two days before Eid. It is one sa' of the country's staple food for each person.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Coming dates</h2>
+      <ul>
+        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
+        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

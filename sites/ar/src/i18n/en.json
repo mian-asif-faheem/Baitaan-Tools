@@ -1,0 +1,259 @@
+{
+  "brand": "Baitaan Tools · Gulf",
+  "nav": [
+    {
+      "href": "/en/tahweel-altareekh/",
+      "label": "Date converter"
+    },
+    {
+      "href": "/en/kam-baqi-ala-ramadan/",
+      "label": "Ramadan"
+    },
+    {
+      "href": "/en/nihayat-alkhidma-saudi/",
+      "label": "End of service"
+    },
+    {
+      "href": "/en/hasibat-addariba/",
+      "label": "VAT"
+    },
+    {
+      "href": "/en/hasibat-azzakat/",
+      "label": "Zakat"
+    }
+  ],
+  "footer": [
+    {
+      "href": "/en/about/",
+      "label": "About"
+    },
+    {
+      "href": "/en/privacy/",
+      "label": "Privacy policy"
+    },
+    {
+      "href": "mailto:salam@baitaandessigns.com",
+      "label": "Contact"
+    }
+  ],
+  "footerNote": "Free tools that run in your browser",
+  "conv": {
+    "toHijri": "Gregorian to Hijri",
+    "toGregorian": "Hijri to Gregorian",
+    "gregorianDate": "Gregorian date",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "result": "Result",
+    "hijriSuffix": "AH",
+    "gregorianSuffix": "CE",
+    "today": "Today",
+    "error": "This date doesn't exist in the Umm al-Qura calendar",
+    "note": "Based on the Umm al-Qura calendar used in Saudi Arabia. Some countries may differ by one day depending on the moon sighting."
+  },
+  "common": {
+    "years": "years",
+    "months": "months",
+    "days": "days",
+    "and": "and",
+    "start": "Start date",
+    "end": "End date",
+    "service": "Length of service",
+    "calendar": "Calendar",
+    "gregorian": "Gregorian",
+    "hijri": "Hijri"
+  },
+  "eos": {
+    "reason": "Why did the job end?",
+    "employer": "Ended by the employer, or the contract expired",
+    "resignation": "Resignation",
+    "fullResignation": "Resignation with full award (Article 87)",
+    "fullResignationHint": "Force majeure, or a female worker within 6 months of marriage or 3 months of giving birth.",
+    "art80": "Dismissal under Article 80",
+    "wageSa": "Last actual monthly wage (SAR)",
+    "wageSaHint": "Basic wage plus housing, transport and other allowances due.",
+    "wageAe": "Last basic monthly salary (AED)",
+    "wageAeHint": "Basic salary only, without housing or transport allowance.",
+    "unpaid": "Days of unpaid absence",
+    "dailyBasis": "Daily wage basis",
+    "basis30": "Basic ÷ 30",
+    "basis365": "Basic × 12 ÷ 365",
+    "result": "End-of-service award",
+    "fullAward": "Full award",
+    "share": "Share due on resignation",
+    "firstPart": "Half a month per year for the first 5 years",
+    "restPart": "A full month per year after that",
+    "daysLine": "Award days",
+    "daily": "Daily wage",
+    "cap": "Maximum (2 years' wage)",
+    "capped": "The award has reached the maximum: 2 years' wage.",
+    "lessThanYear": "No gratuity is due before completing one year of service.",
+    "lessThanTwo": "No award is due if you resign before completing 2 years.",
+    "noneArt80": "No award is due on dismissal under Article 80 of the Labor Law.",
+    "disclaimerSa": "Estimate under Articles 84, 85 and 87 of the Saudi Labor Law. The award must be paid within a week if the employer ended the contract, and within two weeks if the worker resigned.",
+    "disclaimerAe": "Estimate under Article 51 of Federal Decree-Law No. 33 of 2021. Dues must be paid within 14 days of the end of employment.",
+    "shareFull": "full",
+    "shareNone": "none",
+    "shareThird": "one third",
+    "shareTwoThirds": "two thirds"
+  },
+  "vat": {
+    "country": "Country",
+    "sa": "Saudi Arabia 15%",
+    "ae": "UAE 5%",
+    "bh": "Bahrain 10%",
+    "om": "Oman 5%",
+    "custom": "Other rate",
+    "rate": "VAT rate (%)",
+    "mode": "The amount you enter is",
+    "add": "Before VAT (add VAT)",
+    "remove": "Including VAT (extract VAT)",
+    "amount": "Amount",
+    "net": "Amount before VAT",
+    "vat": "VAT",
+    "gross": "Amount including VAT"
+  },
+  "zakat": {
+    "cash": "Cash in the bank and in hand",
+    "gold": "Value of gold you keep",
+    "silver": "Value of silver",
+    "investments": "Shares and investments",
+    "trade": "Trade goods (stock held for sale)",
+    "receivables": "Money owed to you that you expect back",
+    "debts": "Debts you owe that are due now",
+    "nisabBasis": "Calculate the nisab on",
+    "nisabGold": "Gold (85 grams)",
+    "nisabSilver": "Silver (595 grams)",
+    "goldPrice": "Today's price of 1 gram of 24k gold",
+    "silverPrice": "Today's price of 1 gram of silver",
+    "priceHint": "Enter the price in the same currency as your money.",
+    "result": "Zakat due",
+    "net": "Net zakatable wealth",
+    "nisab": "Nisab",
+    "notDue": "Your wealth is below the nisab, so no zakat is due on it.",
+    "needPrice": "Enter the price per gram to work out the nisab.",
+    "disclaimer": "Zakat is due when wealth reaches the nisab and a full Hijri year has passed over it. For special cases, ask a scholar.",
+    "gram": "g"
+  },
+  "diff": {
+    "from": "From",
+    "to": "To",
+    "includeEnd": "Include the last day",
+    "result": "Time between the dates",
+    "totalDays": "Total days",
+    "weeks": "Weeks",
+    "gregorianDiff": "In the Gregorian calendar",
+    "hijriDiff": "In the Hijri calendar",
+    "workDays": "Working days (excluding Friday and Saturday)",
+    "error": "Check the two dates"
+  },
+  "age": {
+    "birth": "Date of birth",
+    "result": "Your age in Hijri years",
+    "gregorianAge": "Your age in Gregorian years",
+    "birthHijri": "Your Hijri date of birth",
+    "birthGregorian": "Your Gregorian date of birth",
+    "totalDays": "Days lived so far",
+    "next": "Your next Hijri birthday is in",
+    "error": "Enter a valid date before today",
+    "today": "Today"
+  },
+  "countdown": {
+    "left": "Time left until",
+    "today": "Today!",
+    "expected": "Expected date",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "days": "days",
+    "note": "Based on the Umm al-Qura calendar. The official date is announced after the moon sighting and may differ by one day. The countdown ends at midnight Makkah time."
+  },
+  "words": {
+    "placeholder": "Type or paste your text here…",
+    "words": "words",
+    "chars": "characters with spaces",
+    "charsNoSpaces": "characters without spaces",
+    "charsNoDiacritics": "characters without diacritics",
+    "diacritics": "diacritics (tashkeel)",
+    "sentences": "sentences",
+    "paragraphs": "paragraphs",
+    "strip": "Remove diacritics",
+    "copy": "Copy text",
+    "copied": "Copied",
+    "clear": "Clear",
+    "privacy": "Your text stays on your device and is never sent to a server."
+  },
+  "photo": {
+    "choose": "Choose your photo",
+    "drop": "or drop it here",
+    "size": "Size",
+    "zoom": "Zoom",
+    "dragHint": "Drag the photo to center the face.",
+    "sheet": "Sheet to print",
+    "sheetNone": "Single photo",
+    "copies": "photos per sheet",
+    "download": "Download",
+    "another": "Change photo",
+    "privacy": "Your photo never leaves your device: everything happens in your browser.",
+    "printNote": "Print at actual size (100%), without “fit to page”.",
+    "error": "Couldn't open the image. Try a JPG or PNG."
+  },
+  "pdf": {
+    "choose": "Choose your PDF",
+    "drop": "or drop it here",
+    "target": "Maximum size",
+    "custom": "Other size (MB)",
+    "compress": "Compress",
+    "working": "Compressing… page",
+    "of": "of",
+    "original": "Original",
+    "result": "Compressed",
+    "download": "Download PDF",
+    "another": "Another file",
+    "privacy": "Your file never leaves your device: everything happens in your browser.",
+    "note": "To reduce the size, each page becomes an image. The text can no longer be selected or copied.",
+    "already": "Your file is already smaller than the size you chose.",
+    "tooBig": "Couldn't reach that size while keeping the text readable. This is the smallest readable result.",
+    "error": "Couldn't open the file. It may be damaged or password-protected."
+  },
+  "merge": {
+    "choose": "Choose PDF files",
+    "drop": "or drop them here",
+    "add": "Add files",
+    "pages": "pages",
+    "page": "page",
+    "up": "Move up",
+    "down": "Move down",
+    "remove": "Remove",
+    "merge": "Merge files",
+    "working": "Merging…",
+    "download": "Download PDF",
+    "result": "Your file is ready",
+    "needTwo": "Choose at least 2 files.",
+    "privacy": "Your files never leave your device: everything happens in your browser.",
+    "error": "Couldn't open one of the files. It may be password-protected.",
+    "images": "JPG and PNG photos work too: each one becomes a page."
+  },
+  "chrome": {
+    "themeToggle": "Switch between light and dark theme",
+    "languageLabel": "Language",
+    "cookieSettings": "Cookie settings",
+    "consent": {
+      "title": "We use cookies",
+      "text": "Necessary cookies remember your theme, your language and this choice. With your permission, Google also uses cookies to measure visits and personalise ads. You can change your choice at any time from the bottom of the page.",
+      "privacyLabel": "Privacy policy",
+      "privacyHref": "/en/privacy/",
+      "accept": "Accept all",
+      "reject": "Reject",
+      "customize": "Customise",
+      "save": "Save choices",
+      "necessary": "Necessary",
+      "necessaryDesc": "Remember your theme, your language and your cookie choice.",
+      "analytics": "Statistics",
+      "analyticsDesc": "Help us see which tools are used most (Google Analytics).",
+      "ads": "Personalised advertising",
+      "adsDesc": "Lets Google show ads based on your interests. If you reject it, you'll see non-personalised ads.",
+      "alwaysOn": "always on"
+    }
+  }
+}

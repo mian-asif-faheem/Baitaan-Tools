@@ -1,13 +1,15 @@
 import { useMemo, useState } from "preact/hooks";
 import { horasExtras } from "@bt/tools/br";
-import t from "../i18n/pt.json";
-import { NumberField, Result, Rows, Toggle, brl } from "./form";
+import { getT, locale, type Lang } from "../i18n";
+import { NumberField, Result, Rows, Toggle, money } from "./form";
 
-const L = t.horas;
-const C = t.common;
 type Divisor = "220" | "200" | "180" | "150";
 
-export default function HorasExtrasCalc() {
+export default function HorasExtrasCalc({ lang = "pt" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.horas;
+  const C = t.common;
+  const brl = money(lang);
   const [salary, setSalary] = useState("2200");
   const [divisor, setDivisor] = useState<Divisor>("220");
   const [h50, setH50] = useState("10");
@@ -63,7 +65,7 @@ export default function HorasExtrasCalc() {
             rows={[
               ...(r.he50 > 0 ? [{ label: `${L.lines.he50} (${Math.max(50, Number(pct) || 50)}%)`, value: brl.format(r.he50) }] : []),
               ...(r.he100 > 0 ? [{ label: L.lines.he100, value: brl.format(r.he100) }] : []),
-              ...(r.night > 0 ? [{ label: `${L.lines.night} · ${r.nightPaidHours.toLocaleString("pt-BR")} h`, value: brl.format(r.night) }] : []),
+              ...(r.night > 0 ? [{ label: `${L.lines.night} · ${r.nightPaidHours.toLocaleString(locale(lang))} h`, value: brl.format(r.night) }] : []),
               { label: L.lines.dsr, value: brl.format(r.dsr) },
               { label: L.result, value: brl.format(r.total), strong: true },
             ]}

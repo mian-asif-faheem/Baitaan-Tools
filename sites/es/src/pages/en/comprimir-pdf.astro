@@ -1,0 +1,41 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PdfCompressTool from "@bt/ui/PdfCompressTool.tsx";
+import t from "../../i18n/en.json";
+---
+<Layout
+  lang="en"
+  title="Compress PDF to 1 MB or 2 MB free, without uploading | Baitaan"
+  description="Shrink your PDF to 1 MB, 2 MB or any size a government, school or job portal asks for. It runs in your browser: your file is never uploaded."
+>
+  <ToolPage
+    heading="Compress PDF to 1 MB"
+    lead="Choose your PDF and the maximum size the portal allows. The tool shrinks it in your browser, without uploading it to any server."
+    updated="Updated: November 2026"
+  >
+    <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="en-US" />
+
+    <Fragment slot="guide">
+      <h2>What it's for</h2>
+      <p>Many portals limit file sizes: job applications, school enrolment, scholarships and online government services often ask for PDFs of 1 MB or 2 MB at most. Documents scanned with a phone are almost always bigger.</p>
+
+      <h2>How it works</h2>
+      <p>The tool turns each page into a good-quality JPG and builds a new PDF. It starts at the highest quality and lowers it step by step until the file fits the size you chose.</p>
+      <p>It works best for scanned documents, ID photos and receipts. In a PDF with digital text, the text can no longer be selected after compressing.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Tips</h2>
+      <ul>
+        <li>If a long file won't get under 1 MB, remove the pages that aren't required.</li>
+        <li>Scan in black and white or greyscale when the document doesn't need colour.</li>
+        <li>Open the compressed PDF before sending it: numbers and signatures should be easy to read.</li>
+      </ul>
+
+      <h2>Is it safe?</h2>
+      <p>Yes. Your PDF is processed on your own device and is never sent to our servers. You can check: choose your file, switch off your internet, then press “Compress”. The tool still works.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

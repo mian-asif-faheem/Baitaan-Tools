@@ -1,0 +1,45 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import ZakatCalc from "../../components/ZakatCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Zakat calculator: zakat on money, gold and the nisab | Baitaan"
+  description="Work out your zakat easily: cash, gold, silver, shares and trade goods, with the nisab calculated from today's gold or silver price. Free, no sign-up."
+>
+  <ToolPage
+    heading="Zakat calculator"
+    lead="If your wealth reaches the nisab and a full Hijri year passes over it, its zakat is 2.5% of its value. The nisab is the value of 85 grams of gold or 595 grams of silver."
+    updated="Updated: November 2026"
+  >
+    <ZakatCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How to calculate it</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Add up your zakatable wealth: cash, gold and silver you keep, shares, trade goods and money owed to you that you expect back.</li>
+        <li>Subtract debts you owe that are due now.</li>
+        <li>Compare the result with the nisab: 85 grams of 24k gold, or 595 grams of silver.</li>
+        <li>If it reaches the nisab and a year has passed, the zakat is 2.5% of it.</li>
+      </ol>
+
+      <h2>Example</h2>
+      <p>You have SAR 60,000 and a gram of 24k gold costs SAR 400. The nisab is 85 × 400 = SAR 34,000, and your wealth is above it, so the zakat is 60,000 × 2.5% = <strong>SAR 1,500</strong>.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Gold or silver?</h2>
+      <p>At current prices the silver nisab is much lower than the gold nisab, so using silver makes zakat due on less wealth. Choose the view held by the scholars you follow.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Is there zakat on jewellery?</h3>
+      <p>Scholars differ on gold kept for personal use. Enter in the calculator the gold you believe zakat is due on.</p>
+      <h3 class="font-semibold text-stone-900">Where can I find today's gold price?</h3>
+      <p>From your bank's website or the gold shop you deal with. Enter the price per gram in the same currency as your money.</p>
+      <h3 class="font-semibold text-stone-900">Is there zakat on my monthly salary?</h3>
+      <p>Zakat is due on what you save from your salary if it reaches the nisab and a year passes over it, not on the salary itself.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

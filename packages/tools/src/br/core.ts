@@ -1,6 +1,7 @@
+import type { Widen } from "../widen";
 import { BR_2026 } from "./rates-2026";
 
-export type BrRates = typeof BR_2026;
+export type BrRates = Widen<typeof BR_2026>;
 
 export const round2 = (n: number) => Math.round(n * 100) / 100;
 

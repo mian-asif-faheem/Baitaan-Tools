@@ -1,0 +1,36 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import HijriAgeCalc from "../../components/HijriAgeCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Hijri age calculator: your age in Hijri and Gregorian years | Baitaan"
+  description="Work out your age in the Hijri and Gregorian calendars in years, months and days, find your Hijri date of birth and your next Hijri birthday. Free, no sign-up."
+>
+  <ToolPage
+    heading="Hijri age calculator"
+    lead="Enter your date of birth in the Gregorian or Hijri calendar to see your age in both calendars, your matching date of birth and how many days you have lived."
+    updated="Updated: November 2026"
+  >
+    <HijriAgeCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>Why is my Hijri age higher?</h2>
+      <p>A Hijri year is about 11 days shorter than a Gregorian year, so your Hijri age gains roughly one year for every 33 Gregorian years. Someone who is 33 in Gregorian years is about 34 in Hijri years.</p>
+
+      <h2>When is a Hijri age needed?</h2>
+      <ul>
+        <li>In some government transactions and official forms in Saudi Arabia.</li>
+        <li>To work out religious age limits and periods.</li>
+        <li>To read the Hijri date of birth recorded in older documents.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <p>The tool uses the Umm al-Qura calendar. If your country relied on moon sighting when you were born, your recorded Hijri date may differ by one day.</p>
+      <p>To count the time between any two dates, use the <a class="text-teal-800 underline" href="/en/alfarq-bayna-tarikhayn/">days between two dates</a> calculator.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

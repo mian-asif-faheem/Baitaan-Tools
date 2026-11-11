@@ -1,0 +1,37 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PdfCompressTool from "@bt/ui/PdfCompressTool.tsx";
+import t from "../../i18n/en.json";
+---
+<Layout
+  lang="en"
+  title="Compress a PDF to 1 MB or less, free | Baitaan"
+  description="Shrink a PDF to 1 or 2 MB or whatever size a portal asks for, without uploading the file to any server. Free, no sign-up."
+>
+  <ToolPage
+    heading="Compress PDF"
+    lead="Choose the file and the maximum size the portal asks for. The tool shrinks it in your browser, without uploading it to any server."
+    updated="Updated: November 2026"
+  >
+    <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="en-US" />
+
+    <Fragment slot="guide">
+      <h2>When you need it</h2>
+      <p>Many government portals, universities and job sites limit attachments to 1 or 2 MB, while documents scanned with a phone are often bigger.</p>
+
+      <h2>How it works</h2>
+      <p>The tool turns each page into a good-quality JPG image and builds a new PDF, starting at the highest quality and lowering it step by step until it reaches the size you need. It works best for scanned documents and ID photos.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Tips</h2>
+      <ul>
+        <li>Remove pages you don't need if the file is long.</li>
+        <li>To combine your ID and certificate in one file, use <a class="text-teal-800 underline" href="/en/damj-pdf/">merge PDF</a> first, then compress the result.</li>
+        <li>Open the compressed file before sending it and check that numbers and signatures are clear.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

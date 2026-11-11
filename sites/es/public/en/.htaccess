@@ -1,0 +1,3 @@
+# English pages: show the English "page not found" page.
+# The rules in the site's main .htaccess still apply here.
+ErrorDocument 404 /en/404/index.html

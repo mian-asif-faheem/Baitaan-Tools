@@ -1,15 +1,34 @@
 ---
 import BaseLayout from "@bt/ui/BaseLayout.astro";
-import t from "../i18n/ar.json";
+import { NATIVE, dirOf, getT, versionsFor, type Lang } from "../i18n";
 import "../global.css";
 
 interface Props {
   title: string;
   description: string;
-  alternates?: Record<string, string>;
+  lang?: Lang;
+  /** 404 pages: no language redirect, switcher points to the other home page. */
+  notFound?: boolean;
 }
-const { title, description, alternates } = Astro.props;
+const { title, description, lang = NATIVE, notFound = false } = Astro.props;
+const t = getT(lang);
+const versions = versionsFor(notFound ? (lang === "en" ? "/en/" : "/") : Astro.url.pathname);
 ---
-<BaseLayout site="ar" {title} {description} {alternates} nav={t.nav} footer={t.footer} footerNote={t.footerNote}>
+<BaseLayout
+  site="ar"
+  {title}
+  {description}
+  code={lang}
+  lang={lang}
+  dir={dirOf(lang)}
+  {versions}
+  nav={t.nav}
+  footer={t.footer}
+  footerNote={t.footerNote}
+  brand={t.brand}
+  homeHref={lang === "en" ? "/en/" : "/"}
+  chrome={t.chrome}
+  langRedirect={!notFound}
+>
   <slot />
 </BaseLayout>

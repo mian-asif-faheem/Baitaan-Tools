@@ -1,12 +1,14 @@
 import { useMemo, useState } from "preact/hooks";
 import { salarioProporcional } from "@bt/tools/br";
-import t from "../i18n/pt.json";
-import { NumberField, Result, Rows, brl } from "./form";
+import { getT, type Lang } from "../i18n";
+import { NumberField, Result, Rows, money } from "./form";
 
-const L = t.proporcional;
-const C = t.common;
 
-export default function ProporcionalCalc() {
+export default function ProporcionalCalc({ lang = "pt" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.proporcional;
+  const C = t.common;
+  const brl = money(lang);
   const [salary, setSalary] = useState("3000");
   const [days, setDays] = useState("15");
   const [abs, setAbs] = useState("0");

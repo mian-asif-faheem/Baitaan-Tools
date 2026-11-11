@@ -1,10 +1,8 @@
 import { useMemo, useState } from "preact/hooks";
 import { monthlyToDaily, vacaciones, vacationTable } from "@bt/tools/mx";
-import t from "../i18n/es.json";
-import { NumberField, Result, Rows, Toggle, mxn } from "./form";
+import { getT, locale, type Lang } from "../i18n";
+import { NumberField, Result, Rows, Toggle, money } from "./form";
 
-const L = t.vacaciones;
-const C = t.common;
 const table = vacationTable(35);
 // Compress years with the same entitlement into ranges: 6–10, 11–15…
 const ranges = table.reduce<{ from: number; to: number; days: number }[]>((acc, r) => {
@@ -14,7 +12,11 @@ const ranges = table.reduce<{ from: number; to: number; days: number }[]>((acc, 
   return acc;
 }, []);
 
-export default function VacacionesCalc() {
+export default function VacacionesCalc({ lang = "es" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.vacaciones;
+  const C = t.common;
+  const mxn = money(lang);
   const [mode, setMode] = useState<"monthly" | "daily">("monthly");
   const [salary, setSalary] = useState("15000");
   const [years, setYears] = useState("1");
@@ -73,7 +75,7 @@ export default function VacacionesCalc() {
                     {L.year} {g.from === g.to ? g.from : `${g.from}–${g.to}`}
                   </td>
                   <td class="py-1.5 pe-2 text-end tabular-nums">
-                    {g.days} {L.days.split(" ")[0]}
+                    {g.days} {L.daysShort}
                   </td>
                 </tr>
               );

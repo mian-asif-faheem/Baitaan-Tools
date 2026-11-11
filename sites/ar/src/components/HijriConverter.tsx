@@ -1,15 +1,16 @@
 import { useMemo, useState } from "preact/hooks";
-import { HIJRI_MONTHS_AR, hijriMonthLength, toGregorian, toHijri } from "@bt/tools/hijri";
-import t from "../i18n/ar.json";
+import { hijriMonthLength, toGregorian, toHijri } from "@bt/tools/hijri";
+import { getT, type Lang } from "../i18n";
+import { hijriMonths, hijriText } from "./form";
 
-const L = t.conv;
 const field = "mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 text-lg focus:border-teal-700 focus:outline-none";
-const weekdayFmt = new Intl.DateTimeFormat("ar", { weekday: "long", timeZone: "UTC" });
-const gregFmt = new Intl.DateTimeFormat("ar-u-nu-latn", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
-export default function HijriConverter() {
+export default function HijriConverter({ lang = "ar" }: { lang?: Lang }) {
+  const L = getT(lang).conv;
+  const weekdayFmt = new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "ar", { weekday: "long", timeZone: "UTC" });
+  const gregFmt = new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "ar-u-nu-latn", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   const [mode, setMode] = useState<"toHijri" | "toGregorian">("toHijri");
   const [greg, setGreg] = useState(todayIso());
   const todayH = toHijri(new Date());
@@ -23,7 +24,7 @@ export default function HijriConverter() {
         if (!greg) return null;
         const d = new Date(`${greg}T00:00:00Z`);
         const h = toHijri(d);
-        return { main: `${h.day} ${HIJRI_MONTHS_AR[h.month - 1]} ${h.year} ${L.hijriSuffix}`, weekday: weekdayFmt.format(d) };
+        return { main: hijriText(h, lang), weekday: weekdayFmt.format(d) };
       }
       const d = toGregorian({ year: Number(hy), month: Number(hm), day: Number(hd) });
       return { main: `${gregFmt.format(d)} ${L.gregorianSuffix}`, weekday: weekdayFmt.format(d) };
@@ -63,7 +64,7 @@ export default function HijriConverter() {
           <label class="text-sm font-semibold">
             {L.month}
             <select class={field} value={hm} onChange={(e) => setHm(e.currentTarget.value)}>
-              {HIJRI_MONTHS_AR.map((name, i) => <option value={String(i + 1)}>{name}</option>)}
+              {hijriMonths(lang).map((name, i) => <option value={String(i + 1)}>{name}</option>)}
             </select>
           </label>
           <label class="text-sm font-semibold">

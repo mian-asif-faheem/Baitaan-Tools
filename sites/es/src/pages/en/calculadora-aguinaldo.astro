@@ -1,0 +1,41 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import AguinaldoCalc from "../../components/AguinaldoCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Mexico aguinaldo calculator 2026 (Christmas bonus) | Baitaan"
+  description="Work out your 2026 aguinaldo from your salary and the days you worked. Legal minimum of 15 days, art. 87 of Mexico's Federal Labor Law. Free, no sign-up."
+>
+  <ToolPage
+    heading="Aguinaldo calculator 2026 (Mexico)"
+    lead="In Mexico the minimum aguinaldo, the year-end bonus, is 15 days' pay for a full year worked, paid in proportion if you worked less."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Federal Labor Law, article 87" }]}
+  >
+    <AguinaldoCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How the aguinaldo is calculated</h2>
+      <p>Multiply your daily salary by the aguinaldo days (at least 15). If you did not work the whole year, divide by 365 and multiply by the days you did work.</p>
+      <p><strong>Formula:</strong> daily salary × aguinaldo days × days worked ÷ 365.</p>
+
+      <h2>Example</h2>
+      <p>With a monthly salary of $12,000, the daily salary is $400. For 182 days worked: 400 × 15 × 182 ÷ 365 = <strong>$2,991.78</strong>.</p>
+
+      <h2>When is it paid?</h2>
+      <p>Employers must pay it before 20 December.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Frequently asked questions</h2>
+      <ul>
+        <li>Is the aguinaldo taxed? It is tax-free up to 30 UMA ($3,519.30 in 2026); ISR applies to the rest.</li>
+        <li>Do I get an aguinaldo if I resigned? Yes, the proportional part is included in your <a class="text-teal-800 underline" href="/en/calculadora-finiquito/">finiquito</a>.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,0 +1,37 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import MergePdfTool from "@bt/ui/MergePdfTool.tsx";
+import t from "../../i18n/en.json";
+---
+<Layout
+  lang="en"
+  title="Merge PDF files and photos into one file, free | Baitaan"
+  description="Combine several PDF files and JPG or PNG photos into one PDF, in the order you want, without uploading your documents. Free, no sign-up."
+>
+  <ToolPage
+    heading="Merge PDF files"
+    lead="Choose your files and photos, put them in order and download them as one PDF. Your documents never leave your device."
+    updated="Updated: November 2026"
+  >
+    <MergePdfTool client:visible t={t.merge} outputName="documents.pdf" locale="en-US" />
+
+    <Fragment slot="guide">
+      <h2>When you need it</h2>
+      <p>Application portals often ask for your documents in a single file: ID, passport, certificates and a letter from your employer.</p>
+
+      <h2>How to use it</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Choose the files. Each JPG or PNG photo becomes an A4 page.</li>
+        <li>Use the arrows to change the order.</li>
+        <li>Tap “Merge files”, then download the file.</li>
+        <li>If it's too big, use <a class="text-teal-800 underline" href="/en/dagt-pdf/">compress PDF</a>.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <p>Merging copies the pages as they are with no loss of quality, and the text stays selectable. The tool doesn't work with password-protected files.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

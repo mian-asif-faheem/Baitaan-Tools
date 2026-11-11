@@ -5,6 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://es.baitaandessigns.com",
-  integrations: [preact(), sitemap()],
+  integrations: [preact(), sitemap({ filter: (page) => !/\/404\/?$/.test(page) })],
   vite: { plugins: [tailwindcss()] },
 });

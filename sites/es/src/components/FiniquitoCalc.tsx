@@ -1,14 +1,16 @@
 import { useMemo, useState } from "preact/hooks";
 import { finiquito, monthlyToDaily, type Motivo } from "@bt/tools/mx";
-import t from "../i18n/es.json";
-import { Check, NumberField, Result, Rows, Toggle, fieldClass, mxn } from "./form";
+import { getT, locale, type Lang } from "../i18n";
+import { Check, NumberField, Result, Rows, Toggle, fieldClass, money } from "./form";
 
-const L = t.finiquito;
-const C = t.common;
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-export default function FiniquitoCalc() {
+export default function FiniquitoCalc({ lang = "es" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.finiquito;
+  const C = t.common;
+  const mxn = money(lang);
   const [motivo, setMotivo] = useState<Motivo>("renuncia");
   const [mode, setMode] = useState<"monthly" | "daily">("monthly");
   const [salary, setSalary] = useState("15000");
@@ -43,7 +45,7 @@ export default function FiniquitoCalc() {
   }, [motivo, mode, salary, start, end, unpaid, pendingVac, agDays, prima, veinte, frontera]);
 
   const line = (l: { key: string; days: number; amount: number }) => ({
-    label: `${L.lines[l.key as keyof typeof L.lines]}${l.key === "salarioPendiente" || l.days === 0 ? "" : ` · ${l.days.toLocaleString("es-MX")} ${L.days}`}`,
+    label: `${L.lines[l.key as keyof typeof L.lines]}${l.key === "salarioPendiente" || l.days === 0 ? "" : ` · ${l.days.toLocaleString(locale(lang))} ${L.days}`}`,
     value: mxn.format(l.amount),
   });
 
@@ -83,7 +85,7 @@ export default function FiniquitoCalc() {
       <NumberField label={L.pendingVac} value={pendingVac} onInput={setPendingVac} min={0} step="1" />
 
       <details class="sm:col-span-2 rounded-lg border border-stone-200 p-3">
-        <summary class="cursor-pointer text-sm font-semibold text-stone-700">Prestaciones de tu empresa</summary>
+        <summary class="cursor-pointer text-sm font-semibold text-stone-700">{L.benefits}</summary>
         <div class="mt-3 grid gap-4 sm:grid-cols-2">
           <NumberField label={L.aguinaldoDays} value={agDays} onInput={setAgDays} min={15} step="1" />
           <NumberField label={L.prima} value={prima} onInput={setPrima} min={25} step="1" />
@@ -98,7 +100,7 @@ export default function FiniquitoCalc() {
       {r ? (
         <Result class="sm:col-span-2" label={L.resultTotal} amount={mxn.format(r.total)}>
           <span class="mt-1 block text-sm text-stone-600">
-            {L.service}: {r.yearsOfService.toLocaleString("es-MX")} {L.years}
+            {L.service}: {r.yearsOfService.toLocaleString(locale(lang))} {L.years}
             {r.liquidacion.length > 0 && ` · ${L.sdi}: ${mxn.format(r.sdi)}`}
           </span>
           <h3 class="mt-4 text-sm font-semibold text-teal-900">{L.finiquitoTitle}</h3>

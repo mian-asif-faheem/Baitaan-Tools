@@ -1,11 +1,12 @@
 import { useMemo, useState } from "preact/hooks";
 import { NISAB_GOLD_GRAMS, NISAB_SILVER_GRAMS, zakat } from "@bt/tools/gulf";
-import t from "../i18n/ar.json";
-import { NumberField, Result, Rows, Toggle, num } from "./form";
+import { getT, type Lang } from "../i18n";
+import { NumberField, Result, Rows, Toggle, numFmt } from "./form";
 
-const L = t.zakat;
 
-export default function ZakatCalc() {
+export default function ZakatCalc({ lang = "ar" }: { lang?: Lang }) {
+  const L = getT(lang).zakat;
+  const num = numFmt(lang);
   const [v, setV] = useState({ cash: "60000", gold: "0", silver: "0", investments: "0", trade: "0", receivables: "0", debts: "0" });
   const [basis, setBasis] = useState<"gold" | "silver">("gold");
   const [goldPrice, setGoldPrice] = useState("");
@@ -59,7 +60,7 @@ export default function ZakatCalc() {
           rows={[
             { label: L.net, value: num.format(r.net) },
             {
-              label: `${L.nisab} (${basis === "gold" ? NISAB_GOLD_GRAMS : NISAB_SILVER_GRAMS} غ)`,
+              label: `${L.nisab} (${basis === "gold" ? NISAB_GOLD_GRAMS : NISAB_SILVER_GRAMS} ${L.gram})`,
               value: r.nisabKnown ? num.format(r.nisab) : "—",
               muted: true,
             },

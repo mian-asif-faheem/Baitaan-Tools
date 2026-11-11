@@ -1,0 +1,52 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PhotoTool from "@bt/ui/PhotoTool.tsx";
+import { PRESETS_MX_ES } from "@bt/ui/photo-presets";
+import t from "../../i18n/en.json";
+---
+<Layout
+  lang="en"
+  title="Mexican ID photo sizes online: infantil, passport, credential | Baitaan"
+  description="Crop your photo to Mexican 'infantil' size (2.5 × 3 cm), passport, credential, diploma or Spanish DNI, and download a print-ready sheet. Free, no sign-up, and your photo is never uploaded."
+>
+  <ToolPage
+    heading="ID photo sizes: infantil and more"
+    lead="Pick a photo from your phone, fit it to the size you need, and download a 10 × 15 cm or letter-size sheet ready to print. Your photo never leaves your device."
+    updated="Updated: November 2026"
+  >
+    <PhotoTool client:visible presets={PRESETS_MX_ES} t={t.photo} sheets={["10x15", "carta"]} />
+
+    <Fragment slot="guide">
+      <h2>Common photo sizes</h2>
+      <ul>
+        <li><strong>Infantil:</strong> 2.5 × 3 cm. Schools, ID cards and paperwork.</li>
+        <li><strong>Passport size:</strong> 3.5 × 4.5 cm. Visas and documents in many countries.</li>
+        <li><strong>Credential:</strong> 3.5 × 5 cm.</li>
+        <li><strong>Diploma or professional licence:</strong> 6 × 9 cm.</li>
+        <li><strong>Spanish DNI and passport:</strong> 2.6 × 3.2 cm.</li>
+        <li><strong>US visa:</strong> 5 × 5 cm (2 × 2 inches).</li>
+      </ul>
+      <p>You don't need to bring a photo for a Mexican passport: the Foreign Ministry (SRE) takes it at the office.</p>
+
+      <h2>How to print your photos</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Choose the 10 × 15 cm print sheet for a photo shop, or Letter for your own printer.</li>
+        <li>When printing, choose actual size or 100%. Don't use “fit to page”, which changes the size.</li>
+        <li>Cut along the grey lines.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Tips for an accepted photo</h2>
+      <ul>
+        <li>White or light background, no shadows.</li>
+        <li>Facing the camera, face uncovered, neutral expression.</li>
+        <li>No sunglasses or cap.</li>
+        <li>Good light from the front: next to a window works well.</li>
+      </ul>
+      <p>Each institution may ask for something different (white or coloured background, glasses or not). Check their requirements before printing.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,0 +1,41 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PhotoTool from "@bt/ui/PhotoTool.tsx";
+import { PRESETS_AR } from "@bt/ui/photo-presets";
+import t from "../../i18n/en.json";
+---
+<Layout
+  lang="en"
+  title="Resize a photo to 4×6 cm for printing, free | Baitaan"
+  description="Crop your photo to 4×6, 3.5×4.5 or 5×5 cm and download a sheet ready to print on 10×15 or A4. Free, and your photo is never uploaded."
+>
+  <ToolPage
+    heading="Photo size for printing"
+    lead="Choose a photo from your phone, fit your face in the frame and download a 10×15 or A4 sheet with several copies at the size you need, ready to print."
+    updated="Updated: November 2026"
+  >
+    <PhotoTool client:visible presets={PRESETS_AR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="photo" />
+
+    <Fragment slot="guide">
+      <h2>Available sizes</h2>
+      <ul>
+        <li><strong>4 × 6 cm:</strong> the common size for paperwork in Saudi Arabia and the Gulf.</li>
+        <li><strong>3.5 × 4.5 cm:</strong> used for many visas and international documents.</li>
+        <li><strong>5 × 5 cm:</strong> the US visa size (2 × 2 inches).</li>
+      </ul>
+      <p>Always check what the issuing office asks for, since many official documents now take the photo at the service centre.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Tips for an accepted photo</h2>
+      <ul>
+        <li>White or light background, with no shadows.</li>
+        <li>Whole face visible and facing forward.</li>
+        <li>Natural light from the front, for example next to a window.</li>
+        <li>Print at actual size (100%), then cut along the grey lines.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,0 +1,46 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import ProporcionalCalc from "../../components/ProporcionalCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Brazil proportional salary and absence deduction calculator | Baitaan"
+  description="Work out the salary for the days worked in your first or last month, and the deduction for absences including the lost paid rest day (DSR), under Brazilian law. Free, no sign-up."
+>
+  <ToolPage
+    heading="Proportional salary calculator (Brazil)"
+    lead="To work out the salary for part of a month, divide the salary by 30 and multiply by the days worked. Each unexcused absence takes off one day and also that week's paid rest day."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l0605.htm", label: "Law 605/1949, art. 6 (losing the rest day for an absence)" },
+    ]}
+  >
+    <ProporcionalCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>When to use it</h2>
+      <ul>
+        <li>In the month you started work.</li>
+        <li>In the month you left (this is the unpaid salary in your termination pay).</li>
+        <li>To check absence deductions on your payslip.</li>
+      </ul>
+
+      <h2>Examples</h2>
+      <ul>
+        <li>Salary of R$ 3,000, hired on the 19th of a month: 12 days worked. R$ 3,000 ÷ 30 × 12 = <strong>R$ 1,200.00</strong>.</li>
+        <li>Salary of R$ 3,000 with 1 unexcused absence: R$ 100 off for the absence and R$ 100 for that week's DSR. <strong>Salary: R$ 2,800.00</strong>.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Why 30 days?</h2>
+      <p>For monthly-paid workers, payroll uses a 30-day commercial month, whether the month has 28, 30 or 31 days. Some employers use calendar days; check your payslip.</p>
+
+      <h2>Absences that can't be deducted</h2>
+      <p>The CLT (art. 473) lists excused absences with no deduction, such as up to 2 days for the death of a close relative, 3 days for your wedding, and days for blood donation (1 a year) or voter registration. Medical certificates also excuse an absence.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

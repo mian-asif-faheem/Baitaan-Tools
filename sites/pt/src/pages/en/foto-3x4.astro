@@ -1,0 +1,44 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import PhotoTool from "@bt/ui/PhotoTool.tsx";
+import { PRESETS_BR } from "@bt/ui/photo-presets";
+import t from "../../i18n/en.json";
+---
+<Layout
+  lang="en"
+  title="3x4 photo online for free: crop and print at home | Baitaan"
+  description="Make a Brazilian 3x4 photo on your phone: crop it to the right size and download a 10x15 or A4 sheet ready to print. Free, no sign-up, and your photo is never uploaded."
+>
+  <ToolPage
+    heading="3x4 photo online"
+    lead="Choose a photo from your phone, fit your face in the frame and download a 10x15 sheet with several 3x4 photos to print at a print shop or at home."
+    updated="Updated: November 2026"
+  >
+    <PhotoTool client:visible presets={PRESETS_BR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="photo" />
+
+    <Fragment slot="guide">
+      <h2>Where 3x4 photos are used</h2>
+      <p>School and university ID cards, badges, registration forms, enrolment, club cards and many company documents in Brazil. Always check what the issuer asks for, because many official documents now take the photo on the spot.</p>
+
+      <h2>How to print</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Choose the 10x15 sheet to print on photo paper at a print shop or photo kiosk.</li>
+        <li>To print at home, choose A4.</li>
+        <li>When printing, use actual size or 100%, without “fit to page”.</li>
+        <li>Cut along the grey lines.</li>
+      </ol>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Tips for a good photo</h2>
+      <ul>
+        <li>White or light background, with no shadows.</li>
+        <li>Face the camera, no sunglasses, cap or hat.</li>
+        <li>Natural light from the front, near a window.</li>
+        <li>Phone at eye level, about a metre away.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

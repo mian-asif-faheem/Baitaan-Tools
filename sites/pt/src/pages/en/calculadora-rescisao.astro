@@ -1,0 +1,92 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import RescisaoCalc from "../../components/RescisaoCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Brazil termination pay calculator 2026 (CLT rescisão) | Baitaan"
+  description="Work out your 2026 termination pay in Brazil: dismissal without just cause, resignation, mutual agreement or just cause. Unpaid salary, notice, 13th, vacation and the 40% FGTS penalty. Free, no sign-up."
+>
+  <ToolPage
+    heading="Termination pay calculator 2026 (Brazil)"
+    lead="If you are dismissed without just cause in Brazil, you get unpaid salary, notice pay, a proportional 13th and vacation with the 1/3 bonus, plus a 40% penalty on your FGTS. If you resign, there is no penalty and you can't withdraw your FGTS."
+    updated="Updated: November 2026 · 2026 INSS and income tax tables"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm", label: "CLT, arts. 477, 484-A and 487" },
+      { href: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm", label: "Law 12.506/2011 (proportional notice)" },
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l8036consol.htm", label: "Law 8.036/1990 (FGTS), art. 18" },
+    ]}
+  >
+    <RescisaoCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>What you get with each type of termination</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Item</th>
+              <th class="px-1.5 py-2 text-center font-medium">Without just cause</th>
+              <th class="px-1.5 py-2 text-center font-medium">Resignation</th>
+              <th class="px-1.5 py-2 text-center font-medium">Agreement</th>
+              <th class="px-1.5 py-2 text-center font-medium">Just cause</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Unpaid salary</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Notice paid in lieu</td><td class="px-1.5 text-center">Full</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">Half</td><td class="px-1.5 text-center">No</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Proportional 13th</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">No</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Proportional vacation + 1/3</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">No</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Overdue vacation + 1/3</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">FGTS penalty</td><td class="px-1.5 text-center">40%</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">20%</td><td class="px-1.5 text-center">No</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">FGTS withdrawal</td><td class="px-1.5 text-center">100%</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">80%</td><td class="px-1.5 text-center">No</td></tr>
+            <tr class="border-t border-stone-200"><td class="py-1.5">Unemployment insurance</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>How to calculate it, step by step</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li><strong>Unpaid salary:</strong> salary ÷ 30 × days worked in the last month.</li>
+        <li><strong>Notice:</strong> 30 days plus 3 days per full year worked, up to 90 days (Law 12.506/2011). When it is paid in lieu, those days also count as time of service.</li>
+        <li><strong>Proportional 13th:</strong> salary ÷ 12 × months worked in the year. A month counts if you worked 15 days or more.</li>
+        <li><strong>Proportional vacation:</strong> salary ÷ 12 × months since your last hire anniversary, plus 1/3.</li>
+        <li><strong>Overdue vacation:</strong> one salary per full period not taken, plus 1/3.</li>
+        <li><strong>FGTS penalty:</strong> 40% of all deposits made during the contract, including the termination month.</li>
+      </ol>
+
+      <h2>Example: dismissal without just cause</h2>
+      <p>Salary of R$ 3,000, hired on 1 March 2024, last day on 15 August 2026, with one overdue vacation period and R$ 7,200 in FGTS. That is 2 full years, so the notice is 36 days, which takes the contract to 20 September.</p>
+      <ul>
+        <li>Unpaid salary (15 days): R$ 1,500.00</li>
+        <li>Notice (36 days): R$ 3,600.00</li>
+        <li>Proportional 13th (9/12): R$ 2,250.00</li>
+        <li>Proportional vacation (7/12) + 1/3: R$ 2,333.33</li>
+        <li>Overdue vacation + 1/3: R$ 4,000.00</li>
+        <li>INSS on unpaid salary and 13th: −R$ 290.69</li>
+        <li><strong>Net: R$ 13,392.64</strong>, plus the FGTS penalty of R$ 3,115.20, for a total of R$ 16,507.84.</li>
+      </ul>
+      <p>If you resign under the same conditions, the 13th drops to 8/12 and the vacation to 6/12, there is no notice pay or penalty, and if you don't work your notice the employer may deduct R$ 3,000.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Deadlines</h2>
+      <ul>
+        <li>The employer must pay within 10 calendar days after the contract ends (art. 477, § 6). If it is late, it owes a penalty of one salary.</li>
+        <li>You can apply for unemployment insurance from the 7th to the 120th day after dismissal.</li>
+        <li>You have up to 2 years after the contract ends to file a labor claim.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Is termination pay taxed?</h3>
+      <p>Only the unpaid salary and the 13th pay INSS and income tax. Notice paid in lieu, paid-out vacation and the FGTS penalty are exempt. With the 2026 income tax reduction, people earning up to R$ 5,000 usually have no income tax taken.</p>
+      <h3 class="font-semibold text-stone-900">Where can I see my FGTS balance?</h3>
+      <p>In Caixa's FGTS app. The penalty is calculated on all deposits made during the contract, even if you have already used part of the balance, for example with the birthday withdrawal (saque-aniversário).</p>
+      <h3 class="font-semibold text-stone-900">What is the art. 484-A agreement?</h3>
+      <p>Since the 2017 labor reform, employer and employee can end the contract by mutual agreement. You get half the notice pay and a 20% penalty, can withdraw 80% of your FGTS, and are not entitled to unemployment insurance.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

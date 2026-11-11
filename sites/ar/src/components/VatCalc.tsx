@@ -1,12 +1,13 @@
 import { useMemo, useState } from "preact/hooks";
 import { VAT_RATES, vat, type VatCountry } from "@bt/tools/gulf";
-import t from "../i18n/ar.json";
-import { NumberField, Result, Rows, Toggle, num } from "./form";
+import { getT, type Lang } from "../i18n";
+import { NumberField, Result, Rows, Toggle, numFmt } from "./form";
 
-const L = t.vat;
 type Choice = VatCountry | "custom";
 
-export default function VatCalc({ initial = "sa" as Choice }: { initial?: Choice }) {
+export default function VatCalc({ initial = "sa" as Choice, lang = "ar" }: { initial?: Choice; lang?: Lang }) {
+  const L = getT(lang).vat;
+  const num = numFmt(lang);
   const [country, setCountry] = useState<Choice>(initial);
   const [custom, setCustom] = useState("15");
   const [mode, setMode] = useState<"add" | "remove">("add");

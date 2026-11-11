@@ -80,3 +80,9 @@ export const HIJRI_MONTHS_AR = [
   "محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة",
   "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة",
 ] as const;
+
+/** Common English transliterations, as used by Saudi and UAE government sites. */
+export const HIJRI_MONTHS_EN = [
+  "Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Ula", "Jumada al-Akhirah",
+  "Rajab", "Shaban", "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah",
+] as const;

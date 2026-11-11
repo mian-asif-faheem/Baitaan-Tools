@@ -1,0 +1,40 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import SalarioLiquidoCalc from "../../components/SalarioLiquidoCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Brazil net salary calculator 2026 (CLT) | Baitaan"
+  description="Work out your 2026 net salary in Brazil with the INSS and income tax tables and the new income tax exemption up to R$ 5,000 (Law 15.270/2025). Free, no sign-up."
+>
+  <ToolPage
+    heading="Net salary calculator 2026 (Brazil)"
+    lead="Since January 2026, people earning up to R$ 5,000 a month pay no income tax at source in Brazil. The INSS social security deduction still applies, from 7.5% to 14% by bracket."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15270.htm", label: "Law 15.270/2025 (income tax reduction)" },
+      { href: "https://www.gov.br/inss/", label: "INSS: 2026 contribution table" },
+    ]}
+  >
+    <SalarioLiquidoCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How to calculate net salary</h2>
+      <p>Net salary = gross salary − INSS − income tax − other deductions. INSS is calculated bracket by bracket. Income tax is calculated on gross pay minus INSS and dependents (or the simplified deduction of R$ 607.20, whichever is higher).</p>
+
+      <h2>2026 examples</h2>
+      <ul>
+        <li>R$ 5,000: INSS R$ 501.51, no income tax, net R$ 4,498.49.</li>
+        <li>R$ 6,000: INSS R$ 641.51, income tax R$ 385.10 after the reduction, net R$ 4,973.39.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Earning between R$ 5,000 and R$ 7,350</h2>
+      <p>In this range the tax isn't zero, but it is lower. The reduction is R$ 978.62 minus 13.3145% of the salary. Above R$ 7,350 the normal table applies.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

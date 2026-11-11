@@ -1,0 +1,108 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import SueldoNetoCalc from "../../components/SueldoNetoCalc.tsx";
+import { MX_2026, sueldoNeto } from "@bt/tools/mx";
+import { money } from "../../components/form";
+
+const fmt = money("en");
+const pct = (r: number) => `${(r * 100).toLocaleString("en-US", { maximumFractionDigits: 3 })}%`;
+const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ monthlyGross: g }));
+---
+<Layout
+  lang="en"
+  title="Mexico net salary calculator 2026 (ISR and IMSS) | Baitaan"
+  description="Work out your 2026 monthly take-home pay in Mexico: ISR from the SAT table, the employment subsidy and IMSS contributions. Free, no sign-up."
+>
+  <ToolPage
+    heading="Mexico net salary calculator 2026"
+    lead="Your net pay is your gross salary minus ISR (income tax) and IMSS (social security). If you earn up to $11,492.66 a month, the employment subsidy cuts your ISR by up to $535.65."
+    updated="Updated: November 2026 · 2026 ISR table, UMA $117.31"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.sat.gob.mx/", label: "SAT: Annex 8 of the 2026 Miscellaneous Tax Resolution" },
+      { href: "https://www.inegi.org.mx/temas/uma/", label: "INEGI: 2026 UMA value" },
+      { href: "https://www.imss.gob.mx/", label: "IMSS: employer and employee contributions" },
+    ]}
+  >
+    <SueldoNetoCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How net pay is worked out</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li><strong>ISR:</strong> find your gross monthly salary in the SAT table. Apply your row's percentage to the amount above the lower limit, then add the fixed fee.</li>
+        <li><strong>Employment subsidy:</strong> if you earn up to $11,492.66, take $535.65 off your ISR. The subsidy is never paid in cash: if it is larger than your ISR, your ISR is simply zero.</li>
+        <li><strong>IMSS:</strong> multiply your contribution base (daily salary × integration factor) by the employee rates and by 30.4 days.</li>
+        <li>Subtract ISR and IMSS from your gross salary.</li>
+      </ol>
+
+      <h2>2026 examples</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Gross salary</th>
+              <th class="py-2 text-end font-medium">ISR</th>
+              <th class="py-2 text-end font-medium">IMSS</th>
+              <th class="py-2 text-end font-medium">Net pay</th>
+            </tr>
+          </thead>
+          <tbody>
+            {examples.map((r) => (
+              <tr class="border-t border-stone-200">
+                <td class="py-2 tabular-nums">{fmt.format(r.monthlyGross)}</td>
+                <td class="py-2 text-end tabular-nums">{fmt.format(r.isr)}</td>
+                <td class="py-2 text-end tabular-nums">{fmt.format(r.imss)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{fmt.format(r.net)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-stone-500">With the legal minimum integration factor (1.0493). At $10,000 the subsidy is already applied.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>2026 monthly ISR table</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Lower limit</th>
+              <th class="py-2 text-end font-medium">Fixed fee</th>
+              <th class="py-2 text-end font-medium">% on the excess</th>
+            </tr>
+          </thead>
+          <tbody>
+            {MX_2026.isrMonthly.map((r) => (
+              <tr class="border-t border-stone-200">
+                <td class="py-1.5 tabular-nums">{fmt.format(r.lower)}</td>
+                <td class="py-1.5 text-end tabular-nums">{fmt.format(r.fixed)}</td>
+                <td class="py-1.5 text-end tabular-nums">{pct(r.rate)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>IMSS contributions paid by the employee</h2>
+      <ul>
+        <li>Cash benefits: 0.25%</li>
+        <li>Pensioners' medical costs: 0.375%</li>
+        <li>Disability and life: 0.625%</li>
+        <li>Old age and early retirement: 1.125%</li>
+        <li>Sickness and maternity: 0.40%, only on the part of the daily salary above 3 UMA ($351.93)</li>
+      </ul>
+      <p>In total, most people pay between 2.4% and 2.8% of their salary to IMSS.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Is ISR deducted if I earn the minimum wage?</h3>
+      <p>No. Anyone earning only the minimum wage ($315.04 a day in 2026) pays no ISR, and the employer covers their IMSS contributions.</p>
+      <h3 class="font-semibold text-stone-900">How do I work out my fortnightly net pay?</h3>
+      <p>Divide the monthly result by two. Your payslip may differ by a few pesos because employers calculate a fortnight as 15 or 15.2 days.</p>
+      <h3 class="font-semibold text-stone-900">What is the integration factor?</h3>
+      <p>It turns your daily salary into your contribution base by adding the daily share of your aguinaldo and vacation premium. If your employer gives more benefits, your factor is higher.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

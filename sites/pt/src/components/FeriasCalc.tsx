@@ -1,12 +1,14 @@
 import { useMemo, useState } from "preact/hooks";
 import { ferias } from "@bt/tools/br";
-import t from "../i18n/pt.json";
-import { Check, NumberField, Result, Rows, brl } from "./form";
+import { getT, type Lang } from "../i18n";
+import { Check, NumberField, Result, Rows, money } from "./form";
 
-const L = t.ferias;
-const C = t.common;
 
-export default function FeriasCalc() {
+export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.ferias;
+  const C = t.common;
+  const brl = money(lang);
   const [salary, setSalary] = useState("3000");
   const [extras, setExtras] = useState("0");
   const [absences, setAbsences] = useState("0");
@@ -40,7 +42,7 @@ export default function FeriasCalc() {
         <Result class="sm:col-span-2" label={L.result} amount={brl.format(r.net)}>
           <span class="mt-1 block text-sm text-stone-600">
             {L.entitled} {r.entitlement} {C.days}
-            {r.daysSold > 0 && ` · ${r.restDays} ${C.days} de descanso + ${r.daysSold} vendidos`}
+            {r.daysSold > 0 && ` · ${L.split.replace("{rest}", String(r.restDays)).replace("{sold}", String(r.daysSold))}`}
           </span>
           {r.entitlement > 0 && (
             <Rows

@@ -1,11 +1,12 @@
 import { useMemo, useState } from "preact/hooks";
 import { stripDiacritics, textStats } from "@bt/tools/text";
-import t from "../i18n/ar.json";
-import { num } from "./form";
+import { getT, type Lang } from "../i18n";
+import { numFmt } from "./form";
 
-const L = t.words;
 
-export default function WordCounter() {
+export default function WordCounter({ lang = "ar" }: { lang?: Lang }) {
+  const L = getT(lang).words;
+  const num = numFmt(lang);
   const [text, setText] = useState("");
   const [copied, setCopied] = useState(false);
   const s = useMemo(() => textStats(text), [text]);

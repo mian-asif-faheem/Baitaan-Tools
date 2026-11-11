@@ -1,13 +1,15 @@
 import { useMemo, useState } from "preact/hooks";
 import { rescisao, type TipoRescisao } from "@bt/tools/br";
-import t from "../i18n/pt.json";
-import { Check, NumberField, Result, Rows, Toggle, brl, fieldClass } from "./form";
+import { getT, type Lang } from "../i18n";
+import { Check, NumberField, Result, Rows, Toggle, money, fieldClass } from "./form";
 
-const L = t.rescisao;
-const C = t.common;
 const today = () => new Date().toISOString().slice(0, 10);
 
-export default function RescisaoCalc() {
+export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.rescisao;
+  const C = t.common;
+  const brl = money(lang);
   const [tipo, setTipo] = useState<TipoRescisao>("semJustaCausa");
   const [salary, setSalary] = useState("3000");
   const [start, setStart] = useState("2024-03-01");
@@ -78,7 +80,7 @@ export default function RescisaoCalc() {
       {(tipo === "semJustaCausa" || tipo === "acordo") && <NumberField label={L.fgts} hint={L.fgtsHint} value={fgts} onInput={setFgts} min={0} />}
 
       <details class="rounded-lg border border-stone-200 p-3 sm:col-span-2">
-        <summary class="cursor-pointer text-sm font-semibold text-stone-700">Horas extras, comissões e dependentes</summary>
+        <summary class="cursor-pointer text-sm font-semibold text-stone-700">{L.extrasSummary}</summary>
         <div class="mt-3 grid gap-4 sm:grid-cols-2">
           <NumberField label={C.extras} hint={C.extrasHint} value={extras} onInput={setExtras} min={0} />
           <NumberField label={C.dependents} value={deps} onInput={setDeps} min={0} step="1" />

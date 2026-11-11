@@ -1,0 +1,79 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Mexico finiquito and severance calculator 2026 | Baitaan"
+  description="Work out your 2026 finiquito or severance pay under Mexico's Federal Labor Law: aguinaldo, vacation, vacation premium, 3 months' pay, 20 days per year and seniority premium. Free, no sign-up."
+>
+  <ToolPage
+    heading="Finiquito and severance calculator 2026 (Mexico)"
+    lead="Whenever a job ends in Mexico, you are owed a finiquito: unpaid salary plus proportional aguinaldo, vacation and vacation premium. If you were dismissed without just cause, you are also owed severance (liquidación) of at least 3 months' pay."
+    updated="Updated: November 2026 · 2026 minimum wage and UMA"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Federal Labor Law, arts. 48–50, 76–80, 87, 162, 486" },
+      { href: "https://www.gob.mx/profedet", label: "PROFEDET: free labor advice" },
+    ]}
+  >
+    <FiniquitoCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>Finiquito vs. severance</h2>
+      <p>The <strong>finiquito</strong> is what your employer owes you for work already done. You get it whether you resign or are dismissed. <strong>Severance</strong> (liquidación) is extra compensation, owed only when you are dismissed without just cause or when you end the job because of the employer's fault (arts. 51 and 52).</p>
+
+      <h2>What the finiquito includes</h2>
+      <ul>
+        <li><strong>Unpaid salary:</strong> days worked and not yet paid.</li>
+        <li><strong>Proportional aguinaldo:</strong> 15 days' pay per year (art. 87), in proportion to the days worked since 1 January.</li>
+        <li><strong>Vacation:</strong> the proportional part of the current service year, plus untaken days from earlier years (arts. 76 and 79).</li>
+        <li><strong>Vacation premium:</strong> at least 25% of that vacation pay (art. 80).</li>
+        <li>Any other pending pay: profit sharing (PTU), bonuses or commissions.</li>
+      </ul>
+
+      <h2>What severance includes</h2>
+      <ul>
+        <li><strong>3 months' pay</strong> (90 days of integrated daily salary), arts. 48 and 50 sec. III.</li>
+        <li><strong>20 days per year worked</strong> (art. 50 sec. II), when the employer refuses to reinstate you (art. 49) or you end the job because of the employer (art. 52).</li>
+        <li><strong>Seniority premium:</strong> 12 days per year worked (art. 162). The salary used is capped at twice the minimum wage: $630.08 a day in 2026 ($881.74 in the northern border zone).</li>
+      </ul>
+      <p>If you win a lawsuit, you may also be owed back pay of up to 12 months (art. 48). The calculator leaves it out because it depends on the ruling.</p>
+
+      <h2>Example 1: resigning after 6 months</h2>
+      <p>Salary of $15,000 a month ($500 a day), from 1 January to 30 June 2026 (181 days):</p>
+      <ul>
+        <li>Aguinaldo: 500 × 15 × 181 ÷ 365 = $3,719.18</li>
+        <li>Vacation: 500 × 12 × 181 ÷ 365 = $2,975.34</li>
+        <li>Vacation premium: 25% of $2,975.34 = $743.84</li>
+        <li><strong>Finiquito: $7,438.36</strong></li>
+      </ul>
+
+      <h2>Example 2: unjustified dismissal after 3 years and 8 months</h2>
+      <p>Salary of $12,000 a month ($400 a day), from 1 March 2023 to 31 October 2026. In the fourth year the worker is entitled to 18 vacation days, so the integrated daily salary is 400 × (365 + 15 + 18 × 0.25) ÷ 365 = $421.37.</p>
+      <ul>
+        <li>Finiquito (aguinaldo, vacation and premium): $11,038.36</li>
+        <li>3 months' pay: 90 × $421.37 = $37,923.29</li>
+        <li>Seniority premium: 12 × 3.67 years × $400 = $17,635.07</li>
+        <li><strong>Total: $66,596.72</strong>, or $97,558.75 if the 20 days per year also apply.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Is the finiquito taxed?</h2>
+      <p>Part of it is free of ISR (Income Tax Law, art. 93): the aguinaldo up to 30 UMA ($3,519.30), the vacation premium up to 15 UMA ($1,759.65), and severance and seniority premium up to 90 UMA per year worked ($10,557.90 per year). Your employer withholds ISR on the rest, so the payment can be lower than the calculator's gross total.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Do I get severance if I resign?</h3>
+      <p>No. If you resign you only get the finiquito. With 15 or more years at the company, you also get the seniority premium.</p>
+      <h3 class="font-semibold text-stone-900">How long do I have to claim if I was dismissed?</h3>
+      <p>Two months from the dismissal (art. 518). Before filing a lawsuit you must go to your state's Conciliation Center or the Federal Conciliation Center. PROFEDET advises workers for free.</p>
+      <h3 class="font-semibold text-stone-900">Do I have to sign a resignation to get my finiquito?</h3>
+      <p>No. Your employer must pay the finiquito even if you sign nothing. Check the amounts before you sign any document.</p>
+      <h3 class="font-semibold text-stone-900">Which salary is used?</h3>
+      <p>The finiquito uses your daily salary. The 3 months and the 20 days per year use the integrated daily salary, which adds the daily share of your aguinaldo and vacation premium.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

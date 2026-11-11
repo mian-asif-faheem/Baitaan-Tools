@@ -1,0 +1,74 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import DecimoCalc from "../../components/DecimoCalc.tsx";
+import { decimoTerceiro } from "@bt/tools/br";
+import { money } from "../../components/form";
+
+const brl = money("en");
+const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTerceiro({ monthlySalary: s, monthsWorked: 12 }) }));
+---
+<Layout
+  lang="en"
+  title="Brazil 13th salary calculator 2026: 1st and 2nd installment | Baitaan"
+  description="Work out your 2026 13th salary in Brazil: the 1st installment, INSS and income tax on the 2nd installment with the R$ 5,000 exemption, and the proportional 13th. Free, no sign-up."
+>
+  <ToolPage
+    heading="13th salary calculator 2026 (Brazil)"
+    lead="The 1st installment of the 13th salary is half the amount, with no deductions, paid by 30 November. The 2nd installment, by 20 December, comes with INSS and income tax for the whole 13th. In 2026, a 13th of up to R$ 5,000 pays no income tax."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l4090.htm", label: "Law 4.090/1962 (13th salary)" },
+      { href: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15270.htm", label: "Law 15.270/2025, art. 3-A, § 3 (reduction also applies to the 13th)" },
+    ]}
+  >
+    <DecimoCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How to calculate the 13th salary</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Divide the salary by 12 and multiply by the months worked in the year. A month counts if you worked 15 days or more in it.</li>
+        <li>The 1st installment is half of that amount.</li>
+        <li>From the 2nd installment, take off INSS on the whole 13th and income tax, which is calculated separately from your salary.</li>
+      </ol>
+
+      <h2>2026 examples (full year, no dependents)</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-stone-500">
+              <th class="py-2 text-start font-medium">Salary</th>
+              <th class="py-2 text-end font-medium">1st installment</th>
+              <th class="py-2 text-end font-medium">INSS</th>
+              <th class="py-2 text-end font-medium">Income tax</th>
+              <th class="py-2 text-end font-medium">2nd installment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {examples.map((r) => (
+              <tr class="border-t border-stone-200">
+                <td class="py-2 tabular-nums">{brl.format(r.s)}</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.firstInstallment)}</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.inss)}</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.irrf)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{brl.format(r.secondInstallment)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Does the R$ 5,000 income tax exemption apply to the 13th?</h3>
+      <p>Yes. Law 15.270/2025 says explicitly that the reduction also applies to income tax on the 13th salary. Between R$ 5,000 and R$ 7,350 the tax is reduced; above that the normal table applies.</p>
+      <h3 class="font-semibold text-stone-900">Does overtime count toward the 13th?</h3>
+      <p>Yes. The monthly average of overtime, commissions and allowances over the year is included.</p>
+      <h3 class="font-semibold text-stone-900">I was dismissed. Do I get a 13th?</h3>
+      <p>Yes, the proportional 13th is part of your termination pay, except when you are dismissed for just cause. See the <a class="text-teal-800 underline" href="/en/calculadora-rescisao/">termination calculator</a>.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

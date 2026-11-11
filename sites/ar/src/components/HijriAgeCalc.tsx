@@ -1,13 +1,15 @@
 import { useMemo, useState } from "preact/hooks";
-import { HIJRI_MONTHS_AR, hijriAge, toGregorian, toHijri } from "@bt/tools/hijri";
+import { hijriAge, toGregorian, toHijri } from "@bt/tools/hijri";
 import { dateDiff, nextHijriOccurrence } from "@bt/tools/hijri-dates";
-import t from "../i18n/ar.json";
-import { HijriDateInput, Result, Rows, Toggle, count, durationText, fieldClass, gregLong } from "./form";
+import { getT, type Lang } from "../i18n";
+import { HijriDateInput, Result, Rows, Toggle, count, durationText, fieldClass, gregLongFmt, hijriText } from "./form";
 
-const L = t.age;
-const C = t.common;
 
-export default function HijriAgeCalc() {
+export default function HijriAgeCalc({ lang = "ar" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.age;
+  const C = t.common;
+  const gregLong = gregLongFmt(lang);
   const [cal, setCal] = useState<"g" | "h">("g");
   const [g, setG] = useState("1995-06-15");
   const [h, setH] = useState({ year: "1416", month: "1", day: "17" });
@@ -55,18 +57,18 @@ export default function HijriAgeCalc() {
           <input class={fieldClass} type="date" value={g} onInput={(e) => setG(e.currentTarget.value)} />
         </label>
       ) : (
-        <HijriDateInput label={L.birth} value={h} onChange={setH} />
+        <HijriDateInput lang={lang} label={L.birth} value={h} onChange={setH} />
       )}
 
       {r ? (
-        <Result label={L.result} amount={durationText(r.hijri.years, r.hijri.months, r.hijri.days)}>
+        <Result label={L.result} amount={durationText(r.hijri.years, r.hijri.months, r.hijri.days, lang)}>
           <Rows
             rows={[
-              { label: L.gregorianAge, value: durationText(r.greg.years, r.greg.months, r.greg.days) },
-              { label: L.birthHijri, value: `${r.bh.day} ${HIJRI_MONTHS_AR[r.bh.month - 1]} ${r.bh.year} ${t.conv.hijriSuffix}` },
+              { label: L.gregorianAge, value: durationText(r.greg.years, r.greg.months, r.greg.days, lang) },
+              { label: L.birthHijri, value: hijriText(r.bh, lang) },
               { label: L.birthGregorian, value: gregLong.format(r.birth) },
-              { label: L.totalDays, value: count(r.greg.totalDays, "days"), muted: true },
-              { label: L.next, value: r.nextDays === 0 ? "اليوم" : count(r.nextDays, "days"), muted: true },
+              { label: L.totalDays, value: count(r.greg.totalDays, "days", lang), muted: true },
+              { label: L.next, value: r.nextDays === 0 ? L.today : count(r.nextDays, "days", lang), muted: true },
             ]}
           />
         </Result>

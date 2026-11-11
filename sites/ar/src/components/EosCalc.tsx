@@ -1,14 +1,16 @@
 import { useMemo, useState } from "preact/hooks";
 import { saudiEos, serviceLength, uaeGratuity, type SaudiReason } from "@bt/tools/gulf";
-import t from "../i18n/ar.json";
-import { NumberField, Result, Rows, Toggle, count, durationText, fieldClass, money, num } from "./form";
+import { getT, type Lang } from "../i18n";
+import { NumberField, Result, Rows, Toggle, count, durationText, fieldClass, money, numFmt } from "./form";
 
-const L = t.eos;
-const C = t.common;
 const today = () => new Date().toISOString().slice(0, 10);
 
-export default function EosCalc({ country }: { country: "sa" | "ae" }) {
-  const cur = money(country === "sa" ? "SAR" : "AED");
+export default function EosCalc({ country, lang = "ar" }: { country: "sa" | "ae"; lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.eos;
+  const C = t.common;
+  const num = numFmt(lang);
+  const cur = money(country === "sa" ? "SAR" : "AED", lang);
   const [wage, setWage] = useState(country === "sa" ? "8000" : "5000");
   const [start, setStart] = useState("2020-01-01");
   const [end, setEnd] = useState(today());
@@ -28,7 +30,7 @@ export default function EosCalc({ country }: { country: "sa" | "ae" }) {
     }
   }, [country, wage, start, end, unpaid, reason, basis]);
 
-  const shareText = (x: number) => (x === 1 ? "كاملة" : x === 0 ? "لا شيء" : x < 0.5 ? "الثلث" : "الثلثان");
+  const shareText = (x: number) => (x === 1 ? L.shareFull : x === 0 ? L.shareNone : x < 0.5 ? L.shareThird : L.shareTwoThirds);
 
   return (
     <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
@@ -85,7 +87,7 @@ export default function EosCalc({ country }: { country: "sa" | "ae" }) {
           amount={cur.format(r.sa ? r.sa.award : r.ae!.gratuity)}
         >
           <span class="mt-1 block text-sm text-stone-600">
-            {C.service}: {durationText(r.s.years, r.s.months, r.s.days)}
+            {C.service}: {durationText(r.s.years, r.s.months, r.s.days, lang)}
           </span>
           {r.sa && (
             <>
@@ -109,7 +111,7 @@ export default function EosCalc({ country }: { country: "sa" | "ae" }) {
                 <Rows
                   rows={[
                     { label: L.daily, value: cur.format(r.ae.daily), muted: true },
-                    { label: L.daysLine, value: Number.isInteger(r.ae.days) ? count(r.ae.days, "days") : `${num.format(r.ae.days)} ${C.days}` },
+                    { label: L.daysLine, value: Number.isInteger(r.ae.days) ? count(r.ae.days, "days", lang) : `${num.format(r.ae.days)} ${C.days}` },
                     { label: L.cap, value: cur.format(r.ae.cap), muted: true },
                     { label: L.result, value: cur.format(r.ae.gratuity), strong: true },
                   ]}

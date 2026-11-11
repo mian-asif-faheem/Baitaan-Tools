@@ -9,6 +9,7 @@
     "dev:pt": "pnpm --filter @bt/site-pt dev",
     "dev:ar": "pnpm --filter @bt/site-ar dev",
     "build": "pnpm -r --filter \"./sites/*\" build",
-    "test": "pnpm --filter @bt/tools test"
+    "test": "pnpm --filter @bt/tools test",
+    "check:i18n": "node scripts/check-i18n.mjs"
   }
 }

@@ -1,0 +1,37 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import DateDiffCalc from "../../components/DateDiffCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Days between two dates, in Hijri and Gregorian | Baitaan"
+  description="Count the days, weeks, months and years between two dates in the Hijri or Gregorian calendar, plus working days excluding Friday and Saturday. Free, no sign-up."
+>
+  <ToolPage
+    heading="Days between two dates"
+    lead="Enter two Hijri or Gregorian dates to see the number of days between them, the time in years, months and days in both calendars, and the number of working days."
+    updated="Updated: November 2026"
+  >
+    <DateDiffCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>Common uses</h2>
+      <ul>
+        <li>Working out the length of contracts, leave and probation periods.</li>
+        <li>Counting the days left until an appointment or until a residence permit or passport expires.</li>
+        <li>Calculating the iddah and other religious periods in the Hijri calendar.</li>
+      </ul>
+
+      <h2>Why do Hijri and Gregorian results differ?</h2>
+      <p>A Hijri month has 29 or 30 days and a Hijri year about 354 days. So the same period can be “1 year” in Hijri and “11 months and 20 days” in Gregorian.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Working days</h2>
+      <p>The tool counts working days excluding Friday and Saturday, the weekend in Saudi Arabia and most Gulf countries. It does not remove public holidays, so subtract them yourself if needed.</p>
+      <p>Want your Hijri age? Use the <a class="text-teal-800 underline" href="/en/hisab-alumr-bilhijri/">Hijri age calculator</a>.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

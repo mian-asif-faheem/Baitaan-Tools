@@ -1,0 +1,55 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import HorasExtrasCalc from "../../components/HorasExtrasCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Brazil overtime and night premium calculator 2026 | Baitaan"
+  description="Work out 50% and 100% overtime, the night premium with the shorter night hour, and the effect on the paid weekly rest day (DSR) in Brazil. For 44, 40, 36 and 30-hour weeks. Free, no sign-up."
+>
+  <ToolPage
+    heading="Overtime and night premium calculator (Brazil)"
+    lead="In Brazil, an overtime hour pays at least 50% more than a normal hour, and night work between 10 pm and 5 am earns a 20% premium. Overtime also increases the pay for your weekly rest day (DSR)."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm", label: "CLT, arts. 59 and 73" },
+      { href: "https://www.planalto.gov.br/ccivil_03/leis/l0605.htm", label: "Law 605/1949 (paid weekly rest)" },
+    ]}
+  >
+    <HorasExtrasCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How to calculate overtime</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li><strong>Hourly rate:</strong> salary ÷ the divisor for your weekly hours. For 44 hours a week the divisor is 220; for 40 hours, 200.</li>
+        <li><strong>Overtime hour:</strong> hourly rate × 1.5 (50%) or × 2 (100%, on Sundays and holidays).</li>
+        <li><strong>DSR:</strong> add up overtime and night premium, divide by the working days in the month and multiply by the Sundays and holidays.</li>
+      </ol>
+
+      <h2>Example</h2>
+      <p>Salary of R$ 2,200 on a 44-hour week: the hourly rate is R$ 10 and a 50% overtime hour is R$ 15. With 10 overtime hours on working days and 4 on a Sunday, in a month with 25 working days and 5 Sundays and holidays:</p>
+      <ul>
+        <li>50% overtime: 10 × R$ 15 = R$ 150.00</li>
+        <li>100% overtime: 4 × R$ 20 = R$ 80.00</li>
+        <li>DSR: R$ 230 ÷ 25 × 5 = R$ 46.00</li>
+        <li><strong>Total: R$ 276.00</strong></li>
+      </ul>
+
+      <h2>Night premium and the shorter night hour</h2>
+      <p>For urban workers, night hours run from 10 pm to 5 am. Each night hour counts as 52 minutes and 30 seconds, so 7 clock hours count as 8 hours. The premium is at least 20% of the normal hourly rate: in the example above, 8 × R$ 2 = R$ 16 per night.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">How much overtime can I work per day?</h3>
+      <p>Up to 2 hours a day (CLT art. 59), except where the law or an agreement allows otherwise.</p>
+      <h3 class="font-semibold text-stone-900">Can the premium be more than 50%?</h3>
+      <p>Yes. Many collective agreements set 60%, 70% or more. Enter your union's percentage in the calculator.</p>
+      <h3 class="font-semibold text-stone-900">Is overtime taxed?</h3>
+      <p>Yes. It is added to the month's salary and pays INSS and income tax with it.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

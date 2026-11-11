@@ -1,0 +1,31 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import HijriConverter from "../../components/HijriConverter.tsx";
+---
+<Layout
+  lang="en"
+  title="Hijri to Gregorian date converter (and back) | Baitaan"
+  description="Convert any date from Gregorian to Hijri or from Hijri to Gregorian using the Umm al-Qura calendar. Free, no sign-up."
+>
+  <ToolPage
+    heading="Hijri and Gregorian date converter"
+    lead="Pick a direction and enter a date to get the matching date and the day of the week instantly, using the Umm al-Qura calendar."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar" }]}
+  >
+    <HijriConverter client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>What is the Umm al-Qura calendar?</h2>
+      <p>Umm al-Qura is Saudi Arabia's official Hijri calendar. It is calculated in advance from astronomical data, so the start of a month can differ by one day in countries that rely on sighting the new moon.</p>
+
+      <h2>Why does the length of a Hijri month vary?</h2>
+      <p>A Hijri month has 29 or 30 days, and a Hijri year has about 354 days, roughly 11 days shorter than a Gregorian year.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+    </Fragment>
+  </ToolPage>
+</Layout>

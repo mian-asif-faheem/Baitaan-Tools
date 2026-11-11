@@ -1,14 +1,36 @@
 {
+  "brand": "Baitaan Herramientas",
   "nav": [
-    { "href": "/calculadora-finiquito/", "label": "Finiquito" },
-    { "href": "/calculadora-sueldo-neto/", "label": "Sueldo neto" },
-    { "href": "/foto-tamano-infantil/", "label": "Fotos" },
-    { "href": "/comprimir-pdf/", "label": "PDF" }
+    {
+      "href": "/calculadora-finiquito/",
+      "label": "Finiquito"
+    },
+    {
+      "href": "/calculadora-sueldo-neto/",
+      "label": "Sueldo neto"
+    },
+    {
+      "href": "/foto-tamano-infantil/",
+      "label": "Fotos"
+    },
+    {
+      "href": "/comprimir-pdf/",
+      "label": "PDF"
+    }
   ],
   "footer": [
-    { "href": "/acerca/", "label": "Acerca de" },
-    { "href": "/privacidad/", "label": "Privacidad" },
-    { "href": "mailto:hola@baitaandessigns.com", "label": "Contacto" }
+    {
+      "href": "/acerca/",
+      "label": "Acerca de"
+    },
+    {
+      "href": "/privacidad/",
+      "label": "Privacidad"
+    },
+    {
+      "href": "mailto:hola@baitaandessigns.com",
+      "label": "Contacto"
+    }
   ],
   "footerNote": "Herramientas gratis que funcionan en tu navegador",
   "common": {
@@ -61,7 +83,8 @@
       "primaAntiguedad": "Prima de antigüedad (art. 162)"
     },
     "noLiquidacion": "Al renunciar con menos de 15 años de antigüedad no te corresponde indemnización ni prima de antigüedad.",
-    "disclaimer": "Montos brutos estimados. Tu empresa retiene ISR sobre la parte gravable. Si te despidieron, tienes 2 meses para demandar; acude a la PROFEDET (gratis)."
+    "disclaimer": "Montos brutos estimados. Tu empresa retiene ISR sobre la parte gravable. Si te despidieron, tienes 2 meses para demandar; acude a la PROFEDET (gratis).",
+    "benefits": "Prestaciones de tu empresa"
   },
   "neto": {
     "gross": "Sueldo bruto mensual (MXN)",
@@ -89,7 +112,8 @@
     "total": "Total",
     "table": "Días por año de antigüedad",
     "year": "Año",
-    "disclaimer": "Según el artículo 76 de la Ley Federal del Trabajo, vigente desde 2023."
+    "disclaimer": "Según el artículo 76 de la Ley Federal del Trabajo, vigente desde 2023.",
+    "daysShort": "días"
   },
   "photo": {
     "choose": "Elige tu foto",
@@ -123,5 +147,27 @@
     "already": "Tu PDF ya pesa menos que el tamaño elegido.",
     "tooBig": "No fue posible llegar a ese tamaño sin que el texto deje de leerse. Este es el resultado más pequeño legible.",
     "error": "No se pudo abrir el PDF. Puede estar dañado o protegido con contraseña."
+  },
+  "chrome": {
+    "themeToggle": "Cambiar entre tema claro y oscuro",
+    "languageLabel": "Idioma",
+    "cookieSettings": "Configuración de cookies",
+    "consent": {
+      "title": "Usamos cookies",
+      "text": "Las cookies necesarias guardan tu tema, tu idioma y esta elección. Con tu permiso, Google también usa cookies para medir las visitas y personalizar los anuncios. Puedes cambiar tu elección cuando quieras desde el pie de página.",
+      "privacyLabel": "Política de privacidad",
+      "privacyHref": "/privacidad/",
+      "accept": "Aceptar todo",
+      "reject": "Rechazar",
+      "customize": "Personalizar",
+      "save": "Guardar selección",
+      "necessary": "Necesarias",
+      "necessaryDesc": "Recuerdan tu tema, tu idioma y tu elección de cookies.",
+      "analytics": "Analítica",
+      "analyticsDesc": "Nos ayuda a saber qué herramientas se usan más (Google Analytics).",
+      "ads": "Publicidad personalizada",
+      "adsDesc": "Permite a Google mostrar anuncios según tus intereses. Si la rechazas, verás anuncios no personalizados.",
+      "alwaysOn": "siempre activas"
+    }
   }
 }

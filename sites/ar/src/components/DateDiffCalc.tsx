@@ -1,18 +1,20 @@
 import { useMemo, useState } from "preact/hooks";
 import { toGregorian, toHijri } from "@bt/tools/hijri";
 import { dateDiff, hijriDiff, workingDays } from "@bt/tools/hijri-dates";
-import t from "../i18n/ar.json";
-import { Check, HijriDateInput, Result, Rows, Toggle, count, durationText, fieldClass, num } from "./form";
+import { getT, type Lang } from "../i18n";
+import { Check, HijriDateInput, Result, Rows, Toggle, count, durationText, fieldClass, joinParts, numFmt } from "./form";
 
-const L = t.diff;
-const C = t.common;
 const todayIso = () => new Date().toISOString().slice(0, 10);
 const hToStr = (d: Date) => {
   const h = toHijri(d);
   return { year: String(h.year), month: String(h.month), day: String(h.day) };
 };
 
-export default function DateDiffCalc() {
+export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.diff;
+  const C = t.common;
+  const num = numFmt(lang);
   const [cal, setCal] = useState<"g" | "h">("g");
   const [a, setA] = useState(todayIso());
   const [b, setB] = useState(`${new Date().getUTCFullYear() + 1}-01-01`);
@@ -59,19 +61,19 @@ export default function DateDiffCalc() {
         </>
       ) : (
         <>
-          <HijriDateInput label={L.from} value={ha} onChange={setHa} />
-          <HijriDateInput label={L.to} value={hb} onChange={setHb} />
+          <HijriDateInput lang={lang} label={L.from} value={ha} onChange={setHa} />
+          <HijriDateInput lang={lang} label={L.to} value={hb} onChange={setHb} />
         </>
       )}
       <Check class="sm:col-span-2" label={L.includeEnd} checked={includeEnd} onChange={setIncludeEnd} />
 
       {r && r !== "error" ? (
-        <Result class="sm:col-span-2" label={L.totalDays} amount={r.g.totalDays === 0 ? `0 ${C.days}` : count(r.g.totalDays, "days")}>
+        <Result class="sm:col-span-2" label={L.totalDays} amount={count(r.g.totalDays, "days", lang)}>
           <Rows
             rows={[
-              { label: L.gregorianDiff, value: durationText(r.g.years, r.g.months, r.g.days) },
-              { label: L.hijriDiff, value: durationText(r.h.years, r.h.months, r.h.days) },
-              { label: L.weeks, value: r.g.weeks === 0 ? count(r.g.weekDays || 0, "days") : `${count(r.g.weeks, "weeks")}${r.g.weekDays ? ` و${count(r.g.weekDays, "days")}` : ""}` },
+              { label: L.gregorianDiff, value: durationText(r.g.years, r.g.months, r.g.days, lang) },
+              { label: L.hijriDiff, value: durationText(r.h.years, r.h.months, r.h.days, lang) },
+              { label: L.weeks, value: r.g.weeks === 0 ? count(r.g.weekDays || 0, "days", lang) : joinParts([count(r.g.weeks, "weeks", lang), ...(r.g.weekDays ? [count(r.g.weekDays, "days", lang)] : [])], lang) },
               { label: L.workDays, value: num.format(r.w) },
             ]}
           />

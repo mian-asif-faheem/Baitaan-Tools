@@ -1,0 +1,50 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import EosCalc from "../../components/EosCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="UAE end-of-service gratuity calculator 2026 | Baitaan"
+  description="Work out your UAE end-of-service gratuity under the new Labour Law: 21 days per year for the first five years and 30 days after that, on the basic salary. Free, no sign-up."
+>
+  <ToolPage
+    heading="End-of-service gratuity calculator (UAE)"
+    lead="After one year of service, an employee in the UAE earns 21 days of basic salary for each of the first five years and 30 days for each year after that, up to 2 years' pay. Under the new law, the gratuity isn't reduced on resignation."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.mohre.gov.ae/", label: "Ministry of Human Resources and Emiratisation" }]}
+  >
+    <EosCalc client:load country="ae" lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How it is calculated (Article 51)</h2>
+      <ol class="ms-5 list-decimal space-y-1">
+        <li>Daily wage = basic salary ÷ 30. Some employers use salary × 12 ÷ 365.</li>
+        <li>For each of the first five years: 21 days.</li>
+        <li>For each year after that: 30 days.</li>
+        <li>Parts of a year count in proportion; days of unpaid absence don't count.</li>
+        <li>The gratuity can't exceed 2 years' pay (24 basic salaries).</li>
+      </ol>
+
+      <h2>Examples on a basic salary of AED 5,000</h2>
+      <ul>
+        <li>3 years and 8 months: 77 days × 166.67 = <strong>AED 12,833.33</strong>.</li>
+        <li>6 years and 4 months: 105 days for the first five years and 40 days after = <strong>AED 24,166.67</strong>.</li>
+        <li>25 years: AED 117,500, below the maximum (AED 120,000).</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Is the gratuity lower if I resign?</h3>
+      <p>No. Under Decree-Law No. 33 of 2021, the gratuity is calculated the same way whether the employee resigns or the employer ends the contract, as long as one year of service is complete.</p>
+      <h3 class="font-semibold text-stone-900">Is housing allowance included?</h3>
+      <p>No. The gratuity is calculated on the last basic salary only, without allowances or commissions.</p>
+      <h3 class="font-semibold text-stone-900">When must it be paid?</h3>
+      <p>Within 14 days of the end of employment.</p>
+      <p>Working in Saudi Arabia? Use the <a class="text-teal-800 underline" href="/en/nihayat-alkhidma-saudi/">Saudi end-of-service calculator</a>.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

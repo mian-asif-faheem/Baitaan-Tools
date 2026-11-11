@@ -1,0 +1,44 @@
+/*
+ * Light/dark theme for every Baitaan site.
+ * Dark mode redefines the palette tokens Tailwind compiles to, so every existing class
+ * (bg-white, text-stone-900, bg-teal-700…) switches without per-element dark: classes.
+ * The stone scale is inverted; teal gets lighter so buttons and links keep their contrast
+ * (buttons become light teal with dark text, since text-white maps to the card colour).
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  --color-white: #1b1917;
+  --color-stone-50: #100f0e;
+  --color-stone-100: #26231f;
+  --color-stone-200: #34302c;
+  --color-stone-300: #4b4641;
+  --color-stone-400: #7c756f;
+  --color-stone-500: #a8a29e;
+  --color-stone-600: #c4bfba;
+  --color-stone-700: #d9d5d1;
+  --color-stone-800: #e9e6e3;
+  --color-stone-900: #f6f5f3;
+
+  --color-teal-50: #10302d;
+  --color-teal-100: #1c4642;
+  --color-teal-700: #2dd4bf;
+  --color-teal-800: #5eead4;
+  --color-teal-900: #a7f3e7;
+
+  --color-red-700: #f87171;
+  --color-amber-800: #fbbf24;
+}
+
+/* Smooth the switch, but never animate on first paint. */
+html.theme-ready body,
+html.theme-ready header,
+html.theme-ready footer {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

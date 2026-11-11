@@ -1,12 +1,14 @@
 import { useMemo, useState } from "preact/hooks";
 import { factorIntegracion, sueldoNeto } from "@bt/tools/mx";
-import t from "../i18n/es.json";
-import { Check, NumberField, Result, Rows, mxn } from "./form";
+import { getT, locale, type Lang } from "../i18n";
+import { Check, NumberField, Result, Rows, money } from "./form";
 
-const L = t.neto;
-const C = t.common;
 
-export default function SueldoNetoCalc() {
+export default function SueldoNetoCalc({ lang = "es" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.neto;
+  const C = t.common;
+  const mxn = money(lang);
   const [gross, setGross] = useState("15000");
   const [factor, setFactor] = useState(factorIntegracion().toFixed(4));
   const [other, setOther] = useState("0");

@@ -58,6 +58,9 @@ jobs:
       - name: Test calculators
         run: pnpm test
 
+      - name: Check translations
+        run: pnpm check:i18n
+
       - name: Build all sites
         run: pnpm build
         env:
@@ -71,6 +74,10 @@ jobs:
             test -f "sites/$s/dist/.htaccess" || { echo "::error::sites/$s/dist/.htaccess missing"; exit 1; }
             test -f "sites/$s/dist/404.html" || { echo "::error::sites/$s/dist/404.html missing"; exit 1; }
             echo "$s: $(find "sites/$s/dist" -type f | wc -l) files"
+          done
+          for s in es pt ar; do
+            test -f "sites/$s/dist/en/index.html" || { echo "::error::sites/$s/dist/en/index.html missing"; exit 1; }
+            test -f "sites/$s/dist/en/.htaccess" || { echo "::error::sites/$s/dist/en/.htaccess missing"; exit 1; }
           done
 
       - name: Deployment skipped

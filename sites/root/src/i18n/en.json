@@ -1,0 +1,24 @@
+{
+  "chrome": {
+    "themeToggle": "Switch between light and dark theme",
+    "languageLabel": "Language",
+    "cookieSettings": "Cookie settings",
+    "consent": {
+      "title": "We use cookies",
+      "text": "Necessary cookies remember your theme, your language and this choice. With your permission, Google also uses cookies to measure visits and personalise ads. You can change your choice at any time from the page footer.",
+      "privacyLabel": "Privacy policy",
+      "privacyHref": "/privacy/",
+      "accept": "Accept all",
+      "reject": "Reject",
+      "customize": "Customise",
+      "save": "Save choices",
+      "necessary": "Necessary",
+      "necessaryDesc": "Remember your theme, your language and your cookie choice.",
+      "analytics": "Analytics",
+      "analyticsDesc": "Helps us see which tools are used most (Google Analytics).",
+      "ads": "Personalised advertising",
+      "adsDesc": "Lets Google show ads based on your interests. If you reject it, you will see non-personalised ads.",
+      "alwaysOn": "always on"
+    }
+  }
+}

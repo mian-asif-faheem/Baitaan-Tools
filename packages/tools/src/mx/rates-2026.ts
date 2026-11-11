@@ -1,3 +1,4 @@
+import type { Widen } from "../widen";
 /**
  * Mexico 2026 payroll figures. Update every January (UMA changes on 1 February).
  *
@@ -43,4 +44,4 @@ export const MX_2026 = {
   },
 } as const;
 
-export type MxRates = typeof MX_2026;
+export type MxRates = Widen<typeof MX_2026>;

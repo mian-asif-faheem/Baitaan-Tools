@@ -1,12 +1,14 @@
 import { useMemo, useState } from "preact/hooks";
 import { aguinaldo, monthlyToDaily } from "@bt/tools/mx";
-import t from "../i18n/es.json";
+import { getT, locale, type Lang } from "../i18n";
+import { money } from "./form";
 
-const L = t.aguinaldo;
-const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
 const field = "mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 text-lg focus:border-teal-700 focus:outline-none";
 
-export default function AguinaldoCalc() {
+export default function AguinaldoCalc({ lang = "es" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.aguinaldo;
+  const mxn = money(lang);
   const [mode, setMode] = useState<"monthly" | "daily">("monthly");
   const [salary, setSalary] = useState("12000");
   const [days, setDays] = useState("365");

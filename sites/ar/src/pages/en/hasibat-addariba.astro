@@ -1,0 +1,47 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import VatCalc from "../../components/VatCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="VAT calculator: Saudi Arabia 15% and UAE 5% | Baitaan"
+  description="Add VAT to a price or extract it from a VAT-inclusive amount: Saudi Arabia 15%, UAE 5%, Bahrain 10%, Oman 5%. Free, no sign-up."
+>
+  <ToolPage
+    heading="VAT calculator (Gulf)"
+    lead="To add VAT, multiply the amount by (1 + the rate). To extract it from a VAT-inclusive amount, divide by (1 + the rate); the difference is the VAT."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[
+      { href: "https://zatca.gov.sa/", label: "Zakat, Tax and Customs Authority (Saudi Arabia)" },
+      { href: "https://tax.gov.ae/", label: "Federal Tax Authority (UAE)" },
+    ]}
+  >
+    <VatCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>VAT rates in the Gulf</h2>
+      <ul>
+        <li>Saudi Arabia: 15%</li>
+        <li>UAE: 5%</li>
+        <li>Bahrain: 10%</li>
+        <li>Oman: 5%</li>
+        <li>Qatar and Kuwait: no VAT yet.</li>
+      </ul>
+
+      <h2>Examples</h2>
+      <ul>
+        <li>A price of SAR 1,000 before VAT in Saudi Arabia: VAT 150, total <strong>SAR 1,150</strong>.</li>
+        <li>An invoice of SAR 1,150 including VAT: amount before VAT 1,150 ÷ 1.15 = 1,000, VAT <strong>SAR 150</strong>.</li>
+        <li>AED 210 including VAT in the UAE: 210 ÷ 1.05 = 200, VAT <strong>AED 10</strong>.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>A common mistake</h2>
+      <p>Don't work out the VAT by multiplying the inclusive amount by 15%. On a SAR 1,150 invoice that gives 172.50, while the correct VAT is SAR 150. Divide by 1.15 first.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

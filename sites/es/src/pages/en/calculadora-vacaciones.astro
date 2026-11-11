@@ -1,0 +1,50 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import VacacionesCalc from "../../components/VacacionesCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Mexico vacation days and vacation premium calculator 2026 | Baitaan"
+  description="How many vacation days you get in Mexico by years of service, and how much your vacation premium is, under the 2023 'vacaciones dignas' reform. Free, no sign-up."
+>
+  <ToolPage
+    heading="Vacation days and vacation premium (Mexico)"
+    lead="Since 2023, workers in Mexico get 12 vacation days in their first year, 2 more each year up to 20, and then 2 more every 5 years. They also get a vacation premium of at least 25%."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Federal Labor Law, arts. 76–81" }]}
+  >
+    <VacacionesCalc client:load lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How many vacation days you get</h2>
+      <p>Article 76 of the Federal Labor Law sets the minimum. Your employer can give you more, never less.</p>
+      <ul>
+        <li>Year 1: 12 days · year 2: 14 · year 3: 16 · year 4: 18 · year 5: 20</li>
+        <li>Years 6–10: 22 days · 11–15: 24 · 16–20: 26 · 21–25: 28 · 26–30: 30</li>
+      </ul>
+
+      <h2>How the vacation premium is calculated</h2>
+      <p>Multiply your daily salary by your vacation days, then by 25% (or the higher percentage your employer gives).</p>
+      <p><strong>Example:</strong> on $12,000 a month ($400 a day) with 3 full years, you are in your fourth year: 18 days. Vacation pay: 400 × 18 = $7,200. Vacation premium: 25% of $7,200 = <strong>$1,800</strong>.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Rules worth knowing</h2>
+      <ul>
+        <li>At least 12 of your vacation days must be consecutive; you can spread the rest as you like (art. 78).</li>
+        <li>Vacation must be given within 6 months of each work anniversary (art. 81).</li>
+        <li>It cannot be swapped for money while you keep working (art. 79). It is only paid out when the job ends, as part of your finiquito.</li>
+        <li>The vacation premium is tax-free up to 15 UMA ($1,759.65 in 2026).</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">Are these calendar days or working days?</h3>
+      <p>Working days: your rest days and public holidays do not count.</p>
+      <h3 class="font-semibold text-stone-900">What happens to vacation I didn't take if I resign?</h3>
+      <p>It must be paid in your finiquito, together with its vacation premium. Work it out with the <a class="text-teal-800 underline" href="/en/calculadora-finiquito/">finiquito calculator</a>.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

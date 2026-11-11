@@ -15,6 +15,14 @@ Astro 7 (static output) · Preact 11 islands for the tools · Tailwind CSS 4 · 
 
 Every tool runs in the visitor's browser. There is no server and no database.
 
+## Languages, theme and cookies
+
+- **English on every language site.** Each page of `es.`, `pt.` and `ar.` has an English twin at `/en/<same slug>/` (English pages on `ar.` are left-to-right). The native language is the default; the language button in the header switches between the two versions of the same page and saves the choice in the `bt_lang` cookie, so returning visitors land on their language. Search engines see both versions linked with `hreflang`. 404 pages never redirect.
+- **Light and dark theme.** The first visit follows the browser/OS setting; the sun/moon button overrides it and saves `bt_theme`.
+- **Cookie consent.** A banner asks once (Accept all / Reject / Customise) and stores `bt_consent` for 6 months. Google Consent Mode v2 starts as denied, so Analytics and AdSense store nothing until the visitor accepts. "Cookie settings" in every footer reopens it.
+- All three cookies are set on `.baitaandessigns.com`, so choices carry across the hub and the subdomains.
+- The shell lives in `packages/ui/src/BaseLayout.astro` and `ConsentBanner.astro`; dark colours are in `packages/ui/src/theme.css`.
+
 ## Layout
 
 ```
@@ -29,12 +37,15 @@ packages/
                 dates.ts: date difference, Gulf working days, next Ramadan/Eid (countdowns)
     src/gulf/   End-of-service: Saudi Arabia (arts. 84-87) and UAE (art. 51); GCC VAT; zakat
     src/text/   Word/character counts that handle Arabic diacritics
-  ui/      BaseLayout (lang, dir, canonical, hreflang, AdSense), ToolPage, AdSlot, sites.ts
+  ui/      BaseLayout (lang, dir, canonical, hreflang, theme, language switch, consent, AdSense),
+           ConsentBanner, theme.css (dark mode), ToolPage, AdSlot, sites.ts
     src/tools/  Shared browser tools with translatable strings: PhotoTool (document photos + print
                 sheets at 300 dpi), PdfCompressTool (pdf.js + pdf-lib, loaded only when used),
                 MergePdfTool (PDFs + JPG/PNG, reorderable); form.tsx shared form controls
 sites/
-  root/ es/ pt/ ar/   Each: astro.config.mjs, src/i18n/<lang>.json, src/components, src/pages
+  root/ es/ pt/ ar/   Each: astro.config.mjs, src/i18n/<lang>.json + en.json, src/components,
+                      src/pages (native) and src/pages/en (English)
+scripts/check-i18n.mjs  Fails if a page has no English twin or the two string files differ
 ```
 
 ## Commands
@@ -42,6 +53,7 @@ sites/
 ```bash
 pnpm install
 pnpm test          # calculator tests (95 so far)
+pnpm check:i18n    # every page has an English version, all strings translated
 pnpm dev:es        # or dev:root, dev:pt, dev:ar
 pnpm build         # builds all four sites into sites/*/dist
 ```
@@ -49,9 +61,9 @@ pnpm build         # builds all four sites into sites/*/dist
 ## Adding a tool
 
 1. Write the logic in `packages/tools/src/<country>/` and tests in `packages/tools/test/`, using worked examples from official sources.
-2. Add UI strings to the site's `src/i18n/<lang>.json`.
-3. Add a Preact component in `sites/<lang>/src/components/`.
-4. Add a page in `sites/<lang>/src/pages/` using `ToolPage`, with the guide (method, 2–3 examples, FAQ) and official sources.
+2. Add UI strings to the site's `src/i18n/<lang>.json` and the same keys in English to `src/i18n/en.json`.
+3. Add a Preact component in `sites/<lang>/src/components/` that takes a `lang` prop and reads strings with `getT(lang)`.
+4. Add a page in `sites/<lang>/src/pages/` using `ToolPage`, with the guide (method, 2–3 examples, FAQ) and official sources, and its English twin with the same file name in `src/pages/en/` (`<Layout lang="en">`, `<Tool lang="en" />`, links to `/en/...`). `pnpm check:i18n` (also run on every deploy) catches anything missed.
 5. Mark it ready on the site's index page.
 6. Send the page for native-speaker review before indexing.
 

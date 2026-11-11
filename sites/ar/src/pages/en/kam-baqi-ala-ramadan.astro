@@ -1,0 +1,43 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import Countdown from "../../components/Countdown.tsx";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+
+const next = nextHijriOccurrence(9, 1);
+const y = next.hijri.year;
+const gYear = next.gregorian.getUTCFullYear();
+---
+<Layout
+  lang="en"
+  title={`How long until Ramadan ${gYear} (${y} AH)? Countdown | Baitaan`}
+  description={`Countdown in days and hours to the first day of Ramadan ${y} AH, with the expected date from the Umm al-Qura calendar.`}
+>
+  <ToolPage
+    heading={`How long until Ramadan ${gYear}?`}
+    lead={`Under the Umm al-Qura calendar, Ramadan ${y} AH starts on the date shown below. The official date is announced after the moon sighting on the evening of 29 Shaban.`}
+    updated="The countdown updates every second"
+  >
+    <Countdown client:load month={9} day={1} name="Ramadan" lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How is the first day of Ramadan decided?</h2>
+      <p>In Saudi Arabia, the Supreme Court calls for sighting the new moon on the evening of 29 Shaban. If the moon is seen, the next day is the first of Ramadan; if not, Shaban runs to 30 days. So the actual date can be a day earlier or later than the Umm al-Qura calendar.</p>
+
+      <h2>Coming dates</h2>
+      <ul>
+        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
+        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Get ready for Ramadan</h2>
+      <ul>
+        <li>Work out your zakat early with the <a class="text-teal-800 underline" href="/en/hasibat-azzakat/">zakat calculator</a>; many people pay it in Ramadan.</li>
+        <li>Convert any date between Hijri and Gregorian with the <a class="text-teal-800 underline" href="/en/tahweel-altareekh/">date converter</a>.</li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

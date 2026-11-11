@@ -1,0 +1,46 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import Countdown from "../../components/Countdown.tsx";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+import { toGregorian } from "@bt/tools/hijri";
+
+const next = nextHijriOccurrence(12, 10);
+const y = next.hijri.year;
+const gYear = next.gregorian.getUTCFullYear();
+const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", weekday: "long", timeZone: "UTC" });
+const arafah = fmt.format(toGregorian({ year: y, month: 12, day: 9 }));
+const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
+---
+<Layout
+  lang="en"
+  title={`How long until Eid al-Adha ${gYear} (${y} AH)? And the Day of Arafah | Baitaan`}
+  description={`Countdown to Eid al-Adha ${y} AH (10 Dhu al-Hijjah), with the expected date of the Day of Arafah from the Umm al-Qura calendar.`}
+>
+  <ToolPage
+    heading={`How long until Eid al-Adha ${gYear}?`}
+    lead={`Eid al-Adha falls on 10 Dhu al-Hijjah, after the Day of Arafah on 9 Dhu al-Hijjah. This is the expected date for ${y} AH under the Umm al-Qura calendar.`}
+    updated="The countdown updates every second"
+  >
+    <Countdown client:load month={12} day={10} name="Eid al-Adha" lang="en" />
+
+    <Fragment slot="guide">
+      <h2>Expected Hajj days for {y} AH</h2>
+      <ul>
+        <li>Day of Tarwiyah (8 Dhu al-Hijjah): {tarwiyah}</li>
+        <li>Day of Arafah (9 Dhu al-Hijjah): {arafah}</li>
+        <li>Eid al-Adha (10 Dhu al-Hijjah): {fmt.format(next.gregorian)}</li>
+      </ul>
+      <p>Saudi Arabia's Supreme Court announces the start of Dhu al-Hijjah after the moon sighting, so these dates may differ by one day.</p>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Coming dates</h2>
+      <ul>
+        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
+        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
+      </ul>
+    </Fragment>
+  </ToolPage>
+</Layout>

@@ -1,16 +1,44 @@
 {
+  "brand": "Baitaan Ferramentas",
   "nav": [
-    { "href": "/calculadora-rescisao/", "label": "Rescisão" },
-    { "href": "/calculadora-ferias/", "label": "Férias" },
-    { "href": "/calculadora-horas-extras/", "label": "Horas extras" },
-    { "href": "/calculadora-salario-liquido/", "label": "Salário líquido" },
-    { "href": "/foto-3x4/", "label": "Foto 3x4" },
-    { "href": "/comprimir-pdf/", "label": "PDF" }
+    {
+      "href": "/calculadora-rescisao/",
+      "label": "Rescisão"
+    },
+    {
+      "href": "/calculadora-ferias/",
+      "label": "Férias"
+    },
+    {
+      "href": "/calculadora-horas-extras/",
+      "label": "Horas extras"
+    },
+    {
+      "href": "/calculadora-salario-liquido/",
+      "label": "Salário líquido"
+    },
+    {
+      "href": "/foto-3x4/",
+      "label": "Foto 3x4"
+    },
+    {
+      "href": "/comprimir-pdf/",
+      "label": "PDF"
+    }
   ],
   "footer": [
-    { "href": "/sobre/", "label": "Sobre" },
-    { "href": "/privacidade/", "label": "Privacidade" },
-    { "href": "mailto:ola@baitaandessigns.com", "label": "Contato" }
+    {
+      "href": "/sobre/",
+      "label": "Sobre"
+    },
+    {
+      "href": "/privacidade/",
+      "label": "Privacidade"
+    },
+    {
+      "href": "mailto:ola@baitaandessigns.com",
+      "label": "Contato"
+    }
   ],
   "footerNote": "Ferramentas grátis que rodam no seu navegador",
   "common": {
@@ -81,7 +109,8 @@
     "service": "Tempo de casa",
     "years": "anos completos",
     "avisoDays": "Aviso prévio",
-    "disclaimer": "Simulação com as regras da CLT e as tabelas de 2026. A empresa deve pagar em até 10 dias após o fim do contrato (art. 477). Confira com o sindicato ou um advogado trabalhista."
+    "disclaimer": "Simulação com as regras da CLT e as tabelas de 2026. A empresa deve pagar em até 10 dias após o fim do contrato (art. 477). Confira com o sindicato ou um advogado trabalhista.",
+    "extrasSummary": "Horas extras, comissões e dependentes"
   },
   "ferias": {
     "absences": "Faltas sem justificativa no período aquisitivo",
@@ -96,7 +125,8 @@
       "abono": "Abono pecuniário",
       "tercoAbono": "1/3 sobre o abono"
     },
-    "disclaimer": "Simulação. O abono e o seu 1/3 não pagam INSS nem IR. A empresa deve pagar até 2 dias antes do início das férias (art. 145)."
+    "disclaimer": "Simulação. O abono e o seu 1/3 não pagam INSS nem IR. A empresa deve pagar até 2 dias antes do início das férias (art. 145).",
+    "split": "{rest} dias de descanso + {sold} vendidos"
   },
   "decimo": {
     "months": "Meses trabalhados no ano",
@@ -193,5 +223,27 @@
     "privacy": "Seus arquivos não saem do seu aparelho: tudo é feito no seu navegador.",
     "error": "Não foi possível abrir um dos arquivos. Ele pode estar protegido por senha.",
     "images": "Também aceita fotos JPG e PNG: cada uma vira uma página."
+  },
+  "chrome": {
+    "themeToggle": "Alternar entre tema claro e escuro",
+    "languageLabel": "Idioma",
+    "cookieSettings": "Configurações de cookies",
+    "consent": {
+      "title": "Usamos cookies",
+      "text": "Os cookies necessários guardam seu tema, seu idioma e esta escolha. Com sua permissão, o Google também usa cookies para medir as visitas e personalizar os anúncios. Você pode mudar sua escolha quando quiser pelo rodapé da página.",
+      "privacyLabel": "Política de privacidade",
+      "privacyHref": "/privacidade/",
+      "accept": "Aceitar todos",
+      "reject": "Recusar",
+      "customize": "Personalizar",
+      "save": "Salvar escolhas",
+      "necessary": "Necessários",
+      "necessaryDesc": "Lembram seu tema, seu idioma e sua escolha de cookies.",
+      "analytics": "Estatísticas",
+      "analyticsDesc": "Ajudam a saber quais ferramentas são mais usadas (Google Analytics).",
+      "ads": "Publicidade personalizada",
+      "adsDesc": "Permite que o Google mostre anúncios de acordo com seus interesses. Se recusar, você verá anúncios não personalizados.",
+      "alwaysOn": "sempre ativos"
+    }
   }
 }

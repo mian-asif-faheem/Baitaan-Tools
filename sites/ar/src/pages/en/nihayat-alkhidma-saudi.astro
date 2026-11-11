@@ -1,0 +1,57 @@
+---
+import Layout from "../../components/Layout.astro";
+import ToolPage from "@bt/ui/ToolPage.astro";
+import AdSlot from "@bt/ui/AdSlot.astro";
+import EosCalc from "../../components/EosCalc.tsx";
+---
+<Layout
+  lang="en"
+  title="Saudi end-of-service award calculator 2026 | Baitaan"
+  description="Work out your end-of-service award under the Saudi Labor Law: on resignation or end of contract, with the one-third, two-thirds and full award rules. Free, no sign-up."
+>
+  <ToolPage
+    heading="End-of-service award calculator (Saudi Arabia)"
+    lead="A worker in Saudi Arabia earns half a month's wage for each of the first five years and a full month's wage for each year after that. On resignation, the worker gets one third, two thirds or the full award depending on length of service."
+    updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://hrsd.gov.sa/en/knowledge-centre/articles/317", label: "Ministry of Human Resources: end-of-service award rules" }]}
+  >
+    <EosCalc client:load country="sa" lang="en" />
+
+    <Fragment slot="guide">
+      <h2>How it is calculated (Article 84)</h2>
+      <ul>
+        <li>Half a month's wage for each of the first five years.</li>
+        <li>A full month's wage for each year after the first five.</li>
+        <li>Parts of a year count in proportion.</li>
+        <li>The wage used is your last actual wage: basic plus housing, transport and all allowances due, not the basic wage alone.</li>
+      </ul>
+
+      <h2>Resignation (Article 85)</h2>
+      <ul>
+        <li>Less than 2 years: no award.</li>
+        <li>2 to 5 years: one third of the award.</li>
+        <li>More than 5 and less than 10 years: two thirds of the award.</li>
+        <li>10 years or more: the full award.</li>
+      </ul>
+      <p>The full award is paid despite resignation in cases of force majeure, and to a female worker who ends her contract within 6 months of marriage or 3 months of giving birth (Article 87).</p>
+
+      <h2>Examples</h2>
+      <ul>
+        <li>Contract ended after 7 years, actual wage SAR 8,000 (6,000 basic, 1,500 housing and 500 transport): 5 × 4,000 + 2 × 8,000 = <strong>SAR 36,000</strong>. On the basic wage alone it would be only SAR 27,000.</li>
+        <li>Resignation after 4 years on SAR 6,000: full award 12,000, one third due: <strong>SAR 4,000</strong>.</li>
+        <li>Resignation after 8 years on SAR 10,000: full award 55,000, two thirds due: <strong>SAR 36,666.67</strong>.</li>
+      </ul>
+
+      <AdSlot slot="0000000000" label="Advertisement" />
+
+      <h2>Frequently asked questions</h2>
+      <h3 class="font-semibold text-stone-900">When must the award be paid?</h3>
+      <p>Within a week of the end of employment if the employer ended it, and within two weeks if the worker resigned (Article 88).</p>
+      <h3 class="font-semibold text-stone-900">Does the award include housing allowance?</h3>
+      <p>Yes. It is calculated on the actual wage including allowances due, except items such as commissions that both parties agreed to exclude.</p>
+      <h3 class="font-semibold text-stone-900">Do I get an award if my contract ends during probation?</h3>
+      <p>No. No end-of-service award is due if the contract ends during the probation period.</p>
+    </Fragment>
+  </ToolPage>
+</Layout>

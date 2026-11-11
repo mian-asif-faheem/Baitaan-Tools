@@ -1,12 +1,14 @@
 import { useMemo, useState } from "preact/hooks";
 import { netSalary } from "@bt/tools/br";
-import t from "../i18n/pt.json";
+import { getT, type Lang } from "../i18n";
+import { money } from "./form";
 
-const L = t.net;
-const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const field = "mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 text-lg focus:border-teal-700 focus:outline-none";
 
-export default function SalarioLiquidoCalc() {
+export default function SalarioLiquidoCalc({ lang = "pt" }: { lang?: Lang }) {
+  const t = getT(lang);
+  const L = t.net;
+  const brl = money(lang);
   const [gross, setGross] = useState("5000");
   const [deps, setDeps] = useState("0");
   const [other, setOther] = useState("0");

@@ -12,7 +12,10 @@
     "./PdfCompressTool.tsx": "./src/tools/PdfCompressTool.tsx",
     "./photo-presets": "./src/tools/photo-presets.ts",
     "./form": "./src/form.tsx",
-    "./MergePdfTool.tsx": "./src/tools/MergePdfTool.tsx"
+    "./MergePdfTool.tsx": "./src/tools/MergePdfTool.tsx",
+    "./ConsentBanner.astro": "./src/ConsentBanner.astro",
+    "./consent": "./src/consent.ts",
+    "./theme.css": "./src/theme.css"
   },
   "dependencies": {
     "pdf-lib": "1.17.1",

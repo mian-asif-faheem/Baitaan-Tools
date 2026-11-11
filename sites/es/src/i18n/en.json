@@ -1,0 +1,173 @@
+{
+  "brand": "Baitaan Tools · Mexico",
+  "nav": [
+    {
+      "href": "/en/calculadora-finiquito/",
+      "label": "Severance"
+    },
+    {
+      "href": "/en/calculadora-sueldo-neto/",
+      "label": "Net pay"
+    },
+    {
+      "href": "/en/foto-tamano-infantil/",
+      "label": "Photos"
+    },
+    {
+      "href": "/en/comprimir-pdf/",
+      "label": "PDF"
+    }
+  ],
+  "footer": [
+    {
+      "href": "/en/acerca/",
+      "label": "About"
+    },
+    {
+      "href": "/en/privacidad/",
+      "label": "Privacy"
+    },
+    {
+      "href": "mailto:hola@baitaandessigns.com",
+      "label": "Contact"
+    }
+  ],
+  "footerNote": "Free tools that run in your browser",
+  "common": {
+    "monthly": "Monthly",
+    "daily": "Daily",
+    "salaryType": "How do you know your salary?",
+    "salaryMxn": "Gross salary (MXN)",
+    "frontera": "I work in the Northern Border Free Zone",
+    "dailyUsed": "Daily salary used"
+  },
+  "aguinaldo": {
+    "salaryType": "How do you know your salary?",
+    "monthly": "Monthly",
+    "daily": "Daily",
+    "salary": "Salary (MXN)",
+    "daysWorked": "Days worked this year",
+    "aguinaldoDays": "Aguinaldo days your employer gives",
+    "minNote": "The law requires at least 15 days.",
+    "result": "Your estimated aguinaldo",
+    "fullYear": "If you worked the whole year",
+    "dailyUsed": "Daily salary used",
+    "disclaimer": "Estimated gross amount. The aguinaldo is tax-free (ISR) up to 30 UMA ($3,519.30 in 2026); tax is charged on the rest."
+  },
+  "finiquito": {
+    "motivo": "How did your job end?",
+    "renuncia": "I resigned",
+    "despidoInjustificado": "I was dismissed without just cause",
+    "despidoJustificado": "I was dismissed with just cause",
+    "start": "Start date",
+    "end": "Last day of work",
+    "unpaid": "Days worked and not yet paid",
+    "pendingVac": "Untaken vacation days from earlier years",
+    "aguinaldoDays": "Aguinaldo days (at least 15)",
+    "prima": "Vacation premium (%, at least 25)",
+    "veinte": "Include 20 days per year (the employer refuses to reinstate you, or you ended the job because of the employer)",
+    "resultTotal": "Estimated total",
+    "finiquitoTitle": "Finiquito",
+    "liquidacionTitle": "Severance (liquidación)",
+    "service": "Length of service",
+    "years": "years",
+    "sdi": "Integrated daily salary",
+    "days": "days",
+    "lines": {
+      "salarioPendiente": "Unpaid salary",
+      "aguinaldo": "Proportional aguinaldo",
+      "vacaciones": "Vacation",
+      "primaVacacional": "Vacation premium",
+      "tresMeses": "3 months' pay (art. 50, sec. III)",
+      "veinteDias": "20 days per year (art. 50, sec. II)",
+      "primaAntiguedad": "Seniority premium (art. 162)"
+    },
+    "noLiquidacion": "When you resign with less than 15 years of service, you are not owed severance or a seniority premium.",
+    "disclaimer": "Estimated gross amounts. Your employer withholds ISR on the taxable part. If you were dismissed, you have 2 months to file a claim; PROFEDET gives free advice.",
+    "benefits": "Your employer's benefits"
+  },
+  "neto": {
+    "gross": "Gross monthly salary (MXN)",
+    "factor": "Integration factor",
+    "factorHint": "1.0493 matches the legal minimum benefits in the first year.",
+    "other": "Other deductions (MXN)",
+    "otherHint": "Infonavit, Fonacot, savings fund…",
+    "result": "Net monthly pay",
+    "isrBefore": "ISR from the tax table",
+    "subsidio": "Employment subsidy",
+    "isr": "ISR withheld",
+    "imss": "IMSS contributions",
+    "otherLine": "Other deductions",
+    "perQuincena": "Per fortnight",
+    "minWage": "You earn the minimum wage: no ISR is withheld and your employer pays your IMSS contributions.",
+    "disclaimer": "Estimate using the 2026 monthly ISR table and the UMA in force since February 2026. Your payslip may differ depending on your benefits and pay period."
+  },
+  "vacaciones": {
+    "completed": "Full years at the company",
+    "prima": "Vacation premium (%, at least 25)",
+    "result": "You are entitled to",
+    "days": "vacation days",
+    "pay": "Vacation pay",
+    "prima2": "Vacation premium",
+    "total": "Total",
+    "table": "Days by years of service",
+    "year": "Year",
+    "disclaimer": "Under article 76 of the Federal Labor Law, in force since 2023.",
+    "daysShort": "days"
+  },
+  "photo": {
+    "choose": "Choose your photo",
+    "drop": "or drag it here",
+    "size": "Size",
+    "zoom": "Zoom",
+    "dragHint": "Drag the photo to centre your face.",
+    "sheet": "Print sheet",
+    "sheetNone": "Single photo",
+    "copies": "photos per sheet",
+    "download": "Download",
+    "another": "Change photo",
+    "privacy": "Your photo never leaves your device: everything happens in your browser.",
+    "printNote": "Print at 100% (actual size), not “fit to page”.",
+    "error": "The image could not be opened. Try a JPG or PNG."
+  },
+  "pdf": {
+    "choose": "Choose your PDF",
+    "drop": "or drag it here",
+    "target": "Maximum size",
+    "custom": "Other (MB)",
+    "compress": "Compress",
+    "working": "Compressing… page",
+    "of": "of",
+    "original": "Original",
+    "result": "Compressed",
+    "download": "Download PDF",
+    "another": "Another PDF",
+    "privacy": "Your file never leaves your device: everything happens in your browser.",
+    "note": "To reduce the size, each page becomes an image. Text can no longer be selected or copied.",
+    "already": "Your PDF is already smaller than the size you chose.",
+    "tooBig": "That size could not be reached while keeping the text readable. This is the smallest readable result.",
+    "error": "The PDF could not be opened. It may be damaged or password-protected."
+  },
+  "chrome": {
+    "themeToggle": "Switch between light and dark theme",
+    "languageLabel": "Language",
+    "cookieSettings": "Cookie settings",
+    "consent": {
+      "title": "We use cookies",
+      "text": "Necessary cookies remember your theme, your language and this choice. With your permission, Google also uses cookies to measure visits and personalise ads. You can change your choice at any time from the page footer.",
+      "privacyLabel": "Privacy policy",
+      "privacyHref": "/en/privacidad/",
+      "accept": "Accept all",
+      "reject": "Reject",
+      "customize": "Customise",
+      "save": "Save choices",
+      "necessary": "Necessary",
+      "necessaryDesc": "Remember your theme, your language and your cookie choice.",
+      "analytics": "Analytics",
+      "analyticsDesc": "Helps us see which tools are used most (Google Analytics).",
+      "ads": "Personalised advertising",
+      "adsDesc": "Lets Google show ads based on your interests. If you reject it, you will see non-personalised ads.",
+      "alwaysOn": "always on"
+    }
+  }
+}
