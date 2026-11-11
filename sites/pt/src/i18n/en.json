@@ -1,17 +1,44 @@
 {
-  "brand": "Baitaan Tools · Brazil",
+  "brand": "Baitaan Tools",
   "nav": [
-    { "href": "/en/calculadora-rescisao/", "label": "Termination" },
-    { "href": "/en/calculadora-ferias/", "label": "Vacation" },
-    { "href": "/en/calculadora-horas-extras/", "label": "Overtime" },
-    { "href": "/en/calculadora-salario-liquido/", "label": "Net salary" },
-    { "href": "/en/foto-3x4/", "label": "3x4 photo" },
-    { "href": "/en/comprimir-pdf/", "label": "PDF" }
+    {
+      "href": "/en/calculadora-rescisao/",
+      "label": "Termination"
+    },
+    {
+      "href": "/en/calculadora-ferias/",
+      "label": "Vacation"
+    },
+    {
+      "href": "/en/calculadora-horas-extras/",
+      "label": "Overtime"
+    },
+    {
+      "href": "/en/calculadora-salario-liquido/",
+      "label": "Net salary"
+    },
+    {
+      "href": "/en/foto-3x4/",
+      "label": "3x4 photo"
+    },
+    {
+      "href": "/en/comprimir-pdf/",
+      "label": "PDF"
+    }
   ],
   "footer": [
-    { "href": "/en/sobre/", "label": "About" },
-    { "href": "/en/privacidade/", "label": "Privacy" },
-    { "href": "mailto:ola@baitaandessigns.com", "label": "Contact" }
+    {
+      "href": "/en/sobre/",
+      "label": "About"
+    },
+    {
+      "href": "/en/privacidade/",
+      "label": "Privacy"
+    },
+    {
+      "href": "mailto:ola@baitaandessigns.com",
+      "label": "Contact"
+    }
   ],
   "footerNote": "Free tools that run in your browser",
   "common": {
@@ -217,6 +244,17 @@
       "ads": "Personalised advertising",
       "adsDesc": "Lets Google show ads based on your interests. If you reject it, you'll see non-personalised ads.",
       "alwaysOn": "always on"
-    }
+    },
+    "home": "Home",
+    "chips": [
+      "Free",
+      "No sign-up",
+      "Nothing is uploaded"
+    ],
+    "popular": "Most used",
+    "soon": "Coming soon",
+    "tools": "tools",
+    "example": "Example",
+    "adLabel": "Advertisement"
   }
 }

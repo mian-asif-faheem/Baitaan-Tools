@@ -37,7 +37,8 @@ export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
   }, [cal, a, b, ha, hb, includeEnd]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <Toggle
         class="sm:col-span-2"
         legend={C.calendar}
@@ -50,11 +51,11 @@ export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
       />
       {cal === "g" ? (
         <>
-          <label class="text-sm font-semibold">
+          <label class="bt-label flex flex-col">
             {L.from}
             <input class={fieldClass} type="date" value={a} onInput={(e) => setA(e.currentTarget.value)} />
           </label>
-          <label class="text-sm font-semibold">
+          <label class="bt-label flex flex-col">
             {L.to}
             <input class={fieldClass} type="date" value={b} onInput={(e) => setB(e.currentTarget.value)} />
           </label>
@@ -67,6 +68,7 @@ export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
       )}
       <Check class="sm:col-span-2" label={L.includeEnd} checked={includeEnd} onChange={setIncludeEnd} />
 
+      </form>
       {r && r !== "error" ? (
         <Result class="sm:col-span-2" label={L.totalDays} amount={count(r.g.totalDays, "days", lang)}>
           <Rows
@@ -80,9 +82,9 @@ export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
         </Result>
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—">
-          {r === "error" && <p class="mt-2 text-sm text-red-700">{L.error}</p>}
+          {r === "error" && <p class="mt-2 text-sm text-err">{L.error}</p>}
         </Result>
       )}
-    </form>
+    </div>
   );
 }

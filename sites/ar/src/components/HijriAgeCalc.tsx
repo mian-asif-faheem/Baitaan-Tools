@@ -41,7 +41,8 @@ export default function HijriAgeCalc({ lang = "ar" }: { lang?: Lang }) {
   }, [cal, g, h]);
 
   return (
-    <form class="grid gap-5" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6" onSubmit={(e) => e.preventDefault()}>
       <Toggle
         legend={C.calendar}
         value={cal}
@@ -52,7 +53,7 @@ export default function HijriAgeCalc({ lang = "ar" }: { lang?: Lang }) {
         ]}
       />
       {cal === "g" ? (
-        <label class="text-sm font-semibold">
+        <label class="bt-label flex flex-col">
           {L.birth}
           <input class={fieldClass} type="date" value={g} onInput={(e) => setG(e.currentTarget.value)} />
         </label>
@@ -60,6 +61,7 @@ export default function HijriAgeCalc({ lang = "ar" }: { lang?: Lang }) {
         <HijriDateInput lang={lang} label={L.birth} value={h} onChange={setH} />
       )}
 
+      </form>
       {r ? (
         <Result label={L.result} amount={durationText(r.hijri.years, r.hijri.months, r.hijri.days, lang)}>
           <Rows
@@ -74,9 +76,9 @@ export default function HijriAgeCalc({ lang = "ar" }: { lang?: Lang }) {
         </Result>
       ) : (
         <Result label={L.result} amount="—">
-          <p class="mt-2 text-sm text-stone-600">{L.error}</p>
+          <p class="mt-2 text-sm text-muted">{L.error}</p>
         </Result>
       )}
-    </form>
+    </div>
   );
 }

@@ -7,14 +7,16 @@ interface Props {
   title: string;
   description: string;
   notFound?: boolean;
+  bleed?: boolean;
+  wide?: boolean;
 }
-const { title, description, notFound = false } = Astro.props;
+const { title, description, notFound = false, bleed = false, wide = false } = Astro.props;
 const footer = [
   { href: "/about/", label: "About" },
   { href: "/privacy/", label: "Privacy" },
   { href: "/contact/", label: "Contact" },
 ];
 ---
-<BaseLayout site="root" {title} {description} code="en" lang="en" dir="ltr" {footer} chrome={t.chrome} langRedirect={!notFound}>
+<BaseLayout site="root" {title} {description} code="en" lang="en" dir="ltr" {footer} chrome={t.chrome} langRedirect={!notFound} {bleed} {wide}>
   <slot />
 </BaseLayout>

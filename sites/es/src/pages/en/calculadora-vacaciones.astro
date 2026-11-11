@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import VacacionesCalc from "../../components/VacacionesCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="Mexico vacation days and vacation premium calculator 2026 | Baitaan"
   description="How many vacation days you get in Mexico by years of service, and how much your vacation premium is, under the 2023 'vacaciones dignas' reform. Free, no sign-up."
@@ -41,10 +42,8 @@ import VacacionesCalc from "../../components/VacacionesCalc.tsx";
       </ul>
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">Are these calendar days or working days?</h3>
-      <p>Working days: your rest days and public holidays do not count.</p>
-      <h3 class="font-semibold text-stone-900">What happens to vacation I didn't take if I resign?</h3>
-      <p>It must be paid in your finiquito, together with its vacation premium. Work it out with the <a class="text-teal-800 underline" href="/en/calculadora-finiquito/">finiquito calculator</a>.</p>
+      <details class="bt-faq"><summary>Are these calendar days or working days?</summary><p>Working days: your rest days and public holidays do not count.</p></details>
+      <details class="bt-faq"><summary>What happens to vacation I didn't take if I resign?</summary><p>It must be paid in your finiquito, together with its vacation premium. Work it out with the <a class="text-link underline" href="/en/calculadora-finiquito/">finiquito calculator</a>.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

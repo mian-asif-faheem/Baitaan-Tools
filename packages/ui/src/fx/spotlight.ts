@@ -6,7 +6,7 @@
  * Full licence: packages/ui/src/fx/LICENSE-react-bits.md
  *
  * Usage: give cards `data-spotlight` and the classes `relative isolate overflow-hidden`,
- * then call spotlightAll(). The light colour is the site's accent (--color-teal-700).
+ * then call spotlightAll(). The light colour is the site's accent (--primary).
  */
 
 type Opts = { intensity: number; size: number; softness: number; borderGlow: number; proximity: number; smoothing: number };
@@ -63,7 +63,7 @@ export function attachSpotlight(root: HTMLElement, opts: Partial<Opts> = {}) {
 
   const theme = () => {
     const dark = document.documentElement.classList.contains("dark");
-    const c = getComputedStyle(document.documentElement).getPropertyValue("--color-teal-700").trim() || "#0f766e";
+    const c = getComputedStyle(document.documentElement).getPropertyValue("--primary").trim() || "#0f766e";
     if (c !== color) {
       color = c;
       fills = { fill: falloff(c, o.softness), edge: falloff(c, 1) };

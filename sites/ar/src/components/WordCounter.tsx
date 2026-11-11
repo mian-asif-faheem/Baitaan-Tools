@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { stripDiacritics, textStats } from "@bt/tools/text";
 import { getT, type Lang } from "../i18n";
-import { numFmt } from "./form";
+import { numFmt, Note } from "./form";
 
 
 export default function WordCounter({ lang = "ar" }: { lang?: Lang }) {
@@ -12,16 +12,16 @@ export default function WordCounter({ lang = "ar" }: { lang?: Lang }) {
   const s = useMemo(() => textStats(text), [text]);
 
   const stat = (value: number, label: string, big = false) => (
-    <div class={`rounded-lg p-3 text-center ${big ? "bg-teal-50" : "bg-stone-50"}`}>
-      <span class={`block font-semibold tabular-nums ${big ? "text-3xl text-teal-900" : "text-xl text-stone-800"}`}>{num.format(value)}</span>
-      <span class="block text-xs text-stone-500">{label}</span>
+    <div class={`rounded-[20px] p-4 text-center ${big ? "bg-result text-result-ink" : "border border-hair bg-card shadow-elev"}`}>
+      <bdi dir="ltr" class={`block font-[650] tabular-nums tracking-[-0.02em] ${big ? "text-4xl" : "text-2xl"}`}>{num.format(value)}</bdi>
+      <span class={`block text-[13px] ${big ? "opacity-85" : "text-muted"}`}>{label}</span>
     </div>
   );
 
   return (
-    <div class="grid gap-4">
+    <div class="bt-tool">
       <textarea
-        class="min-h-48 w-full rounded-lg border border-stone-300 p-3 text-lg leading-loose focus:border-teal-700 focus:outline-none"
+        class="bt-input min-h-56 py-4 text-lg leading-loose"
         placeholder={L.placeholder}
         value={text}
         dir="auto"
@@ -42,7 +42,7 @@ export default function WordCounter({ lang = "ar" }: { lang?: Lang }) {
           type="button"
           disabled={!s.diacritics}
           onClick={() => setText(stripDiacritics(text))}
-          class="rounded-lg border border-stone-300 px-4 py-2 text-sm hover:bg-stone-50 disabled:opacity-40"
+          class="bt-btn bt-btn--ghost"
         >
           {L.strip}
         </button>
@@ -56,15 +56,15 @@ export default function WordCounter({ lang = "ar" }: { lang?: Lang }) {
               setTimeout(() => setCopied(false), 1500);
             } catch {}
           }}
-          class="rounded-lg border border-stone-300 px-4 py-2 text-sm hover:bg-stone-50 disabled:opacity-40"
+          class="bt-btn bt-btn--ghost"
         >
           {copied ? L.copied : L.copy}
         </button>
-        <button type="button" disabled={!text} onClick={() => setText("")} class="rounded-lg border border-stone-300 px-4 py-2 text-sm hover:bg-stone-50 disabled:opacity-40">
+        <button type="button" disabled={!text} onClick={() => setText("")} class="bt-btn bt-btn--ghost">
           {L.clear}
         </button>
       </div>
-      <p class="text-xs text-stone-500">{L.privacy}</p>
+      <Note>{L.privacy}</Note>
     </div>
   );
 }

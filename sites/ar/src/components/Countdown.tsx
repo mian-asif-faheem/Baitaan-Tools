@@ -5,7 +5,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 import { dirOf, getT, type Lang } from "../i18n";
-import { gregLongFmt, hijriText, numFmt } from "./form";
+import { gregLongFmt, hijriText, numFmt, Note, Result } from "./form";
 
 const MAKKAH_OFFSET = 3 * 3600_000;
 
@@ -37,38 +37,43 @@ export default function Countdown({ month, day, name, lang = "ar" }: { month: nu
   const ss = Math.floor((left % 60_000) / 1000);
   const isToday = next.daysLeft === 0;
 
-  const cell = (value: number, label: string) => (
-    <div class="rounded-lg bg-white px-2 py-3 text-center shadow-sm">
-      <span class="block text-3xl font-semibold tabular-nums text-teal-900 sm:text-4xl">{num.format(value)}</span>
-      <span class="mt-1 block text-xs text-stone-500">{label}</span>
+  // Each tile re-mounts its number when it changes, which replays the slide-in.
+  const tile = (value: number, label: string) => (
+    <div class="flex flex-col items-center gap-0.5 overflow-hidden rounded-[22px] border border-hair bg-card px-1 pt-4 pb-3 shadow-elev">
+      <span
+        key={value}
+        dir="ltr"
+        class="block font-['Inter_Variable',sans-serif] text-[clamp(28px,9vw,44px)] leading-[1.15] font-[650] tabular-nums tracking-[-0.02em] [animation:bt-slide_300ms_var(--ease)_both]"
+      >
+        {num.format(value)}
+      </span>
+      <span class="text-sm text-muted">{label}</span>
     </div>
   );
 
   return (
-    <div class="grid gap-4">
-      <output class="block rounded-xl bg-teal-50 p-4" aria-live="off">
-        {isToday ? (
-          <span class="block text-center text-3xl font-semibold text-teal-900">
-            {name}: {L.today}
+    <div class="bt-tool">
+      {isToday ? (
+        <Result label={name} amount={L.today} />
+      ) : (
+        <div class="flex flex-col gap-3">
+          <span class="bt-label">
+            {L.left} {name}
           </span>
-        ) : (
-          <>
-            <span class="block text-sm text-teal-900">
-              {L.left} {name}
-            </span>
-            <div class="mt-3 grid grid-cols-4 gap-2" dir={dirOf(lang)}>
-              {cell(d, L.days)}
-              {cell(hh, L.hours)}
-              {cell(mm, L.minutes)}
-              {cell(ss, L.seconds)}
-            </div>
-          </>
-        )}
-        <p class="mt-4 text-sm text-stone-700">
-          {L.expected}: <strong>{gregLong.format(next.gregorian)}</strong> · {hijriText(next.hijri, lang)}
-        </p>
-      </output>
-      <p class="text-xs text-stone-500">{L.note}</p>
+          <div role="timer" aria-live="off" class="grid grid-cols-4 gap-2" dir={dirOf(lang)}>
+            {tile(d, L.days)}
+            {tile(hh, L.hours)}
+            {tile(mm, L.minutes)}
+            {tile(ss, L.seconds)}
+          </div>
+        </div>
+      )}
+      <div class="bt-result">
+        <span class="bt-result__label">{L.expected}</span>
+        <span class="text-2xl font-[650] leading-snug">{gregLong.format(next.gregorian)}</span>
+        <span class="bt-result__sub">{hijriText(next.hijri, lang)}</span>
+      </div>
+      <Note>{L.note}</Note>
     </div>
   );
 }

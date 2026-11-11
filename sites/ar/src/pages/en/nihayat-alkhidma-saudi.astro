@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import EosCalc from "../../components/EosCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="Saudi end-of-service award calculator 2026 | Baitaan"
   description="Work out your end-of-service award under the Saudi Labor Law: on resignation or end of contract, with the one-third, two-thirds and full award rules. Free, no sign-up."
@@ -46,12 +47,9 @@ import EosCalc from "../../components/EosCalc.tsx";
       <AdSlot slot="0000000000" label="Advertisement" />
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">When must the award be paid?</h3>
-      <p>Within a week of the end of employment if the employer ended it, and within two weeks if the worker resigned (Article 88).</p>
-      <h3 class="font-semibold text-stone-900">Does the award include housing allowance?</h3>
-      <p>Yes. It is calculated on the actual wage including allowances due, except items such as commissions that both parties agreed to exclude.</p>
-      <h3 class="font-semibold text-stone-900">Do I get an award if my contract ends during probation?</h3>
-      <p>No. No end-of-service award is due if the contract ends during the probation period.</p>
+      <details class="bt-faq"><summary>When must the award be paid?</summary><p>Within a week of the end of employment if the employer ended it, and within two weeks if the worker resigned (Article 88).</p></details>
+      <details class="bt-faq"><summary>Does the award include housing allowance?</summary><p>Yes. It is calculated on the actual wage including allowances due, except items such as commissions that both parties agreed to exclude.</p></details>
+      <details class="bt-faq"><summary>Do I get an award if my contract ends during probation?</summary><p>No. No end-of-service award is due if the contract ends during the probation period.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { horasExtras } from "@bt/tools/br";
 import { getT, locale, type Lang } from "../i18n";
-import { NumberField, Result, Rows, Toggle, money } from "./form";
+import { NumberField, Result, Rows, Toggle, money, Note } from "./form";
 
 type Divisor = "220" | "200" | "180" | "150";
 
@@ -35,7 +35,8 @@ export default function HorasExtrasCalc({ lang = "pt" }: { lang?: Lang }) {
   }, [salary, divisor, h50, pct, h100, night, wd, rd]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <NumberField class="sm:col-span-2" label={C.salary} value={salary} onInput={setSalary} min={0} />
       <Toggle
         class="sm:col-span-2"
@@ -56,9 +57,10 @@ export default function HorasExtrasCalc({ lang = "pt" }: { lang?: Lang }) {
       <NumberField label={L.workingDays} value={wd} onInput={setWd} min={1} max={31} step="1" />
       <NumberField label={L.restDays} value={rd} onInput={setRd} min={0} max={15} step="1" />
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} value={r.total} format={brl.format}>
-          <span class="mt-1 block text-sm text-stone-600">
+          <span class="bt-result__sub">
             {L.hourly}: {brl.format(r.hourly)} · {L.lines.he50}: {brl.format(r.overtimeRate)}/h
           </span>
           <Rows
@@ -74,7 +76,7 @@ export default function HorasExtrasCalc({ lang = "pt" }: { lang?: Lang }) {
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

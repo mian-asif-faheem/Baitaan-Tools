@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Herramientas",
+  "brand": "Baitaan Tools",
   "nav": [
     {
       "href": "/calculadora-finiquito/",
@@ -168,6 +168,17 @@
       "ads": "Publicidad personalizada",
       "adsDesc": "Permite a Google mostrar anuncios según tus intereses. Si la rechazas, verás anuncios no personalizados.",
       "alwaysOn": "siempre activas"
-    }
+    },
+    "home": "Inicio",
+    "chips": [
+      "Gratis",
+      "Sin registro",
+      "Nada se sube"
+    ],
+    "popular": "La más usada",
+    "soon": "Próximamente",
+    "tools": "herramientas",
+    "example": "Ejemplo",
+    "adLabel": "Publicidad"
   }
 }

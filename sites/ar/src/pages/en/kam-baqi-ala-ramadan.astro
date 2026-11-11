@@ -10,6 +10,7 @@ const y = next.hijri.year;
 const gYear = next.gregorian.getUTCFullYear();
 ---
 <Layout
+  bleed
   lang="en"
   title={`How long until Ramadan ${gYear} (${y} AH)? Countdown | Baitaan`}
   description={`Countdown in days and hours to the first day of Ramadan ${y} AH, with the expected date from the Umm al-Qura calendar.`}
@@ -27,16 +28,16 @@ const gYear = next.gregorian.getUTCFullYear();
 
       <h2>Coming dates</h2>
       <ul>
-        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
-        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
+        <li><a class="text-link underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
+        <li><a class="text-link underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
       </ul>
 
       <AdSlot slot="0000000000" label="Advertisement" />
 
       <h2>Get ready for Ramadan</h2>
       <ul>
-        <li>Work out your zakat early with the <a class="text-teal-800 underline" href="/en/hasibat-azzakat/">zakat calculator</a>; many people pay it in Ramadan.</li>
-        <li>Convert any date between Hijri and Gregorian with the <a class="text-teal-800 underline" href="/en/tahweel-altareekh/">date converter</a>.</li>
+        <li>Work out your zakat early with the <a class="text-link underline" href="/en/hasibat-azzakat/">zakat calculator</a>; many people pay it in Ramadan.</li>
+        <li>Convert any date between Hijri and Gregorian with the <a class="text-link underline" href="/en/tahweel-altareekh/">date converter</a>.</li>
       </ul>
     </Fragment>
   </ToolPage>

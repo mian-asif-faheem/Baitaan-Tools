@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { monthlyToDaily, vacaciones, vacationTable } from "@bt/tools/mx";
 import { getT, locale, type Lang } from "../i18n";
-import { NumberField, Result, Rows, Toggle, money } from "./form";
+import { NumberField, Result, Rows, Toggle, money, Note } from "./form";
 
 const table = vacationTable(35);
 // Compress years with the same entitlement into ranges: 6–10, 11–15…
@@ -34,7 +34,8 @@ export default function VacacionesCalc({ lang = "es" }: { lang?: Lang }) {
   }, [mode, salary, years, prima]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <Toggle
         class="sm:col-span-2"
         legend={C.salaryType}
@@ -49,6 +50,7 @@ export default function VacacionesCalc({ lang = "es" }: { lang?: Lang }) {
       <NumberField label={L.completed} value={years} onInput={setYears} min={0} step="1" />
       <NumberField label={L.prima} value={prima} onInput={setPrima} min={25} step="1" />
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} amount={`${r.days} ${L.days}`}>
           <Rows
@@ -70,7 +72,7 @@ export default function VacacionesCalc({ lang = "es" }: { lang?: Lang }) {
             {ranges.slice(0, 10).map((g) => {
               const current = r && r.serviceYear >= g.from && r.serviceYear <= g.to;
               return (
-                <tr class={`border-t border-stone-200 ${current ? "bg-teal-50 font-semibold text-teal-900" : ""}`}>
+                <tr class={`border-t border-hair ${current ? "bg-result font-semibold text-result-ink" : ""}`}>
                   <td class="py-1.5 ps-2">
                     {L.year} {g.from === g.to ? g.from : `${g.from}–${g.to}`}
                   </td>
@@ -83,7 +85,7 @@ export default function VacacionesCalc({ lang = "es" }: { lang?: Lang }) {
           </tbody>
         </table>
       </div>
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

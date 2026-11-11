@@ -1,0 +1,20 @@
+---
+/** Inline Phosphor icon. Pass a path from ./icons.ts. Decorative unless `label` is given. */
+interface Props {
+  d: string;
+  size?: number;
+  class?: string;
+  label?: string;
+}
+const { d, size = 18, class: cls, label } = Astro.props;
+---
+<svg
+  viewBox="0 0 256 256"
+  width={size}
+  height={size}
+  fill="currentColor"
+  class={cls}
+  aria-hidden={label ? undefined : "true"}
+  aria-label={label}
+  role={label ? "img" : undefined}
+><path d={d} /></svg>

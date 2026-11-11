@@ -9,8 +9,12 @@ interface Props {
   lang?: Lang;
   /** 404 pages: no language redirect, switcher points to the other home page. */
   notFound?: boolean;
+  /** Page lays out its own full-width sections (tool and home pages). */
+  bleed?: boolean;
+  /** Wide footer for home pages. */
+  wide?: boolean;
 }
-const { title, description, lang = NATIVE, notFound = false } = Astro.props;
+const { title, description, lang = NATIVE, notFound = false, bleed = false, wide = false } = Astro.props;
 const t = getT(lang);
 const versions = versionsFor(notFound ? (lang === "en" ? "/en/" : "/") : Astro.url.pathname);
 ---
@@ -29,6 +33,8 @@ const versions = versionsFor(notFound ? (lang === "en" ? "/en/" : "/") : Astro.u
   homeHref={lang === "en" ? "/en/" : "/"}
   chrome={t.chrome}
   langRedirect={!notFound}
+  {bleed}
+  {wide}
 >
   <slot />
 </BaseLayout>

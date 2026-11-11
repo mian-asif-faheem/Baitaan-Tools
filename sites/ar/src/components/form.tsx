@@ -26,9 +26,9 @@ export function HijriDateInput(props: {
   const t = getT(lang);
   const max = Number(v.year) > 0 ? hijriMonthLength(Number(v.year), Number(v.month)) : 30;
   return (
-    <fieldset>
-      <legend class="text-sm font-semibold">{props.label}</legend>
-      <div class="mt-1 grid grid-cols-[1fr_2fr_1.3fr] gap-2">
+    <fieldset class="m-0 min-w-0 border-0 p-0">
+      <legend class="bt-label mb-1.5 p-0">{props.label}</legend>
+      <div class="grid grid-cols-[72px_minmax(0,1fr)_88px] gap-2">
         <input
           aria-label={t.conv.day}
           class={fieldClass}

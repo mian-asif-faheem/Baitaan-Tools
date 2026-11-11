@@ -1,8 +1,7 @@
 ---
 /**
- * One AdSense unit. Renders nothing until PUBLIC_ADSENSE_CLIENT is set,
- * so local dev and pre-approval builds stay ad-free.
- * Never place a slot above or inside a tool.
+ * One AdSense unit, set apart between guide sections (never inside a tool).
+ * Renders nothing until PUBLIC_ADSENSE_CLIENT is set, so local and pre-approval builds stay ad-free.
  */
 interface Props {
   slot: string;
@@ -12,9 +11,10 @@ const { slot, label = "Publicidad" } = Astro.props;
 const client = import.meta.env.PUBLIC_ADSENSE_CLIENT;
 ---
 {client && (
-  <aside class="my-8" aria-label={label}>
+  <aside class="bt-ad" aria-label={label}>
+    <span class="bt-ad__label">{label}</span>
     <ins
-      class="adsbygoogle block"
+      class="adsbygoogle block w-full"
       style="display:block"
       data-ad-client={client}
       data-ad-slot={slot}

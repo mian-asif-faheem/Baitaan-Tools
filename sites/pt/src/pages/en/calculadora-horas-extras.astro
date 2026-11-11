@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import HorasExtrasCalc from "../../components/HorasExtrasCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="Brazil overtime and night premium calculator 2026 | Baitaan"
   description="Work out 50% and 100% overtime, the night premium with the shorter night hour, and the effect on the paid weekly rest day (DSR) in Brazil. For 44, 40, 36 and 30-hour weeks. Free, no sign-up."
@@ -44,12 +45,9 @@ import HorasExtrasCalc from "../../components/HorasExtrasCalc.tsx";
       <AdSlot slot="0000000000" label="Advertisement" />
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">How much overtime can I work per day?</h3>
-      <p>Up to 2 hours a day (CLT art. 59), except where the law or an agreement allows otherwise.</p>
-      <h3 class="font-semibold text-stone-900">Can the premium be more than 50%?</h3>
-      <p>Yes. Many collective agreements set 60%, 70% or more. Enter your union's percentage in the calculator.</p>
-      <h3 class="font-semibold text-stone-900">Is overtime taxed?</h3>
-      <p>Yes. It is added to the month's salary and pays INSS and income tax with it.</p>
+      <details class="bt-faq"><summary>How much overtime can I work per day?</summary><p>Up to 2 hours a day (CLT art. 59), except where the law or an agreement allows otherwise.</p></details>
+      <details class="bt-faq"><summary>Can the premium be more than 50%?</summary><p>Yes. Many collective agreements set 60%, 70% or more. Enter your union's percentage in the calculator.</p></details>
+      <details class="bt-faq"><summary>Is overtime taxed?</summary><p>Yes. It is added to the month's salary and pays INSS and income tax with it.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

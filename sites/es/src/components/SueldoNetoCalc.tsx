@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { factorIntegracion, sueldoNeto } from "@bt/tools/mx";
 import { getT, locale, type Lang } from "../i18n";
-import { Check, NumberField, Result, Rows, money } from "./form";
+import { Check, NumberField, Result, Rows, money, Note } from "./form";
 
 
 export default function SueldoNetoCalc({ lang = "es" }: { lang?: Lang }) {
@@ -27,18 +27,20 @@ export default function SueldoNetoCalc({ lang = "es" }: { lang?: Lang }) {
   }, [gross, factor, other, frontera]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <NumberField class="sm:col-span-2" label={L.gross} value={gross} onInput={setGross} min={0} />
       <NumberField label={L.other} hint={L.otherHint} value={other} onInput={setOther} min={0} />
       <NumberField label={L.factor} hint={L.factorHint} value={factor} onInput={setFactor} min={1} max={2} step="0.0001" />
       <Check class="sm:col-span-2" label={C.frontera} checked={frontera} onChange={setFrontera} />
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} value={r.net} format={mxn.format}>
-          <span class="mt-1 block text-sm text-stone-600">
+          <span class="bt-result__sub">
             {L.perQuincena}: {mxn.format(r.net / 2)}
           </span>
-          {r.minimumWageExempt && <p class="mt-3 text-sm text-teal-900">{L.minWage}</p>}
+          {r.minimumWageExempt && <p class="mt-3 text-sm">{L.minWage}</p>}
           <Rows
             rows={[
               { label: L.isrBefore, value: mxn.format(r.isrBeforeSubsidio), muted: true },
@@ -53,7 +55,7 @@ export default function SueldoNetoCalc({ lang = "es" }: { lang?: Lang }) {
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

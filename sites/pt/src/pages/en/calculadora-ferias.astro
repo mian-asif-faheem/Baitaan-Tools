@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import FeriasCalc from "../../components/FeriasCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="Brazil vacation pay calculator 2026 (CLT): 1/3 bonus and net | Baitaan"
   description="Work out your 2026 vacation pay in Brazil: gross amount, the constitutional 1/3 bonus, selling 10 days (abono pecuniário), INSS, income tax with the 2026 reduction, and net pay. Free, no sign-up."
@@ -49,12 +50,9 @@ import FeriasCalc from "../../components/FeriasCalc.tsx";
       <AdSlot slot="0000000000" label="Advertisement" />
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">When must the employer pay?</h3>
-      <p>Up to 2 days before your vacation starts (art. 145).</p>
-      <h3 class="font-semibold text-stone-900">Can I split my vacation?</h3>
-      <p>Yes, into up to 3 periods if you agree. One must be at least 14 days, and the others at least 5 days each (art. 134).</p>
-      <h3 class="font-semibold text-stone-900">Does the 2026 income tax reduction apply to vacation pay?</h3>
-      <p>Law 15.270/2025 doesn't mention vacation pay explicitly. Most payroll systems apply the reduction, so the calculator does too. Untick the option to see the amount without it.</p>
+      <details class="bt-faq"><summary>When must the employer pay?</summary><p>Up to 2 days before your vacation starts (art. 145).</p></details>
+      <details class="bt-faq"><summary>Can I split my vacation?</summary><p>Yes, into up to 3 periods if you agree. One must be at least 14 days, and the others at least 5 days each (art. 134).</p></details>
+      <details class="bt-faq"><summary>Does the 2026 income tax reduction apply to vacation pay?</summary><p>Law 15.270/2025 doesn't mention vacation pay explicitly. Most payroll systems apply the reduction, so the calculator does too. Untick the option to see the amount without it.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

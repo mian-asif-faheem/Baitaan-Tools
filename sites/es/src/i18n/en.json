@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Tools · Mexico",
+  "brand": "Baitaan Tools",
   "nav": [
     {
       "href": "/en/calculadora-finiquito/",
@@ -168,6 +168,17 @@
       "ads": "Personalised advertising",
       "adsDesc": "Lets Google show ads based on your interests. If you reject it, you will see non-personalised ads.",
       "alwaysOn": "always on"
-    }
+    },
+    "home": "Home",
+    "chips": [
+      "Free",
+      "No sign-up",
+      "Nothing is uploaded"
+    ],
+    "popular": "Most used",
+    "soon": "Coming soon",
+    "tools": "tools",
+    "example": "Example",
+    "adLabel": "Advertisement"
   }
 }

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { salarioProporcional } from "@bt/tools/br";
 import { getT, type Lang } from "../i18n";
-import { NumberField, Result, Rows, money } from "./form";
+import { NumberField, Result, Rows, money, Note } from "./form";
 
 
 export default function ProporcionalCalc({ lang = "pt" }: { lang?: Lang }) {
@@ -27,11 +27,13 @@ export default function ProporcionalCalc({ lang = "pt" }: { lang?: Lang }) {
   }, [salary, days, abs, weeks]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <NumberField label={C.salary} value={salary} onInput={setSalary} min={0} />
       <NumberField label={L.days} hint={L.daysHint} value={days} onInput={setDays} min={0} max={30} step="1" />
       <NumberField label={L.absences} value={abs} onInput={setAbs} min={0} step="1" />
       <NumberField label={L.weeks} value={weeks} onInput={setWeeks} min={0} max={5} step="1" />
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} value={r.total} format={brl.format}>
           <Rows
@@ -47,7 +49,7 @@ export default function ProporcionalCalc({ lang = "pt" }: { lang?: Lang }) {
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

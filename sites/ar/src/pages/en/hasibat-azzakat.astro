@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import ZakatCalc from "../../components/ZakatCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="Zakat calculator: zakat on money, gold and the nisab | Baitaan"
   description="Work out your zakat easily: cash, gold, silver, shares and trade goods, with the nisab calculated from today's gold or silver price. Free, no sign-up."
@@ -34,12 +35,9 @@ import ZakatCalc from "../../components/ZakatCalc.tsx";
       <p>At current prices the silver nisab is much lower than the gold nisab, so using silver makes zakat due on less wealth. Choose the view held by the scholars you follow.</p>
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">Is there zakat on jewellery?</h3>
-      <p>Scholars differ on gold kept for personal use. Enter in the calculator the gold you believe zakat is due on.</p>
-      <h3 class="font-semibold text-stone-900">Where can I find today's gold price?</h3>
-      <p>From your bank's website or the gold shop you deal with. Enter the price per gram in the same currency as your money.</p>
-      <h3 class="font-semibold text-stone-900">Is there zakat on my monthly salary?</h3>
-      <p>Zakat is due on what you save from your salary if it reaches the nisab and a year passes over it, not on the salary itself.</p>
+      <details class="bt-faq"><summary>Is there zakat on jewellery?</summary><p>Scholars differ on gold kept for personal use. Enter in the calculator the gold you believe zakat is due on.</p></details>
+      <details class="bt-faq"><summary>Where can I find today's gold price?</summary><p>From your bank's website or the gold shop you deal with. Enter the price per gram in the same currency as your money.</p></details>
+      <details class="bt-faq"><summary>Is there zakat on my monthly salary?</summary><p>Zakat is due on what you save from your salary if it reaches the nisab and a year passes over it, not on the salary itself.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

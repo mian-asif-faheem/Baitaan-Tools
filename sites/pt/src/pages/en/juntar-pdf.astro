@@ -6,6 +6,7 @@ import MergePdfTool from "@bt/ui/MergePdfTool.tsx";
 import t from "../../i18n/en.json";
 ---
 <Layout
+  bleed
   lang="en"
   title="Merge PDF for free: combine PDFs and photos into one file | Baitaan"
   description="Combine several PDFs and photos (JPG and PNG) into one file, in the order you want. Ideal for RG, CPF and proof of address. Free, and your documents are never uploaded."
@@ -26,16 +27,14 @@ import t from "../../i18n/en.json";
         <li>Tap “Choose the PDFs” and select the files. Each JPG or PNG photo becomes an A4 page.</li>
         <li>Use the arrows to change the order.</li>
         <li>Tap “Merge PDFs” and download the file.</li>
-        <li>If the site has a size limit, run the result through <a class="text-teal-800 underline" href="/en/comprimir-pdf/">compress PDF</a>.</li>
+        <li>If the site has a size limit, run the result through <a class="text-link underline" href="/en/comprimir-pdf/">compress PDF</a>.</li>
       </ol>
 
       <AdSlot slot="0000000000" label="Advertisement" />
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">Can the text still be selected?</h3>
-      <p>Yes. When merging, the pages are copied as they are, with no loss of quality.</p>
-      <h3 class="font-semibold text-stone-900">Does it work with password-protected PDFs?</h3>
-      <p>No. Remove the password first, in the app the PDF was created with.</p>
+      <details class="bt-faq"><summary>Can the text still be selected?</summary><p>Yes. When merging, the pages are copied as they are, with no loss of quality.</p></details>
+      <details class="bt-faq"><summary>Does it work with password-protected PDFs?</summary><p>No. Remove the password first, in the app the PDF was created with.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

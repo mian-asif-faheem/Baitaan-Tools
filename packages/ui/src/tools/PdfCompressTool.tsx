@@ -1,3 +1,5 @@
+import Svg from "../fx/Svg";
+import { checkCircle, downloadSimple, filePdf, info, lockSimple, uploadSimple } from "../icons";
 import { useState } from "preact/hooks";
 import { compressPdf, loadLibs, type CompressResult } from "./compress-pdf";
 
@@ -80,11 +82,18 @@ export default function PdfCompressTool({ t, targets = [0.5, 1, 2, 5], defaultTa
     <input type="file" accept="application/pdf,.pdf" class="sr-only" onChange={(e) => pick(e.currentTarget.files?.[0])} />
   );
 
+  const privacy = (
+    <p class="bt-note text-muted">
+      <Svg d={lockSimple} size={16} class="mt-px flex-none" />
+      <span>{t.privacy}</span>
+    </p>
+  );
+
   if (!file)
     return (
-      <div class="grid gap-3">
+      <div class="bt-tool">
         <label
-          class={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 text-center ${dragOver ? "border-teal-700 bg-teal-50" : "border-stone-300"}`}
+          class={`bt-drop cursor-pointer ${dragOver ? "is-over" : ""}`}
           onDragOver={(e) => {
             e.preventDefault();
             setDragOver(true);
@@ -96,95 +105,121 @@ export default function PdfCompressTool({ t, targets = [0.5, 1, 2, 5], defaultTa
             pick(e.dataTransfer?.files?.[0]);
           }}
         >
-          <span class="rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white">{t.choose}</span>
-          <span class="mt-2 text-sm text-stone-500">{t.drop}</span>
+          <span class="bt-file-icon"><Svg d={filePdf} size={26} /></span>
+          <span class="bt-btn bt-btn--sm">
+            <Svg d={uploadSimple} size={18} />
+            {t.choose}
+          </span>
+          <span class="text-[15px] text-muted">{t.drop}</span>
           {fileInput}
         </label>
-        <p class="text-xs text-stone-500">{t.privacy}</p>
+        {privacy}
       </div>
     );
 
+  const saved = Math.max(0, Math.round((1 - (result?.bytes.byteLength ?? 0) / file.size) * 100));
+  const pct = progress.pages ? Math.round((progress.page / progress.pages) * 100) : 0;
+
   return (
-    <div class="grid gap-4">
-      <p class="truncate text-sm">
-        <span class="font-semibold">{file.name}</span>
-        <span class="text-stone-500"> · {t.original}: {size(file.size)}</span>
-      </p>
-
-      <fieldset>
-        <legend class="text-sm font-semibold">{t.target}</legend>
-        <div class="mt-2 flex flex-wrap gap-1">
-          {[...targets.map(String), "custom"].map((v) => (
-            <button
-              type="button"
-              aria-pressed={target === v}
-              onClick={() => setTarget(v)}
-              class={`rounded-md border px-3 py-1.5 text-sm ${target === v ? "border-teal-700 bg-teal-700 text-white" : "border-stone-300 text-stone-600 hover:bg-stone-100"}`}
-            >
-              {v === "custom" ? t.custom : `${nf.format(Number(v))} MB`}
-            </button>
-          ))}
+    <div class="bt-tool">
+      <div class="bt-panel flex flex-col gap-6">
+        <div class="flex min-w-0 items-center gap-3">
+          <span class="bt-file-icon size-11 rounded-[14px]"><Svg d={filePdf} size={22} /></span>
+          <span class="flex min-w-0 flex-col">
+            <span class="truncate font-semibold">{file.name}</span>
+            <span class="text-[13px] text-muted">{t.original}: {size(file.size)}</span>
+          </span>
         </div>
-        {target === "custom" && (
-          <input
-            class="mt-2 w-40 rounded-lg border border-stone-300 px-3 py-2"
-            type="number"
-            min="0.1"
-            step="0.1"
-            inputMode="decimal"
-            value={custom}
-            placeholder="MB"
-            onInput={(e) => setCustom(e.currentTarget.value)}
-          />
+
+        <div class="flex flex-col gap-2">
+          <span class="bt-label">{t.target}</span>
+          <div class="flex flex-wrap gap-1.5" role="radiogroup" aria-label={t.target}>
+            {[...targets.map(String), "custom"].map((v) => (
+              <button
+                type="button"
+                role="radio"
+                aria-checked={target === v}
+                onClick={() => setTarget(v)}
+                class={`bt-tab cursor-pointer border-0 ${target === v ? "!bg-primary !text-on-primary font-semibold" : ""}`}
+              >
+                {v === "custom" ? t.custom : `${nf.format(Number(v))} MB`}
+              </button>
+            ))}
+          </div>
+          {target === "custom" && (
+            <input
+              class="bt-input mt-1 max-w-40"
+              type="number"
+              min="0.1"
+              step="0.1"
+              inputMode="decimal"
+              value={custom}
+              placeholder="MB"
+              aria-label={t.custom}
+              onInput={(e) => setCustom(e.currentTarget.value)}
+            />
+          )}
+        </div>
+
+        {alreadySmall && status !== "done" && <p class="m-0 rounded-2xl bg-result p-3 text-sm text-result-ink">{t.already}</p>}
+
+        {status === "working" ? (
+          <div class="flex flex-col gap-2" aria-live="polite">
+            <div class="bt-progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+              <span style={{ width: `${pct}%` }} />
+            </div>
+            <div class="flex justify-between text-sm">
+              <span>
+                {t.working} {progress.page} {t.of} {progress.pages}
+              </span>
+              <span class="font-semibold tabular-nums">{pct}%</span>
+            </div>
+          </div>
+        ) : (
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onClick={run} disabled={!(targetMb > 0)} class="bt-btn grow">
+              {t.compress}
+            </button>
+            <label class="bt-btn bt-btn--ghost cursor-pointer">
+              {t.another}
+              {fileInput}
+            </label>
+          </div>
         )}
-      </fieldset>
-
-      {alreadySmall && status !== "done" && <p class="rounded-lg bg-teal-50 p-3 text-sm text-teal-900">{t.already}</p>}
-
-      <div class="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={run}
-          disabled={status === "working" || !(targetMb > 0)}
-          class="rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white hover:bg-teal-800 disabled:opacity-50"
-        >
-          {t.compress}
-        </button>
-        <label class="cursor-pointer rounded-lg border border-stone-300 px-4 py-2.5 text-sm text-stone-700 hover:bg-stone-50">
-          {t.another}
-          {fileInput}
-        </label>
+        {status === "error" && <p class="m-0 text-sm text-err">{t.error}</p>}
       </div>
 
-      {status === "working" && (
-        <div aria-live="polite">
-          <p class="text-sm text-stone-600">
-            {t.working} {progress.page} {t.of} {progress.pages}
-          </p>
-          <div class="mt-2 h-2 overflow-hidden rounded bg-stone-200">
-            <div class="h-full bg-teal-700 transition-all" style={{ width: `${progress.pages ? (progress.page / progress.pages) * 100 : 0}%` }} />
-          </div>
-        </div>
-      )}
-
-      {status === "error" && <p class="text-sm text-red-700">{t.error}</p>}
-
       {status === "done" && result && (
-        <output class="block rounded-lg bg-teal-50 p-4" aria-live="polite">
-          <span class="block text-sm text-teal-900">{t.result}</span>
-          <span class="block text-3xl font-semibold tabular-nums text-teal-900">{size(result.bytes.byteLength)}</span>
-          <span class="mt-1 block text-sm text-stone-600">
-            {t.original}: {size(file.size)} · −{Math.max(0, Math.round((1 - result.bytes.byteLength / file.size) * 100))}%
+        <output class="bt-done" aria-live="polite">
+          <span class="flex items-center gap-2 font-semibold">
+            <Svg d={checkCircle} size={20} />
+            {t.result} · −{saved}%
           </span>
-          {!result.fits && <p class="mt-2 text-sm text-amber-800">{t.tooBig}</p>}
-          <button type="button" onClick={download} class="mt-3 rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white hover:bg-teal-800">
+          <div class="bt-bars">
+            <div>
+              <span class="text-muted">{t.original}</span>
+              <span class="bt-bar" />
+              <span>{size(file.size)}</span>
+            </div>
+            <div>
+              <span class="text-muted">{t.result}</span>
+              <span class="bt-bar bt-bar--after" style={{ width: `${Math.max(3, 100 - saved)}%` }} />
+              <span class="font-semibold">{size(result.bytes.byteLength)}</span>
+            </div>
+          </div>
+          {!result.fits && <p class="m-0 text-sm">{t.tooBig}</p>}
+          <button type="button" onClick={download} class="bt-btn">
+            <Svg d={downloadSimple} size={18} />
             {t.download}
           </button>
         </output>
       )}
 
-      <p class="text-xs text-stone-500">{t.note}</p>
-      <p class="text-xs text-stone-500">{t.privacy}</p>
+      <p class="bt-note text-muted">
+        <Svg d={info} size={16} class="mt-px flex-none" />
+        <span>{t.note}</span>
+      </p>
+      {privacy}
     </div>
   );
 }

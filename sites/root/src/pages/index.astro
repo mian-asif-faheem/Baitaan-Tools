@@ -1,27 +1,110 @@
 ---
 import Hero from "@bt/ui/Hero.astro";
-import Layout from "../components/Layout.astro";
+import Icon from "@bt/ui/Icon.astro";
+import { arrowLeft, arrowRight } from "@bt/ui/icons";
 import { SITES } from "@bt/ui/sites";
+import Layout from "../components/Layout.astro";
+
+/**
+ * Each card carries a hint of its own site's palette (Claude Design board 2): a corner glow,
+ * three swatch dots and the arrow button, in both light and dark.
+ */
+const rgba = (hex: string, a: number) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
+};
+const card = (tones: string[], primaryL: string, primaryD: string, cardD: string) =>
+  [
+    `--g-l:${rgba(tones[3], 0.38)}`,
+    `--g-d:${rgba(tones[2], 0.7)}`,
+    `--d1-l:${tones[1]}`, `--d2-l:${tones[2]}`, `--d3-l:${tones[3]}`,
+    `--d1-d:${tones[2]}`, `--d2-d:${tones[3]}`, `--d3-d:${primaryD}`,
+    `--b-l:${primaryL}`, `--b-d:${primaryD}`, `--o-l:#fff`, `--o-d:${cardD}`,
+  ].join(";");
 
 const langs = [
-  { site: SITES.es, title: "Español", desc: "Calculadoras laborales para México, España y Latinoamérica" },
-  { site: SITES.pt, title: "Português", desc: "Calculadoras trabalhistas para o Brasil" },
-  { site: SITES.ar, title: "العربية", desc: "أدوات التاريخ الهجري والحاسبات الخليجية" },
+  {
+    site: SITES.es, name: "Español", go: "Abrir herramientas",
+    desc: "Calculadoras laborales para México: finiquito, aguinaldo, sueldo neto y más.",
+    style: card(["#0E0B1D", "#2A1E4D", "#5A3B8C", "#8B7CC7"], "#5A3B8C", "#AA9CE2", "#17132B"),
+  },
+  {
+    site: SITES.pt, name: "Português", go: "Abrir ferramentas",
+    desc: "Calculadoras trabalhistas do Brasil: rescisão, férias, 13º salário e mais.",
+    style: card(["#0B1526", "#1B2F52", "#2F5597", "#6F8FC7"], "#2F5597", "#94B2E6", "#111D33"),
+  },
+  {
+    site: SITES.ar, name: "العربية", go: "افتح الأدوات",
+    desc: "التاريخ الهجري، ومكافأة نهاية الخدمة، والزكاة لدول الخليج.",
+    style: card(["#0F1F17", "#1E3A2E", "#3E5A3F", "#6B7F67"], "#3E5A3F", "#A8C29F", "#14271E"),
+  },
 ];
 ---
-<Layout title="Baitaan Tools: free tools in your language" description="Free calculators and everyday tools in Spanish, Portuguese and Arabic. They run in your browser, with no sign-up.">
-  <Hero title="Free tools in your language" lead="Calculators that follow each country's own rules, running in your browser with no sign-up. Choose your language." />
-  <ul class="mt-2 grid gap-4 sm:grid-cols-3">
-    {langs.map(({ site, title, desc }) => (
-      <li>
-        <a href={site.url} lang={site.lang} dir={site.dir} class="relative isolate block h-full overflow-hidden rounded-xl border border-stone-200 bg-white p-5 shadow-sm hover:border-teal-700" data-spotlight>
-          <span class="block text-xl font-semibold text-teal-800">{title}</span>
-          <span class="mt-2 block text-sm text-stone-500">{desc}</span>
-        </a>
-      </li>
-    ))}
-  </ul>
+<Layout bleed wide title="Baitaan Tools: free tools in your language" description="Free calculators and everyday tools in Spanish, Portuguese and Arabic. They run in your browser, with no sign-up.">
+  <Hero title="Free tools in your language" lead="Calculators that follow each country’s own rules, running in your browser with no sign-up. Choose your language." />
+  <div class="mx-auto max-w-[1120px] px-5">
+    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3.5 p-0">
+      {langs.map(({ site, name, go, desc, style }) => {
+        const rtl = site.dir === "rtl";
+        return (
+          <li>
+            <a href={site.url} lang={site.lang} dir={site.dir} class="bt-card bt-lang-card min-h-[220px] gap-2.5 rounded-[28px] p-6" style={style} data-spotlight>
+              <span class="bt-lang-card__glow" aria-hidden="true"></span>
+              <span class="flex items-center gap-2.5">
+                <span class="flex gap-[3px]" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="font-['Inter_Variable',sans-serif] text-[13px] text-muted">{new URL(site.url).host}</span>
+              </span>
+              <span class:list={["text-[34px] leading-[1.15] font-[650]", rtl ? "font-['IBM_Plex_Sans_Arabic',sans-serif]" : "tracking-[-0.02em]"]}>{name}</span>
+              <span class:list={["text-base text-muted text-pretty", rtl && "font-['IBM_Plex_Sans_Arabic',sans-serif] leading-[1.7]"]}>{desc}</span>
+              <span class:list={["mt-auto flex items-center justify-between gap-3 text-[15px] font-semibold", rtl && "font-['IBM_Plex_Sans_Arabic',sans-serif]"]}>
+                <span>{go}</span>
+                <span class="bt-lang-card__btn"><Icon d={rtl ? arrowLeft : arrowRight} size={18} /></span>
+              </span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
 </Layout>
+
+<style>
+  .bt-lang-card__glow {
+    position: absolute;
+    z-index: -1;
+    inset-inline-end: -90px;
+    top: -110px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(closest-side, var(--g-l), transparent);
+  }
+  .bt-lang-card i {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+  .bt-lang-card i:nth-child(1) { background: var(--d1-l); }
+  .bt-lang-card i:nth-child(2) { background: var(--d2-l); }
+  .bt-lang-card i:nth-child(3) { background: var(--d3-l); }
+  .bt-lang-card__btn {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: var(--b-l);
+    color: var(--o-l);
+  }
+  :global(html.dark) .bt-lang-card__glow { background: radial-gradient(closest-side, var(--g-d), transparent); }
+  :global(html.dark) .bt-lang-card i:nth-child(1) { background: var(--d1-d); }
+  :global(html.dark) .bt-lang-card i:nth-child(2) { background: var(--d2-d); }
+  :global(html.dark) .bt-lang-card i:nth-child(3) { background: var(--d3-d); }
+  :global(html.dark) .bt-lang-card__btn { background: var(--b-d); color: var(--o-d); }
+</style>
 
 <script>
   import { spotlightAll } from "@bt/ui/fx/spotlight";

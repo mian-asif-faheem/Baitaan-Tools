@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import FiniquitoCalc from "../components/FiniquitoCalc.tsx";
 ---
 <Layout
+  bleed
   title="Calculadora de finiquito y liquidación 2026 (México) | Baitaan"
   description="Calcula tu finiquito o liquidación 2026 según la Ley Federal del Trabajo: aguinaldo, vacaciones, prima vacacional, 3 meses, 20 días por año y prima de antigüedad. Gratis y sin registro."
 >
@@ -64,14 +65,10 @@ import FiniquitoCalc from "../components/FiniquitoCalc.tsx";
       <p>Una parte está exenta de ISR (art. 93 de la Ley del ISR): el aguinaldo hasta 30 UMA ($3,519.30), la prima vacacional hasta 15 UMA ($1,759.65), y las indemnizaciones y la prima de antigüedad hasta 90 UMA por año trabajado ($10,557.90 por año). Tu empresa retiene ISR sobre el resto, por eso el depósito puede ser menor que el total bruto de la calculadora.</p>
 
       <h2>Preguntas frecuentes</h2>
-      <h3 class="font-semibold text-stone-900">¿Me toca liquidación si renuncio?</h3>
-      <p>No. Al renunciar solo te toca el finiquito. Si tienes 15 años o más en la empresa, también te corresponde la prima de antigüedad.</p>
-      <h3 class="font-semibold text-stone-900">¿Cuánto tiempo tengo para reclamar si me despidieron?</h3>
-      <p>Dos meses a partir del despido (art. 518). Antes de demandar debes acudir al Centro de Conciliación de tu estado o al Centro Federal de Conciliación. La PROFEDET te asesora gratis.</p>
-      <h3 class="font-semibold text-stone-900">¿Debo firmar la renuncia para recibir mi finiquito?</h3>
-      <p>No. Tu empresa debe pagarte el finiquito aunque no firmes nada. Revisa los montos antes de firmar cualquier documento.</p>
-      <h3 class="font-semibold text-stone-900">¿Qué salario se usa?</h3>
-      <p>El finiquito se calcula con tu salario diario. La indemnización de 3 meses y los 20 días por año usan el salario diario integrado, que suma la parte diaria de tu aguinaldo y tu prima vacacional.</p>
+      <details class="bt-faq"><summary>¿Me toca liquidación si renuncio?</summary><p>No. Al renunciar solo te toca el finiquito. Si tienes 15 años o más en la empresa, también te corresponde la prima de antigüedad.</p></details>
+      <details class="bt-faq"><summary>¿Cuánto tiempo tengo para reclamar si me despidieron?</summary><p>Dos meses a partir del despido (art. 518). Antes de demandar debes acudir al Centro de Conciliación de tu estado o al Centro Federal de Conciliación. La PROFEDET te asesora gratis.</p></details>
+      <details class="bt-faq"><summary>¿Debo firmar la renuncia para recibir mi finiquito?</summary><p>No. Tu empresa debe pagarte el finiquito aunque no firmes nada. Revisa los montos antes de firmar cualquier documento.</p></details>
+      <details class="bt-faq"><summary>¿Qué salario se usa?</summary><p>El finiquito se calcula con tu salario diario. La indemnización de 3 meses y los 20 días por año usan el salario diario integrado, que suma la parte diaria de tu aguinaldo y tu prima vacacional.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

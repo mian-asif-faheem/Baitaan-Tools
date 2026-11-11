@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Ferramentas",
+  "brand": "Baitaan Tools",
   "nav": [
     {
       "href": "/calculadora-rescisao/",
@@ -244,6 +244,17 @@
       "ads": "Publicidade personalizada",
       "adsDesc": "Permite que o Google mostre anúncios de acordo com seus interesses. Se recusar, você verá anúncios não personalizados.",
       "alwaysOn": "sempre ativos"
-    }
+    },
+    "home": "Início",
+    "chips": [
+      "Grátis",
+      "Sem cadastro",
+      "Nada é enviado"
+    ],
+    "popular": "Mais usada",
+    "soon": "Em breve",
+    "tools": "ferramentas",
+    "example": "Exemplo",
+    "adLabel": "Publicidade"
   }
 }

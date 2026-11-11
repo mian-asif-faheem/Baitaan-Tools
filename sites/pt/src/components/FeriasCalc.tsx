@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { ferias } from "@bt/tools/br";
 import { getT, type Lang } from "../i18n";
-import { Check, NumberField, Result, Rows, money } from "./form";
+import { Check, NumberField, Result, Rows, money, Note } from "./form";
 
 
 export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
@@ -30,7 +30,8 @@ export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
   }, [salary, extras, absences, sold, deps, reduction]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <NumberField class="sm:col-span-2" label={C.salary} value={salary} onInput={setSalary} min={0} />
       <NumberField label={L.absences} value={absences} onInput={setAbsences} min={0} step="1" />
       <NumberField label={L.sold} hint={L.soldHint} value={sold} onInput={setSold} min={0} max={10} step="1" />
@@ -38,9 +39,10 @@ export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
       <NumberField label={C.dependents} value={deps} onInput={setDeps} min={0} step="1" />
       <Check class="sm:col-span-2" label={L.reduction} checked={reduction} onChange={setReduction} />
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} value={r.net} format={brl.format}>
-          <span class="mt-1 block text-sm text-stone-600">
+          <span class="bt-result__sub">
             {L.entitled} {r.entitlement} {C.days}
             {r.daysSold > 0 && ` · ${L.split.replace("{rest}", String(r.restDays)).replace("{sold}", String(r.daysSold))}`}
           </span>
@@ -68,7 +70,7 @@ export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

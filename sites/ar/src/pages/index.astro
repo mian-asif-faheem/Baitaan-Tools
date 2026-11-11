@@ -1,60 +1,111 @@
 ---
 import Hero from "@bt/ui/Hero.astro";
+import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../components/Layout.astro";
+import { toHijri, HIJRI_MONTHS_AR } from "@bt/tools/hijri";
 
-const groups = [
+// Today's Hijri date as of the build; the script below refreshes it in the browser.
+const h = toHijri(new Date());
+const today = `${h.day} ${HIJRI_MONTHS_AR[h.month - 1]} ${h.year}\u00a0هـ`;
+
+const groups: Group[] = [
   {
     title: "التاريخ الهجري والمناسبات",
+    featured: {
+      href: "/tahweel-altareekh/",
+      name: "تحويل التاريخ",
+      desc: "من ميلادي إلى هجري وبالعكس، حسب أم القرى",
+      exampleLabel: "اليوم",
+      example: today,
+      exampleId: "bt-today"
+    },
     tools: [
-      { href: "/tahweel-altareekh/", name: "تحويل التاريخ", desc: "من ميلادي إلى هجري وبالعكس، حسب أم القرى" },
-      { href: "/kam-baqi-ala-ramadan/", name: "كم باقي على رمضان", desc: "عد تنازلي بالأيام والساعات" },
-      { href: "/kam-baqi-ala-eid-alfitr/", name: "كم باقي على عيد الفطر", desc: "" },
-      { href: "/kam-baqi-ala-eid-aladha/", name: "كم باقي على عيد الأضحى", desc: "مع موعد يوم عرفة" },
-      { href: "/hisab-alumr-bilhijri/", name: "حساب العمر بالهجري", desc: "عمرك بالتقويمين" },
-      { href: "/alfarq-bayna-tarikhayn/", name: "المدة بين تاريخين", desc: "بالأيام والأشهر وأيام العمل" },
-    ],
+      {
+        href: "/kam-baqi-ala-ramadan/",
+        name: "كم باقي على رمضان",
+        desc: "عد تنازلي بالأيام والساعات"
+      },
+      {
+        href: "/kam-baqi-ala-eid-alfitr/",
+        name: "كم باقي على عيد الفطر"
+      },
+      {
+        href: "/kam-baqi-ala-eid-aladha/",
+        name: "كم باقي على عيد الأضحى",
+        desc: "مع موعد يوم عرفة"
+      },
+      {
+        href: "/hisab-alumr-bilhijri/",
+        name: "حساب العمر بالهجري",
+        desc: "عمرك بالتقويمين"
+      },
+      {
+        href: "/alfarq-bayna-tarikhayn/",
+        name: "المدة بين تاريخين",
+        desc: "بالأيام والأشهر وأيام العمل"
+      }
+    ]
   },
   {
     title: "العمل والمال",
     tools: [
-      { href: "/nihayat-alkhidma-saudi/", name: "مكافأة نهاية الخدمة · السعودية", desc: "عند الاستقالة أو إنهاء العقد" },
-      { href: "/nihayat-alkhidma-uae/", name: "مكافأة نهاية الخدمة · الإمارات", desc: "وفق قانون العمل الجديد" },
-      { href: "/hasibat-addariba/", name: "ضريبة القيمة المضافة", desc: "إضافة الضريبة أو استخراجها" },
-      { href: "/hasibat-azzakat/", name: "حاسبة الزكاة", desc: "مع النصاب بسعر الذهب أو الفضة" },
-    ],
+      {
+        href: "/nihayat-alkhidma-saudi/",
+        name: "مكافأة نهاية الخدمة · السعودية",
+        desc: "عند الاستقالة أو إنهاء العقد"
+      },
+      {
+        href: "/nihayat-alkhidma-uae/",
+        name: "مكافأة نهاية الخدمة · الإمارات",
+        desc: "وفق قانون العمل الجديد"
+      },
+      {
+        href: "/hasibat-addariba/",
+        name: "ضريبة القيمة المضافة",
+        desc: "إضافة الضريبة أو استخراجها"
+      },
+      {
+        href: "/hasibat-azzakat/",
+        name: "حاسبة الزكاة",
+        desc: "مع النصاب بسعر الذهب أو الفضة"
+      }
+    ]
   },
   {
     title: "المستندات والنصوص",
     tools: [
-      { href: "/maqas-assura/", name: "مقاس الصورة للطباعة", desc: "4×6 و3.5×4.5 وغيرها" },
-      { href: "/dagt-pdf/", name: "ضغط PDF", desc: "إلى 1 ميغا أو أقل" },
-      { href: "/damj-pdf/", name: "دمج PDF", desc: "ملفات وصور في ملف واحد" },
-      { href: "/adad-alkalimat/", name: "عداد الكلمات", desc: "مع عدّ التشكيل وإزالته" },
-    ],
-  },
+      {
+        href: "/maqas-assura/",
+        name: "مقاس الصورة للطباعة",
+        desc: "4×6 و3.5×4.5 وغيرها"
+      },
+      {
+        href: "/dagt-pdf/",
+        name: "ضغط PDF",
+        desc: "إلى 1 ميغا أو أقل"
+      },
+      {
+        href: "/damj-pdf/",
+        name: "دمج PDF",
+        desc: "ملفات وصور في ملف واحد"
+      },
+      {
+        href: "/adad-alkalimat/",
+        name: "عداد الكلمات",
+        desc: "مع عدّ التشكيل وإزالته"
+      }
+    ]
+  }
 ];
 ---
-<!-- TODO (native review): all Arabic copy on this site. -->
-<Layout title="أدوات مجانية بالعربية | بيتان" description="أدوات وحاسبات مجانية تعمل في متصفحك دون تسجيل: تحويل التاريخ الهجري، كم باقي على رمضان، مكافأة نهاية الخدمة، الضريبة، الزكاة، ضغط PDF.">
-  <Hero title="أدوات مجانية دون تسجيل" lead="حاسبات وأدوات تعمل في متصفحك. بياناتك لا تغادر جهازك." tight={false} />
-  {groups.map((g) => (
-    <section class="mt-10">
-      <h2 class="text-sm font-semibold text-stone-500">{g.title}</h2>
-      <ul class="mt-3 grid gap-4 sm:grid-cols-2">
-        {g.tools.map((tool) => (
-          <li>
-            <a href={tool.href} class="relative isolate block h-full overflow-hidden rounded-xl border border-stone-200 bg-white p-5 shadow-sm hover:border-teal-700" data-spotlight>
-              <span class="block font-semibold">{tool.name}</span>
-              {tool.desc && <span class="mt-1 block text-sm text-stone-500">{tool.desc}</span>}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  ))}
+<Layout bleed wide title="أدوات مجانية بالعربية | بيتان" description="أدوات وحاسبات مجانية تعمل في متصفحك دون تسجيل: تحويل التاريخ الهجري، كم باقي على رمضان، مكافأة نهاية الخدمة، الضريبة، الزكاة، ضغط PDF.">
+  <Hero title="أدوات مجانية دون تسجيل" lead="حاسبات وأدوات تعمل في متصفحك. بياناتك لا تغادر جهازك." cta={{ href: "/tahweel-altareekh/", label: "حوّل التاريخ الآن" }} />
+  <ToolGrid {groups} />
 </Layout>
 
 <script>
-  import { spotlightAll } from "@bt/ui/fx/spotlight";
-  spotlightAll();
+  import { toHijri, HIJRI_MONTHS_AR } from "@bt/tools/hijri";
+  const el = document.getElementById("bt-today");
+  const h = toHijri(new Date());
+  if (el) el.textContent = `${h.day} ${HIJRI_MONTHS_AR[h.month - 1]} ${h.year}\u00a0هـ`;
 </script>

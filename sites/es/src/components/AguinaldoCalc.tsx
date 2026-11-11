@@ -1,9 +1,8 @@
 import { useMemo, useState } from "preact/hooks";
 import { aguinaldo, monthlyToDaily } from "@bt/tools/mx";
 import { getT, locale, type Lang } from "../i18n";
-import { money } from "./form";
+import { money, NumberField, Note, Result, Rows, Toggle } from "./form";
 
-const field = "mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 text-lg focus:border-teal-700 focus:outline-none";
 
 export default function AguinaldoCalc({ lang = "es" }: { lang?: Lang }) {
   const t = getT(lang);
@@ -23,50 +22,35 @@ export default function AguinaldoCalc({ lang = "es" }: { lang?: Lang }) {
   }, [mode, salary, days, agDays]);
 
   return (
-    <form class="grid gap-4 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
-      <fieldset class="sm:col-span-2">
-        <legend class="text-sm font-semibold">{L.salaryType}</legend>
-        <div class="mt-2 inline-flex rounded-lg border border-stone-300 p-1">
-          {(["monthly", "daily"] as const).map((m) => (
-            <button
-              type="button"
-              aria-pressed={mode === m}
-              onClick={() => setMode(m)}
-              class={`rounded-md px-4 py-1.5 text-sm ${mode === m ? "bg-teal-700 text-white" : "text-stone-600"}`}
-            >
-              {L[m]}
-            </button>
-          ))}
-        </div>
-      </fieldset>
-      <label class="text-sm font-semibold">
-        {L.salary}
-        <input class={field} type="number" inputMode="decimal" min="0" value={salary} onInput={(e) => setSalary(e.currentTarget.value)} />
-      </label>
-      <label class="text-sm font-semibold">
-        {L.daysWorked}
-        <input class={field} type="number" inputMode="numeric" min="1" max="365" value={days} onInput={(e) => setDays(e.currentTarget.value)} />
-      </label>
-      <label class="text-sm font-semibold sm:col-span-2">
-        {L.aguinaldoDays}
-        <input class={field} type="number" inputMode="numeric" min="15" value={agDays} onInput={(e) => setAgDays(e.currentTarget.value)} />
-        <span class="mt-1 block text-xs font-normal text-stone-500">{L.minNote}</span>
-      </label>
-
-      <output class="rounded-lg bg-teal-50 p-4 sm:col-span-2" aria-live="polite">
-        {result ? (
-          <>
-            <span class="block text-sm text-teal-900">{L.result}</span>
-            <span class="block text-3xl font-semibold text-teal-900">{mxn.format(result.proportionalAmount)}</span>
-            <span class="mt-2 block text-sm text-stone-600">
-              {L.fullYear}: {mxn.format(result.fullYearAmount)} · {L.dailyUsed}: {mxn.format(result.dailySalary)}
-            </span>
-          </>
-        ) : (
-          <span class="text-sm text-stone-500">—</span>
-        )}
-      </output>
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+    <div class="bt-tool">
+      <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+        <Toggle
+          class="sm:col-span-2"
+          legend={L.salaryType}
+          value={mode}
+          onChange={setMode}
+          options={[
+            { value: "monthly", label: L.monthly },
+            { value: "daily", label: L.daily },
+          ]}
+        />
+        <NumberField label={L.salary} value={salary} onInput={setSalary} min={0} />
+        <NumberField label={L.daysWorked} value={days} onInput={setDays} min={1} max={365} step="1" />
+        <NumberField class="sm:col-span-2" label={L.aguinaldoDays} hint={L.minNote} value={agDays} onInput={setAgDays} min={15} step="1" />
+      </form>
+      {result ? (
+        <Result label={L.result} value={result.proportionalAmount} format={mxn.format}>
+          <Rows
+            rows={[
+              { label: L.fullYear, value: mxn.format(result.fullYearAmount), muted: true },
+              { label: L.dailyUsed, value: mxn.format(result.dailySalary), muted: true },
+            ]}
+          />
+        </Result>
+      ) : (
+        <Result label={L.result} amount="—" />
+      )}
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

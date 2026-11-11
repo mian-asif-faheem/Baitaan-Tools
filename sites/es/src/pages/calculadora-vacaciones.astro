@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import VacacionesCalc from "../components/VacacionesCalc.tsx";
 ---
 <Layout
+  bleed
   title="Calculadora de vacaciones y prima vacacional 2026 (México) | Baitaan"
   description="Cuántos días de vacaciones te tocan según tu antigüedad y cuánto es tu prima vacacional, con las vacaciones dignas de la Ley Federal del Trabajo. Gratis y sin registro."
 >
@@ -39,10 +40,8 @@ import VacacionesCalc from "../components/VacacionesCalc.tsx";
       </ul>
 
       <h2>Preguntas frecuentes</h2>
-      <h3 class="font-semibold text-stone-900">¿Los días son naturales o laborables?</h3>
-      <p>Laborables: no cuentan tus días de descanso ni los festivos.</p>
-      <h3 class="font-semibold text-stone-900">¿Qué pasa con las vacaciones que no tomé si renuncio?</h3>
-      <p>Te las deben pagar en tu finiquito, junto con su prima vacacional. Puedes calcularlo en la <a class="text-teal-800 underline" href="/calculadora-finiquito/">calculadora de finiquito</a>.</p>
+      <details class="bt-faq"><summary>¿Los días son naturales o laborables?</summary><p>Laborables: no cuentan tus días de descanso ni los festivos.</p></details>
+      <details class="bt-faq"><summary>¿Qué pasa con las vacaciones que no tomé si renuncio?</summary><p>Te las deben pagar en tu finiquito, junto con su prima vacacional. Puedes calcularlo en la <a class="text-link underline" href="/calculadora-finiquito/">calculadora de finiquito</a>.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

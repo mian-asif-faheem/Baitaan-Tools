@@ -6,6 +6,7 @@ import EosCalc from "../components/EosCalc.tsx";
 ---
 <!-- TODO (native review): Arabic copy. -->
 <Layout
+  bleed
   title="حساب مكافأة نهاية الخدمة في الإمارات 2026 | بيتان"
   description="احسب مكافأة نهاية الخدمة في الإمارات وفق قانون العمل الجديد: 21 يومًا عن كل سنة من أول خمس سنوات و30 يومًا بعدها، على الراتب الأساسي. مجاني ودون تسجيل."
 >
@@ -38,13 +39,10 @@ import EosCalc from "../components/EosCalc.tsx";
       <AdSlot slot="0000000000" label="إعلان" />
 
       <h2>أسئلة شائعة</h2>
-      <h3 class="font-semibold text-stone-900">هل تقل المكافأة إذا استقلت؟</h3>
-      <p>لا. في المرسوم بقانون رقم 33 لسنة 2021 تُحسب المكافأة بالطريقة نفسها سواء استقال الموظف أو أنهى صاحب العمل العقد، ما دام قد أتم سنة خدمة.</p>
-      <h3 class="font-semibold text-stone-900">هل يدخل بدل السكن في الحساب؟</h3>
-      <p>لا. تُحسب المكافأة على آخر راتب أساسي فقط، دون البدلات أو العمولات.</p>
-      <h3 class="font-semibold text-stone-900">متى يجب صرفها؟</h3>
-      <p>خلال 14 يومًا من تاريخ انتهاء العلاقة التعاقدية.</p>
-      <p>هل تعمل في السعودية؟ استخدم <a class="text-teal-800 underline" href="/nihayat-alkhidma-saudi/">حاسبة نهاية الخدمة في السعودية</a>.</p>
+      <details class="bt-faq"><summary>هل تقل المكافأة إذا استقلت؟</summary><p>لا. في المرسوم بقانون رقم 33 لسنة 2021 تُحسب المكافأة بالطريقة نفسها سواء استقال الموظف أو أنهى صاحب العمل العقد، ما دام قد أتم سنة خدمة.</p></details>
+      <details class="bt-faq"><summary>هل يدخل بدل السكن في الحساب؟</summary><p>لا. تُحسب المكافأة على آخر راتب أساسي فقط، دون البدلات أو العمولات.</p></details>
+      <details class="bt-faq"><summary>متى يجب صرفها؟</summary><p>خلال 14 يومًا من تاريخ انتهاء العلاقة التعاقدية.</p></details>
+      <p>هل تعمل في السعودية؟ استخدم <a class="text-link underline" href="/nihayat-alkhidma-saudi/">حاسبة نهاية الخدمة في السعودية</a>.</p>
     </Fragment>
   </ToolPage>
 </Layout>

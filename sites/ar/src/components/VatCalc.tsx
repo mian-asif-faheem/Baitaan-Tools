@@ -21,7 +21,8 @@ export default function VatCalc({ initial = "sa" as Choice, lang = "ar" }: { ini
   }, [amount, rate, mode]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <Toggle
         class="sm:col-span-2"
         legend={L.country}
@@ -47,6 +48,7 @@ export default function VatCalc({ initial = "sa" as Choice, lang = "ar" }: { ini
         ]}
       />
       <NumberField class="sm:col-span-2" label={L.amount} value={amount} onInput={setAmount} min={0} />
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={mode === "add" ? L.gross : L.net} value={mode === "add" ? r.gross : r.net} format={num.format}>
           <Rows
@@ -60,6 +62,6 @@ export default function VatCalc({ initial = "sa" as Choice, lang = "ar" }: { ini
       ) : (
         <Result class="sm:col-span-2" label={L.gross} amount="—" />
       )}
-    </form>
+    </div>
   );
 }

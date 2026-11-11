@@ -15,6 +15,7 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
 ---
 <!-- TODO (native review): Arabic copy. -->
 <Layout
+  bleed
   title={`كم باقي على عيد الأضحى ${y} (${gYear})؟ ويوم عرفة | بيتان`}
   description={`عد تنازلي حتى عيد الأضحى ${y} هـ (10 ذو الحجة)، مع موعد يوم عرفة المتوقع حسب تقويم أم القرى.`}
 >
@@ -38,8 +39,8 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
 
       <h2>مواعيد قريبة</h2>
       <ul>
-        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
-        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-alfitr/">كم باقي على عيد الفطر</a></li>
+        <li><a class="text-link underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
+        <li><a class="text-link underline" href="/kam-baqi-ala-eid-alfitr/">كم باقي على عيد الفطر</a></li>
       </ul>
     </Fragment>
   </ToolPage>

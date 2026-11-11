@@ -14,6 +14,7 @@ const arafah = fmt.format(toGregorian({ year: y, month: 12, day: 9 }));
 const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
 ---
 <Layout
+  bleed
   lang="en"
   title={`How long until Eid al-Adha ${gYear} (${y} AH)? And the Day of Arafah | Baitaan`}
   description={`Countdown to Eid al-Adha ${y} AH (10 Dhu al-Hijjah), with the expected date of the Day of Arafah from the Umm al-Qura calendar.`}
@@ -38,8 +39,8 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
 
       <h2>Coming dates</h2>
       <ul>
-        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
-        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
+        <li><a class="text-link underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
+        <li><a class="text-link underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
       </ul>
     </Fragment>
   </ToolPage>

@@ -143,7 +143,7 @@ export default function MergePdfTool({ t, outputName = "documentos-unidos.pdf", 
 
   const dropZone = (big: boolean) => (
     <label
-      class={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed text-center ${big ? "p-10" : "p-4"} ${dragOver ? "border-teal-700 bg-teal-50" : "border-stone-300"}`}
+      class={`bt-drop cursor-pointer ${big ? "" : "!gap-1 !rounded-[20px] !py-4"} ${dragOver ? "is-over" : ""}`}
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);
@@ -155,70 +155,70 @@ export default function MergePdfTool({ t, outputName = "documentos-unidos.pdf", 
         void add(e.dataTransfer?.files);
       }}
     >
-      <span class={big ? "rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white" : "text-sm font-semibold text-teal-800"}>
+      <span class={big ? "bt-btn bt-btn--sm" : "text-[15px] font-semibold text-link"}>
         {big ? t.choose : `+ ${t.add}`}
       </span>
-      {big && <span class="mt-2 text-sm text-stone-500">{t.drop}</span>}
+      {big && <span class="text-[15px] text-muted">{t.drop}</span>}
       {input}
     </label>
   );
 
   return (
-    <div class="grid gap-4">
+    <div class="bt-tool">
       {items.length === 0 ? (
         dropZone(true)
       ) : (
         <>
           <ol class="grid gap-2">
             {items.map((it, i) => (
-              <li class="flex items-center gap-3 rounded-lg border border-stone-200 bg-white p-3">
-                <span class="w-6 text-center text-sm font-semibold text-stone-400">{i + 1}</span>
+              <li class="flex items-center gap-3 rounded-[18px] border border-hair bg-card p-3 shadow-elev">
+                <span class="w-6 text-center text-sm font-semibold text-muted">{i + 1}</span>
                 <span class="min-w-0 flex-1">
                   <span class="block truncate text-sm font-semibold">{it.file.name}</span>
-                  <span class={`block text-xs ${it.pages === -1 ? "text-red-700" : "text-stone-500"}`}>
+                  <span class={`block text-xs ${it.pages === -1 ? "text-err" : "text-muted"}`}>
                     {it.pages === -1 ? t.error : `${it.pages ?? "…"} ${it.pages === 1 ? (t.page ?? t.pages) : t.pages} · ${size(it.file.size)}`}
                   </span>
                 </span>
-                <button type="button" aria-label={t.up} title={t.up} disabled={i === 0} onClick={() => move(i, -1)} class="rounded p-1.5 text-stone-500 hover:bg-stone-100 disabled:opacity-30">
+                <button type="button" aria-label={t.up} title={t.up} disabled={i === 0} onClick={() => move(i, -1)} class="rounded p-1.5 text-muted hover:bg-tint disabled:opacity-30">
                   ↑
                 </button>
-                <button type="button" aria-label={t.down} title={t.down} disabled={i === items.length - 1} onClick={() => move(i, 1)} class="rounded p-1.5 text-stone-500 hover:bg-stone-100 disabled:opacity-30">
+                <button type="button" aria-label={t.down} title={t.down} disabled={i === items.length - 1} onClick={() => move(i, 1)} class="rounded p-1.5 text-muted hover:bg-tint disabled:opacity-30">
                   ↓
                 </button>
-                <button type="button" aria-label={t.remove} title={t.remove} onClick={() => setItems((p) => p.filter((x) => x.id !== it.id))} class="rounded p-1.5 text-stone-500 hover:bg-stone-100">
+                <button type="button" aria-label={t.remove} title={t.remove} onClick={() => setItems((p) => p.filter((x) => x.id !== it.id))} class="rounded p-1.5 text-muted hover:bg-tint">
                   ✕
                 </button>
               </li>
             ))}
           </ol>
           {dropZone(false)}
-          {items.length < 2 && <p class="text-sm text-stone-500">{t.needTwo}</p>}
+          {items.length < 2 && <p class="text-sm text-muted">{t.needTwo}</p>}
           <div>
             <button
               type="button"
               onClick={merge}
               disabled={items.length < 2 || status === "working" || items.some((i) => i.pages === -1)}
-              class="rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white hover:bg-teal-800 disabled:opacity-50"
+              class="bt-btn"
             >
               {status === "working" ? t.working : t.merge}
             </button>
           </div>
         </>
       )}
-      {status === "error" && <p class="text-sm text-red-700">{t.error}</p>}
+      {status === "error" && <p class="text-sm text-err">{t.error}</p>}
       {status === "done" && out && (
-        <output class="block rounded-lg bg-teal-50 p-4" aria-live="polite">
-          <span class="block text-sm text-teal-900">{t.result}</span>
-          <span class="block text-2xl font-semibold text-teal-900">
+        <output class="bt-done" aria-live="polite">
+          <span class="block text-sm text-result-ink">{t.result}</span>
+          <span class="block text-2xl font-semibold text-result-ink">
             {items.reduce((s, i) => s + (i.pages ?? 0), 0)} {t.pages} · {size(out.byteLength)}
           </span>
-          <button type="button" onClick={download} class="mt-3 rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white hover:bg-teal-800">
+          <button type="button" onClick={download} class="bt-btn">
             {t.download}
           </button>
         </output>
       )}
-      <p class="text-xs text-stone-500">{t.images}</p>
-      <p class="text-xs text-stone-500">{t.privacy}</p>
+      <p class="bt-note text-muted">{t.images}</p>
+      <p class="bt-note text-muted">{t.privacy}</p>
     </div>
   );
 }

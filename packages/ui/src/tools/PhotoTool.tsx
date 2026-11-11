@@ -157,9 +157,9 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
 
   if (!img)
     return (
-      <div class="grid gap-3">
+      <div class="bt-tool">
         <label
-          class={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 text-center ${dragOver ? "border-teal-700 bg-teal-50" : "border-stone-300"}`}
+          class={`bt-drop cursor-pointer ${dragOver ? "is-over" : ""}`}
           onDragOver={(e) => {
             e.preventDefault();
             setDragOver(true);
@@ -171,12 +171,12 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
             load(e.dataTransfer?.files?.[0]);
           }}
         >
-          <span class="rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white">{t.choose}</span>
-          <span class="mt-2 text-sm text-stone-500">{t.drop}</span>
+          <span class="bt-btn bt-btn--sm">{t.choose}</span>
+          <span class="text-[15px] text-muted">{t.drop}</span>
           {fileInput}
         </label>
-        {error && <p class="text-sm text-red-700">{t.error}</p>}
-        <p class="text-xs text-stone-500">{t.privacy}</p>
+        {error && <p class="text-sm text-err">{t.error}</p>}
+        <p class="bt-note text-muted">{t.privacy}</p>
       </div>
     );
 
@@ -184,7 +184,7 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
     <div class="grid gap-5 sm:grid-cols-[auto_1fr]">
       <div class="grid justify-items-center gap-2">
         <div
-          class="relative touch-none select-none overflow-hidden rounded border border-stone-300 bg-stone-100"
+          class="relative touch-none select-none overflow-hidden rounded border border-line bg-track"
           style={{ width: `${frameW}px`, height: `${frameH}px`, cursor: "grab" }}
           onPointerDown={(e) => {
             (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -219,14 +219,14 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
             style={{ left: "22%", right: "22%", top: "12%", bottom: "28%" }}
           />
         </div>
-        <p class="max-w-[260px] text-center text-xs text-stone-500">{t.dragHint}</p>
+        <p class="m-0 max-w-[260px] text-center text-[13px] text-muted">{t.dragHint}</p>
       </div>
 
       <div class="grid content-start gap-4">
-        <label class="text-sm font-semibold">
+        <label class="bt-label flex flex-col">
           {t.size}
           <select
-            class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2"
+            class="bt-input mt-1.5"
             value={presetId}
             onChange={(e) => setPresetId(e.currentTarget.value)}
           >
@@ -235,7 +235,7 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
             ))}
           </select>
         </label>
-        <label class="text-sm font-semibold">
+        <label class="bt-label flex flex-col">
           {t.zoom}
           <input
             type="range"
@@ -243,14 +243,14 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
             max="4"
             step="0.01"
             value={zoom}
-            class="mt-2 w-full accent-teal-700"
+            class="mt-2 w-full accent-[var(--primary)]"
             onInput={(e) => setZoom(Number(e.currentTarget.value))}
           />
         </label>
-        <label class="text-sm font-semibold">
+        <label class="bt-label flex flex-col">
           {t.sheet}
           <select
-            class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2"
+            class="bt-input mt-1.5"
             value={sheetId}
             onChange={(e) => setSheetId(e.currentTarget.value)}
           >
@@ -263,20 +263,20 @@ export default function PhotoTool({ presets, t, sheets = ["10x15", "carta", "a4"
             ))}
           </select>
         </label>
-        <canvas ref={previewRef} class="w-full max-w-[280px] rounded border border-stone-200 bg-white" />
+        <canvas ref={previewRef} class="w-full max-w-[280px] rounded border border-hair bg-card" />
         <div class="flex flex-wrap gap-2">
-          <button type="button" onClick={download} class="rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white hover:bg-teal-800">
+          <button type="button" onClick={download} class="bt-btn">
             {t.download}
           </button>
-          <label class="cursor-pointer rounded-lg border border-stone-300 px-4 py-2.5 text-sm text-stone-700 hover:bg-stone-50">
+          <label class="bt-btn bt-btn--ghost cursor-pointer">
             {t.another}
             {fileInput}
           </label>
         </div>
-        <p class="text-xs text-stone-500">
+        <p class="bt-note text-muted">
           {t.printNote} {DPI} dpi.
         </p>
-        <p class="text-xs text-stone-500">{t.privacy}</p>
+        <p class="bt-note text-muted">{t.privacy}</p>
       </div>
     </div>
   );

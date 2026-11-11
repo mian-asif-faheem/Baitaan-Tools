@@ -104,4 +104,59 @@ for site, modes in PALETTES.items():
         for name, fg, bg, need in checks:
             r = ratio(fg, bg); ok = r >= need; failed |= not ok
             print(f"{site} {m:5} {'ok  ' if ok else 'FAIL'} {r:5.2f} (≥{need}) {name}")
+
+
+# ── Design tokens (Claude Design board 1). Same maths as the boards' baitaan.js. ──
+DESIGN = {
+    "root": {"tones": ["#17130A", "#3A2F14", "#8A6A1F", "#C9A54A", "#EBDDB5", "#45403A"],
+             "L": {"bg": "#FAF8F2", "muted": "#68625A", "primary": "#7D5F17", "link": "#5F4810", "result": "#F8F1DF", "border": "#8E877C"},
+             "D": {"card": "#1E1910", "text": "#FAF6EA", "muted": "#AEA697", "primary": "#D9B85E", "result": "#3A2F14", "border": "#7E7666"}},
+    "es": {"tones": ["#0E0B1D", "#2A1E4D", "#5A3B8C", "#8B7CC7", "#C9C2E3", "#3A3A52"],
+           "L": {"bg": "#F6F5FA", "muted": "#615D79", "primary": "#5A3B8C", "link": "#4A2F78", "result": "#F1EEF9", "border": "#8A86A0"},
+           "D": {"card": "#17132B", "text": "#F3F1FA", "muted": "#A5A0C1", "primary": "#AA9CE2", "result": "#2A1E4D", "border": "#757092"}},
+    "pt": {"tones": ["#0B1526", "#1B2F52", "#2F5597", "#6F8FC7", "#C4D3EC", "#384152"],
+           "L": {"bg": "#F4F7FB", "muted": "#5B6579", "primary": "#2F5597", "link": "#25467F", "result": "#EDF2FA", "border": "#81899B"},
+           "D": {"card": "#111D33", "text": "#F1F5FB", "muted": "#A1ABC0", "primary": "#94B2E6", "result": "#1B2F52", "border": "#6D7A93"}},
+    "ar": {"tones": ["#0F1F17", "#1E3A2E", "#3E5A3F", "#6B7F67", "#C7CBB8", "#3D4337"],
+           "L": {"bg": "#F5F6F1", "muted": "#5D6656", "primary": "#3E5A3F", "link": "#2F4A33", "result": "#EDF1EA", "border": "#858C7E"},
+           "D": {"card": "#14271E", "text": "#F1F3EC", "muted": "#A3AC9C", "primary": "#A8C29F", "result": "#1E3A2E", "border": "#6E7A69"}},
+}
+
+def rgba(h, a):
+    n = int(h[1:], 16)
+    return f"rgba({n >> 16},{(n >> 8) & 255},{n & 255},{a})"
+
+def design_tokens(site, mode):
+    p = DESIGN[site]; t = p["tones"]
+    if mode == "light":
+        l = p["L"]
+        return {"bg": l["bg"], "card": "#FFFFFF", "text": t[0], "muted": l["muted"], "border": l["border"], "primary": l["primary"],
+                "primary-hover": l["link"], "on-primary": "#FFFFFF", "link": l["link"], "result-bg": l["result"], "result-text": t[1],
+                "hair": rgba(t[0], .09), "tint": l["result"], "track": l["bg"], "err": "#B91C1C", "warn": "#92400E",
+                "glow-1": rgba(t[4], .75), "glow-2": rgba(t[3], .28), "glow-3": rgba(t[4], .5),
+                "elev": f"0 1px 2px {rgba(t[0], .05)}, 0 6px 16px -4px {rgba(t[0], .07)}, 0 18px 36px -18px {rgba(t[0], .12)}",
+                "elev-h": f"0 1px 2px {rgba(t[0], .06)}, 0 10px 24px -6px {rgba(t[0], .12)}, 0 28px 48px -20px {rgba(t[0], .18)}",
+                "field": "#FFFFFF", "spot": rgba(t[3], .16), "header": rgba(l["bg"], .72), "ad": rgba(t[5], .05), "sheet": "rgba(255,255,255,0.86)"}
+    d = p["D"]
+    return {"bg": t[0], "card": d["card"], "text": d["text"], "muted": d["muted"], "border": d["border"], "primary": d["primary"],
+            "primary-hover": t[4], "on-primary": d["card"], "link": d["primary"], "result-bg": d["result"], "result-text": d["text"],
+            "hair": rgba(d["text"], .08), "tint": rgba(d["primary"], .14), "track": rgba(d["text"], .06), "err": "#F87171", "warn": "#FBBF24",
+            "glow-1": rgba(t[2], .6), "glow-2": rgba(t[3], .24), "glow-3": rgba(t[1], .9),
+            "elev": "inset 0 1px 0 0 rgba(255,255,255,.07), inset 0 0 0 1px rgba(255,255,255,.035)",
+            "elev-h": f"inset 0 1px 0 0 rgba(255,255,255,.10), inset 0 0 0 1px {rgba(d['primary'], .35)}",
+            "field": t[0], "spot": rgba(d["primary"], .14), "header": rgba(t[0], .66), "ad": rgba(d["text"], .035), "sheet": rgba(d["card"], .86)}
+
+for site in DESIGN:
+    path = f"sites/{site}/src/palette.css"
+    css = open(path).read().rstrip("\n")
+    for sel, mode in ((":root", "light"), ("html.dark", "dark")):
+        css += "\n\n" + sel + " {\n" + "\n".join(f"  --{k}: {v};" for k, v in design_tokens(site, mode).items()) + "\n}"
+    open(path, "w").write(css + "\n")
+    for m in ("light", "dark"):
+        tk = design_tokens(site, m)
+        for name, fg, bg, need in [("text/bg", tk["text"], tk["bg"], 7), ("muted/card", tk["muted"], tk["card"], 4.5), ("muted/bg", tk["muted"], tk["bg"], 4.5),
+                                   ("on-primary/primary", tk["on-primary"], tk["primary"], 4.5), ("on-primary/hover", tk["on-primary"], tk["primary-hover"], 4.5),
+                                   ("link/card", tk["link"], tk["card"], 4.5), ("result", tk["result-text"], tk["result-bg"], 7), ("border/card (UI)", tk["border"], tk["card"], 3)]:
+            r = ratio(fg, bg); ok = r >= need; failed |= not ok
+            print(f"{site} {m:5} {'ok  ' if ok else 'FAIL'} {r:5.2f} (≥{need}) design {name}")
 sys.exit(1 if failed else 0)

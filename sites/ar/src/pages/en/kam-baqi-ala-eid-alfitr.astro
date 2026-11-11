@@ -10,6 +10,7 @@ const y = next.hijri.year;
 const gYear = next.gregorian.getUTCFullYear();
 ---
 <Layout
+  bleed
   lang="en"
   title={`How long until Eid al-Fitr ${gYear} (${y} AH)? Countdown | Baitaan`}
   description={`Countdown in days and hours to Eid al-Fitr ${y} AH (1 Shawwal), with the expected date from the Umm al-Qura calendar.`}
@@ -32,8 +33,8 @@ const gYear = next.gregorian.getUTCFullYear();
 
       <h2>Coming dates</h2>
       <ul>
-        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
-        <li><a class="text-teal-800 underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
+        <li><a class="text-link underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
+        <li><a class="text-link underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
       </ul>
     </Fragment>
   </ToolPage>

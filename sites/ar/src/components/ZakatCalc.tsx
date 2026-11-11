@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { NISAB_GOLD_GRAMS, NISAB_SILVER_GRAMS, zakat } from "@bt/tools/gulf";
 import { getT, type Lang } from "../i18n";
-import { NumberField, Result, Rows, Toggle, numFmt } from "./form";
+import { NumberField, Result, Rows, Toggle, numFmt, Note } from "./form";
 
 
 export default function ZakatCalc({ lang = "ar" }: { lang?: Lang }) {
@@ -31,7 +31,8 @@ export default function ZakatCalc({ lang = "ar" }: { lang?: Lang }) {
   );
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <NumberField label={L.cash} value={v.cash} onInput={set("cash")} min={0} />
       <NumberField label={L.gold} value={v.gold} onInput={set("gold")} min={0} />
       <NumberField label={L.silver} value={v.silver} onInput={set("silver")} min={0} />
@@ -55,6 +56,7 @@ export default function ZakatCalc({ lang = "ar" }: { lang?: Lang }) {
         <NumberField class="sm:col-span-2" label={L.silverPrice} hint={L.priceHint} value={silverPrice} onInput={setSilverPrice} min={0} />
       )}
 
+      </form>
       <Result class="sm:col-span-2" label={L.result} {...(r.nisabKnown ? { value: r.zakat, format: num.format } : { amount: "—" })}>
         <Rows
           rows={[
@@ -67,10 +69,10 @@ export default function ZakatCalc({ lang = "ar" }: { lang?: Lang }) {
             ...(r.due ? [{ label: `${L.result} (2.5%)`, value: num.format(r.zakat), strong: true }] : []),
           ]}
         />
-        {!r.nisabKnown && <p class="mt-3 text-sm text-stone-600">{L.needPrice}</p>}
-        {r.nisabKnown && !r.due && <p class="mt-3 text-sm text-stone-600">{L.notDue}</p>}
+        {!r.nisabKnown && <p class="mt-3 text-sm opacity-85">{L.needPrice}</p>}
+        {r.nisabKnown && !r.due && <p class="mt-3 text-sm opacity-85">{L.notDue}</p>}
       </Result>
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

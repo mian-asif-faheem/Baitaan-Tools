@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="Mexico finiquito and severance calculator 2026 | Baitaan"
   description="Work out your 2026 finiquito or severance pay under Mexico's Federal Labor Law: aguinaldo, vacation, vacation premium, 3 months' pay, 20 days per year and seniority premium. Free, no sign-up."
@@ -66,14 +67,10 @@ import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
       <p>Part of it is free of ISR (Income Tax Law, art. 93): the aguinaldo up to 30 UMA ($3,519.30), the vacation premium up to 15 UMA ($1,759.65), and severance and seniority premium up to 90 UMA per year worked ($10,557.90 per year). Your employer withholds ISR on the rest, so the payment can be lower than the calculator's gross total.</p>
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">Do I get severance if I resign?</h3>
-      <p>No. If you resign you only get the finiquito. With 15 or more years at the company, you also get the seniority premium.</p>
-      <h3 class="font-semibold text-stone-900">How long do I have to claim if I was dismissed?</h3>
-      <p>Two months from the dismissal (art. 518). Before filing a lawsuit you must go to your state's Conciliation Center or the Federal Conciliation Center. PROFEDET advises workers for free.</p>
-      <h3 class="font-semibold text-stone-900">Do I have to sign a resignation to get my finiquito?</h3>
-      <p>No. Your employer must pay the finiquito even if you sign nothing. Check the amounts before you sign any document.</p>
-      <h3 class="font-semibold text-stone-900">Which salary is used?</h3>
-      <p>The finiquito uses your daily salary. The 3 months and the 20 days per year use the integrated daily salary, which adds the daily share of your aguinaldo and vacation premium.</p>
+      <details class="bt-faq"><summary>Do I get severance if I resign?</summary><p>No. If you resign you only get the finiquito. With 15 or more years at the company, you also get the seniority premium.</p></details>
+      <details class="bt-faq"><summary>How long do I have to claim if I was dismissed?</summary><p>Two months from the dismissal (art. 518). Before filing a lawsuit you must go to your state's Conciliation Center or the Federal Conciliation Center. PROFEDET advises workers for free.</p></details>
+      <details class="bt-faq"><summary>Do I have to sign a resignation to get my finiquito?</summary><p>No. Your employer must pay the finiquito even if you sign nothing. Check the amounts before you sign any document.</p></details>
+      <details class="bt-faq"><summary>Which salary is used?</summary><p>The finiquito uses your daily salary. The 3 months and the 20 days per year use the integrated daily salary, which adds the daily share of your aguinaldo and vacation premium.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

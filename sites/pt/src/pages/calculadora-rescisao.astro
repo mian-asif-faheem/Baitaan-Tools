@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import RescisaoCalc from "../components/RescisaoCalc.tsx";
 ---
 <Layout
+  bleed
   title="Calculadora de rescisão trabalhista 2026 (CLT) | Baitaan"
   description="Calcule sua rescisão 2026: sem justa causa, pedido de demissão, acordo ou justa causa. Saldo de salário, aviso prévio, 13º, férias, multa de 40% do FGTS. Grátis e sem cadastro."
 >
@@ -26,7 +27,7 @@ import RescisaoCalc from "../components/RescisaoCalc.tsx";
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
-            <tr class="text-stone-500">
+            <tr class="text-muted">
               <th class="py-2 text-start font-medium">Verba</th>
               <th class="px-1.5 py-2 text-center font-medium">Sem justa causa</th>
               <th class="px-1.5 py-2 text-center font-medium">Pedido</th>
@@ -35,14 +36,14 @@ import RescisaoCalc from "../components/RescisaoCalc.tsx";
             </tr>
           </thead>
           <tbody>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Saldo de salário</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Aviso prévio indenizado</td><td class="px-1.5 text-center">Integral</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Metade</td><td class="px-1.5 text-center">Não</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">13º proporcional</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Férias proporcionais + 1/3</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Férias vencidas + 1/3</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Multa do FGTS</td><td class="px-1.5 text-center">40%</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">20%</td><td class="px-1.5 text-center">Não</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Saque do FGTS</td><td class="px-1.5 text-center">100%</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">80%</td><td class="px-1.5 text-center">Não</td></tr>
-            <tr class="border-t border-stone-200"><td class="py-1.5">Seguro-desemprego</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Saldo de salário</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Aviso prévio indenizado</td><td class="px-1.5 text-center">Integral</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Metade</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">13º proporcional</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Férias proporcionais + 1/3</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Férias vencidas + 1/3</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Sim</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Multa do FGTS</td><td class="px-1.5 text-center">40%</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">20%</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Saque do FGTS</td><td class="px-1.5 text-center">100%</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">80%</td><td class="px-1.5 text-center">Não</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Seguro-desemprego</td><td class="px-1.5 text-center">Sim</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Não</td><td class="px-1.5 text-center">Não</td></tr>
           </tbody>
         </table>
       </div>
@@ -80,12 +81,9 @@ import RescisaoCalc from "../components/RescisaoCalc.tsx";
       </ul>
 
       <h2>Perguntas frequentes</h2>
-      <h3 class="font-semibold text-stone-900">A rescisão tem desconto de IR?</h3>
-      <p>Só o saldo de salário e o 13º pagam INSS e IR. Aviso prévio indenizado, férias indenizadas e a multa do FGTS são isentos. Com a redução do IR de 2026, quem ganha até R$ 5.000 normalmente não tem desconto de IR.</p>
-      <h3 class="font-semibold text-stone-900">Onde vejo meu saldo do FGTS?</h3>
-      <p>No aplicativo FGTS da Caixa. A multa é calculada sobre todos os depósitos feitos durante o contrato, mesmo que você já tenha usado parte do saldo, como no saque-aniversário.</p>
-      <h3 class="font-semibold text-stone-900">O que é o acordo do art. 484-A?</h3>
-      <p>Desde a Reforma Trabalhista de 2017, empresa e empregado podem encerrar o contrato em comum acordo. Você recebe metade do aviso indenizado e 20% de multa, saca 80% do FGTS e não tem direito ao seguro-desemprego.</p>
+      <details class="bt-faq"><summary>A rescisão tem desconto de IR?</summary><p>Só o saldo de salário e o 13º pagam INSS e IR. Aviso prévio indenizado, férias indenizadas e a multa do FGTS são isentos. Com a redução do IR de 2026, quem ganha até R$ 5.000 normalmente não tem desconto de IR.</p></details>
+      <details class="bt-faq"><summary>Onde vejo meu saldo do FGTS?</summary><p>No aplicativo FGTS da Caixa. A multa é calculada sobre todos os depósitos feitos durante o contrato, mesmo que você já tenha usado parte do saldo, como no saque-aniversário.</p></details>
+      <details class="bt-faq"><summary>O que é o acordo do art. 484-A?</summary><p>Desde a Reforma Trabalhista de 2017, empresa e empregado podem encerrar o contrato em comum acordo. Você recebe metade do aviso indenizado e 20% de multa, saca 80% do FGTS e não tem direito ao seguro-desemprego.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

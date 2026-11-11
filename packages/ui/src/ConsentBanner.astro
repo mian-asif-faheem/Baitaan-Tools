@@ -6,6 +6,8 @@
  * advertising are off until the visitor allows them.
  */
 import { CONSENT_DAYS, type ConsentStrings } from "./consent";
+import Icon from "./Icon.astro";
+import * as I from "./icons";
 
 interface Props {
   t: ConsentStrings;
@@ -16,45 +18,48 @@ const { t } = Astro.props;
   data-bt-consent
   hidden
   role="dialog"
+  aria-modal="false"
   aria-labelledby="bt-consent-title"
   aria-describedby="bt-consent-text"
-  class="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-4"
+  class="bt-consent"
 >
-  <div class="mx-auto max-w-3xl rounded-xl border border-stone-200 bg-white p-4 shadow-lg sm:p-5">
-    <h2 id="bt-consent-title" class="text-base font-semibold text-stone-900">{t.title}</h2>
-    <p id="bt-consent-text" class="mt-1 text-sm text-stone-600">
-      {t.text} <a class="text-teal-800 underline" href={t.privacyHref}>{t.privacyLabel}</a>
-    </p>
+  <div class="flex items-center gap-2">
+    <Icon d={I.cookie} size={20} />
+    <h2 id="bt-consent-title" class="m-0 text-[17px] font-semibold">{t.title}</h2>
+  </div>
+  <p id="bt-consent-text" class="m-0 mt-2 text-sm text-muted">
+    {t.text} <a class="text-ink underline underline-offset-2" href={t.privacyHref}>{t.privacyLabel}</a>
+  </p>
 
-    <div data-bt-consent-details hidden class="mt-3 grid gap-2">
-      <label class="flex items-start gap-3 rounded-lg border border-stone-200 p-3 text-sm">
-        <input type="checkbox" checked disabled class="mt-0.5 size-4 accent-teal-700" />
-        <span>
-          <span class="block font-semibold text-stone-900">{t.necessary} · <span class="font-normal text-stone-500">{t.alwaysOn}</span></span>
-          <span class="block text-stone-600">{t.necessaryDesc}</span>
-        </span>
+  <div data-bt-consent-main class="mt-4 flex flex-col gap-1">
+    <div class="grid grid-cols-2 gap-2">
+      <button type="button" data-bt-consent-accept class="bt-btn bt-btn--sm">{t.accept}</button>
+      <button type="button" data-bt-consent-reject class="bt-btn bt-btn--sm bt-btn--secondary">{t.reject}</button>
+    </div>
+    <button type="button" data-bt-consent-customize class="bt-link-btn self-center">{t.customize}</button>
+  </div>
+
+  <div data-bt-consent-details hidden class="mt-2">
+    <div class="flex flex-col">
+      <label class="bt-consent__row">
+        <span><span class="block font-semibold">{t.necessary}</span><span class="block text-[13px] text-muted">{t.necessaryDesc} · {t.alwaysOn}</span></span>
+        <input type="checkbox" role="switch" class="bt-switch" checked disabled />
       </label>
-      <label class="flex items-start gap-3 rounded-lg border border-stone-200 p-3 text-sm">
-        <input type="checkbox" data-bt-consent-analytics class="mt-0.5 size-4 accent-teal-700" />
-        <span>
-          <span class="block font-semibold text-stone-900">{t.analytics}</span>
-          <span class="block text-stone-600">{t.analyticsDesc}</span>
-        </span>
+      <label class="bt-consent__row">
+        <span><span class="block font-semibold">{t.analytics}</span><span class="block text-[13px] text-muted">{t.analyticsDesc}</span></span>
+        <input type="checkbox" role="switch" class="bt-switch" data-bt-consent-analytics />
       </label>
-      <label class="flex items-start gap-3 rounded-lg border border-stone-200 p-3 text-sm">
-        <input type="checkbox" data-bt-consent-ads class="mt-0.5 size-4 accent-teal-700" />
-        <span>
-          <span class="block font-semibold text-stone-900">{t.ads}</span>
-          <span class="block text-stone-600">{t.adsDesc}</span>
-        </span>
+      <label class="bt-consent__row">
+        <span><span class="block font-semibold">{t.ads}</span><span class="block text-[13px] text-muted">{t.adsDesc}</span></span>
+        <input type="checkbox" role="switch" class="bt-switch" data-bt-consent-ads />
       </label>
     </div>
-
-    <div class="mt-4 flex flex-wrap gap-2">
-      <button type="button" data-bt-consent-accept class="rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-800">{t.accept}</button>
-      <button type="button" data-bt-consent-reject class="rounded-lg border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 hover:bg-stone-100">{t.reject}</button>
-      <button type="button" data-bt-consent-customize class="rounded-lg px-4 py-2 text-sm text-stone-700 underline hover:text-teal-800">{t.customize}</button>
-      <button type="button" data-bt-consent-save hidden class="rounded-lg border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 hover:bg-stone-100">{t.save}</button>
+    <div class="mt-3 flex flex-col gap-2">
+      <button type="button" data-bt-consent-save class="bt-btn bt-btn--sm">{t.save}</button>
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" data-bt-consent-accept class="bt-btn bt-btn--ghost">{t.accept}</button>
+        <button type="button" data-bt-consent-reject class="bt-btn bt-btn--ghost">{t.reject}</button>
+      </div>
     </div>
   </div>
 </section>
@@ -69,6 +74,7 @@ const { t } = Astro.props;
     var ads = box.querySelector("[data-bt-consent-ads]");
     var save = box.querySelector("[data-bt-consent-save]");
     var custom = box.querySelector("[data-bt-consent-customize]");
+    var main = box.querySelector("[data-bt-consent-main]");
 
     function current() {
       var v = c.get("bt_consent") || "";
@@ -93,13 +99,12 @@ const { t } = Astro.props;
       an.checked = s.analytics;
       ads.checked = s.ads;
       details.hidden = !showDetails;
-      save.hidden = !showDetails;
-      custom.hidden = !!showDetails;
+      main.hidden = !!showDetails;
       box.hidden = false;
     }
 
-    box.querySelector("[data-bt-consent-accept]").addEventListener("click", function () { store(true, true); });
-    box.querySelector("[data-bt-consent-reject]").addEventListener("click", function () { store(false, false); });
+    box.querySelectorAll("[data-bt-consent-accept]").forEach(function (b) { b.addEventListener("click", function () { store(true, true); }); });
+    box.querySelectorAll("[data-bt-consent-reject]").forEach(function (b) { b.addEventListener("click", function () { store(false, false); }); });
     custom.addEventListener("click", function () { open(true); });
     save.addEventListener("click", function () { store(an.checked, ads.checked); });
     document.querySelectorAll("[data-bt-consent-open]").forEach(function (b) {

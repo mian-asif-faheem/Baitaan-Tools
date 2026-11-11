@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import EosCalc from "../../components/EosCalc.tsx";
 ---
 <Layout
+  bleed
   lang="en"
   title="UAE end-of-service gratuity calculator 2026 | Baitaan"
   description="Work out your UAE end-of-service gratuity under the new Labour Law: 21 days per year for the first five years and 30 days after that, on the basic salary. Free, no sign-up."
@@ -38,13 +39,10 @@ import EosCalc from "../../components/EosCalc.tsx";
       <AdSlot slot="0000000000" label="Advertisement" />
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">Is the gratuity lower if I resign?</h3>
-      <p>No. Under Decree-Law No. 33 of 2021, the gratuity is calculated the same way whether the employee resigns or the employer ends the contract, as long as one year of service is complete.</p>
-      <h3 class="font-semibold text-stone-900">Is housing allowance included?</h3>
-      <p>No. The gratuity is calculated on the last basic salary only, without allowances or commissions.</p>
-      <h3 class="font-semibold text-stone-900">When must it be paid?</h3>
-      <p>Within 14 days of the end of employment.</p>
-      <p>Working in Saudi Arabia? Use the <a class="text-teal-800 underline" href="/en/nihayat-alkhidma-saudi/">Saudi end-of-service calculator</a>.</p>
+      <details class="bt-faq"><summary>Is the gratuity lower if I resign?</summary><p>No. Under Decree-Law No. 33 of 2021, the gratuity is calculated the same way whether the employee resigns or the employer ends the contract, as long as one year of service is complete.</p></details>
+      <details class="bt-faq"><summary>Is housing allowance included?</summary><p>No. The gratuity is calculated on the last basic salary only, without allowances or commissions.</p></details>
+      <details class="bt-faq"><summary>When must it be paid?</summary><p>Within 14 days of the end of employment.</p></details>
+      <p>Working in Saudi Arabia? Use the <a class="text-link underline" href="/en/nihayat-alkhidma-saudi/">Saudi end-of-service calculator</a>.</p>
     </Fragment>
   </ToolPage>
 </Layout>

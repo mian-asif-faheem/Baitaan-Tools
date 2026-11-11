@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { decimoTerceiro } from "@bt/tools/br";
 import { getT, type Lang } from "../i18n";
-import { NumberField, Result, Rows, money } from "./form";
+import { NumberField, Result, Rows, money, Note } from "./form";
 
 
 export default function DecimoCalc({ lang = "pt" }: { lang?: Lang }) {
@@ -27,12 +27,14 @@ export default function DecimoCalc({ lang = "pt" }: { lang?: Lang }) {
   }, [salary, months, extras, deps]);
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <NumberField label={C.salary} value={salary} onInput={setSalary} min={0} />
       <NumberField label={L.months} hint={L.monthsHint} value={months} onInput={setMonths} min={1} max={12} step="1" />
       <NumberField label={C.extras} value={extras} onInput={setExtras} min={0} />
       <NumberField label={C.dependents} value={deps} onInput={setDeps} min={0} step="1" />
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} value={r.net} format={brl.format}>
           <Rows
@@ -50,7 +52,7 @@ export default function DecimoCalc({ lang = "pt" }: { lang?: Lang }) {
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

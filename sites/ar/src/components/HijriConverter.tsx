@@ -1,9 +1,8 @@
 import { useMemo, useState } from "preact/hooks";
 import { hijriMonthLength, toGregorian, toHijri } from "@bt/tools/hijri";
 import { getT, type Lang } from "../i18n";
-import { hijriMonths, hijriText } from "./form";
+import { fieldClass, hijriMonths, hijriText, Note, Result, Toggle } from "./form";
 
-const field = "mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 text-lg focus:border-teal-700 focus:outline-none";
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
@@ -36,58 +35,50 @@ export default function HijriConverter({ lang = "ar" }: { lang?: Lang }) {
   const maxDay = mode === "toGregorian" && Number(hy) > 0 ? hijriMonthLength(Number(hy), Number(hm)) : 30;
 
   return (
-    <form class="grid gap-4" onSubmit={(e) => e.preventDefault()}>
-      <div class="inline-flex w-fit rounded-lg border border-stone-300 p-1">
-        {(["toHijri", "toGregorian"] as const).map((m) => (
-          <button
-            type="button"
-            aria-pressed={mode === m}
-            onClick={() => setMode(m)}
-            class={`rounded-md px-4 py-1.5 text-sm ${mode === m ? "bg-teal-700 text-white" : "text-stone-600"}`}
-          >
-            {L[m]}
-          </button>
-        ))}
-      </div>
-
-      {mode === "toHijri" ? (
-        <label class="text-sm font-semibold">
-          {L.gregorianDate}
-          <input class={field} type="date" value={greg} onInput={(e) => setGreg(e.currentTarget.value)} />
-        </label>
-      ) : (
-        <div class="grid grid-cols-3 gap-3">
-          <label class="text-sm font-semibold">
-            {L.day}
-            <input class={field} type="number" inputMode="numeric" min="1" max={maxDay} value={hd} onInput={(e) => setHd(e.currentTarget.value)} />
+    <div class="bt-tool">
+      <form class="bt-panel grid gap-6" onSubmit={(e) => e.preventDefault()}>
+        <Toggle
+          legend={L.direction}
+          value={mode}
+          onChange={setMode}
+          variant="segmented"
+          options={[
+            { value: "toHijri", label: L.toHijri },
+            { value: "toGregorian", label: L.toGregorian },
+          ]}
+        />
+        {mode === "toHijri" ? (
+          <label class="bt-label flex flex-col">
+            {L.gregorianDate}
+            <input class={fieldClass} type="date" value={greg} onInput={(e) => setGreg(e.currentTarget.value)} />
           </label>
-          <label class="text-sm font-semibold">
-            {L.month}
-            <select class={field} value={hm} onChange={(e) => setHm(e.currentTarget.value)}>
-              {hijriMonths(lang).map((name, i) => <option value={String(i + 1)}>{name}</option>)}
-            </select>
-          </label>
-          <label class="text-sm font-semibold">
-            {L.year}
-            <input class={field} type="number" inputMode="numeric" min="1343" max="1500" value={hy} onInput={(e) => setHy(e.currentTarget.value)} />
-          </label>
-        </div>
-      )}
-
-      <output class="rounded-lg bg-teal-50 p-4" aria-live="polite">
-        <span class="block text-sm text-teal-900">{L.result}</span>
-        {result && "error" in result ? (
-          <span class="block text-lg text-red-700">{result.error}</span>
-        ) : result ? (
-          <>
-            <span class="block text-3xl font-semibold text-teal-900">{result.main}</span>
-            <span class="mt-1 block text-sm text-stone-600">{result.weekday}</span>
-          </>
         ) : (
-          <span class="text-sm text-stone-500">—</span>
+          <div class="grid grid-cols-[72px_minmax(0,1fr)_88px] gap-2">
+            <label class="bt-label flex flex-col">
+              {L.day}
+              <input class={`${fieldClass} text-center`} type="number" inputMode="numeric" min="1" max={maxDay} value={hd} onInput={(e) => setHd(e.currentTarget.value)} />
+            </label>
+            <label class="bt-label flex min-w-0 flex-col">
+              {L.month}
+              <select class={fieldClass} value={hm} onChange={(e) => setHm(e.currentTarget.value)}>
+                {hijriMonths(lang).map((name, i) => <option value={String(i + 1)}>{name}</option>)}
+              </select>
+            </label>
+            <label class="bt-label flex flex-col">
+              {L.year}
+              <input class={`${fieldClass} text-center`} type="number" inputMode="numeric" min="1343" max="1500" value={hy} onInput={(e) => setHy(e.currentTarget.value)} />
+            </label>
+          </div>
         )}
-      </output>
-      <p class="text-xs text-stone-500">{L.note}</p>
-    </form>
+      </form>
+      {result && "error" in result ? (
+        <Result label={L.result} amount="—" sub={result.error} />
+      ) : result ? (
+        <Result label={L.result} amount={result.main} sub={result.weekday} />
+      ) : (
+        <Result label={L.result} amount="—" />
+      )}
+      <Note>{L.note}</Note>
+    </div>
   );
 }

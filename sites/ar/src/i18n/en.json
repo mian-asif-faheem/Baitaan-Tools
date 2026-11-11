@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Tools · Gulf",
+  "brand": "Baitaan Tools",
   "nav": [
     {
       "href": "/en/tahweel-altareekh/",
@@ -49,7 +49,8 @@
     "gregorianSuffix": "CE",
     "today": "Today",
     "error": "This date doesn't exist in the Umm al-Qura calendar",
-    "note": "Based on the Umm al-Qura calendar used in Saudi Arabia. Some countries may differ by one day depending on the moon sighting."
+    "note": "Based on the Umm al-Qura calendar used in Saudi Arabia. Some countries may differ by one day depending on the moon sighting.",
+    "direction": "Convert"
   },
   "common": {
     "years": "years",
@@ -254,6 +255,17 @@
       "ads": "Personalised advertising",
       "adsDesc": "Lets Google show ads based on your interests. If you reject it, you'll see non-personalised ads.",
       "alwaysOn": "always on"
-    }
+    },
+    "home": "Home",
+    "chips": [
+      "Free",
+      "No sign-up",
+      "Nothing is uploaded"
+    ],
+    "popular": "Most used",
+    "soon": "Coming soon",
+    "tools": "tools",
+    "example": "Example",
+    "adLabel": "Advertisement"
   }
 }

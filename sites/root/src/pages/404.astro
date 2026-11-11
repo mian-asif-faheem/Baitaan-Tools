@@ -1,11 +1,7 @@
 ---
+import NotFound from "@bt/ui/NotFound.astro";
 import Layout from "../components/Layout.astro";
 ---
-<Layout notFound title="Page not found | Baitaan Tools" description="The page you are looking for does not exist.">
-  <div class="py-10 text-center">
-    <p class="text-6xl font-bold text-teal-800">404</p>
-    <h1 class="mt-4 text-2xl font-bold">This page does not exist</h1>
-    <p class="mt-3 text-stone-600">The address may be mistyped, or the page has moved.</p>
-    <a href="/" class="mt-6 inline-block rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white hover:bg-teal-800">Choose your language</a>
-  </div>
+<Layout notFound bleed title="Page not found | Baitaan Tools" description="The page you are looking for does not exist.">
+  <NotFound title="This page does not exist" text="The address may be mistyped, or the page has moved." cta={{ href: "/", label: "Choose your language" }} links={[{ href: "https://es.baitaandessigns.com/", label: "Español", lang: "es" }, { href: "https://pt.baitaandessigns.com/", label: "Português", lang: "pt-BR" }, { href: "https://ar.baitaandessigns.com/", label: "العربية", lang: "ar" }]} />
 </Layout>

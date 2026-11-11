@@ -11,6 +11,7 @@ const gYear = next.gregorian.getUTCFullYear();
 ---
 <!-- TODO (native review): Arabic copy. -->
 <Layout
+  bleed
   title={`كم باقي على رمضان ${y} (${gYear})؟ العد التنازلي | بيتان`}
   description={`عد تنازلي بالأيام والساعات حتى أول أيام شهر رمضان ${y} هـ، والموعد المتوقع حسب تقويم أم القرى.`}
 >
@@ -27,16 +28,16 @@ const gYear = next.gregorian.getUTCFullYear();
 
       <h2>مواعيد قريبة</h2>
       <ul>
-        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-alfitr/">كم باقي على عيد الفطر</a></li>
-        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
+        <li><a class="text-link underline" href="/kam-baqi-ala-eid-alfitr/">كم باقي على عيد الفطر</a></li>
+        <li><a class="text-link underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
       </ul>
 
       <AdSlot slot="0000000000" label="إعلان" />
 
       <h2>استعد لرمضان</h2>
       <ul>
-        <li>احسب زكاة مالك مبكرًا مع <a class="text-teal-800 underline" href="/hasibat-azzakat/">حاسبة الزكاة</a>، فكثيرون يُخرجونها في رمضان.</li>
-        <li>حوّل أي تاريخ بين الهجري والميلادي مع <a class="text-teal-800 underline" href="/tahweel-altareekh/">محوّل التاريخ</a>.</li>
+        <li>احسب زكاة مالك مبكرًا مع <a class="text-link underline" href="/hasibat-azzakat/">حاسبة الزكاة</a>، فكثيرون يُخرجونها في رمضان.</li>
+        <li>حوّل أي تاريخ بين الهجري والميلادي مع <a class="text-link underline" href="/tahweel-altareekh/">محوّل التاريخ</a>.</li>
       </ul>
     </Fragment>
   </ToolPage>

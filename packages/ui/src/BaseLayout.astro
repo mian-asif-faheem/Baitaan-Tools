@@ -10,6 +10,8 @@
  */
 import { SITES, type SiteKey } from "./sites";
 import ConsentBanner from "./ConsentBanner.astro";
+import Icon from "./Icon.astro";
+import * as I from "./icons";
 import type { ConsentStrings } from "./consent";
 
 export interface PageVersion {
@@ -28,6 +30,23 @@ export interface Chrome {
   languageLabel: string;
   cookieSettings: string;
   consent: ConsentStrings;
+  /** Breadcrumb label for the home page. */
+  home?: string;
+  /** Three short trust chips under tool headings ("Free", "No sign-up"…). */
+  chips?: string[];
+  popular?: string;
+  soon?: string;
+  tools?: string;
+  example?: string;
+  adLabel?: string;
+}
+
+/** What the layout shares with components rendered inside it (ToolPage, ToolGrid…). */
+export interface ShellContext {
+  chrome: Chrome;
+  nav: { href: string; label: string }[];
+  homeHref: string;
+  dir: "ltr" | "rtl";
 }
 
 interface Props {
@@ -47,6 +66,10 @@ interface Props {
   chrome: Chrome;
   /** Off on 404 pages so a language redirect can never loop. */
   langRedirect?: boolean;
+  /** The page lays out its own full-width sections (home pages, tool pages). */
+  bleed?: boolean;
+  /** 1120px footer instead of the 760px reading column (home pages). */
+  wide?: boolean;
 }
 
 const {
@@ -64,6 +87,8 @@ const {
   homeHref = "/",
   chrome,
   langRedirect = true,
+  bleed = false,
+  wide = false,
 } = Astro.props;
 const s = SITES[site];
 const abs = (path: string) => new URL(path, s.url).href;
@@ -71,6 +96,8 @@ const canonical = abs(Astro.url.pathname);
 const others = versions.filter((v) => v.code !== code);
 const xDefault = versions[0];
 const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-XXXXXXXXXXXXXXXX
+const here = Astro.url.pathname;
+(Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir };
 const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href })), redirect: langRedirect };
 ---
 <!doctype html>
@@ -148,58 +175,55 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
       ></script>
     )}
   </head>
-  <body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
-    <header class="border-b border-stone-200 bg-white">
-      <div class="mx-auto max-w-3xl px-4 pt-3 pb-2">
-        <div class="flex items-center gap-3">
-          <a href={homeHref} class="me-auto whitespace-nowrap font-semibold tracking-tight text-teal-800">{brand ?? s.name}</a>
-          {others.map((v) => (
-            <a
-              href={v.href}
-              hreflang={v.hreflang}
-              lang={v.hreflang}
-              data-bt-lang={v.code}
-              class="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 px-2.5 py-1.5 text-sm text-stone-700 hover:border-teal-700 hover:text-teal-800"
-              aria-label={`${chrome.languageLabel}: ${v.label}`}
-            >
-              <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" />
-              </svg>
-              {v.label}
-            </a>
-          ))}
-          <button
-            type="button"
-            data-bt-theme
-            class="inline-flex size-9 items-center justify-center rounded-lg border border-stone-200 text-stone-700 hover:border-teal-700 hover:text-teal-800"
-            aria-label={chrome.themeToggle}
-            title={chrome.themeToggle}
+  <body class="min-h-screen">
+    <header class="bt-header">
+      <div class="mx-auto flex max-w-[1120px] items-center gap-2 px-4 py-2">
+        <a href={homeHref} class="me-auto flex min-h-11 items-center gap-2.5 font-[650] text-ink no-underline" style="letter-spacing:var(--ls)">
+          <span class="bt-badge" aria-hidden="true">B</span>
+          <span>{brand ?? s.name}</span>
+        </a>
+        {others.map((v) => (
+          <a
+            href={v.href}
+            hreflang={v.hreflang}
+            lang={v.hreflang}
+            data-bt-lang={v.code}
+            class="bt-lang"
+            aria-label={`${chrome.languageLabel}: ${v.label}`}
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="size-5 dark:hidden" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" stroke-linejoin="round" />
-            </svg>
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="hidden size-5 dark:block" fill="none" stroke="currentColor" stroke-width="1.8">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round" />
-            </svg>
-          </button>
-        </div>
-        {nav.length > 0 && (
-          <nav class="-mx-4 mt-2 flex gap-5 overflow-x-auto whitespace-nowrap px-4 pb-1 text-sm text-stone-600">
-            {nav.map((n) => <a class="hover:text-teal-800" href={n.href}>{n.label}</a>)}
-          </nav>
-        )}
+            <Icon d={I.globe} size={17} />
+            {v.label}
+          </a>
+        ))}
+        <button type="button" data-bt-theme class="bt-icon-btn" aria-label={chrome.themeToggle} title={chrome.themeToggle}>
+          <span class="bt-theme-icon grid place-items-center">
+            <Icon d={I.moon} size={20} class="dark:hidden" />
+            <Icon d={I.sun} size={20} class="hidden dark:block" />
+          </span>
+        </button>
       </div>
+      {nav.length > 0 && (
+        <nav class="bt-tabs mx-auto max-w-[1120px]" aria-label={brand ?? s.name}>
+          {nav.map((n) => (
+            <a class="bt-tab" href={n.href} aria-current={here === n.href ? "page" : undefined}>{n.label}</a>
+          ))}
+        </nav>
+      )}
     </header>
-    <main class="mx-auto max-w-3xl px-4 py-8">
-      <slot />
-    </main>
-    <footer class="border-t border-stone-200 bg-white text-sm text-stone-500">
-      <div class="mx-auto flex max-w-3xl flex-wrap gap-x-4 gap-y-2 px-4 py-6">
-        {footer.map((f) => <a class="hover:text-teal-800" href={f.href}>{f.label}</a>)}
-        <button type="button" data-bt-consent-open class="hover:text-teal-800">{chrome.cookieSettings}</button>
-        <span class="ms-auto">© {new Date().getFullYear()} MAAF Studios{footerNote && ` · ${footerNote}`}</span>
+    {bleed ? (
+      <main><slot /></main>
+    ) : (
+      <main class="mx-auto max-w-[760px] px-5 pt-10 pb-4">
+        <slot />
+      </main>
+    )}
+    <footer class="mt-14 border-t border-hair">
+      <div class:list={["mx-auto flex flex-col gap-2.5 px-5 pt-5 pb-8", wide ? "max-w-[1120px]" : "max-w-[760px]"]}>
+        <nav class="flex flex-wrap gap-x-5">
+          {footer.map((f) => <a class="inline-flex min-h-11 items-center text-sm text-muted no-underline hover:text-link hover:underline" href={f.href}>{f.label}</a>)}
+          <button type="button" data-bt-consent-open class="inline-flex min-h-11 cursor-pointer items-center text-sm text-muted hover:text-link hover:underline">{chrome.cookieSettings}</button>
+        </nav>
+        <p class="m-0 text-[13px] text-muted">© {new Date().getFullYear()} MAAF Studios{footerNote && ` · ${footerNote}`}</p>
       </div>
     </footer>
 
@@ -212,8 +236,8 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
         var media = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
         var meta = document.querySelector('meta[name="theme-color"]');
         function paint() {
-          // Browser bar: the site's card colour in dark mode, its brand colour in light mode.
-          var v = getComputedStyle(doc).getPropertyValue(doc.classList.contains("dark") ? "--color-white" : "--color-teal-700").trim();
+          // Browser bar: the page background in dark mode, the brand colour in light mode.
+          var v = getComputedStyle(doc).getPropertyValue(doc.classList.contains("dark") ? "--bg" : "--primary").trim();
           if (meta && v) meta.setAttribute("content", v);
         }
         paint();

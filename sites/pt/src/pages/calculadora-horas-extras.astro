@@ -5,6 +5,7 @@ import AdSlot from "@bt/ui/AdSlot.astro";
 import HorasExtrasCalc from "../components/HorasExtrasCalc.tsx";
 ---
 <Layout
+  bleed
   title="Calculadora de horas extras e adicional noturno 2026 | Baitaan"
   description="Calcule horas extras de 50% e 100%, adicional noturno com hora reduzida e o reflexo no DSR. Para jornadas de 44, 40, 36 e 30 horas. Grátis e sem cadastro."
 >
@@ -43,12 +44,9 @@ import HorasExtrasCalc from "../components/HorasExtrasCalc.tsx";
       <AdSlot slot="0000000000" label="Publicidade" />
 
       <h2>Perguntas frequentes</h2>
-      <h3 class="font-semibold text-stone-900">Quantas horas extras posso fazer por dia?</h3>
-      <p>Até 2 horas por dia (art. 59 da CLT), salvo exceções previstas em lei ou acordo.</p>
-      <h3 class="font-semibold text-stone-900">O adicional pode ser maior que 50%?</h3>
-      <p>Sim. Muitas convenções coletivas preveem 60%, 70% ou mais. Informe o percentual do seu sindicato na calculadora.</p>
-      <h3 class="font-semibold text-stone-900">Hora extra tem desconto?</h3>
-      <p>Sim. O valor entra no salário do mês e paga INSS e IR junto com ele.</p>
+      <details class="bt-faq"><summary>Quantas horas extras posso fazer por dia?</summary><p>Até 2 horas por dia (art. 59 da CLT), salvo exceções previstas em lei ou acordo.</p></details>
+      <details class="bt-faq"><summary>O adicional pode ser maior que 50%?</summary><p>Sim. Muitas convenções coletivas preveem 60%, 70% ou mais. Informe o percentual do seu sindicato na calculadora.</p></details>
+      <details class="bt-faq"><summary>Hora extra tem desconto?</summary><p>Sim. O valor entra no salário do mês e paga INSS e IR junto com ele.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

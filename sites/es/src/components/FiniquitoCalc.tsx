@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { finiquito, monthlyToDaily, type Motivo } from "@bt/tools/mx";
 import { getT, locale, type Lang } from "../i18n";
-import { Check, NumberField, Result, Rows, Toggle, fieldClass, money } from "./form";
+import { Check, NumberField, Result, Rows, Toggle, fieldClass, money, Note } from "./form";
 
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -50,7 +50,8 @@ export default function FiniquitoCalc({ lang = "es" }: { lang?: Lang }) {
   });
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <Toggle
         class="sm:col-span-2"
         legend={L.motivo}
@@ -73,20 +74,20 @@ export default function FiniquitoCalc({ lang = "es" }: { lang?: Lang }) {
         ]}
       />
       <NumberField class="sm:col-span-2" label={C.salaryMxn} value={salary} onInput={setSalary} min={0} />
-      <label class="text-sm font-semibold">
+      <label class="bt-label flex flex-col">
         {L.start}
         <input class={fieldClass} type="date" value={start} onInput={(e) => setStart(e.currentTarget.value)} />
       </label>
-      <label class="text-sm font-semibold">
+      <label class="bt-label flex flex-col">
         {L.end}
         <input class={fieldClass} type="date" value={end} onInput={(e) => setEnd(e.currentTarget.value)} />
       </label>
       <NumberField label={L.unpaid} value={unpaid} onInput={setUnpaid} min={0} step="1" />
       <NumberField label={L.pendingVac} value={pendingVac} onInput={setPendingVac} min={0} step="1" />
 
-      <details class="sm:col-span-2 rounded-lg border border-stone-200 p-3">
-        <summary class="cursor-pointer text-sm font-semibold text-stone-700">{L.benefits}</summary>
-        <div class="mt-3 grid gap-4 sm:grid-cols-2">
+      <details class="bt-more sm:col-span-2">
+        <summary>{L.benefits}</summary>
+        <div class="mt-3 grid gap-6 sm:grid-cols-2">
           <NumberField label={L.aguinaldoDays} value={agDays} onInput={setAgDays} min={15} step="1" />
           <NumberField label={L.prima} value={prima} onInput={setPrima} min={25} step="1" />
           <Check class="sm:col-span-2" label={C.frontera} checked={frontera} onChange={setFrontera} />
@@ -97,27 +98,28 @@ export default function FiniquitoCalc({ lang = "es" }: { lang?: Lang }) {
         <Check class="sm:col-span-2" label={L.veinte} checked={veinte} onChange={setVeinte} />
       )}
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.resultTotal} value={r.total} format={mxn.format}>
-          <span class="mt-1 block text-sm text-stone-600">
+          <span class="bt-result__sub">
             {L.service}: {r.yearsOfService.toLocaleString(locale(lang))} {L.years}
             {r.liquidacion.length > 0 && ` · ${L.sdi}: ${mxn.format(r.sdi)}`}
           </span>
-          <h3 class="mt-4 text-sm font-semibold text-teal-900">{L.finiquitoTitle}</h3>
+          <h3 class="mt-4 text-sm font-semibold">{L.finiquitoTitle}</h3>
           <Rows rows={[...r.finiquito.filter((l) => l.amount > 0).map(line), { label: L.finiquitoTitle, value: mxn.format(r.totalFiniquito), strong: true }]} />
           {r.liquidacion.length > 0 ? (
             <>
-              <h3 class="mt-4 text-sm font-semibold text-teal-900">{L.liquidacionTitle}</h3>
+              <h3 class="mt-4 text-sm font-semibold">{L.liquidacionTitle}</h3>
               <Rows rows={[...r.liquidacion.map(line), { label: L.liquidacionTitle, value: mxn.format(r.totalLiquidacion), strong: true }]} />
             </>
           ) : (
-            motivo === "renuncia" && <p class="mt-3 text-sm text-stone-600">{L.noLiquidacion}</p>
+            motivo === "renuncia" && <p class="mt-3 text-sm opacity-85">{L.noLiquidacion}</p>
           )}
         </Result>
       ) : (
         <Result class="sm:col-span-2" label={L.resultTotal} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

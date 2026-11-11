@@ -1,9 +1,8 @@
 import { useMemo, useState } from "preact/hooks";
 import { netSalary } from "@bt/tools/br";
 import { getT, type Lang } from "../i18n";
-import { money } from "./form";
+import { money, NumberField, Note, Result, Rows } from "./form";
 
-const field = "mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 text-lg focus:border-teal-700 focus:outline-none";
 
 export default function SalarioLiquidoCalc({ lang = "pt" }: { lang?: Lang }) {
   const t = getT(lang);
@@ -31,42 +30,20 @@ export default function SalarioLiquidoCalc({ lang = "pt" }: { lang?: Lang }) {
     : [];
 
   return (
-    <form class="grid gap-4 sm:grid-cols-3" onSubmit={(e) => e.preventDefault()}>
-      <label class="text-sm font-semibold">
-        {L.gross}
-        <input class={field} type="number" inputMode="decimal" min="0" value={gross} onInput={(e) => setGross(e.currentTarget.value)} />
-      </label>
-      <label class="text-sm font-semibold">
-        {L.dependents}
-        <input class={field} type="number" inputMode="numeric" min="0" value={deps} onInput={(e) => setDeps(e.currentTarget.value)} />
-      </label>
-      <label class="text-sm font-semibold">
-        {L.other}
-        <input class={field} type="number" inputMode="decimal" min="0" value={other} onInput={(e) => setOther(e.currentTarget.value)} />
-        <span class="mt-1 block text-xs font-normal text-stone-500">{L.otherHint}</span>
-      </label>
-
-      <output class="rounded-lg bg-teal-50 p-4 sm:col-span-3" aria-live="polite">
-        {r ? (
-          <>
-            <span class="block text-sm text-teal-900">{L.result}</span>
-            <span class="block text-3xl font-semibold text-teal-900">{brl.format(r.net)}</span>
-            <table class="mt-3 w-full text-sm">
-              <tbody>
-                {rows.map(([label, value, info]) => (
-                  <tr class="border-t border-teal-100">
-                    <td class={`py-1.5 ${info ? "text-stone-500" : "text-stone-700"}`}>{label}</td>
-                    <td class={`py-1.5 text-end tabular-nums ${info ? "text-stone-500" : "text-stone-800"}`}>{brl.format(value === 0 ? 0 : value)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        ) : (
-          <span class="text-sm text-stone-500">—</span>
-        )}
-      </output>
-      <p class="text-xs text-stone-500 sm:col-span-3">{L.disclaimer}</p>
-    </form>
+    <div class="bt-tool">
+      <form class="bt-panel grid gap-6 sm:grid-cols-3" onSubmit={(e) => e.preventDefault()}>
+        <NumberField label={L.gross} value={gross} onInput={setGross} min={0} />
+        <NumberField label={L.dependents} value={deps} onInput={setDeps} min={0} step="1" />
+        <NumberField label={L.other} hint={L.otherHint} value={other} onInput={setOther} min={0} />
+      </form>
+      {r ? (
+        <Result label={L.result} value={r.net} format={brl.format}>
+          <Rows rows={rows.map(([label, value, info]) => ({ label, value: brl.format(value === 0 ? 0 : value), muted: !!info }))} />
+        </Result>
+      ) : (
+        <Result label={L.result} amount="—" />
+      )}
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }

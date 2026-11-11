@@ -23,12 +23,16 @@ Every tool runs in the visitor's browser. There is no server and no database.
 - `bt_theme` and `bt_consent` are set on `.baitaandessigns.com`, so they carry across the hub and the subdomains. `bt_lang` is per subdomain: English on `es.` doesn't switch `pt.` or `ar.` to English.
 - The shell lives in `packages/ui/src/BaseLayout.astro` and `ConsentBanner.astro`; dark colours are in `packages/ui/src/theme.css`.
 
-## Animation
+## Design system
 
-- **Home pages (all four sites):** `Hero.astro` puts an animated aurora behind the heading, and the tool cards get a hover spotlight. Both are ported from [React Bits](https://github.com/DavidHDev/react-bits) to Preact/plain DOM (`packages/ui/src/fx/`). Licence: MIT + Commons Clause. Use on these websites is fine; the components may not be sold or redistributed on their own. Keep the licence header in each file.
-- **Results:** pass `value` and `format` to `<Result>` instead of `amount` and the number counts up to the answer (`fx/CountUp.tsx`, our own; screen readers get only the final value).
-- The aurora loads after the page is idle, needs WebGL2, pauses off-screen and is static for "reduce motion". Its colours are `--hero-1..3` in each site's palette (`scripts/palettes.py`).
-- Keep animation off tool forms and ad slots.
+The look comes from the Claude Design boards (design system, home pages, calculators, utility screens).
+
+- **Tokens:** `scripts/palettes.py` writes each site's `src/palette.css`: the design's semantic tokens (`--bg`, `--card`, `--text`, `--muted`, `--border`, `--hair`, `--primary`, `--on-primary`, `--link`, `--result-bg`, `--glow-1..3`, `--elev`…) for light (`:root`) and dark (`html.dark`), plus a WCAG AA contrast check. Tailwind gets them as `bg-card`, `text-muted`, `border-hair`, `shadow-elev`… (`packages/ui/src/design.css`).
+- **Components** (`packages/ui/src/`): `BaseLayout` (glass header, pill tool tabs, footer), `ToolPage` (breadcrumb, trust chips, guide, sources card), `form.tsx` (inputs, segmented toggle or radio cards, checkbox, result card with breakdown rows, notes), `Hero` + `ToolGrid` (home hero and bento grid), `NotFound`, `ConsentBanner`, the PDF/photo tools, and `design.css` for all of their styles.
+- **Icons:** Phosphor (MIT) as inline SVG paths in `icons.ts`; `Icon.astro` for pages, `fx/Svg.tsx` for islands.
+- **Fonts:** Inter (variable, for the 650 weight) and IBM Plex Sans Arabic.
+- **FAQ:** write entries in a guide as `<details class="bt-faq"><summary>Question</summary><p>Answer</p></details>`.
+- **Motion:** one easing (`cubic-bezier(.2,.7,.2,1)`): hero glow blobs drift (CSS transforms), headings blur in word by word, cards lift with a cursor spotlight (ported from [React Bits](https://github.com/DavidHDev/react-bits) SpotlightCard; MIT + Commons Clause, so it can be used on these sites but not resold on its own, so keep the header in `fx/spotlight.ts`), results count up (`fx/CountUp.tsx`) and rows stagger in, the toggle pill slides, countdown digits slide. Everything is instant under "reduce motion". Nothing animates near ad slots or inside fields.
 
 ## Layout
 
@@ -45,7 +49,7 @@ packages/
     src/gulf/   End-of-service: Saudi Arabia (arts. 84-87) and UAE (art. 51); GCC VAT; zakat
     src/text/   Word/character counts that handle Arabic diacritics
   ui/      BaseLayout (lang, dir, canonical, hreflang, theme, language switch, consent, AdSense),
-           ConsentBanner, theme.css (dark mode), ToolPage, AdSlot, sites.ts
+           ConsentBanner, design.css (design system), ToolPage, ToolGrid, Hero, NotFound, AdSlot, icons, sites.ts
     src/tools/  Shared browser tools with translatable strings: PhotoTool (document photos + print
                 sheets at 300 dpi), PdfCompressTool (pdf.js + pdf-lib, loaded only when used),
                 MergePdfTool (PDFs + JPG/PNG, reorderable); form.tsx shared form controls

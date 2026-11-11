@@ -17,7 +17,13 @@
     "./consent": "./src/consent.ts",
     "./theme.css": "./src/theme.css",
     "./Hero.astro": "./src/Hero.astro",
-    "./fx/spotlight": "./src/fx/spotlight.ts"
+    "./fx/spotlight": "./src/fx/spotlight.ts",
+    "./ToolGrid.astro": "./src/ToolGrid.astro",
+    "./Icon.astro": "./src/Icon.astro",
+    "./icons": "./src/icons.ts",
+    "./shell": "./src/shell.ts",
+    "./design.css": "./src/design.css",
+    "./NotFound.astro": "./src/NotFound.astro"
   },
   "dependencies": {
     "pdf-lib": "1.17.1",

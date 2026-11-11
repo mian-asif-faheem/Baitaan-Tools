@@ -11,6 +11,7 @@ const pct = (r: number) => `${(r * 100).toLocaleString("en-US", { maximumFractio
 const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ monthlyGross: g }));
 ---
 <Layout
+  bleed
   lang="en"
   title="Mexico net salary calculator 2026 (ISR and IMSS) | Baitaan"
   description="Work out your 2026 monthly take-home pay in Mexico: ISR from the SAT table, the employment subsidy and IMSS contributions. Free, no sign-up."
@@ -41,7 +42,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
-            <tr class="text-stone-500">
+            <tr class="text-muted">
               <th class="py-2 text-start font-medium">Gross salary</th>
               <th class="py-2 text-end font-medium">ISR</th>
               <th class="py-2 text-end font-medium">IMSS</th>
@@ -50,7 +51,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
           </thead>
           <tbody>
             {examples.map((r) => (
-              <tr class="border-t border-stone-200">
+              <tr class="border-t border-hair">
                 <td class="py-2 tabular-nums">{fmt.format(r.monthlyGross)}</td>
                 <td class="py-2 text-end tabular-nums">{fmt.format(r.isr)}</td>
                 <td class="py-2 text-end tabular-nums">{fmt.format(r.imss)}</td>
@@ -60,7 +61,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
           </tbody>
         </table>
       </div>
-      <p class="text-sm text-stone-500">With the legal minimum integration factor (1.0493). At $10,000 the subsidy is already applied.</p>
+      <p class="text-sm text-muted">With the legal minimum integration factor (1.0493). At $10,000 the subsidy is already applied.</p>
 
       <AdSlot slot="0000000000" label="Advertisement" />
 
@@ -68,7 +69,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
-            <tr class="text-stone-500">
+            <tr class="text-muted">
               <th class="py-2 text-start font-medium">Lower limit</th>
               <th class="py-2 text-end font-medium">Fixed fee</th>
               <th class="py-2 text-end font-medium">% on the excess</th>
@@ -76,7 +77,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
           </thead>
           <tbody>
             {MX_2026.isrMonthly.map((r) => (
-              <tr class="border-t border-stone-200">
+              <tr class="border-t border-hair">
                 <td class="py-1.5 tabular-nums">{fmt.format(r.lower)}</td>
                 <td class="py-1.5 text-end tabular-nums">{fmt.format(r.fixed)}</td>
                 <td class="py-1.5 text-end tabular-nums">{pct(r.rate)}</td>
@@ -97,12 +98,9 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <p>In total, most people pay between 2.4% and 2.8% of their salary to IMSS.</p>
 
       <h2>Frequently asked questions</h2>
-      <h3 class="font-semibold text-stone-900">Is ISR deducted if I earn the minimum wage?</h3>
-      <p>No. Anyone earning only the minimum wage ($315.04 a day in 2026) pays no ISR, and the employer covers their IMSS contributions.</p>
-      <h3 class="font-semibold text-stone-900">How do I work out my fortnightly net pay?</h3>
-      <p>Divide the monthly result by two. Your payslip may differ by a few pesos because employers calculate a fortnight as 15 or 15.2 days.</p>
-      <h3 class="font-semibold text-stone-900">What is the integration factor?</h3>
-      <p>It turns your daily salary into your contribution base by adding the daily share of your aguinaldo and vacation premium. If your employer gives more benefits, your factor is higher.</p>
+      <details class="bt-faq"><summary>Is ISR deducted if I earn the minimum wage?</summary><p>No. Anyone earning only the minimum wage ($315.04 a day in 2026) pays no ISR, and the employer covers their IMSS contributions.</p></details>
+      <details class="bt-faq"><summary>How do I work out my fortnightly net pay?</summary><p>Divide the monthly result by two. Your payslip may differ by a few pesos because employers calculate a fortnight as 15 or 15.2 days.</p></details>
+      <details class="bt-faq"><summary>What is the integration factor?</summary><p>It turns your daily salary into your contribution base by adding the daily share of your aguinaldo and vacation premium. If your employer gives more benefits, your factor is higher.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

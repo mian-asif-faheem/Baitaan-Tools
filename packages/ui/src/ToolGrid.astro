@@ -1,0 +1,86 @@
+---
+/**
+ * Bento grid of tools (Claude Design board 2). Each group can lead with a featured 2×2 card
+ * that shows a real example result; "soon" groups render dashed, non-clickable cards.
+ * Cards get the cursor spotlight (React Bits SpotlightCard port, fx/spotlight.ts).
+ */
+import Icon from "./Icon.astro";
+import * as I from "./icons";
+import { shell } from "./shell";
+
+export interface Tool {
+  href: string;
+  name: string;
+  desc?: string;
+  /** Span the whole row (fills the gap after a featured card). */
+  full?: boolean;
+}
+export interface Group {
+  title: string;
+  soon?: boolean;
+  featured?: Tool & { example: string; exampleLabel: string; exampleId?: string };
+  tools: Tool[];
+}
+interface Props {
+  groups: Group[];
+}
+const { groups } = Astro.props;
+const { chrome } = shell(Astro.locals);
+const countLabel = (g: Group) => {
+  const n = g.tools.length + (g.featured ? 1 : 0);
+  return g.soon ? String(n) : `${n} ${chrome.tools ?? ""}`.trim();
+};
+---
+<div class="mx-auto flex max-w-[1120px] flex-col gap-11 px-5 pt-2">
+  {groups.map((g) => (
+    <section class="flex flex-col gap-3.5">
+      <div class="flex items-baseline justify-between gap-3">
+        <h2 class="m-0 text-xl leading-[1.3] font-semibold">{g.title}</h2>
+        <span class="text-[13px] whitespace-nowrap text-muted">{countLabel(g)}</span>
+      </div>
+      <ul class="bt-bento m-0 list-none p-0">
+        {g.featured && (
+          <li class="col-span-2 row-span-2">
+            <a href={g.featured.href} class="bt-card min-h-[280px] gap-2 rounded-[28px] p-[22px]" data-spotlight>
+              <span class="bt-tag">{chrome.popular}</span>
+              <span class="text-[clamp(22px,3vw,28px)] leading-[1.2] font-[650]" style="letter-spacing:var(--ls)">{g.featured.name}</span>
+              {g.featured.desc && <span class="max-w-[40ch] text-[15px] text-muted">{g.featured.desc}</span>}
+              <span class="mt-auto flex items-end justify-between gap-3 rounded-[20px] bg-result p-4 text-result-ink">
+                <span class="flex min-w-0 flex-col gap-0.5">
+                  <span class="text-[13px] opacity-85">{g.featured.exampleLabel}</span>
+                  <bdi id={g.featured.exampleId} class="text-[clamp(24px,3vw,32px)] leading-[1.2] font-[650] tabular-nums tracking-[-0.01em]">{g.featured.example}</bdi>
+                </span>
+                <span class="bt-arrow bt-arrow--lg"><Icon d={I.arrowRight} size={18} /></span>
+              </span>
+            </a>
+          </li>
+        )}
+        {g.tools.map((t, i) => {
+          const full = t.full ?? (!g.soon && g.tools.length % 2 === 1 && i === g.tools.length - 1);
+          return (
+            <li class={full ? "col-span-full" : undefined}>
+              {g.soon ? (
+                <div class="bt-card bt-card--soon" aria-disabled="true">
+                  <span class="bt-tag">{chrome.soon}</span>
+                  <span class="text-[17px] leading-[1.3] font-semibold" style="letter-spacing:var(--ls)">{t.name}</span>
+                  {t.desc && <span class="text-sm leading-[1.45]">{t.desc}</span>}
+                </div>
+              ) : (
+                <a href={t.href} class="bt-card" data-spotlight>
+                  <span class="text-[17px] leading-[1.3] font-semibold [overflow-wrap:break-word] hyphens-auto" style="letter-spacing:var(--ls)">{t.name}</span>
+                  {t.desc && <span class="text-sm leading-[1.45] text-muted">{t.desc}</span>}
+                  <span class="bt-arrow mt-auto self-end"><Icon d={I.arrowRight} size={16} /></span>
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</div>
+
+<script>
+  import { spotlightAll } from "./fx/spotlight";
+  spotlightAll();
+</script>

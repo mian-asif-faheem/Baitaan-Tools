@@ -11,6 +11,7 @@ const gYear = next.gregorian.getUTCFullYear();
 ---
 <!-- TODO (native review): Arabic copy. -->
 <Layout
+  bleed
   title={`كم باقي على عيد الفطر ${y} (${gYear})؟ العد التنازلي | بيتان`}
   description={`عد تنازلي بالأيام والساعات حتى عيد الفطر ${y} هـ (1 شوال)، والموعد المتوقع حسب تقويم أم القرى.`}
 >
@@ -32,8 +33,8 @@ const gYear = next.gregorian.getUTCFullYear();
 
       <h2>مواعيد قريبة</h2>
       <ul>
-        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
-        <li><a class="text-teal-800 underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
+        <li><a class="text-link underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
+        <li><a class="text-link underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
       </ul>
     </Fragment>
   </ToolPage>

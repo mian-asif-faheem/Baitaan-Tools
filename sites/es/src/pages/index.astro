@@ -1,60 +1,77 @@
 ---
 import Hero from "@bt/ui/Hero.astro";
+import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../components/Layout.astro";
 
-const groups = [
+const groups: Group[] = [
   {
     title: "Calculadoras laborales · México",
+    featured: {
+      href: "/calculadora-finiquito/",
+      name: "Finiquito y liquidación",
+      desc: "Renuncia o despido, según la Ley Federal del Trabajo",
+      exampleLabel: "Ejemplo · despido, $12,000 al mes",
+      example: "$66,596.72"
+    },
     tools: [
-      { href: "/calculadora-finiquito/", name: "Finiquito y liquidación", desc: "Renuncia o despido, según la Ley Federal del Trabajo" },
-      { href: "/calculadora-sueldo-neto/", name: "Sueldo neto 2026", desc: "ISR, subsidio para el empleo e IMSS" },
-      { href: "/calculadora-aguinaldo/", name: "Aguinaldo", desc: "Cuánto te toca según los días trabajados" },
-      { href: "/calculadora-vacaciones/", name: "Vacaciones y prima vacacional", desc: "Días por antigüedad y pago de la prima" },
-    ],
+      {
+        href: "/calculadora-sueldo-neto/",
+        name: "Sueldo neto 2026",
+        desc: "ISR, subsidio para el empleo e IMSS"
+      },
+      {
+        href: "/calculadora-aguinaldo/",
+        name: "Aguinaldo",
+        desc: "Cuánto te toca según los días trabajados"
+      },
+      {
+        href: "/calculadora-vacaciones/",
+        name: "Vacaciones y prima vacacional",
+        desc: "Días por antigüedad y pago de la prima"
+      }
+    ]
   },
   {
     title: "Documentos",
     tools: [
-      { href: "/foto-tamano-infantil/", name: "Foto tamaño infantil", desc: "Infantil, pasaporte, credencial, título y DNI" },
-      { href: "/comprimir-pdf/", name: "Comprimir PDF a 1 MB", desc: "Para portales que limitan el tamaño" },
-    ],
+      {
+        href: "/foto-tamano-infantil/",
+        name: "Foto tamaño infantil",
+        desc: "Infantil, pasaporte, credencial, título y DNI"
+      },
+      {
+        href: "/comprimir-pdf/",
+        name: "Comprimir PDF a 1 MB",
+        desc: "Para portales que limitan el tamaño"
+      }
+    ]
   },
   {
     title: "Próximamente",
     soon: true,
     tools: [
-      { href: "#", name: "Nómina y sueldo neto · España", desc: "IRPF y Seguridad Social" },
-      { href: "#", name: "Liquidación, prima y cesantías · Colombia", desc: "" },
-      { href: "#", name: "Finiquito y sueldo líquido · Chile", desc: "" },
-      { href: "#", name: "CTS y gratificación · Perú", desc: "" },
-    ],
-  },
+      {
+        href: "#",
+        name: "Nómina y sueldo neto · España",
+        desc: "IRPF y Seguridad Social"
+      },
+      {
+        href: "#",
+        name: "Liquidación, prima y cesantías · Colombia"
+      },
+      {
+        href: "#",
+        name: "Finiquito y sueldo líquido · Chile"
+      },
+      {
+        href: "#",
+        name: "CTS y gratificación · Perú"
+      }
+    ]
+  }
 ];
 ---
-<Layout title="Herramientas gratis en español | Baitaan" description="Calculadoras laborales y herramientas gratuitas que funcionan en tu navegador, sin registro: finiquito, sueldo neto, aguinaldo, fotos tamaño infantil y comprimir PDF.">
-  <Hero title="Herramientas gratis, sin registro" lead="Calculadoras laborales y utilidades que funcionan en tu navegador. Tus datos nunca salen de tu dispositivo." />
-  {groups.map((g) => (
-    <section class="mt-10">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-stone-500">{g.title}</h2>
-      <ul class="mt-3 grid gap-4 sm:grid-cols-2">
-        {g.tools.map((tool) => (
-          <li>
-            <a
-              href={tool.href}
-              class={`block h-full rounded-xl border bg-white p-5 shadow-sm ${g.soon ? "pointer-events-none border-dashed border-stone-300 opacity-60" : "relative isolate overflow-hidden border-stone-200 hover:border-teal-700"}`}
-              data-spotlight={g.soon ? undefined : ""}
-            >
-              <span class="block font-semibold">{tool.name}</span>
-              {tool.desc && <span class="mt-1 block text-sm text-stone-500">{tool.desc}</span>}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  ))}
+<Layout bleed wide title="Herramientas gratis en español | Baitaan" description="Calculadoras laborales y herramientas gratuitas que funcionan en tu navegador, sin registro: finiquito, sueldo neto, aguinaldo, fotos tamaño infantil y comprimir PDF.">
+  <Hero title="Herramientas gratis, sin registro" lead="Calculadoras laborales y utilidades que funcionan en tu navegador. Tus datos nunca salen de tu dispositivo." cta={{ href: "/calculadora-finiquito/", label: "Calcular mi finiquito" }} />
+  <ToolGrid {groups} />
 </Layout>
-
-<script>
-  import { spotlightAll } from "@bt/ui/fx/spotlight";
-  spotlightAll();
-</script>

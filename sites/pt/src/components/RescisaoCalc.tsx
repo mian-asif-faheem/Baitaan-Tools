@@ -1,7 +1,7 @@
 import { useMemo, useState } from "preact/hooks";
 import { rescisao, type TipoRescisao } from "@bt/tools/br";
 import { getT, type Lang } from "../i18n";
-import { Check, NumberField, Result, Rows, Toggle, money, fieldClass } from "./form";
+import { Check, NumberField, Result, Rows, Toggle, money, fieldClass, Note } from "./form";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -50,7 +50,8 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
   };
 
   return (
-    <form class="grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
+    <div class="bt-tool">
+    <form class="bt-panel grid gap-6 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
       <Toggle
         class="sm:col-span-2"
         legend={L.tipo}
@@ -64,11 +65,11 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
         ]}
       />
       <NumberField class="sm:col-span-2" label={C.salary} value={salary} onInput={setSalary} min={0} />
-      <label class="text-sm font-semibold">
+      <label class="bt-label flex flex-col">
         {L.start}
         <input class={fieldClass} type="date" value={start} onInput={(e) => setStart(e.currentTarget.value)} />
       </label>
-      <label class="text-sm font-semibold">
+      <label class="bt-label flex flex-col">
         {L.end}
         <input class={fieldClass} type="date" value={end} onInput={(e) => setEnd(e.currentTarget.value)} />
       </label>
@@ -79,21 +80,22 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
       <NumberField label={L.vencidas} value={vencidas} onInput={setVencidas} min={0} step="1" />
       {(tipo === "semJustaCausa" || tipo === "acordo") && <NumberField label={L.fgts} hint={L.fgtsHint} value={fgts} onInput={setFgts} min={0} />}
 
-      <details class="rounded-lg border border-stone-200 p-3 sm:col-span-2">
-        <summary class="cursor-pointer text-sm font-semibold text-stone-700">{L.extrasSummary}</summary>
-        <div class="mt-3 grid gap-4 sm:grid-cols-2">
+      <details class="bt-more sm:col-span-2">
+        <summary>{L.extrasSummary}</summary>
+        <div class="mt-3 grid gap-6 sm:grid-cols-2">
           <NumberField label={C.extras} hint={C.extrasHint} value={extras} onInput={setExtras} min={0} />
           <NumberField label={C.dependents} value={deps} onInput={setDeps} min={0} step="1" />
         </div>
       </details>
 
+      </form>
       {r ? (
         <Result class="sm:col-span-2" label={L.result} value={r.net} format={brl.format}>
-          <span class="mt-1 block text-sm text-stone-600">
+          <span class="bt-result__sub">
             {L.service}: {r.yearsOfService} {L.years}
             {r.avisoDays > 0 && ` · ${L.avisoDays}: ${r.avisoDays} ${C.days}`}
           </span>
-          <h3 class="mt-4 text-sm font-semibold text-teal-900">{L.verbas}</h3>
+          <h3 class="mt-4 text-sm font-semibold">{L.verbas}</h3>
           <Rows
             rows={[
               ...r.lines.filter((l) => l.amount > 0).map((l) => ({ label: lineLabel(l.key, l.detail), value: brl.format(l.amount) })),
@@ -102,7 +104,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
           />
           {r.totalDeductions > 0 && (
             <>
-              <h3 class="mt-4 text-sm font-semibold text-teal-900">{L.descontos}</h3>
+              <h3 class="mt-4 text-sm font-semibold">{L.descontos}</h3>
               <Rows
                 rows={r.deductions
                   .filter((d) => d.amount > 0)
@@ -112,7 +114,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
           )}
           {r.fgts.fineRate > 0 ? (
             <>
-              <h3 class="mt-4 text-sm font-semibold text-teal-900">{L.fgtsTitle}</h3>
+              <h3 class="mt-4 text-sm font-semibold">{L.fgtsTitle}</h3>
               <Rows
                 rows={[
                   { label: `${L.fgtsBalance}${r.fgts.estimated ? ` (${L.fgtsEstimated})` : ""}`, value: brl.format(r.fgts.balance), muted: true },
@@ -123,14 +125,14 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
               />
             </>
           ) : (
-            <p class="mt-3 text-sm text-stone-600">{L.fgtsNoWithdraw}</p>
+            <p class="mt-3 text-sm opacity-85">{L.fgtsNoWithdraw}</p>
           )}
-          <p class="mt-3 text-sm text-stone-600">{r.seguroDesemprego ? L.seguro : L.noSeguro}</p>
+          <p class="mt-3 text-sm opacity-85">{r.seguroDesemprego ? L.seguro : L.noSeguro}</p>
         </Result>
       ) : (
         <Result class="sm:col-span-2" label={L.result} amount="—" />
       )}
-      <p class="text-xs text-stone-500 sm:col-span-2">{L.disclaimer}</p>
-    </form>
+      <Note>{L.disclaimer}</Note>
+    </div>
   );
 }
