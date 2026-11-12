@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Tools",
+  "brand": "Baitaan",
   "nav": [
     {
       "href": "/en/tahweel-altareekh/",
@@ -36,7 +36,7 @@
       "label": "Contact"
     }
   ],
-  "footerNote": "Free tools that run in your browser",
+  "footerNote": "Free tools that speak your language.",
   "conv": {
     "toHijri": "Gregorian to Hijri",
     "toGregorian": "Hijri to Gregorian",

@@ -1,4 +1,4 @@
-# Baitaan Tools
+# Baitaan
 
 Free, ad-supported tool sites in Spanish, Portuguese (Brazil) and Arabic, on subdomains of baitaandessigns.com. A MAAF Studios project.
 

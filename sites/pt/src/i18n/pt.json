@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Tools",
+  "brand": "Baitaan",
   "nav": [
     {
       "href": "/calculadora-rescisao/",
@@ -40,7 +40,7 @@
       "label": "Contato"
     }
   ],
-  "footerNote": "Ferramentas grátis que rodam no seu navegador",
+  "footerNote": "Ferramentas grátis que falam a sua língua.",
   "common": {
     "salary": "Salário bruto mensal (R$)",
     "extras": "Média mensal de horas extras, comissões e adicionais (R$)",

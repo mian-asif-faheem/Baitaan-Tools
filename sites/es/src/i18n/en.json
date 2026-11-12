@@ -1,5 +1,5 @@
 {
-  "brand": "Baitaan Tools",
+  "brand": "Baitaan",
   "nav": [
     {
       "href": "/en/calculadora-finiquito/",
@@ -32,7 +32,7 @@
       "label": "Contact"
     }
   ],
-  "footerNote": "Free tools that run in your browser",
+  "footerNote": "Free tools that speak your language.",
   "common": {
     "monthly": "Monthly",
     "daily": "Daily",
