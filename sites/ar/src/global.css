@@ -4,7 +4,7 @@
 @import "./palette.css";
 /* Shared components from the Claude Design boards. */
 @import "../../../packages/ui/src/design.css";
-@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/ibm-plex-sans/wght.css";
 @import "@fontsource/ibm-plex-sans-arabic/400.css";
 @import "@fontsource/ibm-plex-sans-arabic/500.css";
 @import "@fontsource/ibm-plex-sans-arabic/600.css";
@@ -12,10 +12,10 @@
 @source "../../../packages/ui/src";
 
 @theme {
-  --font-sans: "IBM Plex Sans Arabic", "Inter Variable", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "IBM Plex Sans Variable", system-ui, sans-serif;
 }
 
-/* English pages on the Arabic site use Inter, like the other sites. */
+/* English pages on the Arabic site use Plex Sans, the Latin partner of Plex Sans Arabic. */
 :root:lang(en) body {
-  font-family: "Inter Variable", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: "IBM Plex Sans Variable", "IBM Plex Sans Arabic", system-ui, sans-serif;
 }

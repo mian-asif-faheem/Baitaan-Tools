@@ -20,9 +20,8 @@ const { chrome, nav, homeHref } = shell(Astro.locals);
 const here = Astro.url.pathname;
 const crumb = nav.find((n) => n.href === here)?.label;
 ---
-<div class="relative isolate">
-  <div class="bt-glow bt-glow--page" aria-hidden="true"><span></span><span></span><span></span></div>
-  <div class="mx-auto flex max-w-[760px] flex-col gap-3 px-5 pt-[clamp(20px,5vw,40px)] pb-6">
+<div>
+  <div class="mx-auto flex max-w-[760px] flex-col gap-3 px-5 pt-6 pb-6 sm:pt-10">
     <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted">
       <a href={homeHref} class="text-muted no-underline hover:text-link hover:underline">{chrome.home ?? "Home"}</a>
       {crumb && (
@@ -32,8 +31,8 @@ const crumb = nav.find((n) => n.href === here)?.label;
         </>
       )}
     </nav>
-    <h1 class="m-0 text-[clamp(30px,8vw,46px)] leading-[1.12] font-[650] text-ink" style="letter-spacing:var(--ls-big)">{heading}</h1>
-    <p class="m-0 max-w-[58ch] text-[17px] text-muted text-pretty">{lead}</p>
+    <h1 class="m-0 text-[2rem] leading-[1.15] font-[650] text-ink sm:text-[2.5rem]" style="letter-spacing:var(--ls-big)">{heading}</h1>
+    <p class="m-0 max-w-[56ch] text-[17px] text-muted text-pretty">{lead}</p>
     {chrome.chips && (
       <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0 pt-1">
         {chrome.chips.map((c) => (
@@ -55,7 +54,7 @@ const crumb = nav.find((n) => n.href === here)?.label;
   </article>
 
   {sources.length > 0 && (
-    <section class="bt-sources mt-3">
+    <section class="bt-sources mt-4 max-w-[60ch]">
       <h2 class="m-0 text-base font-semibold">{sourcesHeading}</h2>
       {sources.map((s) => (
         <a href={s.href} rel="noopener" target="_blank">

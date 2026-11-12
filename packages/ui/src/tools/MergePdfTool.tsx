@@ -143,7 +143,7 @@ export default function MergePdfTool({ t, outputName = "documentos-unidos.pdf", 
 
   const dropZone = (big: boolean) => (
     <label
-      class={`bt-drop cursor-pointer ${big ? "" : "!gap-1 !rounded-[20px] !py-4"} ${dragOver ? "is-over" : ""}`}
+      class={`bt-drop cursor-pointer ${big ? "" : "!gap-1 !rounded-xl !py-4"} ${dragOver ? "is-over" : ""}`}
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);

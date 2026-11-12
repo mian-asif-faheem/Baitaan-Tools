@@ -95,7 +95,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
             {L.service}: {r.yearsOfService} {L.years}
             {r.avisoDays > 0 && ` · ${L.avisoDays}: ${r.avisoDays} ${C.days}`}
           </span>
-          <h3 class="mt-4 text-sm font-semibold">{L.verbas}</h3>
+          <h2 class="mt-4 text-sm font-semibold">{L.verbas}</h2>
           <Rows
             rows={[
               ...r.lines.filter((l) => l.amount > 0).map((l) => ({ label: lineLabel(l.key, l.detail), value: brl.format(l.amount) })),
@@ -104,7 +104,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
           />
           {r.totalDeductions > 0 && (
             <>
-              <h3 class="mt-4 text-sm font-semibold">{L.descontos}</h3>
+              <h2 class="mt-4 text-sm font-semibold">{L.descontos}</h2>
               <Rows
                 rows={r.deductions
                   .filter((d) => d.amount > 0)
@@ -114,7 +114,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
           )}
           {r.fgts.fineRate > 0 ? (
             <>
-              <h3 class="mt-4 text-sm font-semibold">{L.fgtsTitle}</h3>
+              <h2 class="mt-4 text-sm font-semibold">{L.fgtsTitle}</h2>
               <Rows
                 rows={[
                   { label: `${L.fgtsBalance}${r.fgts.estimated ? ` (${L.fgtsEstimated})` : ""}`, value: brl.format(r.fgts.balance), muted: true },

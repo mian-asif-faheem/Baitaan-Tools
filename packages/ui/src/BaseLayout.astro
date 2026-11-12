@@ -34,7 +34,6 @@ export interface Chrome {
   home?: string;
   /** Three short trust chips under tool headings ("Free", "No sign-up"…). */
   chips?: string[];
-  popular?: string;
   soon?: string;
   tools?: string;
   example?: string;
@@ -213,7 +212,7 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
     {bleed ? (
       <main><slot /></main>
     ) : (
-      <main class="mx-auto max-w-[760px] px-5 pt-10 pb-4">
+      <main class="bt-prose mx-auto max-w-[760px] px-5 pt-10 pb-4">
         <slot />
       </main>
     )}

@@ -27,12 +27,13 @@ Every tool runs in the visitor's browser. There is no server and no database.
 
 The look comes from the Claude Design boards (design system, home pages, calculators, utility screens).
 
-- **Tokens:** `scripts/palettes.py` writes each site's `src/palette.css`: the design's semantic tokens (`--bg`, `--card`, `--text`, `--muted`, `--border`, `--hair`, `--primary`, `--on-primary`, `--link`, `--result-bg`, `--glow-1..3`, `--elev`…) for light (`:root`) and dark (`html.dark`), plus a WCAG AA contrast check. Tailwind gets them as `bg-card`, `text-muted`, `border-hair`, `shadow-elev`… (`packages/ui/src/design.css`).
+- **Tokens:** `scripts/palettes.py` writes each site's `src/palette.css`: the design's semantic tokens (`--bg`, `--card`, `--text`, `--muted`, `--border`, `--hair`, `--primary`, `--on-primary`, `--link`, `--result-bg`, `--band`, `--elev`…) for light (`:root`) and dark (`html.dark`), plus a WCAG AA contrast check. Tailwind gets them as `bg-card`, `text-muted`, `border-hair`, `shadow-elev`… (`packages/ui/src/design.css`).
 - **Components** (`packages/ui/src/`): `BaseLayout` (glass header, pill tool tabs, footer), `ToolPage` (breadcrumb, trust chips, guide, sources card), `form.tsx` (inputs, segmented toggle or radio cards, checkbox, result card with breakdown rows, notes), `Hero` + `ToolGrid` (home hero and bento grid), `NotFound`, `ConsentBanner`, the PDF/photo tools, and `design.css` for all of their styles.
 - **Icons:** Phosphor (MIT) as inline SVG paths in `icons.ts`; `Icon.astro` for pages, `fx/Svg.tsx` for islands.
-- **Fonts:** Inter (variable, for the 650 weight) and IBM Plex Sans Arabic.
+- **Fonts:** IBM Plex Sans (variable, for the 650 weight) with its partner IBM Plex Sans Arabic, so all four sites share one family.
 - **FAQ:** write entries in a guide as `<details class="bt-faq"><summary>Question</summary><p>Answer</p></details>`.
-- **Motion:** one easing (`cubic-bezier(.2,.7,.2,1)`): hero glow blobs drift (CSS transforms), headings blur in word by word, cards lift with a cursor spotlight (ported from [React Bits](https://github.com/DavidHDev/react-bits) SpotlightCard; MIT + Commons Clause, so it can be used on these sites but not resold on its own, so keep the header in `fx/spotlight.ts`), results count up (`fx/CountUp.tsx`) and rows stagger in, the toggle pill slides, countdown digits slide. Everything is instant under "reduce motion". Nothing animates near ad slots or inside fields.
+- **Slop checks:** [impeccable](https://github.com/pbakaus/impeccable) is the design reviewer. Its rules this project follows: no floating glow haze or eyebrow labels above headings, no cards nested in cards, elevation declared once (hairline border, shadow only on hover), card radii 12–16px with pills only for small controls, reading width about 75 characters (`60ch`, `50ch` for Arabic), more space above headings than below, fixed type sizes on tool pages, motion only for state changes, and the browser's own surfaces (caret, selection, scrollbars, placeholders) themed from the palette.
+- **Motion:** one easing (`cubic-bezier(.2,.7,.2,1)`): home headings sharpen in word by word (the one authored moment), cards lift with a cursor spotlight (ported from [React Bits](https://github.com/DavidHDev/react-bits) SpotlightCard; MIT + Commons Clause, so it can be used on these sites but not resold on its own, so keep the header in `fx/spotlight.ts`), results count up (`fx/CountUp.tsx`, 400 ms), the toggle pill slides, countdown digits slide. Everything is instant under "reduce motion". Nothing animates near ad slots or inside fields.
 
 ## Layout
 
@@ -65,6 +66,8 @@ scripts/check-i18n.mjs  Fails if a page has no English twin or the two string fi
 pnpm install
 pnpm test          # calculator tests (95 so far)
 pnpm check:i18n    # every page has an English version, all strings translated
+pnpm check:design  # impeccable's design-slop detector on all source (also runs on deploy)
+                   # rendered pages too: npx impeccable detect http://localhost:4321/
 pnpm dev:es        # or dev:root, dev:pt, dev:ar
 pnpm build         # builds all four sites into sites/*/dist
 ```

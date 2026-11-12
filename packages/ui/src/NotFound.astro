@@ -1,5 +1,5 @@
 ---
-/** "Page not found" (Claude Design board 4): one action back to the tools; the glow is the only decoration. */
+/** "Page not found": the heading, one line of help and one action back to the tools. */
 import Icon from "./Icon.astro";
 import * as I from "./icons";
 
@@ -12,10 +12,8 @@ interface Props {
 }
 const { title, text, cta, links = [] } = Astro.props;
 ---
-<section class="relative isolate overflow-hidden">
-  <div class="bt-glow" aria-hidden="true"><span></span><span></span><span></span></div>
+<section>
   <div class="mx-auto flex max-w-[760px] flex-col items-start gap-4 px-5 pt-[clamp(48px,12vw,112px)] pb-10">
-    <span class="text-[15px] font-semibold text-link tabular-nums">Error 404</span>
     <h1 class="m-0 max-w-[14ch] text-[clamp(32px,8vw,52px)] leading-[1.1] font-[650]" style="letter-spacing:var(--ls-big)">{title}</h1>
     <p class="m-0 max-w-[48ch] text-[17px] text-muted">{text}</p>
     <a href={cta.href} class="bt-btn bt-btn--sm mt-2">{cta.label}<Icon d={I.arrowRight} size={18} class="bt-flip" /></a>

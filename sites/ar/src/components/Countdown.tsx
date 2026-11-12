@@ -39,11 +39,11 @@ export default function Countdown({ month, day, name, lang = "ar" }: { month: nu
 
   // Each tile re-mounts its number when it changes, which replays the slide-in.
   const tile = (value: number, label: string) => (
-    <div class="flex flex-col items-center gap-0.5 overflow-hidden rounded-[22px] border border-hair bg-card px-1 pt-4 pb-3 shadow-elev">
+    <div class="flex flex-col items-center gap-0.5 overflow-hidden rounded-2xl border border-hair bg-card px-1 pt-4 pb-3">
       <span
         key={value}
         dir="ltr"
-        class="block font-['Inter_Variable',sans-serif] text-[clamp(28px,9vw,44px)] leading-[1.15] font-[650] tabular-nums tracking-[-0.02em] [animation:bt-slide_300ms_var(--ease)_both]"
+        class="block font-['IBM_Plex_Sans_Variable',sans-serif] text-[clamp(28px,9vw,44px)] leading-[1.15] font-[650] tabular-nums tracking-[-0.02em] [animation:bt-slide_300ms_var(--ease)_both]"
       >
         {num.format(value)}
       </span>

@@ -12,7 +12,7 @@ export default function WordCounter({ lang = "ar" }: { lang?: Lang }) {
   const s = useMemo(() => textStats(text), [text]);
 
   const stat = (value: number, label: string, big = false) => (
-    <div class={`rounded-[20px] p-4 text-center ${big ? "bg-result text-result-ink" : "border border-hair bg-card shadow-elev"}`}>
+    <div class={`rounded-xl p-4 text-center ${big ? "bg-result text-result-ink" : "border border-hair bg-card"}`}>
       <bdi dir="ltr" class={`block font-[650] tabular-nums tracking-[-0.02em] ${big ? "text-4xl" : "text-2xl"}`}>{num.format(value)}</bdi>
       <span class={`block text-[13px] ${big ? "opacity-85" : "text-muted"}`}>{label}</span>
     </div>

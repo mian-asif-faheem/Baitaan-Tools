@@ -4,11 +4,11 @@
 @import "./palette.css";
 /* Shared components from the Claude Design boards. */
 @import "../../../packages/ui/src/design.css";
-@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/ibm-plex-sans/wght.css";
 @import "@fontsource/ibm-plex-sans-arabic/600.css";
 @source "../../../packages/ui/src";
 
 @theme {
-  --font-sans: "Inter Variable", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans Arabic", system-ui, sans-serif;
 }
 

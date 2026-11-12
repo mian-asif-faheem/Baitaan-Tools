@@ -105,11 +105,11 @@ export default function FiniquitoCalc({ lang = "es" }: { lang?: Lang }) {
             {L.service}: {r.yearsOfService.toLocaleString(locale(lang))} {L.years}
             {r.liquidacion.length > 0 && ` · ${L.sdi}: ${mxn.format(r.sdi)}`}
           </span>
-          <h3 class="mt-4 text-sm font-semibold">{L.finiquitoTitle}</h3>
+          <h2 class="mt-4 text-sm font-semibold">{L.finiquitoTitle}</h2>
           <Rows rows={[...r.finiquito.filter((l) => l.amount > 0).map(line), { label: L.finiquitoTitle, value: mxn.format(r.totalFiniquito), strong: true }]} />
           {r.liquidacion.length > 0 ? (
             <>
-              <h3 class="mt-4 text-sm font-semibold">{L.liquidacionTitle}</h3>
+              <h2 class="mt-4 text-sm font-semibold">{L.liquidacionTitle}</h2>
               <Rows rows={[...r.liquidacion.map(line), { label: L.liquidacionTitle, value: mxn.format(r.totalLiquidacion), strong: true }]} />
             </>
           ) : (

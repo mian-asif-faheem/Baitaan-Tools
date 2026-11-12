@@ -66,7 +66,7 @@ export default function VacacionesCalc({ lang = "es" }: { lang?: Lang }) {
       )}
 
       <div class="sm:col-span-2">
-        <h3 class="text-sm font-semibold">{L.table}</h3>
+        <h2 class="text-sm font-semibold">{L.table}</h2>
         <table class="mt-2 w-full max-w-sm text-sm">
           <tbody>
             {ranges.slice(0, 10).map((g) => {

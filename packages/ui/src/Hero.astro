@@ -1,8 +1,8 @@
 ---
 /**
- * Home-page hero (Claude Design board 2): a pill with the trust promise, a big heading that
- * blurs in word by word, the lead, an optional call to action, over three drifting glow blobs.
- * The text is in the page from the first frame; the motion is decoration only.
+ * Home-page hero: a big heading that sharpens in word by word (the page's one authored moment),
+ * the lead, the trust promise as plain chips, and an optional call to action, on a quietly
+ * tinted band. The text is readable from the first frame.
  */
 import Icon from "./Icon.astro";
 import * as I from "./icons";
@@ -17,20 +17,21 @@ const { title, lead, cta } = Astro.props;
 const { chrome } = shell(Astro.locals);
 const words = title.split(" ");
 ---
-<section class="relative isolate overflow-hidden">
-  <div class="bt-glow" aria-hidden="true" style="inset:0; -webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent); mask-image:linear-gradient(to bottom,#000 50%,transparent)">
-    <span></span><span></span><span></span>
-  </div>
-  <div class="mx-auto flex max-w-[1120px] flex-col items-start gap-4 px-5 pt-[clamp(40px,9vw,96px)] pb-[clamp(32px,5vw,64px)]">
-    {chrome.chips && (
-      <span class="bt-eyebrow"><Icon d={I.lockSimple} size={14} />{chrome.chips.join(" · ")}</span>
-    )}
+<section class="bt-hero">
+  <div class="mx-auto flex max-w-[1120px] flex-col items-start gap-4 px-5 pt-[clamp(36px,8vw,80px)] pb-[clamp(32px,5vw,56px)]">
     <h1 class="m-0 max-w-[13ch] text-[clamp(38px,10vw,72px)] leading-[1.08] font-[650] text-ink" style="letter-spacing:var(--ls-big)">
       {words.map((w, i) => (
         <span class="bt-word" style={`animation-delay:${Math.min(i, 10) * 50}ms`}>{w}</span>
       ))}
     </h1>
     <p class="m-0 max-w-[52ch] text-[clamp(17px,2vw,20px)] text-muted text-pretty">{lead}</p>
+    {chrome.chips && (
+      <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">
+        {chrome.chips.map((c) => (
+          <li class="bt-chip"><Icon d={I.check} size={13} />{c}</li>
+        ))}
+      </ul>
+    )}
     {cta && (
       <a href={cta.href} class="bt-btn bt-btn--sm mt-1">
         {cta.label}

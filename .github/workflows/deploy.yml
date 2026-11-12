@@ -61,6 +61,9 @@ jobs:
       - name: Check translations
         run: pnpm check:i18n
 
+      - name: Check for design slop (impeccable)
+        run: pnpm check:design
+
       - name: Build all sites
         run: pnpm build
         env:

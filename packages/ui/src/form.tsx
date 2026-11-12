@@ -146,8 +146,8 @@ export function Result(props: {
 export function Rows(props: { rows: { label: string; value: string; muted?: boolean; strong?: boolean }[] }) {
   return (
     <div class="bt-rows">
-      {props.rows.map((r, i) => (
-        <div class={r.strong ? "is-total" : r.muted ? "is-muted" : ""} style={`animation-delay: ${120 + i * 30}ms`}>
+      {props.rows.map((r) => (
+        <div class={r.strong ? "is-total" : r.muted ? "is-muted" : ""}>
           <span class="min-w-0">{r.label}</span>
           <bdi dir="ltr">{r.value}</bdi>
         </div>

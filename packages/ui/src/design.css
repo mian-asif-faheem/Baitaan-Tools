@@ -47,8 +47,7 @@ body {
   color: var(--text);
   font-size: 16px;
   line-height: 1.6;
-  font-feature-settings: "cv11", "ss01";
-  -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
 }
 :root[dir="rtl"] body {
   line-height: 1.8;
@@ -59,6 +58,15 @@ h3 {
   letter-spacing: var(--ls);
   text-wrap: balance;
 }
+html {
+  accent-color: var(--primary);
+  caret-color: var(--primary);
+  scrollbar-color: var(--border) transparent;
+}
+::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
 ::selection {
   background: var(--tint);
 }
@@ -68,14 +76,6 @@ h3 {
 }
 
 /* ── Motion ─────────────────────────────────────────────── */
-@keyframes bt-drift1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(9%, 7%) scale(1.12); }
-}
-@keyframes bt-drift2 {
-  0%, 100% { transform: translate(0, 0) scale(1.05); }
-  50% { transform: translate(-8%, 5%) scale(0.94); }
-}
 @keyframes bt-blur {
   from { filter: blur(8px); transform: translateY(6px); }
   to { filter: blur(0); transform: none; }
@@ -113,7 +113,9 @@ h3 {
   color: var(--on-primary);
   display: grid;
   place-items: center;
-  font: 700 14px/1 Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
   flex: none;
 }
 .bt-icon-btn {
@@ -187,56 +189,10 @@ html.dark .bt-theme-icon {
   font-weight: 600;
 }
 
-/* ── Hero glow: three soft blobs drifting (transform only) ─ */
-.bt-glow {
-  position: absolute;
-  inset: 0 0 -40px 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent);
-}
-.bt-glow > span {
-  position: absolute;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  will-change: transform;
-}
-.bt-glow > span:nth-child(1) {
-  width: 75%;
-  inset-inline-start: -18%;
-  top: -55%;
-  background: radial-gradient(closest-side, var(--glow-1), transparent);
-  animation: bt-drift1 34s ease-in-out infinite;
-}
-.bt-glow > span:nth-child(2) {
-  width: 65%;
-  inset-inline-end: -20%;
-  top: -40%;
-  background: radial-gradient(closest-side, var(--glow-2), transparent);
-  animation: bt-drift2 40s ease-in-out infinite;
-}
-.bt-glow > span:nth-child(3) {
-  width: 50%;
-  inset-inline-start: 28%;
-  top: -20%;
-  background: radial-gradient(closest-side, var(--glow-3), transparent);
-  animation: bt-drift1 28s ease-in-out infinite reverse;
-}
-/* Tool pages: two smaller blobs, no third */
-.bt-glow--page > span:nth-child(1) {
-  width: 80%;
-  inset-inline-start: -25%;
-  top: -70%;
-}
-.bt-glow--page > span:nth-child(2) {
-  width: 70%;
-  inset-inline-end: -25%;
-  top: -60%;
-}
-.bt-glow--page > span:nth-child(3) {
-  display: none;
+/* ── Home hero: a quietly shifted band, no floating glow ─ */
+.bt-hero {
+  background: var(--band);
+  border-bottom: 1px solid var(--hair);
 }
 .bt-word {
   display: inline-block;
@@ -376,9 +332,9 @@ html.dark .bt-theme-icon {
 .bt-panel {
   background: var(--card);
   border: 1px solid var(--hair);
-  border-radius: 28px;
+  border-radius: 16px;
   box-shadow: var(--elev);
-  padding: clamp(20px, 5vw, 32px) clamp(16px, 5vw, 32px);
+  padding: clamp(20px, 5vw, 28px) clamp(16px, 5vw, 28px);
 }
 .bt-card {
   position: relative;
@@ -390,7 +346,7 @@ html.dark .bt-theme-icon {
   height: 100%;
   min-height: 134px;
   padding: 18px;
-  border-radius: 24px;
+  border-radius: 16px;
   border: 1px solid var(--hair);
   background: var(--card);
   box-shadow: var(--elev);
@@ -434,7 +390,7 @@ a.bt-card:active {
   width: 100%;
   box-sizing: border-box;
   height: 52px;
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--field);
   color: var(--text);
@@ -458,11 +414,13 @@ textarea.bt-input {
   flex-direction: column;
   gap: 20px;
 }
+.bt-result h2,
 .bt-result h3 {
   margin: 18px 0 0;
   font-size: 14px;
   font-weight: 600;
 }
+.bt-result h2 + .bt-rows,
 .bt-result h3 + .bt-rows {
   margin-top: 8px;
 }
@@ -557,7 +515,7 @@ input[type="date"].bt-input {
   gap: 12px;
   min-height: 56px;
   padding: 14px 16px;
-  border-radius: 18px;
+  border-radius: 12px;
   border: 1px solid var(--hair);
   background: var(--card);
   cursor: pointer;
@@ -734,22 +692,16 @@ input.bt-switch:disabled {
 .bt-faq[open] > summary::after {
   transform: rotate(180deg);
 }
-.bt-more[open] > :not(summary),
-.bt-faq[open] > :not(summary) {
-  animation: bt-rise 200ms var(--ease) both;
-}
 
 /* ── Result card ────────────────────────────────────────── */
 .bt-result {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-radius: 28px;
+  border-radius: 16px;
   background: var(--result-bg);
   color: var(--result-text);
-  padding: clamp(20px, 5vw, 32px);
-  box-shadow: var(--elev);
-  animation: bt-rise 300ms var(--ease) both;
+  padding: clamp(20px, 5vw, 28px);
 }
 .bt-result__label {
   font-size: 15px;
@@ -758,12 +710,12 @@ input.bt-switch:disabled {
 .bt-result__value {
   display: block;
   text-align: start;
-  font-size: clamp(38px, 10vw, 48px);
+  font-size: 2.5rem;
   line-height: 1.15;
   font-weight: 650;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  font-family: Inter, sans-serif;
+  font-family: inherit;
   overflow-wrap: anywhere;
 }
 .bt-result__sub {
@@ -771,20 +723,16 @@ input.bt-switch:disabled {
   opacity: 0.85;
 }
 .bt-rows {
-  margin-top: 14px;
-  border-radius: 20px;
-  background: var(--card);
-  color: var(--text);
-  padding: 6px 16px 10px;
+  margin-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--result-text) 22%, transparent);
 }
 .bt-rows > div {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   padding: 10px 0;
-  border-top: 1px solid var(--hair);
+  border-top: 1px solid color-mix(in srgb, var(--result-text) 12%, transparent);
   font-variant-numeric: tabular-nums;
-  animation: bt-rise 300ms var(--ease) both;
 }
 .bt-rows > div:first-child {
   border-top: 0;
@@ -794,12 +742,12 @@ input.bt-switch:disabled {
   text-align: end;
 }
 .bt-rows .is-muted {
-  color: var(--muted);
+  opacity: 0.8;
 }
 .bt-rows .is-total {
   font-weight: 650;
   font-size: 17px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid color-mix(in srgb, var(--result-text) 40%, transparent);
   padding-top: 14px;
 }
 .bt-note {
@@ -817,6 +765,25 @@ input.bt-switch:disabled {
   flex-direction: column;
   gap: 12px;
   font-size: 17px;
+}
+/* Reading measure: 60ch of Plex Sans is about 75 characters. Pretty wrapping avoids one-word last lines. */
+.bt-guide > :where(p, ul, ol, details),
+.bt-prose :where(p, ul, ol) {
+  max-width: 60ch;
+}
+/* Arabic letters are narrower, so the same reading width holds more of them. */
+:root[dir="rtl"] :where(.bt-guide > :where(p, ul, ol, details), .bt-prose :where(p, ul, ol), .bt-faq, .bt-sources) {
+  max-width: 50ch;
+}
+p,
+li,
+.bt-hint,
+.bt-note {
+  text-wrap: pretty;
+}
+/* Headings in plain text pages: more space above than below, so they lead what follows. */
+.bt-prose h2 {
+  margin-top: 2rem;
 }
 .bt-guide h2 {
   margin: 28px 0 0;
@@ -864,13 +831,16 @@ input.bt-switch:disabled {
   border-color: var(--hair);
 }
 .bt-faq {
-  border-radius: 20px;
-  background: var(--card);
-  border: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
   font-size: 16px;
+  max-width: 60ch;
 }
-.bt-faq + .bt-faq {
-  margin-top: -4px;
+h2 + .bt-faq,
+.bt-guide > :not(.bt-faq) + .bt-faq {
+  border-top: 1px solid var(--hair);
+}
+.bt-guide > .bt-faq + .bt-faq {
+  margin-top: -12px;
 }
 .bt-faq > summary {
   display: flex;
@@ -878,7 +848,7 @@ input.bt-switch:disabled {
   justify-content: space-between;
   gap: 12px;
   min-height: 56px;
-  padding: 12px 18px;
+  padding: 14px 0;
   list-style: none;
   font-weight: 600;
   cursor: pointer;
@@ -888,16 +858,15 @@ input.bt-switch:disabled {
 }
 .bt-faq > p {
   margin: 0;
-  padding: 0 18px 16px;
+  padding: 0 0 16px;
   color: var(--muted);
 }
 .bt-sources {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  border-radius: 24px;
-  border: 1px solid var(--hair);
+  gap: 6px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hair);
 }
 .bt-sources a {
   display: flex;
@@ -936,7 +905,7 @@ input.bt-switch:disabled {
   align-items: center;
   gap: 14px;
   padding: 36px 20px;
-  border-radius: 28px;
+  border-radius: 16px;
   border: 2px dashed var(--border);
   background: var(--card);
   text-align: center;
@@ -950,7 +919,7 @@ input.bt-switch:disabled {
 .bt-file-icon {
   width: 52px;
   height: 52px;
-  border-radius: 16px;
+  border-radius: 12px;
   background: var(--tint);
   color: var(--link);
   display: grid;
@@ -974,19 +943,16 @@ input.bt-switch:disabled {
   flex-direction: column;
   gap: 14px;
   padding: 20px;
-  border-radius: 24px;
+  border-radius: 16px;
   background: var(--result-bg);
   color: var(--result-text);
-  animation: bt-rise 300ms var(--ease) both;
 }
 .bt-bars {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px 14px;
-  border-radius: 16px;
-  background: var(--card);
-  color: var(--text);
+  padding: 12px 0;
+  border-block: 1px solid color-mix(in srgb, var(--result-text) 14%, transparent);
 }
 .bt-bars > div {
   display: grid;
@@ -1034,13 +1000,11 @@ input.bt-switch:disabled {
   max-height: 85vh;
   overflow-y: auto;
   padding: 20px 20px calc(16px + env(safe-area-inset-bottom));
-  border-radius: 28px 28px 0 0;
+  border-radius: 16px 16px 0 0;
   border: 1px solid var(--hair);
   border-bottom: 0;
-  background: var(--sheet);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  box-shadow: 0 -12px 40px -12px rgba(0, 0, 0, 0.25);
+  background: var(--card);
+  box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.22);
   color: var(--text);
   animation: bt-sheet 250ms var(--ease) both;
 }
@@ -1051,9 +1015,9 @@ input.bt-switch:disabled {
   .bt-consent {
     inset: auto 24px 24px auto;
     width: 420px;
-    border-radius: 28px;
+    border-radius: 16px;
     border-bottom: 1px solid var(--hair);
-    box-shadow: var(--elev-h), 0 24px 60px -20px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.3);
   }
   :root[dir="rtl"] .bt-consent {
     inset: auto auto 24px 24px;

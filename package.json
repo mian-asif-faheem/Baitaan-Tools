@@ -10,6 +10,10 @@
     "dev:ar": "pnpm --filter @bt/site-ar dev",
     "build": "pnpm -r --filter \"./sites/*\" build",
     "test": "pnpm --filter @bt/tools test",
-    "check:i18n": "node scripts/check-i18n.mjs"
+    "check:i18n": "node scripts/check-i18n.mjs",
+    "check:design": "impeccable detect packages/ui/src sites/es/src sites/pt/src sites/ar/src sites/root/src"
+  },
+  "devDependencies": {
+    "impeccable": "4.8.2"
   }
 }

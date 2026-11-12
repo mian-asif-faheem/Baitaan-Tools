@@ -7,13 +7,11 @@ import sys
 PALETTES = {
     "ar": {  # Gulf: forest green. Source: #0F1F17 #1E3A2E #3E5A3F #6B7F67 #C7CBB8 #3D4337
         "light": {
-            "hero": ["#c7cbb8", "#6b7f67", "#c7cbb8"],
             "white": "#ffffff",
             "stone": ["#f5f6f1", "#eceee6", "#dee1d5", "#c7cbb8", "#949b8c", "#5d6656", "#4a5244", "#3d4337", "#283024", "#0f1f17"],
             "teal": {"50": "#edf1ea", "100": "#d6dfd2", "700": "#3e5a3f", "800": "#2f4a33", "900": "#1e3a2e"},
         },
         "dark": {
-            "hero": ["#3e5a3f", "#6b7f67", "#1e3a2e"],
             "white": "#14271e",
             "stone": ["#0f1f17", "#1a2c23", "#2a3a31", "#3d4337", "#6b7f67", "#a3ac9c", "#b8bead", "#c7cbb8", "#dfe2d5", "#f1f3ec"],
             "teal": {"50": "#1e3a2e", "100": "#2b4a38", "700": "#a8c29f", "800": "#c4d6ba", "900": "#e4eedd"},
@@ -21,13 +19,11 @@ PALETTES = {
     },
     "es": {  # Mexico: deep violet. Source: #0E0B1D #2A1E4D #5A3B8C #8B7CC7 #C9C2E3 #3A3A52
         "light": {
-            "hero": ["#c9c2e3", "#8b7cc7", "#c9c2e3"],
             "white": "#ffffff",
             "stone": ["#f6f5fa", "#edebf5", "#dfdbee", "#c9c2e3", "#9590ae", "#615d79", "#4d4a66", "#3a3a52", "#24203a", "#0e0b1d"],
             "teal": {"50": "#f1eef9", "100": "#e0daf2", "700": "#5a3b8c", "800": "#4a2f78", "900": "#2a1e4d"},
         },
         "dark": {
-            "hero": ["#5a3b8c", "#8b7cc7", "#2a1e4d"],
             "white": "#17132b",
             "stone": ["#0e0b1d", "#1e1838", "#2c2747", "#3a3a52", "#6e6a8c", "#a5a0c1", "#bab4d6", "#c9c2e3", "#e0dcf0", "#f3f1fa"],
             "teal": {"50": "#2a1e4d", "100": "#3a2b66", "700": "#aa9ce2", "800": "#c9c2e3", "900": "#e6e1f7"},
@@ -35,13 +31,11 @@ PALETTES = {
     },
     "pt": {  # Brazil: ocean blue. Source: #0B1526 #1B2F52 #2F5597 #6F8FC7 #C4D3EC #384152
         "light": {
-            "hero": ["#c4d3ec", "#6f8fc7", "#c4d3ec"],
             "white": "#ffffff",
             "stone": ["#f4f7fb", "#e9eef6", "#d9e2f0", "#c4d3ec", "#8f9ab0", "#5b6579", "#475164", "#384152", "#222b3c", "#0b1526"],
             "teal": {"50": "#edf2fa", "100": "#d6e1f3", "700": "#2f5597", "800": "#25467f", "900": "#1b2f52"},
         },
         "dark": {
-            "hero": ["#2f5597", "#6f8fc7", "#1b2f52"],
             "white": "#111d33",
             "stone": ["#0b1526", "#16233d", "#24314b", "#384152", "#6b778f", "#a1abc0", "#b8c1d4", "#c4d3ec", "#dde5f3", "#f1f5fb"],
             "teal": {"50": "#1b2f52", "100": "#27406b", "700": "#94b2e6", "800": "#c4d3ec", "900": "#e2eaf8"},
@@ -49,13 +43,11 @@ PALETTES = {
     },
     "root": {  # Hub: antique gold. Source: #17130A #3A2F14 #8A6A1F #C9A54A #EBDDB5 #45403A
         "light": {
-            "hero": ["#ebddb5", "#c9a54a", "#ebddb5"],
             "white": "#ffffff",
-            "stone": ["#faf8f2", "#f3efe3", "#e8e0c9", "#ebddb5", "#a39d90", "#68625a", "#544e46", "#45403a", "#2b261e", "#17130a"],
+            "stone": ["#f5f5f4", "#f3efe3", "#e8e0c9", "#ebddb5", "#a39d90", "#68625a", "#544e46", "#45403a", "#2b261e", "#17130a"],
             "teal": {"50": "#f8f1df", "100": "#efe2bd", "700": "#7d5f17", "800": "#5f4810", "900": "#3a2f14"},
         },
         "dark": {
-            "hero": ["#8a6a1f", "#c9a54a", "#3a2f14"],
             "white": "#1e1910",
             "stone": ["#17130a", "#241e12", "#332b1c", "#45403a", "#7a7366", "#aea697", "#c3bba9", "#ebddb5", "#efe6cd", "#faf6ea"],
             "teal": {"50": "#3a2f14", "100": "#4d3e1a", "700": "#d9b85e", "800": "#ebddb5", "900": "#f6eccd"},
@@ -81,10 +73,8 @@ for site, modes in PALETTES.items():
         out = [f"  --color-white: {p['white']};"]
         out += [f"  --color-stone-{s}: {v};" for s, v in zip(STEPS, p["stone"])]
         out += [f"  --color-teal-{s}: {v};" for s, v in p["teal"].items()]
-        out += [f"  --hero-{i}: {v};" for i, v in enumerate(p["hero"], 1)]
         return out
-    light = block("light")
-    css += [l for l in light if "--hero" not in l] + ["}", "", ":root {"] + [l for l in light if "--hero" in l] + ["}", "", "html.dark {"] + block("dark") + ["}", ""]
+    css += block("light") + ["}", "", "html.dark {"] + block("dark") + ["}", ""]
     open(f"sites/{site}/src/palette.css", "w").write("\n".join(css))
 
     for m, p in modes.items():
@@ -109,7 +99,7 @@ for site, modes in PALETTES.items():
 # ── Design tokens (Claude Design board 1). Same maths as the boards' baitaan.js. ──
 DESIGN = {
     "root": {"tones": ["#17130A", "#3A2F14", "#8A6A1F", "#C9A54A", "#EBDDB5", "#45403A"],
-             "L": {"bg": "#FAF8F2", "muted": "#68625A", "primary": "#7D5F17", "link": "#5F4810", "result": "#F8F1DF", "border": "#8E877C"},
+             "L": {"bg": "#F5F5F4", "muted": "#68625A", "primary": "#7D5F17", "link": "#5F4810", "result": "#F8F1DF", "border": "#8E877C"},
              "D": {"card": "#1E1910", "text": "#FAF6EA", "muted": "#AEA697", "primary": "#D9B85E", "result": "#3A2F14", "border": "#7E7666"}},
     "es": {"tones": ["#0E0B1D", "#2A1E4D", "#5A3B8C", "#8B7CC7", "#C9C2E3", "#3A3A52"],
            "L": {"bg": "#F6F5FA", "muted": "#615D79", "primary": "#5A3B8C", "link": "#4A2F78", "result": "#F1EEF9", "border": "#8A86A0"},
@@ -126,6 +116,11 @@ def rgba(h, a):
     n = int(h[1:], 16)
     return f"rgba({n >> 16},{(n >> 8) & 255},{n & 255},{a})"
 
+def mix(a, b, w):
+    """a mixed into b at weight w, as #rrggbb."""
+    ca = [int(a[i:i + 2], 16) for i in (1, 3, 5)]; cb = [int(b[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x * w + y * (1 - w)):02x}" for x, y in zip(ca, cb))
+
 def design_tokens(site, mode):
     p = DESIGN[site]; t = p["tones"]
     if mode == "light":
@@ -133,18 +128,19 @@ def design_tokens(site, mode):
         return {"bg": l["bg"], "card": "#FFFFFF", "text": t[0], "muted": l["muted"], "border": l["border"], "primary": l["primary"],
                 "primary-hover": l["link"], "on-primary": "#FFFFFF", "link": l["link"], "result-bg": l["result"], "result-text": t[1],
                 "hair": rgba(t[0], .09), "tint": l["result"], "track": l["bg"], "err": "#B91C1C", "warn": "#92400E",
-                "glow-1": rgba(t[4], .75), "glow-2": rgba(t[3], .28), "glow-3": rgba(t[4], .5),
-                "elev": f"0 1px 2px {rgba(t[0], .05)}, 0 6px 16px -4px {rgba(t[0], .07)}, 0 18px 36px -18px {rgba(t[0], .12)}",
-                "elev-h": f"0 1px 2px {rgba(t[0], .06)}, 0 10px 24px -6px {rgba(t[0], .12)}, 0 28px 48px -20px {rgba(t[0], .18)}",
-                "field": "#FFFFFF", "spot": rgba(t[3], .16), "header": rgba(l["bg"], .72), "ad": rgba(t[5], .05), "sheet": "rgba(255,255,255,0.86)"}
+                # Elevation is declared once: cards rest on their hairline border; hover adds one offset shadow.
+                "elev": "none",
+                "elev-h": f"0 6px 16px -8px {rgba(t[0], .18)}",
+                "band": "#ECECEA" if site == "root" else mix(l["primary"], l["bg"], .06),
+                "field": "#FFFFFF", "spot": rgba(t[3], .16), "header": rgba(l["bg"], .94), "ad": rgba(t[5], .05)}
     d = p["D"]
     return {"bg": t[0], "card": d["card"], "text": d["text"], "muted": d["muted"], "border": d["border"], "primary": d["primary"],
             "primary-hover": t[4], "on-primary": d["card"], "link": d["primary"], "result-bg": d["result"], "result-text": d["text"],
             "hair": rgba(d["text"], .08), "tint": rgba(d["primary"], .14), "track": rgba(d["text"], .06), "err": "#F87171", "warn": "#FBBF24",
-            "glow-1": rgba(t[2], .6), "glow-2": rgba(t[3], .24), "glow-3": rgba(t[1], .9),
-            "elev": "inset 0 1px 0 0 rgba(255,255,255,.07), inset 0 0 0 1px rgba(255,255,255,.035)",
-            "elev-h": f"inset 0 1px 0 0 rgba(255,255,255,.10), inset 0 0 0 1px {rgba(d['primary'], .35)}",
-            "field": t[0], "spot": rgba(d["primary"], .14), "header": rgba(t[0], .66), "ad": rgba(d["text"], .035), "sheet": rgba(d["card"], .86)}
+            "elev": "none",
+            "elev-h": f"inset 0 0 0 1px {rgba(d['primary'], .35)}",
+            "band": mix(d["primary"], t[0], .07),
+            "field": t[0], "spot": rgba(d["primary"], .14), "header": rgba(t[0], .94), "ad": rgba(d["text"], .035)}
 
 for site in DESIGN:
     path = f"sites/{site}/src/palette.css"

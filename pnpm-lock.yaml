@@ -6,7 +6,11 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      impeccable:
+        specifier: 4.8.2
+        version: 4.8.2
 
   packages/tools:
     devDependencies:
@@ -40,7 +44,7 @@ importers:
       '@bt/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@fontsource-variable/inter':
+      '@fontsource-variable/ibm-plex-sans':
         specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/ibm-plex-sans-arabic':
@@ -73,7 +77,7 @@ importers:
       '@bt/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@fontsource-variable/inter':
+      '@fontsource-variable/ibm-plex-sans':
         specifier: ^5.3.0
         version: 5.3.0
       '@tailwindcss/vite':
@@ -103,7 +107,7 @@ importers:
       '@bt/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@fontsource-variable/inter':
+      '@fontsource-variable/ibm-plex-sans':
         specifier: ^5.3.0
         version: 5.3.0
       '@tailwindcss/vite':
@@ -130,7 +134,7 @@ importers:
       '@bt/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@fontsource-variable/inter':
+      '@fontsource-variable/ibm-plex-sans':
         specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/ibm-plex-sans-arabic':
@@ -409,8 +413,8 @@ packages:
   '@emnapi/wasi-threads@1.2.3':
     resolution: {integrity: sha512-ELEBe8PsLvvJ6QMr0zLt8ffvOHW/dc1m3CEzNMg7aJUv3bMaoDtw2TXyDAwkYBuroxxuHEwhRTLJSe5sya547g==}
 
-  '@fontsource-variable/inter@5.3.0':
-    resolution: {integrity: sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA==}
+  '@fontsource-variable/ibm-plex-sans@5.3.0':
+    resolution: {integrity: sha512-agG8tXFEo0hD9+J7npa4vbbWult52eMLVaQ6WQRlhs/iCAojrMAoejru85W9HTVXHfyUj96KM7gp/KGAS87XaQ==}
 
   '@fontsource/ibm-plex-sans-arabic@5.3.0':
     resolution: {integrity: sha512-ZZ4g+JDgQY0NqSh4o0MNWU1sHQmtcee1g++aKAwyJvZxnT5y51JXsN1cIXnaQaMd40dcbK6QFYa+Z1LbaiNuqA==}
@@ -560,6 +564,36 @@ packages:
     engines: {node: '>=20.9.0'}
     cpu: [x64]
     os: [win32]
+
+  '@impeccable/cli-darwin-arm64@0.1.21':
+    resolution: {integrity: sha512-8gKNvi98N3pa1tD5+D70/p85Whcs18g1Fp0isPn0iEg1jGnHZnTdZSAdowOITzRTCuAWwRwDuk9gFCgZ8wXctg==}
+    cpu: [arm64]
+    os: [darwin]
+    hasBin: true
+
+  '@impeccable/cli-darwin-x64@0.1.21':
+    resolution: {integrity: sha512-p37+Anz1JrWlsDqNIutTKDGM1He9S2Y9aaxK1sT2zqfyH4xa5yFVJt5TBD0Z1ZPc+kNhEwsfffVWr3OQNRS8+w==}
+    cpu: [x64]
+    os: [darwin]
+    hasBin: true
+
+  '@impeccable/cli-linux-arm64@0.1.21':
+    resolution: {integrity: sha512-Ia2L/Sm6qm9sexWyyUuUK3VUpEl83sfgO0UHKad9iWsZe2pDCxW3iIaBG8naQtfLCFgd+yrmGdG5KNZ0UDaD5w==}
+    cpu: [arm64]
+    os: [linux]
+    hasBin: true
+
+  '@impeccable/cli-linux-x64@0.1.21':
+    resolution: {integrity: sha512-X7r/nQnk2imNF5QH8v0nMdraxnkCUh0XBchScolYODimuInezEKpLAPbCMmhTibpg7EkMgnfPuCA8/IvIDGjdw==}
+    cpu: [x64]
+    os: [linux]
+    hasBin: true
+
+  '@impeccable/cli-windows-x64@0.1.21':
+    resolution: {integrity: sha512-wWcmPBzh0HDWfSDtuJFi5RiGrXk7+8TfAuQOeePsNqqNLyQ4KTp0CR0JfzVvuLXEmRV/goY4g4Y2Hmaya0o/SA==}
+    cpu: [x64]
+    os: [win32]
+    hasBin: true
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1264,6 +1298,11 @@ packages:
 
   http-cache-semantics@4.3.0:
     resolution: {integrity: sha512-M5t5LlJpS1UHMjvwRQVdFHvPISGeLAxNcrWuJkeGh0KxsqCHZ1O3NXZU/8x7cD0BDcGW8kapxMKTvwlqrNkHkA==}
+
+  impeccable@4.8.2:
+    resolution: {integrity: sha512-NCEL/OndWjqCgN1hhau4In7zLDMlk/NZim8IcBitSER56hx3/eQecXjRC5+kSV6iRd2d8G5kWwR5agGXse4b3w==}
+    engines: {node: '>=18.19.0'}
+    hasBin: true
 
   iron-webcrypto@1.2.1:
     resolution: {integrity: sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==}
@@ -2229,7 +2268,7 @@ snapshots:
       tslib: 2.9.1
     optional: true
 
-  '@fontsource-variable/inter@5.3.0': {}
+  '@fontsource-variable/ibm-plex-sans@5.3.0': {}
 
   '@fontsource/ibm-plex-sans-arabic@5.3.0': {}
 
@@ -2338,6 +2377,21 @@ snapshots:
     optional: true
 
   '@img/sharp-win32-x64@0.35.5':
+    optional: true
+
+  '@impeccable/cli-darwin-arm64@0.1.21':
+    optional: true
+
+  '@impeccable/cli-darwin-x64@0.1.21':
+    optional: true
+
+  '@impeccable/cli-linux-arm64@0.1.21':
+    optional: true
+
+  '@impeccable/cli-linux-x64@0.1.21':
+    optional: true
+
+  '@impeccable/cli-windows-x64@0.1.21':
     optional: true
 
   '@jridgewell/gen-mapping@0.3.13':
@@ -3033,6 +3087,14 @@ snapshots:
   html-void-elements@3.0.0: {}
 
   http-cache-semantics@4.3.0: {}
+
+  impeccable@4.8.2:
+    optionalDependencies:
+      '@impeccable/cli-darwin-arm64': 0.1.21
+      '@impeccable/cli-darwin-x64': 0.1.21
+      '@impeccable/cli-linux-arm64': 0.1.21
+      '@impeccable/cli-linux-x64': 0.1.21
+      '@impeccable/cli-windows-x64': 0.1.21
 
   iron-webcrypto@1.2.1: {}
 

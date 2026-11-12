@@ -6,17 +6,11 @@ import { SITES } from "@bt/ui/sites";
 import Layout from "../components/Layout.astro";
 
 /**
- * Each card carries a hint of its own site's palette (Claude Design board 2): a corner glow,
- * three swatch dots and the arrow button, in both light and dark.
+ * Each card carries a hint of its own site's palette: three swatch dots and the arrow button,
+ * in both light and dark.
  */
-const rgba = (hex: string, a: number) => {
-  const n = parseInt(hex.slice(1), 16);
-  return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
-};
 const card = (tones: string[], primaryL: string, primaryD: string, cardD: string) =>
   [
-    `--g-l:${rgba(tones[3], 0.38)}`,
-    `--g-d:${rgba(tones[2], 0.7)}`,
     `--d1-l:${tones[1]}`, `--d2-l:${tones[2]}`, `--d3-l:${tones[3]}`,
     `--d1-d:${tones[2]}`, `--d2-d:${tones[3]}`, `--d3-d:${primaryD}`,
     `--b-l:${primaryL}`, `--b-d:${primaryD}`, `--o-l:#fff`, `--o-d:${cardD}`,
@@ -48,11 +42,10 @@ const langs = [
         const rtl = site.dir === "rtl";
         return (
           <li>
-            <a href={site.url} lang={site.lang} dir={site.dir} class="bt-card bt-lang-card min-h-[220px] gap-2.5 rounded-[28px] p-6" style={style} data-spotlight>
-              <span class="bt-lang-card__glow" aria-hidden="true"></span>
+            <a href={site.url} lang={site.lang} dir={site.dir} class="bt-card bt-lang-card min-h-[220px] gap-2.5 p-6" style={style} data-spotlight>
               <span class="flex items-center gap-2.5">
                 <span class="flex gap-[3px]" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span class="font-['Inter_Variable',sans-serif] text-[13px] text-muted">{new URL(site.url).host}</span>
+                <span class="font-['IBM_Plex_Sans_Variable',sans-serif] text-[13px] text-muted">{new URL(site.url).host}</span>
               </span>
               <span class:list={["text-[34px] leading-[1.15] font-[650]", rtl ? "font-['IBM_Plex_Sans_Arabic',sans-serif]" : "tracking-[-0.02em]"]}>{name}</span>
               <span class:list={["text-base text-muted text-pretty", rtl && "font-['IBM_Plex_Sans_Arabic',sans-serif] leading-[1.7]"]}>{desc}</span>
@@ -69,17 +62,6 @@ const langs = [
 </Layout>
 
 <style>
-  .bt-lang-card__glow {
-    position: absolute;
-    z-index: -1;
-    inset-inline-end: -90px;
-    top: -110px;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    pointer-events: none;
-    background: radial-gradient(closest-side, var(--g-l), transparent);
-  }
   .bt-lang-card i {
     width: 12px;
     height: 12px;
@@ -99,7 +81,6 @@ const langs = [
     background: var(--b-l);
     color: var(--o-l);
   }
-  :global(html.dark) .bt-lang-card__glow { background: radial-gradient(closest-side, var(--g-d), transparent); }
   :global(html.dark) .bt-lang-card i:nth-child(1) { background: var(--d1-d); }
   :global(html.dark) .bt-lang-card i:nth-child(2) { background: var(--d2-d); }
   :global(html.dark) .bt-lang-card i:nth-child(3) { background: var(--d3-d); }

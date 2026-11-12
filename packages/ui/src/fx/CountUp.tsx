@@ -6,7 +6,7 @@ const reduceMotion = () => typeof matchMedia === "function" && matchMedia("(pref
  * Shows `value` formatted, counting up from the previous value (from 0 the first time).
  * Screen readers get only the final value, never the in-between numbers.
  */
-export default function CountUp({ value, format, duration = 650 }: { value: number; format: (n: number) => string; duration?: number }) {
+export default function CountUp({ value, format, duration = 400 }: { value: number; format: (n: number) => string; duration?: number }) {
   const [shown, setShown] = useState(value);
   const from = useRef(0);
   const first = useRef(true);
