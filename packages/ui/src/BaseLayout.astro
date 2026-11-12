@@ -185,7 +185,9 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
     <header class="bt-header">
       <div class:list={["bt-navbar", nav.length > 0 && "has-menu"]}>
         <a href={homeHref} class="bt-brand">
-          {wordmark ? (
+          {wordmark && lang.startsWith("ar") ? (
+            <span class="bt-brand__ar">{brand ?? s.name}</span>
+          ) : wordmark ? (
             <Wordmark class="h-[26px] w-auto" label={brand ?? s.name} />
           ) : (
             <>
@@ -248,6 +250,7 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
       strings={chrome.footer}
       word={lang.startsWith("ar") ? "بيتان" : "Baitaan"}
       {wordmark}
+      arabic={lang.startsWith("ar")}
     />
 
     <ConsentBanner t={chrome.consent} />

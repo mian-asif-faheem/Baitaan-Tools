@@ -28,9 +28,11 @@ interface Props {
   word: string;
   /** Drawn wordmark instead of badge + typed name. */
   wordmark?: boolean;
+  /** Arabic pages show the name as Arabic text instead of the Latin wordmark. */
+  arabic?: boolean;
 }
 
-const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word, wordmark = false } = Astro.props;
+const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word, wordmark = false, arabic = false } = Astro.props;
 const s: FooterStrings = strings ?? { tools: "Tools", site: "Site", languages: "Other languages" };
 const LANG_NAMES: Record<SiteKey, { label: string; lang: string }> = {
   root: { label: "baitaandessigns.com", lang: "en" },
@@ -53,7 +55,9 @@ const tile = Array.from({ length: 16 }, (_, i) => {
     <div class="bt-foot__top">
       <div class="bt-foot__brand">
         <a href={homeHref} class="bt-foot__logo">
-          {wordmark ? (
+          {wordmark && arabic ? (
+            <span class="bt-brand__ar text-[34px]">{brand}</span>
+          ) : wordmark ? (
             <Wordmark class="h-[34px] w-auto" label={brand} />
           ) : (
             <>

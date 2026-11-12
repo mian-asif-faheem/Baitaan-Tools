@@ -161,6 +161,13 @@ html.dark .bt-navbar {
   letter-spacing: var(--ls);
   text-decoration: none;
 }
+/* Arabic name in place of the Latin wordmark (Arabic pages). */
+.bt-brand__ar {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
 .bt-sep {
   grid-area: sep;
   display: none;
