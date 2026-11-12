@@ -111,8 +111,12 @@ body:has(main > .bt-hero:first-child) .bt-header {
 main > .bt-hero:first-child {
   border-top: var(--hh, 0px) solid transparent;
 }
+.bt-hero {
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
 .bt-navbar {
-  --bar: color-mix(in oklab, var(--primary) 14%, #141417);
+  /* Frosted glass: about three-quarters opaque, so text stays readable over anything. */
+  --bar: color-mix(in oklab, color-mix(in oklab, var(--primary) 14%, #141417) 76%, transparent);
   --bar-ink: #f4f4f5;
   --bar-dim: rgb(244 244 245 / 0.72);
   --bar-fill: rgb(255 255 255 / 0.07);
@@ -128,6 +132,8 @@ main > .bt-hero:first-child {
   padding: 8px 8px 8px 14px;
   border-radius: 18px;
   background: var(--bar);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
   color: var(--bar-ink);
   border: 1px solid var(--bar-line);
   box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.45);
@@ -136,8 +142,13 @@ main > .bt-hero:first-child {
   padding: 8px 14px 8px 8px;
 }
 html.dark .bt-navbar {
-  --bar: color-mix(in oklab, var(--primary) 9%, #1d1d21);
+  --bar: color-mix(in oklab, color-mix(in oklab, var(--primary) 9%, #1d1d21) 72%, transparent);
   box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.7);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bt-navbar {
+    --bar: color-mix(in oklab, var(--primary) 14%, #141417);
+  }
 }
 .bt-navbar.has-menu {
   grid-template-areas: "brand . end" "menu menu menu";
@@ -153,7 +164,7 @@ html.dark .bt-navbar {
   grid-area: brand;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
   min-height: 44px;
   color: var(--bar-ink);
@@ -201,7 +212,7 @@ html.dark .bt-navbar {
   position: relative;
   display: inline-flex;
   gap: 2px;
-  padding: 3px;
+  padding: 4px;
   vertical-align: middle;
 }
 .bt-menu__item {
@@ -236,7 +247,7 @@ a.bt-menu__item:focus-visible {
 }
 .bt-menu__thumb {
   position: absolute;
-  inset: 3px;
+  inset: 4px;
   display: flex;
   gap: 2px;
   background: var(--primary);
@@ -282,7 +293,7 @@ a.bt-menu__item:focus-visible {
 .bt-lang {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   min-height: 44px;
   padding: 0 14px;
   border-radius: 12px;
@@ -339,7 +350,7 @@ html.dark .bt-theme-icon {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px 5px 10px;
+  padding: 4px 12px 4px 8px;
   border-radius: 999px;
   background: var(--card);
   border: 1px solid var(--hair);
@@ -363,7 +374,7 @@ html.dark .bt-theme-icon {
 }
 .bt-tag {
   align-self: flex-start;
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 999px;
   background: var(--tint);
   color: var(--link);
@@ -376,7 +387,7 @@ html.dark .bt-theme-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   min-height: 52px;
   padding: 0 24px;
   border: 1.5px solid var(--primary);
@@ -479,7 +490,7 @@ html.dark .bt-theme-icon {
   gap: 6px;
   height: 100%;
   min-height: 134px;
-  padding: 18px;
+  padding: 16px;
   border-radius: 16px;
   border: 1px solid var(--hair);
   background: var(--card);
@@ -507,7 +518,7 @@ a.bt-card:active {
   border: 1px solid var(--border);
   color: var(--muted);
   font-weight: 500;
-  padding: 3px 10px;
+  padding: 4px 8px;
 }
 
 /* ── Form controls ──────────────────────────────────────── */
@@ -1031,7 +1042,7 @@ h2 + .bt-faq,
   border-bottom: 1px solid var(--hair);
 }
 .bt-ad__label {
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1097,7 +1108,7 @@ h2 + .bt-faq,
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-size: 14px;
 }
 .bt-bars > div > :last-child {
@@ -1222,7 +1233,7 @@ html.dark .bt-foot__card {
 .bt-foot__logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-height: 44px;
   color: var(--foot-ink);
   font-size: 20px;
@@ -1323,7 +1334,7 @@ html.dark .bt-foot__card {
     border-radius: 20px;
   }
   .bt-foot__top {
-    padding: 28px 22px 0;
+    padding: 28px 20px 0;
     grid-template-areas: "brand" "nav" "legal";
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;

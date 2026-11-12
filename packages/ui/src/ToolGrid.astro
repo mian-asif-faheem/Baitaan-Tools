@@ -31,7 +31,7 @@ const countLabel = (g: Group) => {
   return g.soon ? String(n) : `${n} ${chrome.tools ?? ""}`.trim();
 };
 ---
-<div class="mx-auto flex max-w-[1120px] flex-col gap-11 px-5 pt-2">
+<div class="mx-auto flex max-w-[1120px] flex-col gap-11 px-5">
   {groups.map((g) => (
     <section class="flex flex-col gap-3.5">
       <div class="flex items-baseline justify-between gap-3">
@@ -41,7 +41,7 @@ const countLabel = (g: Group) => {
       <ul class="bt-bento m-0 list-none p-0">
         {g.featured && (
           <li class="col-span-2 row-span-2">
-            <a href={g.featured.href} class="bt-card min-h-[280px] gap-2 p-[22px]" data-spotlight>
+            <a href={g.featured.href} class="bt-card min-h-[280px] gap-2 p-6" data-spotlight>
               <span class="text-[clamp(22px,3vw,28px)] leading-[1.2] font-[650]" style="letter-spacing:var(--ls)">{g.featured.name}</span>
               {g.featured.desc && <span class="max-w-[40ch] text-[15px] text-muted">{g.featured.desc}</span>}
               <span class="mt-auto flex items-end justify-between gap-3 border-t border-hair pt-4">
