@@ -7,6 +7,7 @@
  * The live WebGPU version is left out: the static pattern costs nothing and never moves.
  */
 import { SITES, type SiteKey } from "./sites";
+import Wordmark from "./Wordmark.astro";
 
 export interface FooterStrings {
   tools: string;
@@ -25,9 +26,11 @@ interface Props {
   strings?: FooterStrings;
   /** Word drawn at the bottom. */
   word: string;
+  /** Drawn wordmark instead of badge + typed name. */
+  wordmark?: boolean;
 }
 
-const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word } = Astro.props;
+const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word, wordmark = false } = Astro.props;
 const s: FooterStrings = strings ?? { tools: "Tools", site: "Site", languages: "Other languages" };
 const LANG_NAMES: Record<SiteKey, { label: string; lang: string }> = {
   root: { label: "baitaandessigns.com", lang: "en" },
@@ -50,8 +53,14 @@ const tile = Array.from({ length: 16 }, (_, i) => {
     <div class="bt-foot__top">
       <div class="bt-foot__brand">
         <a href={homeHref} class="bt-foot__logo">
-          <span class="bt-badge" aria-hidden="true">B</span>
-          <span>{brand}</span>
+          {wordmark ? (
+            <Wordmark class="h-[34px] w-auto" label={brand} />
+          ) : (
+            <>
+              <span class="bt-badge" aria-hidden="true">B</span>
+              <span>{brand}</span>
+            </>
+          )}
         </a>
         {note && <p>{note}</p>}
       </div>

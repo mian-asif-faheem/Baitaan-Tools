@@ -1,0 +1,23 @@
+---
+/**
+ * The "baitaan" wordmark: rounded, even strokes drawn as SVG paths (no font needed).
+ * Takes the text colour (currentColor), so it works in the dark header bar and both footer themes.
+ */
+interface Props {
+  class?: string;
+  /** Accessible name; the visible letters are drawn, not typed. */
+  label?: string;
+}
+const { class: cls = "", label = "Baitaan" } = Astro.props;
+const d =
+  "M7 21 V93 M28 51 A21 21 0 1 0 28 93 A21 21 0 1 0 28 51 " +
+  "M96 51 A21 21 0 1 0 96 93 A21 21 0 1 0 96 51 M117 51 V93 " +
+  "M143 51 V93 M183 28 V93 M169 51 H197 " +
+  "M244 51 A21 21 0 1 0 244 93 A21 21 0 1 0 244 51 M265 51 V93 " +
+  "M312 51 A21 21 0 1 0 312 93 A21 21 0 1 0 312 51 M333 51 V93 " +
+  "M359 51 V93 M359 72 A21 21 0 0 1 401 72 V93";
+---
+<svg class={`bt-wordmark ${cls}`} viewBox="-2 8 412 96" role="img" aria-label={label} fill="none">
+  <path d={d} stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="143" cy="25" r="8.5" fill="currentColor" />
+</svg>
