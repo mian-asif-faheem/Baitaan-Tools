@@ -29,6 +29,11 @@
     "soon": "Coming soon",
     "tools": "tools",
     "example": "Example",
-    "adLabel": "Advertisement"
+    "adLabel": "Advertisement",
+    "footer": {
+      "tools": "Tools",
+      "site": "Site",
+      "languages": "Languages"
+    }
   }
 }

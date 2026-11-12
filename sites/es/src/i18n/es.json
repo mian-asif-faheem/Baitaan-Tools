@@ -178,6 +178,11 @@
     "soon": "Próximamente",
     "tools": "herramientas",
     "example": "Ejemplo",
-    "adLabel": "Publicidad"
+    "adLabel": "Publicidad",
+    "footer": {
+      "tools": "Herramientas",
+      "site": "Sitio",
+      "languages": "Otros idiomas"
+    }
   }
 }

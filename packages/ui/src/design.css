@@ -1169,3 +1169,161 @@ h2 + .bt-faq,
   line-height: 1.4;
   cursor: pointer;
 }
+
+/* ── Footer card (after the reactbits.dev footer) ─────────
+   Light: a soft tinted card. Dark: the same tinted charcoal as the header bar. */
+.bt-foot {
+  --foot-card: color-mix(in oklab, var(--primary) 5%, var(--band));
+  --foot-ink: var(--text);
+  --foot-muted: var(--muted);
+  --foot-art: color-mix(in oklab, var(--primary) 30%, var(--muted));
+  margin-top: 56px;
+  padding: 0 12px 12px;
+}
+html.dark .bt-foot {
+  --foot-card: color-mix(in oklab, var(--primary) 9%, #1d1d21);
+  --foot-ink: #f4f4f5;
+  --foot-muted: rgb(244 244 245 / 0.66);
+  --foot-art: color-mix(in oklab, var(--primary) 40%, #6b6b75);
+}
+.bt-foot__card {
+  position: relative;
+  max-width: 1120px;
+  margin-inline: auto;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 24px;
+  background: var(--foot-card);
+  border: 1px solid var(--hair);
+  color: var(--foot-muted);
+}
+html.dark .bt-foot__card {
+  border-color: rgb(255 255 255 / 0.07);
+}
+.bt-foot__top {
+  display: grid;
+  padding: 40px 40px 0;
+  column-gap: 48px;
+  row-gap: 32px;
+  grid-template-areas: "brand nav" "legal nav";
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr;
+}
+.bt-foot__brand {
+  grid-area: brand;
+}
+.bt-foot__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--foot-ink);
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: var(--ls);
+  text-decoration: none;
+}
+.bt-foot__logo .bt-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.bt-foot__brand p {
+  margin: 10px 0 0;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.bt-foot__nav {
+  grid-area: nav;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  column-gap: clamp(32px, 5vw, 72px);
+  font-size: 14px;
+}
+.bt-foot__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.bt-foot__title {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  color: var(--foot-ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+.bt-foot__col a,
+.bt-foot__col button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bt-foot__col a:hover,
+  .bt-foot__col button:hover {
+    color: var(--foot-ink);
+  }
+}
+.bt-foot a:focus-visible,
+.bt-foot button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+.bt-foot__legal {
+  grid-area: legal;
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 0;
+  font-size: 13px;
+}
+.bt-foot__legal > * + *::before {
+  content: "·";
+  margin: 0 10px;
+  opacity: 0.7;
+}
+.bt-foot__art {
+  margin-top: clamp(32px, 4.5vw, 64px);
+  color: var(--foot-art);
+  pointer-events: none;
+  line-height: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgb(0 0 0 / 0.16) calc(var(--art-fade, 60%) * 0.3), rgb(0 0 0 / 0.5) calc(var(--art-fade, 60%) * 0.5), rgb(0 0 0 / 0.84) calc(var(--art-fade, 60%) * 0.7), #000 var(--art-fade, 60%));
+  mask-image: linear-gradient(to bottom, transparent 0, rgb(0 0 0 / 0.16) calc(var(--art-fade, 60%) * 0.3), rgb(0 0 0 / 0.5) calc(var(--art-fade, 60%) * 0.5), rgb(0 0 0 / 0.84) calc(var(--art-fade, 60%) * 0.7), #000 var(--art-fade, 60%));
+}
+.bt-foot__art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+@media (max-width: 700px) {
+  .bt-foot__card {
+    border-radius: 20px;
+  }
+  .bt-foot__top {
+    padding: 28px 22px 0;
+    grid-template-areas: "brand" "nav" "legal";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+  .bt-foot__nav {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    row-gap: 20px;
+    column-gap: 16px;
+  }
+}

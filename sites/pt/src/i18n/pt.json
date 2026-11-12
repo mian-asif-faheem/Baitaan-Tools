@@ -254,6 +254,11 @@
     "soon": "Em breve",
     "tools": "ferramentas",
     "example": "Exemplo",
-    "adLabel": "Publicidade"
+    "adLabel": "Publicidade",
+    "footer": {
+      "tools": "Ferramentas",
+      "site": "Site",
+      "languages": "Outros idiomas"
+    }
   }
 }

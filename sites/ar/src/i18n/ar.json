@@ -265,6 +265,11 @@
     "soon": "قريبًا",
     "tools": "أدوات",
     "example": "مثال",
-    "adLabel": "إعلان"
+    "adLabel": "إعلان",
+    "footer": {
+      "tools": "الأدوات",
+      "site": "الموقع",
+      "languages": "لغات أخرى"
+    }
   }
 }

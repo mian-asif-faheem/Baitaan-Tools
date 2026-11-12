@@ -1,0 +1,144 @@
+---
+/**
+ * Site footer: a rounded card with the brand, three link columns, the legal line, and the
+ * name drawn large in a pattern of dots, squares and triangles at the bottom.
+ * Layout and the wordmark follow the reactbits.dev footer (FooterWaves' SVG version,
+ * https://github.com/DavidHDev/react-bits, MIT + Commons Clause, see fx/LICENSE-react-bits.md).
+ * The live WebGPU version is left out: the static pattern costs nothing and never moves.
+ */
+import { SITES, type SiteKey } from "./sites";
+
+export interface FooterStrings {
+  tools: string;
+  site: string;
+  languages: string;
+}
+
+interface Props {
+  site: SiteKey;
+  brand: string;
+  homeHref: string;
+  note?: string;
+  nav: { href: string; label: string }[];
+  links: { href: string; label: string }[];
+  cookieSettings: string;
+  strings?: FooterStrings;
+  /** Word drawn at the bottom. */
+  word: string;
+}
+
+const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word } = Astro.props;
+const s: FooterStrings = strings ?? { tools: "Tools", site: "Site", languages: "Other languages" };
+const LANG_NAMES: Record<SiteKey, { label: string; lang: string }> = {
+  root: { label: "Baitaan Tools", lang: "en" },
+  es: { label: "Español", lang: "es" },
+  pt: { label: "Português", lang: "pt-BR" },
+  ar: { label: "العربية", lang: "ar" },
+};
+const elsewhere = (Object.keys(SITES) as SiteKey[]).filter((k) => k !== site).map((k) => ({ href: `${SITES[k].url}/`, ...LANG_NAMES[k] }));
+const year = new Date().getFullYear();
+
+// 4×4 tile of mixed shapes, as in the original pattern.
+const tile = Array.from({ length: 16 }, (_, i) => {
+  const x = (i % 4) * 9 + 4.5;
+  const y = Math.floor(i / 4) * 9 + 4.5;
+  return { x, y, shape: (i + Math.floor(i / 4)) % 3, opacity: 0.48 + ((i * 7) % 5) * 0.11 };
+});
+---
+<footer class="bt-foot">
+  <div class="bt-foot__card">
+    <div class="bt-foot__top">
+      <div class="bt-foot__brand">
+        <a href={homeHref} class="bt-foot__logo">
+          <span class="bt-badge" aria-hidden="true">B</span>
+          <span>{brand}</span>
+        </a>
+        {note && <p>{note}</p>}
+      </div>
+
+      <nav class="bt-foot__nav" aria-label={s.site}>
+        {nav.length > 0 && (
+          <div class="bt-foot__col">
+            <span class="bt-foot__title">{s.tools}</span>
+            {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+          </div>
+        )}
+        <div class="bt-foot__col">
+          <span class="bt-foot__title">{s.site}</span>
+          {links.map((l) => <a href={l.href}>{l.label}</a>)}
+          <button type="button" data-bt-consent-open>{cookieSettings}</button>
+        </div>
+        <div class="bt-foot__col">
+          <span class="bt-foot__title">{s.languages}</span>
+          {elsewhere.map((o) => <a href={o.href} hreflang={o.lang} lang={o.lang}>{o.label}</a>)}
+        </div>
+      </nav>
+
+      <div class="bt-foot__legal">
+        <span>© {year} {brand}</span>
+        <span>MAAF Studios</span>
+      </div>
+    </div>
+
+    <div class="bt-foot__art" aria-hidden="true">
+      <svg data-bt-art viewBox="0 0 800 200" focusable="false">
+        <defs>
+          <pattern id="bt-foot-shapes" width="36" height="36" patternUnits="userSpaceOnUse">
+            <g fill="currentColor">
+              {tile.map((t) =>
+                t.shape === 0 ? (
+                  <circle cx={t.x} cy={t.y} r="2.8" opacity={t.opacity} />
+                ) : t.shape === 1 ? (
+                  <rect x={t.x - 2.5} y={t.y - 2.5} width="5" height="5" opacity={t.opacity} />
+                ) : (
+                  <path d={`M${t.x} ${t.y - 3}l3 5.5h-6z`} opacity={t.opacity} />
+                ),
+              )}
+            </g>
+          </pattern>
+          <mask id="bt-foot-mask">
+            <rect x="-5000" y="-5000" width="10000" height="10000" fill="white" />
+            <text x="40" y="236" direction="ltr" fill="black" font-weight="600" font-size="200">{word}</text>
+          </mask>
+        </defs>
+        <rect x="-5000" y="-5000" width="10000" height="10000" fill="url(#bt-foot-shapes)" mask="url(#bt-foot-mask)" />
+      </svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fit the word to the card: measure its ink, then size the viewBox so the letters fill the
+  // width and only their top 60% shows, with room above for the pattern to fade in.
+  const fit = () => {
+    const svg = document.querySelector<SVGSVGElement>("[data-bt-art]");
+    const text = svg?.querySelector("text");
+    const pattern = svg?.querySelector("pattern");
+    if (!svg || !text || !pattern) return;
+    const family = getComputedStyle(svg).fontFamily;
+    const ctx = document.createElement("canvas").getContext("2d");
+    if (!ctx) return;
+    ctx.font = `600 200px ${family}`;
+    const m = ctx.measureText(text.textContent ?? "");
+    const ink = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
+    const glyph = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+    if (!(ink > 0 && glyph > 0)) return;
+    const pad = ink * 0.035;
+    const above = glyph * 0.46;
+    // Latin letters read from their top 60%; Arabic sits on the baseline, so show more of it.
+    const shown = /[\u0600-\u06ff]/.test(text.textContent ?? "") ? 0.9 : 0.6;
+    const h = above + glyph * shown;
+    // A short word would grow very tall: keep the art at least 4.5:1 and centre the word.
+    const w = Math.max(ink + pad * 2, h * 4.5);
+    const x0 = (w - ink) / 2;
+    svg.setAttribute("viewBox", `0 0 ${w.toFixed(1)} ${h.toFixed(1)}`);
+    text.setAttribute("font-family", family);
+    text.setAttribute("x", (x0 + m.actualBoundingBoxLeft).toFixed(1));
+    text.setAttribute("y", (above + m.actualBoundingBoxAscent).toFixed(1));
+    // About 135 cells across, like the original (9px cells on a 1215px card).
+    pattern.setAttribute("patternTransform", `scale(${(w / 135 / 9).toFixed(4)})`);
+    svg.parentElement?.style.setProperty("--art-fade", `${(((above + glyph * (shown - 0.2)) / h) * 100).toFixed(1)}%`);
+  };
+  fit();
+  document.fonts?.ready.then(fit);
+</script>

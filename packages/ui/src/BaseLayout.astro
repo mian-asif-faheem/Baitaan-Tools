@@ -10,6 +10,7 @@
  */
 import { SITES, type SiteKey } from "./sites";
 import ConsentBanner from "./ConsentBanner.astro";
+import Footer, { type FooterStrings } from "./Footer.astro";
 import Icon from "./Icon.astro";
 import * as I from "./icons";
 import type { ConsentStrings } from "./consent";
@@ -38,6 +39,8 @@ export interface Chrome {
   tools?: string;
   example?: string;
   adLabel?: string;
+  /** Footer column titles. */
+  footer?: FooterStrings;
 }
 
 /** What the layout shares with components rendered inside it (ToolPage, ToolGrid…). */
@@ -224,15 +227,17 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
         <slot />
       </main>
     )}
-    <footer class="mt-14 border-t border-hair">
-      <div class:list={["mx-auto flex flex-col gap-2.5 px-5 pt-5 pb-8", wide ? "max-w-[1120px]" : "max-w-[760px]"]}>
-        <nav class="flex flex-wrap gap-x-5">
-          {footer.map((f) => <a class="inline-flex min-h-11 items-center text-sm text-muted no-underline hover:text-link hover:underline" href={f.href}>{f.label}</a>)}
-          <button type="button" data-bt-consent-open class="inline-flex min-h-11 cursor-pointer items-center text-sm text-muted hover:text-link hover:underline">{chrome.cookieSettings}</button>
-        </nav>
-        <p class="m-0 text-[13px] text-muted">© {new Date().getFullYear()} MAAF Studios{footerNote && ` · ${footerNote}`}</p>
-      </div>
-    </footer>
+    <Footer
+      {site}
+      brand={brand ?? s.name}
+      {homeHref}
+      note={footerNote}
+      {nav}
+      links={footer}
+      cookieSettings={chrome.cookieSettings}
+      strings={chrome.footer}
+      word={lang.startsWith("ar") ? "بيتان" : "Baitaan"}
+    />
 
     <ConsentBanner t={chrome.consent} />
 
