@@ -1,4 +1,4 @@
-import CountUp from "./fx/CountUp";
+import Counter from "./fx/Counter";
 import type { ComponentChildren } from "preact";
 import { useId } from "preact/hooks";
 
@@ -118,7 +118,7 @@ export function Check(props: { label: string; checked: boolean; onChange: (v: bo
 
 /**
  * The answer card. Pass `value` and `format` (instead of a fixed `amount`) to have the
- * number count up to the answer. Children (breakdown rows, notes) go below the number.
+ * digits roll to each new answer (fx/Counter, from React Bits). Children (breakdown rows, notes) go below the number.
  */
 export function Result(props: {
   label: string;
@@ -134,7 +134,7 @@ export function Result(props: {
     <output class={`bt-result ${props.class ?? ""}`} aria-live="polite">
       <span class="bt-result__label">{props.label}</span>
       <bdi dir="ltr" class="bt-result__value">
-        {props.value !== undefined && props.format ? <CountUp value={props.value} format={props.format} /> : props.amount}
+        {props.value !== undefined && props.format ? <Counter text={props.format(props.value)} /> : props.amount}
       </bdi>
       {props.sub && <span class="bt-result__sub">{props.sub}</span>}
       {props.children}

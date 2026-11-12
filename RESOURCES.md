@@ -1,0 +1,8 @@
+# Resources
+
+Outside repositories this project uses or takes ideas from. Add new ones at the bottom with the same layout.
+
+| Repository | What it does | How Baitaan uses it | Licence |
+| --- | --- | --- | --- |
+| [DavidHDev/react-bits](https://github.com/DavidHDev/react-bits) | A free library of 100+ animated React components: text effects, backgrounds, cursor effects and UI pieces. You don't install it as a package. You copy the components you want into your own code (JavaScript or TypeScript, plain CSS or Tailwind). | Two components ported to Preact/plain DOM in `packages/ui/src/fx/`: **SpotlightCard** (`spotlight.ts`: the cursor light on home-page cards) and **Counter** (`Counter.tsx`: rolling digits on every calculator result and on the Ramadan/Eid countdowns). | MIT + Commons Clause: fine to use on these sites, but the components can't be sold or redistributed on their own. Keep the header comments. |
+| [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | A design reviewer that finds "AI slop" in web pages: generic gradients, glow haze, nested cards, poor contrast, cramped spacing and other tell-tale patterns. It scans source files or rendered pages and reports each problem with a fix. | Runs on every deploy (`pnpm check:design`); the deploy stops if it finds anything. | Apache 2.0 |

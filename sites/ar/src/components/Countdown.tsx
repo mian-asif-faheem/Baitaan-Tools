@@ -3,6 +3,7 @@
  * counting to midnight Makkah time (UTC+3).
  */
 import { useEffect, useState } from "preact/hooks";
+import Counter from "@bt/ui/fx/Counter";
 import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 import { dirOf, getT, type Lang } from "../i18n";
 import { gregLongFmt, hijriText, numFmt, Note, Result } from "./form";
@@ -37,16 +38,14 @@ export default function Countdown({ month, day, name, lang = "ar" }: { month: nu
   const ss = Math.floor((left % 60_000) / 1000);
   const isToday = next.daysLeft === 0;
 
-  // Each tile re-mounts its number when it changes, which replays the slide-in.
+  // Digits roll down like a departure board as time passes (fx/Counter, from React Bits).
   const tile = (value: number, label: string) => (
     <div class="flex flex-col items-center gap-0.5 overflow-hidden rounded-2xl border border-hair bg-card px-1 pt-4 pb-3">
-      <span
-        key={value}
-        dir="ltr"
-        class="block font-['IBM_Plex_Sans_Variable',sans-serif] text-[clamp(28px,9vw,44px)] leading-[1.15] font-[650] tabular-nums tracking-[-0.02em] [animation:bt-slide_300ms_var(--ease)_both]"
-      >
-        {num.format(value)}
-      </span>
+      <Counter
+        text={num.format(value)}
+        direction="down"
+        class="font-['IBM_Plex_Sans_Variable',sans-serif] text-[clamp(28px,9vw,44px)] py-[0.075em] font-[650] tracking-[-0.02em]"
+      />
       <span class="text-sm text-muted">{label}</span>
     </div>
   );

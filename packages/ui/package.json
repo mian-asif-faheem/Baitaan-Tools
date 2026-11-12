@@ -18,6 +18,7 @@
     "./theme.css": "./src/theme.css",
     "./Hero.astro": "./src/Hero.astro",
     "./fx/spotlight": "./src/fx/spotlight.ts",
+    "./fx/Counter": "./src/fx/Counter.tsx",
     "./ToolGrid.astro": "./src/ToolGrid.astro",
     "./Icon.astro": "./src/Icon.astro",
     "./icons": "./src/icons.ts",

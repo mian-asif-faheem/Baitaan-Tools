@@ -33,7 +33,11 @@ The look comes from the Claude Design boards (design system, home pages, calcula
 - **Fonts:** IBM Plex Sans (variable, for the 650 weight) with its partner IBM Plex Sans Arabic, so all four sites share one family.
 - **FAQ:** write entries in a guide as `<details class="bt-faq"><summary>Question</summary><p>Answer</p></details>`.
 - **Slop checks:** [impeccable](https://github.com/pbakaus/impeccable) is the design reviewer. Its rules this project follows: no floating glow haze or eyebrow labels above headings, no cards nested in cards, elevation declared once (hairline border, shadow only on hover), card radii 12–16px with pills only for small controls, reading width about 75 characters (`60ch`, `50ch` for Arabic), more space above headings than below, fixed type sizes on tool pages, motion only for state changes, and the browser's own surfaces (caret, selection, scrollbars, placeholders) themed from the palette.
-- **Motion:** one easing (`cubic-bezier(.2,.7,.2,1)`): home headings sharpen in word by word (the one authored moment), cards lift with a cursor spotlight (ported from [React Bits](https://github.com/DavidHDev/react-bits) SpotlightCard; MIT + Commons Clause, so it can be used on these sites but not resold on its own, so keep the header in `fx/spotlight.ts`), results count up (`fx/CountUp.tsx`, 400 ms), the toggle pill slides, countdown digits slide. Everything is instant under "reduce motion". Nothing animates near ad slots or inside fields.
+- **Motion:** one easing (`cubic-bezier(.2,.7,.2,1)`): home headings sharpen in word by word (the one authored moment), cards lift with a cursor spotlight (ported from [React Bits](https://github.com/DavidHDev/react-bits) SpotlightCard; MIT + Commons Clause, so it can be used on these sites but not resold on its own, so keep the header in `fx/spotlight.ts`), result and countdown digits roll to each new value like an odometer (`fx/Counter.tsx`, ported from React Bits Counter), the toggle pill slides. Everything is instant under "reduce motion". Nothing animates near ad slots or inside fields.
+
+## Outside resources
+
+[RESOURCES.md](RESOURCES.md) lists the outside repositories this project uses or takes ideas from, with a short note on each.
 
 ## Layout
 
