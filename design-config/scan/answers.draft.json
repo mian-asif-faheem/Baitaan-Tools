@@ -1,0 +1,38 @@
+{
+  "project": {
+    "name": "baitaan-tools",
+    "stack": "html-css"
+  },
+  "colors": {
+    "primary": "#D9B85E",
+    "foreground": "#FAF6EA",
+    "background": "#17130A"
+  },
+  "typography": {
+    "heading_font": "inherit",
+    "body_font": "IBM Plex Sans Variable",
+    "base_size": 16,
+    "overrides": {
+      "h2": {
+        "desktop": 24
+      },
+      "h3": {
+        "desktop": 18
+      }
+    }
+  },
+  "spacing": {
+    "base_unit": 4,
+    "card_padding": 16,
+    "grid_gap": 16,
+    "heading_gap_before": 8
+  },
+  "shape": {
+    "preset": "round",
+    "button_radius": "full"
+  },
+  "components": {
+    "button_height": 44,
+    "input_height": 44
+  }
+}
