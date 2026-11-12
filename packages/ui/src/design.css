@@ -115,13 +115,14 @@ main > .bt-hero:first-child {
   margin-bottom: clamp(32px, 4vw, 48px);
 }
 .bt-navbar {
-  /* Frosted glass: 70% opaque plus blur in light mode (the floor for AA contrast over a white
-     page), 58% in dark mode where the page behind is already dark. */
-  --bar: color-mix(in oklab, color-mix(in oklab, var(--primary) 14%, #141417) 70%, transparent);
-  --bar-ink: #f4f4f5;
-  --bar-dim: rgb(244 244 245 / 0.72);
-  --bar-fill: rgb(255 255 255 / 0.07);
-  --bar-line: rgb(255 255 255 / 0.1);
+  /* Light mode: the footer card's soft tint (same mix as --foot-card) as frosted glass, with
+     dark text. Dark mode (below): the tinted charcoal of the dark footer. */
+  --bar-solid: color-mix(in oklab, var(--primary) 5%, var(--band));
+  --bar: color-mix(in oklab, var(--bar-solid) 72%, transparent);
+  --bar-ink: var(--text);
+  --bar-dim: var(--muted);
+  --bar-fill: color-mix(in oklab, var(--card) 70%, transparent);
+  --bar-line: var(--hair);
   pointer-events: auto;
   max-width: 1080px; /* = the 1120px content container minus its 20px gutters */
   margin-inline: auto;
@@ -133,22 +134,28 @@ main > .bt-hero:first-child {
   padding: 8px 8px 8px 14px;
   border-radius: 18px;
   background: var(--bar);
-  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.7);
   backdrop-filter: blur(20px) saturate(1.7);
   color: var(--bar-ink);
   border: 1px solid var(--bar-line);
-  box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.45);
+  box-shadow: 0 12px 32px -16px rgb(0 0 0 / 0.18);
 }
 :root[dir="rtl"] .bt-navbar {
   padding: 8px 14px 8px 8px;
 }
 html.dark .bt-navbar {
-  --bar: color-mix(in oklab, color-mix(in oklab, var(--primary) 9%, #1d1d21) 58%, transparent);
+  --bar-solid: color-mix(in oklab, var(--primary) 9%, #1d1d21);
+  --bar: color-mix(in oklab, var(--bar-solid) 58%, transparent);
+  --bar-ink: #f4f4f5;
+  --bar-dim: rgb(244 244 245 / 0.72);
+  --bar-fill: rgb(255 255 255 / 0.07);
+  --bar-line: rgb(255 255 255 / 0.1);
   box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.7);
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .bt-navbar {
-    --bar: color-mix(in oklab, var(--primary) 14%, #141417);
+  .bt-navbar,
+  html.dark .bt-navbar {
+    --bar: var(--bar-solid);
   }
 }
 .bt-navbar.has-menu {
