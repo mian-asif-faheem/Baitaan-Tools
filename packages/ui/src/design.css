@@ -196,7 +196,6 @@ html.dark .bt-theme-icon {
 }
 .bt-word {
   display: inline-block;
-  margin-inline-end: 0.24em;
   animation: bt-blur 600ms var(--ease) both;
 }
 

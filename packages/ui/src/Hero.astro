@@ -21,7 +21,9 @@ const words = title.split(" ");
   <div class="mx-auto flex max-w-[1120px] flex-col items-start gap-4 px-5 pt-[clamp(36px,8vw,80px)] pb-[clamp(32px,5vw,56px)]">
     <h1 class="m-0 max-w-[13ch] text-[clamp(38px,10vw,72px)] leading-[1.08] font-[650] text-ink" style="letter-spacing:var(--ls-big)">
       {words.map((w, i) => (
-        <span class="bt-word" style={`animation-delay:${Math.min(i, 10) * 50}ms`}>{w}</span>
+        <>
+          <span class="bt-word" style={`animation-delay:${Math.min(i, 10) * 50}ms`}>{w}</span>{i < words.length - 1 && " "}
+        </>
       ))}
     </h1>
     <p class="m-0 max-w-[52ch] text-[clamp(17px,2vw,20px)] text-muted text-pretty">{lead}</p>
