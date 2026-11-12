@@ -115,8 +115,9 @@ main > .bt-hero:first-child {
   margin-bottom: clamp(32px, 4vw, 48px);
 }
 .bt-navbar {
-  /* Frosted glass: about 60% opaque plus blur, so text stays readable over anything. */
-  --bar: color-mix(in oklab, color-mix(in oklab, var(--primary) 14%, #141417) 62%, transparent);
+  /* Frosted glass: 70% opaque plus blur in light mode (the floor for AA contrast over a white
+     page), 58% in dark mode where the page behind is already dark. */
+  --bar: color-mix(in oklab, color-mix(in oklab, var(--primary) 14%, #141417) 70%, transparent);
   --bar-ink: #f4f4f5;
   --bar-dim: rgb(244 244 245 / 0.72);
   --bar-fill: rgb(255 255 255 / 0.07);
@@ -213,7 +214,7 @@ html.dark .bt-navbar {
   padding: 0 14px;
   border-radius: 999px;
   color: var(--bar-ink);
-  opacity: 0.84;
+  opacity: 0.9;
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
