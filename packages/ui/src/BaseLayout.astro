@@ -40,6 +40,9 @@ export interface Chrome {
   tools?: string;
   example?: string;
   adLabel?: string;
+  /** Line under FAQ headings: "Didn't find your answer?" + link text "Write to us". */
+  faqMore?: string;
+  faqAsk?: string;
   /** Footer column titles. */
   footer?: FooterStrings;
 }
@@ -50,6 +53,8 @@ export interface ShellContext {
   nav: { href: string; label: string }[];
   homeHref: string;
   dir: "ltr" | "rtl";
+  /** Where "talk to us" links go (the footer's contact link). */
+  contact?: string;
 }
 
 interface Props {
@@ -103,7 +108,8 @@ const others = versions.filter((v) => v.code !== code);
 const xDefault = versions[0];
 const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-XXXXXXXXXXXXXXXX
 const here = Astro.url.pathname;
-(Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir };
+const contact = footer.find((f) => /^mailto:|\/contact/.test(f.href))?.href;
+(Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir, contact };
 const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href })), redirect: langRedirect };
 ---
 <!doctype html>
@@ -294,21 +300,6 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
             }
           });
         }
-
-        // ?ads=preview shows where ads will go (placeholders), for this tab only; ?ads=off hides them.
-        try {
-          var q = new URLSearchParams(location.search).get("ads");
-          if (q === "preview") sessionStorage.setItem("bt_adpreview", "1");
-          if (q === "off") sessionStorage.removeItem("bt_adpreview");
-          if (sessionStorage.getItem("bt_adpreview")) {
-            document.querySelectorAll("[data-bt-ad-preview]").forEach(function (el) { el.hidden = false; });
-            var pill = document.createElement("a");
-            pill.className = "bt-adpreview-pill";
-            pill.href = "?ads=off";
-            pill.textContent = "Ad preview on · hide";
-            document.body.appendChild(pill);
-          }
-        } catch (e) {}
 
         // Language links remember the choice.
         document.querySelectorAll("[data-bt-lang]").forEach(function (a) {

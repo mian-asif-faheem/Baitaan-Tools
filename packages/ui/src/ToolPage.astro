@@ -3,6 +3,8 @@
  * Standard tool page (Claude Design board 3): breadcrumb, heading, lead and trust chips over a
  * soft glow; then the tool, the guide (slot="guide") and the sources card.
  * FAQ entries in the guide are <details class="bt-faq"><summary>…</summary><p>…</p></details>.
+ * A heading followed by FAQ entries becomes one FAQ block (layout after React Bits Pro "FAQ 5",
+ * rebuilt in this project's own styles): centred heading, a "write to us" line, question cards.
  */
 import Icon from "./Icon.astro";
 import * as I from "./icons";
@@ -17,7 +19,19 @@ interface Props {
   sourcesHeading?: string;
 }
 const { heading, lead, updated, sources = [], sourcesHeading = "Fuentes" } = Astro.props;
-const { chrome, nav, homeHref } = shell(Astro.locals);
+const guideHtml = Astro.slots.has("guide") ? await Astro.slots.render("guide") : "";
+const { chrome, nav, homeHref, contact } = shell(Astro.locals);
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const faqHead = (h: string) =>
+  `<header class="bt-faqs__head"><h2>${h}</h2>` +
+  (chrome.faqMore && chrome.faqAsk && contact
+    ? `<p>${esc(chrome.faqMore)} <a href="${esc(contact)}">${esc(chrome.faqAsk)}<span class="bt-faqs__arrow" aria-hidden="true"></span></a></p>`
+    : "") +
+  `</header>`;
+const guide = guideHtml.replace(
+  /<h2(?:\s[^>]*)?>((?:(?!<\/h2>)[\s\S])*)<\/h2>\s*((?:<details class="bt-faq"[\s\S]*?<\/details>\s*)+)/g,
+  (_m: string, h: string, items: string) => `<section class="bt-faqs">${faqHead(h)}<div class="bt-faqs__list">${items}</div></section>`,
+);
 const here = Astro.url.pathname;
 const crumb = nav.find((n) => n.href === here)?.label;
 ---
@@ -53,7 +67,7 @@ const crumb = nav.find((n) => n.href === here)?.label;
   <AdSlot unit="0000000000" />
 
   <article class="bt-guide pt-2">
-    <slot name="guide" />
+    <Fragment set:html={guide} />
   </article>
 
   {sources.length > 0 && (

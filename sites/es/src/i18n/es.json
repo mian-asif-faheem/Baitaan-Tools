@@ -183,6 +183,8 @@
       "tools": "Herramientas",
       "site": "Sitio",
       "languages": "Otros idiomas"
-    }
+    },
+    "faqMore": "¿No encuentras tu respuesta?",
+    "faqAsk": "Escríbenos"
   }
 }

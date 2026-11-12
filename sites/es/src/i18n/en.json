@@ -183,6 +183,8 @@
       "tools": "Tools",
       "site": "Site",
       "languages": "Other languages"
-    }
+    },
+    "faqMore": "Didn't find your answer?",
+    "faqAsk": "Write to us"
   }
 }

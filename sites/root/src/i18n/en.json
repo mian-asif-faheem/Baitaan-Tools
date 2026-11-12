@@ -34,6 +34,8 @@
       "tools": "Tools",
       "site": "Site",
       "languages": "Languages"
-    }
+    },
+    "faqMore": "Didn't find your answer?",
+    "faqAsk": "Write to us"
   }
 }

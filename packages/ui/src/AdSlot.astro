@@ -3,10 +3,9 @@
  * One AdSense unit, set apart from the tool by space and a label (never inside a tool or next
  * to its buttons). Renders the real unit only when PUBLIC_ADSENSE_CLIENT is set.
  *
- * Until then it renders a hidden placeholder of the size the ad will take. Open any page with
- * ?ads=preview to show the placeholders (kept for the browser tab; ?ads=off hides them again).
- * Visitors never see them. The real unit reserves the same height so the page doesn't jump
- * when the ad loads.
+ * Until then it shows a placeholder box of the size the ad will take, so the layout can be judged
+ * on the live sites. Set the build variable PUBLIC_AD_PLACEHOLDERS=off to hide the boxes.
+ * The real unit reserves the same height so the page doesn't jump when the ad loads.
  */
 import { shell } from "./shell";
 
@@ -23,6 +22,7 @@ const { unit, kind = "content", label } = Astro.props;
 const { chrome } = shell(Astro.locals);
 const text = label ?? chrome.adLabel ?? "Advertisement";
 const client = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const placeholders = import.meta.env.PUBLIC_AD_PLACEHOLDERS !== "off";
 ---
 {client ? (
   <aside class={`bt-ad bt-ad--${kind}`} aria-label={text}>
@@ -37,8 +37,8 @@ const client = import.meta.env.PUBLIC_ADSENSE_CLIENT;
     ></ins>
     <script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
   </aside>
-) : (
-  <aside class={`bt-ad bt-ad--${kind}`} data-bt-ad-preview hidden aria-hidden="true">
+) : placeholders && (
+  <aside class={`bt-ad bt-ad--${kind}`} data-bt-ad-placeholder aria-hidden="true">
     <span class="bt-ad__label">{text}</span>
     <div class="bt-ad__unit bt-ad__mock">
       <span>{kind === "banner" ? "Ad · 970 × 90 (phone: 300 × 250)" : "Ad · up to 728 × 280 (phone: 336 × 280)"}</span>

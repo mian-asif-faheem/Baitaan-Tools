@@ -18,6 +18,7 @@
 #   FTP_PORT       default 21
 #   FTP_SECURITY   default strict (set loose only if FTPS fails with a certificate error)
 #   PUBLIC_ADSENSE_CLIENT   ca-pub-… once AdSense approves the site; empty means no ads
+#   PUBLIC_AD_PLACEHOLDERS  "off" hides the grey ad-place boxes shown while there are no real ads
 #
 # Until the secrets and folder variables exist, the workflow still builds and tests, and skips deployment.
 
@@ -69,6 +70,7 @@ jobs:
         env:
           # Ads stay off until this repository variable is set (after AdSense approval).
           PUBLIC_ADSENSE_CLIENT: ${{ vars.PUBLIC_ADSENSE_CLIENT }}
+          PUBLIC_AD_PLACEHOLDERS: ${{ vars.PUBLIC_AD_PLACEHOLDERS }}
 
       - name: Check build output
         run: |

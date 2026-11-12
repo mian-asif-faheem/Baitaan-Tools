@@ -825,8 +825,7 @@ input.bt-switch:disabled {
 .bt-more > summary::-webkit-details-marker {
   display: none;
 }
-.bt-more > summary::after,
-.bt-faq > summary::after {
+.bt-more > summary::after {
   content: "";
   flex: none;
   width: 14px;
@@ -836,8 +835,7 @@ input.bt-switch:disabled {
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M213.7 101.7l-80 80a8 8 0 0 1-11.4 0l-80-80a8 8 0 0 1 11.4-11.4L128 164.7l74.3-74.4a8 8 0 0 1 11.4 11.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
   transition: transform 200ms var(--ease);
 }
-.bt-more[open] > summary::after,
-.bt-faq[open] > summary::after {
+.bt-more[open] > summary::after {
   transform: rotate(180deg);
 }
 
@@ -978,36 +976,159 @@ li,
 .bt-guide table tr {
   border-color: var(--hair);
 }
+/* ── FAQ block (layout after React Bits Pro "FAQ 5", in this project's tokens) ──
+   Centred heading with a "write to us" line, then one rounded card per question.
+   The +/− is two bars: the vertical one turns flat when the card opens. */
+.bt-faqs {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.bt-faqs__head {
+  text-align: center;
+}
+.bt-guide .bt-faqs__head h2 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.bt-faqs__head p {
+  margin: 8px auto 0;
+  max-width: none;
+  color: var(--muted);
+}
+.bt-faqs__head a {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bt-faqs__head a:hover {
+  color: var(--link);
+}
+.bt-faqs__arrow {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-inline-start: 4px;
+  vertical-align: -1px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+:root[dir="rtl"] .bt-faqs__arrow {
+  transform: scaleX(-1);
+}
+.bt-faqs__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 .bt-faq {
-  border-bottom: 1px solid var(--hair);
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--hair);
   font-size: 16px;
-  max-width: 60ch;
+  transition: border-color 200ms var(--ease);
 }
-h2 + .bt-faq,
-.bt-guide > :not(.bt-faq) + .bt-faq {
-  border-top: 1px solid var(--hair);
+.bt-guide .bt-faq,
+:root[dir="rtl"] .bt-guide .bt-faq {
+  max-width: none;
 }
-.bt-guide > .bt-faq + .bt-faq {
-  margin-top: -12px;
+.bt-faq:hover,
+.bt-faq[open] {
+  border-color: var(--border);
 }
 .bt-faq > summary {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
   min-height: 56px;
-  padding: 14px 0;
+  padding: 16px 56px 16px 24px;
   list-style: none;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
+  border-radius: 16px;
+}
+:root[dir="rtl"] .bt-faq > summary {
+  padding: 16px 24px 16px 56px;
 }
 .bt-faq > summary::-webkit-details-marker {
   display: none;
 }
+.bt-faq > summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.bt-faq > summary::before,
+.bt-faq > summary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 24px;
+  width: 14px;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+  background: var(--muted);
+  transition: transform 240ms var(--ease);
+}
+.bt-faq > summary::before {
+  transform: rotate(90deg);
+}
+.bt-faq[open] > summary::before {
+  transform: rotate(0deg);
+}
 .bt-faq > p {
   margin: 0;
-  padding: 0 0 16px;
+  padding: 0 24px 20px;
   color: var(--muted);
+}
+/* Links inside answers: small pills with an arrow. */
+.bt-faq > p a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: 4px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: var(--track);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms var(--ease);
+}
+.bt-faq > p a::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10M7 17 17 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10M7 17 17 7'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+:root[dir="rtl"] .bt-faq > p a::after {
+  transform: scaleX(-1);
+}
+.bt-faq > p a:hover {
+  background: var(--tint);
+}
+/* Smooth open/close where the browser can animate to auto height. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  .bt-faq::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 260ms var(--ease), content-visibility 260ms allow-discrete;
+  }
+  .bt-faq[open]::details-content {
+    block-size: auto;
+  }
 }
 .bt-sources {
   display: flex;
@@ -1080,7 +1201,7 @@ h2 + .bt-faq,
   padding: 12px;
   border-radius: 12px;
   border: 1px dashed var(--border);
-  background: repeating-linear-gradient(135deg, var(--track) 0 12px, transparent 12px 24px);
+  background: color-mix(in oklab, var(--track) 70%, transparent);
   color: var(--muted);
   font-size: 13px;
   text-align: center;
