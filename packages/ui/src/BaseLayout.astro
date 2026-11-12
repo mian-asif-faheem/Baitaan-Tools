@@ -295,6 +295,21 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
           });
         }
 
+        // ?ads=preview shows where ads will go (placeholders), for this tab only; ?ads=off hides them.
+        try {
+          var q = new URLSearchParams(location.search).get("ads");
+          if (q === "preview") sessionStorage.setItem("bt_adpreview", "1");
+          if (q === "off") sessionStorage.removeItem("bt_adpreview");
+          if (sessionStorage.getItem("bt_adpreview")) {
+            document.querySelectorAll("[data-bt-ad-preview]").forEach(function (el) { el.hidden = false; });
+            var pill = document.createElement("a");
+            pill.className = "bt-adpreview-pill";
+            pill.href = "?ads=off";
+            pill.textContent = "Ad preview on · hide";
+            document.body.appendChild(pill);
+          }
+        } catch (e) {}
+
         // Language links remember the choice.
         document.querySelectorAll("[data-bt-lang]").forEach(function (a) {
           a.addEventListener("click", function () {

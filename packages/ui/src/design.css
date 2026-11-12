@@ -1033,17 +1033,74 @@ h2 + .bt-faq,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 16px 0;
   margin: 12px 0;
   border-top: 1px solid var(--hair);
   border-bottom: 1px solid var(--hair);
+}
+.bt-ad[hidden] {
+  display: none;
 }
 .bt-ad__label {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+}
+/* Space reserved for the unit (no layout jump when the ad arrives). */
+.bt-ad__unit {
+  width: 100%;
+  min-height: 280px;
+}
+.bt-ad--content .bt-ad__unit {
+  max-width: 728px;
+}
+.bt-ad--banner .bt-ad__unit {
+  max-width: 970px;
+  min-height: 250px;
+}
+@media (min-width: 768px) {
+  .bt-ad--banner .bt-ad__unit {
+    min-height: 90px;
+  }
+}
+@media (max-width: 480px) {
+  .bt-ad--content .bt-ad__unit {
+    max-width: 336px;
+  }
+  .bt-ad--banner .bt-ad__unit {
+    max-width: 300px;
+  }
+}
+/* ?ads=preview: grey stand-ins with the size each unit will take. */
+.bt-ad__mock {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+  background: repeating-linear-gradient(135deg, var(--track) 0 12px, transparent 12px 24px);
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+.bt-adpreview-pill {
+  position: fixed;
+  inset-inline-start: 16px;
+  bottom: 16px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 /* ── Drop zone and progress (PDF / photo tools) ─────────── */

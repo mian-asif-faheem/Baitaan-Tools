@@ -124,7 +124,11 @@ Each site has the same `public/.htaccess` (keep the four copies identical): HTTP
 
 Ads render nothing until this is set. After AdSense approves `baitaandessigns.com`, add a **repository variable** `PUBLIC_ADSENSE_CLIENT` = `ca-pub-XXXXXXXXXXXXXXXX` in GitHub and re-run the workflow.
 
-Then replace each `<AdSlot slot="0000000000" />` with real ad unit IDs. Turn on Google's consent message (AdSense → Privacy & messaging) for EU and UK visitors.
+Then replace each `unit="0000000000"` with real ad unit IDs: `ToolPage.astro` (below every tool), `ToolGrid.astro` (between the groups on home pages) and the `<AdSlot unit=…>` in each page's guide. Turn on Google's consent message (AdSense → Privacy & messaging) for EU and UK visitors.
+
+**Preview the ad places before approval:** open any page with `?ads=preview`. Grey boxes show where each ad goes and the space it takes (reserved, so the page doesn't jump when ads load). It stays on in that browser tab; `?ads=off` or the "hide" button turns it off. Visitors never see it.
+
+Note: the prop is `unit`, not `slot`. In Astro, `slot="…"` moves an element into a parent's named slot, which silently dropped ads placed inside guides.
 
 ## Yearly maintenance (every January)
 

@@ -1,26 +1,47 @@
 ---
 /**
- * One AdSense unit, set apart between guide sections (never inside a tool).
- * Renders nothing until PUBLIC_ADSENSE_CLIENT is set, so local and pre-approval builds stay ad-free.
+ * One AdSense unit, set apart from the tool by space and a label (never inside a tool or next
+ * to its buttons). Renders the real unit only when PUBLIC_ADSENSE_CLIENT is set.
+ *
+ * Until then it renders a hidden placeholder of the size the ad will take. Open any page with
+ * ?ads=preview to show the placeholders (kept for the browser tab; ?ads=off hides them again).
+ * Visitors never see them. The real unit reserves the same height so the page doesn't jump
+ * when the ad loads.
  */
+import { shell } from "./shell";
+
 interface Props {
-  slot: string;
+  /** AdSense ad unit ID. (Not `slot`: in Astro that attribute assigns the element to a named slot
+   *  of the parent, which silently dropped every ad placed inside a page's guide.) */
+  unit: string;
+  /** "content": in a reading column (336×280 on phones, up to 728×280 on desktop).
+   *  "banner": across a wide page (300×250 on phones, 970×90 on desktop). */
+  kind?: "content" | "banner";
   label?: string;
 }
-const { slot, label = "Publicidad" } = Astro.props;
+const { unit, kind = "content", label } = Astro.props;
+const { chrome } = shell(Astro.locals);
+const text = label ?? chrome.adLabel ?? "Advertisement";
 const client = import.meta.env.PUBLIC_ADSENSE_CLIENT;
 ---
-{client && (
-  <aside class="bt-ad" aria-label={label}>
-    <span class="bt-ad__label">{label}</span>
+{client ? (
+  <aside class={`bt-ad bt-ad--${kind}`} aria-label={text}>
+    <span class="bt-ad__label">{text}</span>
     <ins
-      class="adsbygoogle block w-full"
+      class="adsbygoogle bt-ad__unit"
       style="display:block"
       data-ad-client={client}
-      data-ad-slot={slot}
+      data-ad-slot={unit}
       data-ad-format="auto"
       data-full-width-responsive="true"
     ></ins>
     <script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </aside>
+) : (
+  <aside class={`bt-ad bt-ad--${kind}`} data-bt-ad-preview hidden aria-hidden="true">
+    <span class="bt-ad__label">{text}</span>
+    <div class="bt-ad__unit bt-ad__mock">
+      <span>{kind === "banner" ? "Ad · 970 × 90 (phone: 300 × 250)" : "Ad · up to 728 × 280 (phone: 336 × 280)"}</span>
+    </div>
   </aside>
 )}
