@@ -1,6 +1,7 @@
 import Counter from "./fx/Counter";
 import type { ComponentChildren } from "preact";
-import { useId } from "preact/hooks";
+import { useEffect, useId, useRef } from "preact/hooks";
+import { rubber, type Rubber } from "./fx/rubber";
 
 /** Class for any text, number, date input or select (52px tall, 16px radius). */
 export const fieldClass = "bt-input mt-1.5";
@@ -68,27 +69,7 @@ export function Toggle<T extends string>(props: {
     (props.variant !== "rows" && n <= 3 && props.options.every((o) => !o.sub && o.label.length <= 14));
   const i = Math.max(0, props.options.findIndex((o) => o.value === props.value));
 
-  if (segmented) {
-    return (
-      <div class={`flex flex-col gap-2 ${props.class ?? ""}`}>
-        <span class="bt-label" id={`${name}-l`}>
-          {props.legend}
-        </span>
-        <div class="bt-seg" role="radiogroup" aria-labelledby={`${name}-l`}>
-          <span
-            class="bt-seg__ind"
-            aria-hidden="true"
-            style={`width: calc((100% - 8px) / ${n}); transform: translateX(${i * 100}%); --i: ${i}`}
-          />
-          {props.options.map((o) => (
-            <button type="button" role="radio" aria-checked={props.value === o.value} onClick={() => props.onChange(o.value)}>
-              {o.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  if (segmented) return <Segmented {...props} name={name} i={i} />;
 
   return (
     <fieldset class={`m-0 flex min-w-0 flex-col gap-2 border-0 p-0 ${props.class ?? ""}`}>
@@ -104,6 +85,62 @@ export function Toggle<T extends string>(props: {
         </label>
       ))}
     </fieldset>
+  );
+}
+
+/** Two or three options with the rubber highlight from React Bits' RubberSegment (fx/rubber.ts). */
+function Segmented<T extends string>(props: {
+  legend: string;
+  value: T;
+  options: { value: T; label: string }[];
+  onChange: (v: T) => void;
+  class?: string;
+  name: string;
+  i: number;
+}) {
+  const track = useRef<HTMLDivElement>(null);
+  const r = useRef<Rubber | null>(null);
+  useEffect(() => {
+    r.current = rubber(track.current!);
+    return () => r.current?.destroy();
+  }, []);
+  useEffect(() => r.current?.go(props.i), [props.i]);
+  const keys = (e: KeyboardEvent) => {
+    const n = props.options.length;
+    const rtl = getComputedStyle(e.currentTarget as Element).direction === "rtl";
+    const fwd = e.key === "ArrowDown" || e.key === (rtl ? "ArrowLeft" : "ArrowRight");
+    const back = e.key === "ArrowUp" || e.key === (rtl ? "ArrowRight" : "ArrowLeft");
+    if (!fwd && !back) return;
+    e.preventDefault();
+    const next = (props.i + (fwd ? 1 : n - 1)) % n;
+    props.onChange(props.options[next].value);
+    (track.current?.querySelectorAll<HTMLElement>("[data-rs-item]")[next])?.focus();
+  };
+  return (
+    <div class={`flex flex-col gap-2 ${props.class ?? ""}`}>
+      <span class="bt-label" id={`${props.name}-l`}>
+        {props.legend}
+      </span>
+      <div class="bt-seg" role="radiogroup" aria-labelledby={`${props.name}-l`} ref={track} onKeyDown={keys}>
+        {props.options.map((o) => (
+          <button
+            type="button"
+            role="radio"
+            data-rs-item
+            aria-checked={props.value === o.value}
+            tabIndex={props.value === o.value ? 0 : -1}
+            onClick={() => props.onChange(o.value)}
+          >
+            {o.label}
+          </button>
+        ))}
+        <span class="bt-seg__thumb" data-rs-thumb aria-hidden="true">
+          {props.options.map((o) => (
+            <span>{o.label}</span>
+          ))}
+        </span>
+      </div>
+    </div>
   );
 }
 

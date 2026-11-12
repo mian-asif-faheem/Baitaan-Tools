@@ -92,15 +92,157 @@ html {
 }
 
 /* ── Glass header ───────────────────────────────────────── */
+/* ── Floating header bar ────────────────────────────────
+   A dark rounded bar that floats a little below the top edge and stays there on scroll
+   (after the React Bits site header). Its colours are its own, the same in both themes,
+   tinted with the site colour. */
 .bt-header {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: var(--header);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  border-bottom: 1px solid var(--hair);
+  padding: 12px 12px 0;
+  pointer-events: none;
 }
+/* On pages that open with a hero band, the band runs up behind the floating bar.
+   --hh is the header's height, kept up to date by fx/rubber.ts. */
+body:has(main > .bt-hero:first-child) .bt-header {
+  margin-bottom: calc(var(--hh, 0px) * -1);
+}
+main > .bt-hero:first-child {
+  border-top: var(--hh, 0px) solid transparent;
+}
+.bt-navbar {
+  --bar: color-mix(in oklab, var(--primary) 14%, #141417);
+  --bar-ink: #f4f4f5;
+  --bar-dim: rgb(244 244 245 / 0.72);
+  --bar-fill: rgb(255 255 255 / 0.07);
+  --bar-line: rgb(255 255 255 / 0.1);
+  pointer-events: auto;
+  max-width: 1120px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, auto) 1fr auto;
+  grid-template-areas: "brand . end";
+  align-items: center;
+  column-gap: 12px;
+  padding: 8px 8px 8px 14px;
+  border-radius: 18px;
+  background: var(--bar);
+  color: var(--bar-ink);
+  border: 1px solid var(--bar-line);
+  box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.45);
+}
+:root[dir="rtl"] .bt-navbar {
+  padding: 8px 14px 8px 8px;
+}
+html.dark .bt-navbar {
+  --bar: color-mix(in oklab, var(--primary) 9%, #1d1d21);
+  box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.7);
+}
+.bt-navbar.has-menu {
+  grid-template-areas: "brand . end" "menu menu menu";
+  row-gap: 6px;
+}
+@media (min-width: 1024px) {
+  .bt-navbar.has-menu {
+    grid-template-columns: auto auto 1fr auto;
+    grid-template-areas: "brand sep menu end";
+  }
+}
+.bt-brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 44px;
+  color: var(--bar-ink);
+  font-weight: 650;
+  letter-spacing: var(--ls);
+  text-decoration: none;
+}
+.bt-sep {
+  grid-area: sep;
+  display: none;
+  color: var(--bar-dim);
+  font-size: 20px;
+  font-weight: 300;
+}
+@media (min-width: 1024px) {
+  .bt-sep {
+    display: block;
+  }
+}
+.bt-navbar__end {
+  grid-area: end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Menu with the rubber highlight (fx/rubber.ts). The thumb is a clipped copy of the items. */
+.bt-menu {
+  grid-area: menu;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bt-menu::-webkit-scrollbar {
+  display: none;
+}
+.bt-menu__track {
+  position: relative;
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  vertical-align: middle;
+}
+.bt-menu__item {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: var(--bar-ink);
+  opacity: 0.72;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: opacity 160ms ease, transform 160ms var(--ease);
+}
+a.bt-menu__item:active {
+  transform: scale(0.96);
+}
+a.bt-menu__item[aria-current="page"] {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  a.bt-menu__item:hover {
+    opacity: 1;
+  }
+}
+a.bt-menu__item:focus-visible {
+  outline: 2px solid var(--bar-ink);
+  outline-offset: -2px;
+}
+.bt-menu__thumb {
+  position: absolute;
+  inset: 3px;
+  display: flex;
+  gap: 2px;
+  background: var(--primary);
+  border-radius: 999px;
+  pointer-events: none;
+  /* Before the script runs: no highlight (it is drawn by clip-path). */
+  clip-path: inset(0 50% 0 50%);
+}
+.bt-menu__thumb > .bt-menu__item {
+  color: var(--on-primary);
+  opacity: 1;
+}
+
 .bt-badge {
   width: 28px;
   height: 28px;
@@ -117,14 +259,14 @@ html {
 .bt-icon-btn {
   width: 44px;
   height: 44px;
-  border-radius: 999px;
-  border: 1px solid var(--hair);
-  background: var(--card);
-  color: var(--text);
+  border-radius: 12px;
+  border: 1px solid var(--bar-line, var(--hair));
+  background: var(--bar-fill, var(--card));
+  color: var(--bar-ink, var(--text));
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: border-color 200ms var(--ease);
+  transition: background-color 200ms var(--ease), border-color 200ms var(--ease);
 }
 .bt-icon-btn:hover,
 .bt-lang:hover {
@@ -133,33 +275,23 @@ html {
 .bt-lang {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   min-height: 44px;
   padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid var(--hair);
-  background: var(--card);
-  color: var(--text);
+  border-radius: 12px;
+  border: 1px solid var(--bar-line, var(--hair));
+  background: var(--bar-fill, var(--card));
+  color: var(--bar-ink, var(--text));
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: border-color 200ms var(--ease);
+  transition: background-color 200ms var(--ease), border-color 200ms var(--ease);
 }
 .bt-theme-icon {
   transition: transform 200ms var(--ease);
 }
 html.dark .bt-theme-icon {
   transform: rotate(90deg);
-}
-.bt-tabs {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding: 6px 16px 10px;
-}
-.bt-tabs::-webkit-scrollbar {
-  display: none;
 }
 .bt-tab {
   flex: none;
@@ -471,21 +603,27 @@ input[type="date"].bt-input {
   border: 1px solid var(--hair);
   max-width: 360px;
 }
-.bt-seg__ind {
+/* Highlight: a clipped copy of the labels in the accent colour, moved by fx/rubber.ts. */
+.bt-seg__thumb {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
-  inset-inline-start: 4px;
+  inset: 4px;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
   border-radius: 999px;
   background: var(--primary);
-  transition: transform 200ms var(--ease);
+  color: var(--on-primary);
+  pointer-events: none;
+  clip-path: inset(0 50% 0 50%);
 }
-:root[dir="rtl"] .bt-seg__ind {
-  transform: translateX(calc(var(--i, 0) * -100%)) !important;
+.bt-seg__thumb > span {
+  display: grid;
+  place-items: center;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 500;
 }
 .bt-seg button {
-  position: relative;
-  z-index: 1;
   min-height: 40px;
   border: 0;
   background: none;
@@ -496,11 +634,10 @@ input[type="date"].bt-input {
   font-weight: 500;
   cursor: pointer;
   padding: 0 12px;
-  transition: color 200ms var(--ease);
+  transition: transform 160ms var(--ease);
 }
-.bt-seg button[aria-checked="true"] {
-  color: var(--on-primary);
-  font-weight: 600;
+.bt-seg button:active {
+  transform: scale(0.96);
 }
 
 /* Radio rows (large selectable cards) */

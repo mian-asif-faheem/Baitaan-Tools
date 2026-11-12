@@ -176,38 +176,46 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
   </head>
   <body class="min-h-screen">
     <header class="bt-header">
-      <div class="mx-auto flex max-w-[1120px] items-center gap-2 px-4 py-2">
-        <a href={homeHref} class="me-auto flex min-h-11 items-center gap-2.5 font-[650] text-ink no-underline" style="letter-spacing:var(--ls)">
+      <div class:list={["bt-navbar", nav.length > 0 && "has-menu"]}>
+        <a href={homeHref} class="bt-brand">
           <span class="bt-badge" aria-hidden="true">B</span>
-          <span>{brand ?? s.name}</span>
+          <span class="truncate">{brand ?? s.name}</span>
         </a>
-        {others.map((v) => (
-          <a
-            href={v.href}
-            hreflang={v.hreflang}
-            lang={v.hreflang}
-            data-bt-lang={v.code}
-            class="bt-lang"
-            aria-label={`${chrome.languageLabel}: ${v.label}`}
-          >
-            <Icon d={I.globe} size={17} />
-            {v.label}
-          </a>
-        ))}
-        <button type="button" data-bt-theme class="bt-icon-btn" aria-label={chrome.themeToggle} title={chrome.themeToggle}>
-          <span class="bt-theme-icon grid place-items-center">
-            <Icon d={I.moon} size={20} class="dark:hidden" />
-            <Icon d={I.sun} size={20} class="hidden dark:block" />
-          </span>
-        </button>
-      </div>
-      {nav.length > 0 && (
-        <nav class="bt-tabs mx-auto max-w-[1120px]" aria-label={brand ?? s.name}>
-          {nav.map((n) => (
-            <a class="bt-tab" href={n.href} aria-current={here === n.href ? "page" : undefined}>{n.label}</a>
+        {nav.length > 0 && <span class="bt-sep" aria-hidden="true">/</span>}
+        {nav.length > 0 && (
+          <nav class="bt-menu" aria-label={brand ?? s.name}>
+            <div class="bt-menu__track" data-rs-nav>
+              {nav.map((n) => (
+                <a class="bt-menu__item" data-rs-item href={n.href} aria-current={here === n.href ? "page" : undefined}>{n.label}</a>
+              ))}
+              <span class="bt-menu__thumb" data-rs-thumb aria-hidden="true">
+                {nav.map((n) => <span class="bt-menu__item">{n.label}</span>)}
+              </span>
+            </div>
+          </nav>
+        )}
+        <div class="bt-navbar__end">
+          {others.map((v) => (
+            <a
+              href={v.href}
+              hreflang={v.hreflang}
+              lang={v.hreflang}
+              data-bt-lang={v.code}
+              class="bt-lang"
+              aria-label={`${chrome.languageLabel}: ${v.label}`}
+            >
+              <Icon d={I.globe} size={17} />
+              {v.label}
+            </a>
           ))}
-        </nav>
-      )}
+          <button type="button" data-bt-theme class="bt-icon-btn" aria-label={chrome.themeToggle} title={chrome.themeToggle}>
+            <span class="bt-theme-icon grid place-items-center">
+              <Icon d={I.moon} size={19} class="dark:hidden" />
+              <Icon d={I.sun} size={19} class="hidden dark:block" />
+            </span>
+          </button>
+        </div>
+      </div>
     </header>
     {bleed ? (
       <main><slot /></main>
@@ -227,6 +235,11 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
     </footer>
 
     <ConsentBanner t={chrome.consent} />
+
+    <script>
+      import { rubberNavAll } from "./fx/rubber";
+      rubberNavAll();
+    </script>
 
     <script is:inline>
       (function () {
