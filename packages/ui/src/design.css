@@ -1202,6 +1202,9 @@ li,
   }
   .bt-page__side .bt-ad--side {
     display: flex;
+    /* Stays in view just under the floating header while the page scrolls. */
+    position: sticky;
+    top: calc(var(--hh, 88px) + 16px);
   }
 }
 .bt-side-card {

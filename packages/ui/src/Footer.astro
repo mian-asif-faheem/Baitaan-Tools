@@ -211,45 +211,63 @@ const tile = Array.from({ length: 16 }, (_, i) => {
   fit();
   document.fonts?.ready.then(fit);
 
-  // Entrance, once, when the footer scrolls into view: the card's background, then its text
-  // (row by row), then the big word rising from the bottom of the card. Skipped when the footer
-  // is already on screen at load, without IntersectionObserver, and under "reduce motion".
+  // Entrance, every time the footer scrolls into view: the card's background fades in, then each
+  // piece of text rises from below with a fade (logo, tagline, newsletter, each column, the legal
+  // line), then the big word rises from the card's bottom edge. When the footer goes back below the
+  // screen it resets, so scrolling down to it again plays it again. Off under "reduce motion".
   const enter = () => {
     const card = document.querySelector<HTMLElement>(".bt-foot__card");
     if (!card || matchMedia("(prefers-reduced-motion: reduce)").matches || typeof IntersectionObserver !== "function") return;
-    if (card.getBoundingClientRect().top < innerHeight) return;
     const ease = "cubic-bezier(0.215, 0.61, 0.355, 1)";
-    const rows = [
-      card.querySelector(".bt-foot__brand"),
+    const items = [
+      card.querySelector(".bt-foot__logo"),
+      card.querySelector(".bt-foot__brand > p"),
+      card.querySelector(".bt-news"),
       ...card.querySelectorAll(".bt-foot__col"),
       card.querySelector(".bt-foot__legal"),
     ].filter(Boolean) as HTMLElement[];
     const art = card.querySelector<HTMLElement>(".bt-foot__art svg");
-    const hidden = [card, ...rows, ...(art ? [art] : [])];
-    hidden.forEach((el) => (el.style.opacity = "0"));
+    const all = [card, ...items, ...(art ? [art] : [])];
+    let runs: Animation[] = [];
+    let shown = false;
+
+    const hide = () => {
+      runs.forEach((r) => r.cancel());
+      runs = [];
+      all.forEach((el) => (el.style.opacity = "0"));
+      shown = false;
+    };
     const play = (el: HTMLElement, frames: Keyframe[], delay: number, duration: number) => {
       const run = el.animate(frames, { duration, delay, easing: ease, fill: "both" });
+      runs.push(run);
       run.onfinish = () => {
         el.style.opacity = "";
         run.cancel();
       };
     };
-    const io = new IntersectionObserver(
+    const show = () => {
+      if (shown) return;
+      shown = true;
+      // 1. The card's background.
+      play(card, [{ opacity: 0, transform: "translateY(24px)" }, { opacity: 1, transform: "none" }], 0, 500);
+      // 2. The text, from below, one piece after another.
+      items.forEach((el, i) =>
+        play(el, [{ opacity: 0, transform: "translateY(32px)" }, { opacity: 1, transform: "none" }], 250 + i * 70, 650),
+      );
+      // 3. The big word rises from the bottom edge (the card clips it).
+      if (art) play(art, [{ opacity: 0, transform: "translateY(70%)" }, { opacity: 1, transform: "none" }], 250 + items.length * 70, 900);
+    };
+
+    hide();
+    new IntersectionObserver(
       (seen) => {
-        if (!seen.some((e) => e.isIntersecting)) return;
-        io.disconnect();
-        // 1. The card (its background) fades and lifts in.
-        play(card, [{ opacity: 0, transform: "translateY(24px) scale(0.98)" }, { opacity: 1, transform: "none" }], 0, 600);
-        // 2. Its text comes up from below, one block after another.
-        rows.forEach((el, i) =>
-          play(el, [{ opacity: 0, transform: "translateY(28px)" }, { opacity: 1, transform: "none" }], 300 + i * 80, 600),
-        );
-        // 3. The big word rises from the bottom edge (the card clips it).
-        if (art) play(art, [{ opacity: 0, transform: "translateY(70%)" }, { opacity: 1, transform: "none" }], 300 + rows.length * 80, 900);
+        const e = seen[seen.length - 1];
+        if (e.isIntersecting) show();
+        // Back below the screen: reset, so it plays again next time.
+        else if (e.boundingClientRect.top > 0) hide();
       },
-      { threshold: 0.15 },
-    );
-    io.observe(card);
+      { threshold: 0.12 },
+    ).observe(card);
   };
   enter();
 
