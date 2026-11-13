@@ -1169,8 +1169,6 @@ li,
   gap: 8px;
   padding: 16px 0;
   margin: 12px 0;
-  border-top: 1px solid var(--hair);
-  border-bottom: 1px solid var(--hair);
 }
 /* ── Tool page: content column + sidebar ──────────────────
    The page uses the same 1080px frame as the header and footer, so the content starts at
