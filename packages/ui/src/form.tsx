@@ -164,13 +164,16 @@ export function Result(props: {
   format?: (n: number) => string;
   /** One line under the number, e.g. "3 años y 9 meses trabajados". */
   sub?: string;
+  /** Text direction of the value. Numbers and amounts stay "ltr" (the default); a value that is
+   *  words, such as an Arabic date, needs "rtl" or "auto" so its parts keep their order. */
+  valueDir?: "ltr" | "rtl" | "auto";
   children?: ComponentChildren;
   class?: string;
 }) {
   return (
     <output class={`bt-result ${props.class ?? ""}`} aria-live="polite">
       <span class="bt-result__label">{props.label}</span>
-      <bdi dir="ltr" class="bt-result__value">
+      <bdi dir={props.valueDir ?? "ltr"} class="bt-result__value">
         {props.value !== undefined && props.format ? <Counter text={props.format(props.value)} /> : props.amount}
       </bdi>
       {props.sub && <span class="bt-result__sub">{props.sub}</span>}

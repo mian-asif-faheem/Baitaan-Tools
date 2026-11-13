@@ -14,8 +14,9 @@ interface Props {
    *  of the parent, which silently dropped every ad placed inside a page's guide.) */
   unit: string;
   /** "content": in a reading column (336×280 on phones, up to 728×280 on desktop).
-   *  "banner": across a wide page (300×250 on phones, 970×90 on desktop). */
-  kind?: "content" | "banner";
+   *  "banner": across a wide page (300×250 on phones, 970×90 on desktop).
+   *  "side": the tool-page sidebar (300×600, wide screens only). */
+  kind?: "content" | "banner" | "side";
   label?: string;
 }
 const { unit, kind = "content", label } = Astro.props;
@@ -41,7 +42,7 @@ const placeholders = import.meta.env.PUBLIC_AD_PLACEHOLDERS !== "off";
   <aside class={`bt-ad bt-ad--${kind}`} data-bt-ad-placeholder aria-hidden="true">
     <span class="bt-ad__label">{text}</span>
     <div class="bt-ad__unit bt-ad__mock">
-      <span>{kind === "banner" ? "Ad · 970 × 90 (phone: 300 × 250)" : "Ad · up to 728 × 280 (phone: 336 × 280)"}</span>
+      <span>{kind === "banner" ? "Ad · 970 × 90 (phone: 300 × 250)" : kind === "side" ? "Ad · 300 × 600" : "Ad · up to 728 × 280 (phone: 336 × 280)"}</span>
     </div>
   </aside>
 )}

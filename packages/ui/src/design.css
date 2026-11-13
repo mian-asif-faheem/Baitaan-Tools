@@ -1160,6 +1160,71 @@ li,
   border-top: 1px solid var(--hair);
   border-bottom: 1px solid var(--hair);
 }
+/* ── Tool page: content column + sidebar ──────────────────
+   The page uses the same 1080px frame as the header and footer, so the content starts at
+   the bar's edge. On wide screens a 300px sidebar holds the other tools and one ad. */
+.bt-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 40px;
+}
+.bt-page__main {
+  min-width: 0;
+  max-width: 760px;
+}
+.bt-page__side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.bt-page__side .bt-ad--side {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .bt-page {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    column-gap: 48px;
+  }
+  .bt-page__main {
+    max-width: none;
+  }
+  .bt-page__side {
+    padding-top: 40px;
+  }
+  .bt-page__side .bt-ad--side {
+    display: flex;
+  }
+}
+.bt-side-card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--hair);
+}
+.bt-side-card__title {
+  padding: 12px 12px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.bt-side-card a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 160ms var(--ease);
+}
+.bt-side-card a:hover {
+  background: var(--track);
+}
 .bt-ad[hidden] {
   display: none;
 }
@@ -1194,7 +1259,16 @@ li,
     max-width: 300px;
   }
 }
-/* ?ads=preview: grey stand-ins with the size each unit will take. */
+.bt-ad--side {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.bt-ad--side .bt-ad__unit {
+  max-width: 300px;
+  min-height: 600px;
+}
+/* Grey stand-ins with the size each unit will take. */
 .bt-ad__mock {
   display: grid;
   place-items: center;

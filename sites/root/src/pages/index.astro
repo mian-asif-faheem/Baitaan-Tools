@@ -1,7 +1,7 @@
 ---
 import Hero from "@bt/ui/Hero.astro";
 import Icon from "@bt/ui/Icon.astro";
-import { arrowLeft, arrowRight } from "@bt/ui/icons";
+import { arrowLeft, arrowRight, arrowUpRight, bookOpen, calendarBlank, checkCircle, lockSimple } from "@bt/ui/icons";
 import { SITES } from "@bt/ui/sites";
 import Layout from "../components/Layout.astro";
 
@@ -33,6 +33,47 @@ const langs = [
     style: card(["#0F1F17", "#1E3A2E", "#3E5A3F", "#6B7F67"], "#3E5A3F", "#A8C29F", "#14271E"),
   },
 ];
+
+/** Real screenshots of each tool's answer (sites/root/public/img/tools, 960×600 WebP). */
+const popular = [
+  { img: "finiquito", site: SITES.es, path: "/calculadora-finiquito/", tag: "Español · México", title: "Finiquito y liquidación",
+    desc: "What you are owed when you resign or are dismissed in Mexico, under the Ley Federal del Trabajo.",
+    alt: "Finiquito calculator answer: estimated total of $13,582.19 with its breakdown" },
+  { img: "sueldo-neto", site: SITES.es, path: "/calculadora-sueldo-neto/", tag: "Español · México", title: "Sueldo neto",
+    desc: "Take-home pay in Mexico after ISR and IMSS, with the 2026 tax table and employment subsidy.",
+    alt: "Net salary calculator answer: $13,203.20 a month" },
+  { img: "rescisao", site: SITES.pt, path: "/calculadora-rescisao/", tag: "Português · Brasil", title: "Rescisão trabalhista",
+    desc: "Brazilian severance for each type of dismissal under the CLT, including the 40% FGTS fine.",
+    alt: "Severance calculator answer: R$ 10.887,23 to receive" },
+  { img: "salario-liquido", site: SITES.pt, path: "/calculadora-salario-liquido/", tag: "Português · Brasil", title: "Salário líquido",
+    desc: "Net salary in Brazil after INSS and income tax, with the 2026 tables and the new tax reduction.",
+    alt: "Net salary calculator answer: R$ 4.498,49" },
+  { img: "hijri", site: SITES.ar, path: "/tahweel-altareekh/", tag: "العربية · الخليج", title: "Hijri date converter",
+    desc: "Convert between Hijri (Umm al-Qura) and Gregorian dates in either direction.",
+    alt: "Date converter answer showing a Hijri date" },
+  { img: "end-of-service", site: SITES.ar, path: "/nihayat-alkhidma-saudi/", tag: "العربية · السعودية", title: "End-of-service benefit",
+    desc: "The Saudi end-of-service award under the Labour Law, articles 84 to 87, for resignation or termination.",
+    alt: "End-of-service calculator answer in Saudi riyals with its breakdown" },
+];
+
+const reasons = [
+  { icon: bookOpen, title: "Each country’s own rules",
+    text: "Mexican, Brazilian and Gulf tools follow their own labour and tax laws, and every page links to the official source it uses." },
+  { icon: lockSimple, title: "Nothing leaves your device",
+    text: "The tools run in your browser. Your salary, dates and files are never uploaded or stored." },
+  { icon: calendarBlank, title: "Updated every year",
+    text: "Tax tables and minimum wages change every January. The calculators are updated with them, and each page shows its date." },
+  { icon: checkCircle, title: "Free, with no sign-up",
+    text: "No account and no paywall. Ads keep the tools free." },
+];
+
+const faqs = [
+  { q: "Is Baitaan free?", a: "Yes. Every tool is free and needs no account. Ads on the pages pay for the sites." },
+  { q: "Are the results official?", a: "They are estimates made with the official rules and tables of each country, and each page links to its sources. Your employer, bank or authority has the final figure." },
+  { q: "Do you keep my data?", a: "No. The calculators and the PDF and photo tools work inside your browser, so your numbers and files never reach a server." },
+  { q: "Why Spanish, Portuguese and Arabic?", a: "Most free tools are made in English. These sites are written for people in Mexico, Brazil and the Gulf, in their own language, with their own country’s rules." },
+  { q: "Can I suggest a tool?", a: "Yes, please write to us. New tools are added when many people need the same calculation." },
+];
 ---
 <Layout bleed wide title="Baitaan: free tools that speak your language" description="Free calculators and everyday tools in Spanish, Portuguese and Arabic. They run in your browser, with no sign-up.">
   <Hero title="Free tools that speak your language" lead="Calculators that follow each country’s own rules, running in your browser with no sign-up. Choose your language." />
@@ -58,10 +99,170 @@ const langs = [
         );
       })}
     </ul>
+
+    <section class="bt-hub-section" aria-labelledby="popular">
+      <div class="bt-hub-section__head">
+        <h2 id="popular">Popular tools</h2>
+        <p>A few of the most used calculators. Each one follows its country’s official rules and shows its sources.</p>
+      </div>
+      <ul class="bt-shots">
+        {popular.map((t) => (
+          <li>
+            <a class="bt-card bt-shot" href={t.site.url + t.path} data-spotlight>
+              <img src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
+              <span class="bt-shot__body">
+                <span class="bt-shot__tag" lang={t.site.lang} dir={t.site.dir}>{t.tag}</span>
+                <span class="bt-shot__title">{t.title}</span>
+                <span class="bt-shot__desc">{t.desc}</span>
+                <span class="bt-shot__go">Open <Icon d={arrowUpRight} size={15} /></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="bt-hub-section" aria-labelledby="why">
+      <div class="bt-hub-section__head">
+        <h2 id="why">Why Baitaan</h2>
+      </div>
+      <ul class="bt-reasons">
+        {reasons.map((r) => (
+          <li>
+            <h3><Icon d={r.icon} size={20} class="bt-reasons__icon" />{r.title}</h3>
+            <p>{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="bt-hub-section bt-guide bt-hub-faq">
+      <div class="bt-faqs">
+        <header class="bt-faqs__head">
+          <h2>Frequently asked questions</h2>
+          <p>Didn’t find your answer? <a href="/contact/">Write to us<span class="bt-faqs__arrow" aria-hidden="true"></span></a></p>
+        </header>
+        <div class="bt-faqs__list">
+          {faqs.map((f) => (
+            <details class="bt-faq"><summary>{f.q}</summary><p>{f.a}</p></details>
+          ))}
+        </div>
+      </div>
+    </section>
   </div>
 </Layout>
 
 <style>
+  .bt-hub-section {
+    margin-top: clamp(56px, 8vw, 96px);
+  }
+  .bt-hub-section__head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .bt-hub-section__head h2 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 36px);
+    line-height: 1.15;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  .bt-hub-section__head p {
+    margin: 0;
+    max-width: 60ch;
+    color: var(--muted);
+  }
+  .bt-shots {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 16px;
+  }
+  .bt-shot {
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .bt-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    border-bottom: 1px solid var(--hair);
+  }
+  .bt-shot__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 24px 24px;
+    flex: 1;
+  }
+  .bt-shot__tag {
+    align-self: flex-start;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .bt-shot__title {
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .bt-shot__desc {
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .bt-shot__go {
+    margin-top: auto;
+    padding-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--link);
+  }
+  .bt-reasons {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 32px 24px;
+  }
+  .bt-reasons li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .bt-reasons h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .bt-reasons :global(.bt-reasons__icon) {
+    flex: none;
+    color: var(--primary);
+  }
+  .bt-reasons p {
+    margin: 0;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .bt-hub-faq {
+    max-width: 760px;
+    margin-inline: auto;
+  }
   .bt-lang-card i {
     width: 12px;
     height: 12px;

@@ -34,52 +34,71 @@ const guide = guideHtml.replace(
 );
 const here = Astro.url.pathname;
 const crumb = nav.find((n) => n.href === here)?.label;
+const others = nav.filter((n) => n.href !== here);
 ---
-<div>
-  <div class="mx-auto flex max-w-[760px] flex-col gap-3 px-5 pt-6 pb-6 sm:pt-10">
-    <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted">
-      <a href={homeHref} class="text-muted no-underline hover:text-link hover:underline">{chrome.home ?? "Home"}</a>
-      {crumb && (
-        <>
-          <Icon d={I.caretRight} size={12} class="bt-flip" />
-          <span aria-current="page">{crumb}</span>
-        </>
+<div class="bt-page mx-auto max-w-[1120px] px-5">
+  <div class="bt-page__main">
+    <div class="flex flex-col gap-3 pt-6 pb-6 sm:pt-10">
+      <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted">
+        <a href={homeHref} class="text-muted no-underline hover:text-link hover:underline">{chrome.home ?? "Home"}</a>
+        {crumb && (
+          <>
+            <Icon d={I.caretRight} size={12} class="bt-flip" />
+            <span aria-current="page">{crumb}</span>
+          </>
+        )}
+      </nav>
+      <h1 class="m-0 text-[2rem] leading-[1.15] font-[650] text-ink sm:text-[2.5rem]" style="letter-spacing:var(--ls-big)">{heading}</h1>
+      <p class="m-0 max-w-[56ch] text-[17px] text-muted text-pretty">{lead}</p>
+      {chrome.chips && (
+        <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0 pt-1">
+          {chrome.chips.map((c) => (
+            <li class="bt-chip"><Icon d={I.check} size={13} />{c}</li>
+          ))}
+        </ul>
       )}
-    </nav>
-    <h1 class="m-0 text-[2rem] leading-[1.15] font-[650] text-ink sm:text-[2.5rem]" style="letter-spacing:var(--ls-big)">{heading}</h1>
-    <p class="m-0 max-w-[56ch] text-[17px] text-muted text-pretty">{lead}</p>
-    {chrome.chips && (
-      <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0 pt-1">
-        {chrome.chips.map((c) => (
-          <li class="bt-chip"><Icon d={I.check} size={13} />{c}</li>
-        ))}
-      </ul>
-    )}
-    {sources.length === 0 && <p class="m-0 text-[13px] text-muted">{updated}</p>}
+      {sources.length === 0 && <p class="m-0 text-[13px] text-muted">{updated}</p>}
+    </div>
+
+    <div class="flex flex-col gap-5">
+      <section class="bt-tool-slot">
+        <slot />
+      </section>
+
+      <AdSlot unit="0000000000" />
+
+      <article class="bt-guide pt-2">
+        <Fragment set:html={guide} />
+      </article>
+
+      {sources.length > 0 && (
+        <section class="bt-sources mt-4 max-w-[60ch]">
+          <h2 class="m-0 text-base font-semibold">{sourcesHeading}</h2>
+          {sources.map((s) => (
+            <a href={s.href} rel="noopener" target="_blank">
+              <Icon d={I.arrowSquareOut} size={16} class="flex-none" />
+              <span>{s.label}</span>
+            </a>
+          ))}
+          <span class="text-[13px] text-muted">{updated}</span>
+        </section>
+      )}
+    </div>
   </div>
-</div>
 
-<div class="mx-auto flex max-w-[760px] flex-col gap-5 px-5">
-  <section class="bt-tool-slot">
-    <slot />
-  </section>
-
-  <AdSlot unit="0000000000" />
-
-  <article class="bt-guide pt-2">
-    <Fragment set:html={guide} />
-  </article>
-
-  {sources.length > 0 && (
-    <section class="bt-sources mt-4 max-w-[60ch]">
-      <h2 class="m-0 text-base font-semibold">{sourcesHeading}</h2>
-      {sources.map((s) => (
-        <a href={s.href} rel="noopener" target="_blank">
-          <Icon d={I.arrowSquareOut} size={16} class="flex-none" />
-          <span>{s.label}</span>
-        </a>
-      ))}
-      <span class="text-[13px] text-muted">{updated}</span>
-    </section>
-  )}
+  {/* Sidebar on wide screens, after the content on phones: the site's other tools and one ad. */}
+  <aside class="bt-page__side" aria-label={chrome.moreTools ?? "More tools"}>
+    {others.length > 0 && (
+      <nav class="bt-side-card" aria-label={chrome.moreTools ?? "More tools"}>
+        <span class="bt-side-card__title">{chrome.moreTools ?? "More tools"}</span>
+        {others.map((n) => (
+          <a href={n.href}>
+            <span>{n.label}</span>
+            <Icon d={I.caretRight} size={14} class="bt-flip flex-none" />
+          </a>
+        ))}
+      </nav>
+    )}
+    <AdSlot unit="0000000000" kind="side" />
+  </aside>
 </div>

@@ -28,6 +28,8 @@ Every tool runs in the visitor's browser. There is no server and no database.
 The look comes from the Claude Design boards (design system, home pages, calculators, utility screens).
 
 - **Tokens:** `scripts/palettes.py` writes each site's `src/palette.css`: the design's semantic tokens (`--bg`, `--card`, `--text`, `--muted`, `--border`, `--hair`, `--primary`, `--on-primary`, `--link`, `--result-bg`, `--band`, `--elev`…) for light (`:root`) and dark (`html.dark`), plus a WCAG AA contrast check. Tailwind gets them as `bg-card`, `text-muted`, `border-hair`, `shadow-elev`… (`packages/ui/src/design.css`).
+- **Layout frame:** every page uses the same 1080px content box (1120px container, 20px gutters) as the header bar and footer, so edges line up. Tool pages are two columns on wide screens: content, plus a 300px sidebar with the site's other tools and one ad.
+- **Hub images:** `sites/root/public/img/tools/*.webp` are real screenshots of tool answers (960×600). Re-take them when a tool's look changes.
 - **Components** (`packages/ui/src/`): `BaseLayout` (floating sticky header bar with the tool menu), `Footer` (card with brand, tool/site/language columns and the dotted wordmark, after the reactbits.dev footer), `ToolPage` (breadcrumb, trust chips, guide, sources card), `form.tsx` (inputs, segmented toggle or radio cards, checkbox, result card with breakdown rows, notes), `Hero` + `ToolGrid` (home hero and bento grid), `NotFound`, `ConsentBanner`, the PDF/photo tools, and `design.css` for all of their styles.
 - **Icons:** Phosphor (MIT) as inline SVG paths in `icons.ts`; `Icon.astro` for pages, `fx/Svg.tsx` for islands.
 - **Fonts:** IBM Plex Sans (variable, for the 650 weight) with its partner IBM Plex Sans Arabic, so all four sites share one family.

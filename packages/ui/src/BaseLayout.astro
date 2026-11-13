@@ -43,6 +43,8 @@ export interface Chrome {
   /** Line under FAQ headings: "Didn't find your answer?" + link text "Write to us". */
   faqMore?: string;
   faqAsk?: string;
+  /** Tool-page sidebar title. */
+  moreTools?: string;
   /** Footer column titles. */
   footer?: FooterStrings;
 }
@@ -240,7 +242,7 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
     {bleed ? (
       <main><slot /></main>
     ) : (
-      <main class="bt-prose mx-auto max-w-[760px] px-5 pt-10 pb-4">
+      <main class="bt-prose mx-auto max-w-[1120px] px-5 pt-10 pb-4">
         <slot />
       </main>
     )}

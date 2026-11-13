@@ -74,7 +74,7 @@ export default function HijriConverter({ lang = "ar" }: { lang?: Lang }) {
       {result && "error" in result ? (
         <Result label={L.result} amount="—" sub={result.error} />
       ) : result ? (
-        <Result label={L.result} amount={result.main} sub={result.weekday} />
+        <Result label={L.result} amount={result.main} sub={result.weekday} valueDir={lang === "ar" ? "rtl" : "ltr"} />
       ) : (
         <Result label={L.result} amount="—" />
       )}
