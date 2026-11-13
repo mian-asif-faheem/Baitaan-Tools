@@ -8,7 +8,7 @@
  * - Consent: Google Consent Mode v2 defaults to denied; the banner stores the choice in
  *   `bt_consent` and updates Google's tags. bt_theme and bt_consent are shared across *.baitaandessigns.com.
  */
-import { SITES, CLUSTERS, EN_REGION, type SiteKey } from "./sites";
+import { SITES, CLUSTERS, EN_REGION, ADSENSE_CLIENT, type SiteKey } from "./sites";
 import ConsentBanner from "./ConsentBanner.astro";
 import Footer, { type FooterStrings, type NewsletterStrings } from "./Footer.astro";
 import Wordmark from "./Wordmark.astro";
@@ -124,7 +124,7 @@ const abs = (path: string) => new URL(path, s.url).href;
 const canonical = abs(Astro.url.pathname);
 const others = versions.filter((v) => v.code !== code);
 const xDefault = versions[0];
-const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-XXXXXXXXXXXXXXXX
+const adClient = ADSENSE_CLIENT; // ca-pub-…: loads the AdSense script (needed for the site review too)
 const here = Astro.url.pathname;
 const contact = footer.find((f) => /^mailto:|\/(contact|contacto|contato)\//.test(f.href))?.href;
 (Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir, contact, site, lang, canonical };

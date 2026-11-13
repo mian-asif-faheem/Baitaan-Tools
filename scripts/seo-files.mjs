@@ -1,7 +1,7 @@
 // Writes the crawl files into every site's build output (runs after `astro build`):
 // - robots.txt: allow everything except the form endpoint, and name the sitemap.
 // - sitemap.xml: the same index as sitemap-index.xml, at the address crawlers try first.
-// - ads.txt: only when PUBLIC_ADSENSE_CLIENT (ca-pub-…) is set, Google's one line for this publisher.
+// - ads.txt: Google's one line for this publisher (same ID as ADSENSE_CLIENT in packages/ui/src/sites.ts).
 import { copyFileSync, existsSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,7 +13,7 @@ const HOSTS = {
   pt: "https://pt.baitaandessigns.com",
   ar: "https://ar.baitaandessigns.com",
 };
-const client = (process.env.PUBLIC_ADSENSE_CLIENT ?? "").trim();
+const client = (process.env.PUBLIC_ADSENSE_CLIENT || "ca-pub-1546881510588776").trim();
 const pub = /^ca-pub-\d{10,}$/.test(client) ? client.slice(3) : "";
 if (client && !pub) console.warn(`PUBLIC_ADSENSE_CLIENT "${client}" is not ca-pub-<digits>: ads.txt not written`);
 

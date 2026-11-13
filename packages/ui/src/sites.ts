@@ -23,3 +23,9 @@ export const CLUSTERS: Partial<Record<SiteKey, string>>[] = [
 
 /** hreflang of each subdomain's English twin: English for people in that country. */
 export const EN_REGION: Partial<Record<SiteKey, string>> = { es: "en-MX", pt: "en-BR", ar: "en-SA" };
+
+/**
+ * AdSense publisher (public: it appears in every page's ad code and in ads.txt). A GitHub
+ * variable PUBLIC_ADSENSE_CLIENT overrides it. Keep scripts/seo-files.mjs in step.
+ */
+export const ADSENSE_CLIENT: string = import.meta.env.PUBLIC_ADSENSE_CLIENT || "ca-pub-1546881510588776";

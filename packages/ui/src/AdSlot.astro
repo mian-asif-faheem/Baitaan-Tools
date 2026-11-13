@@ -1,13 +1,15 @@
 ---
 /**
  * One AdSense unit, set apart from the tool by space and a label (never inside a tool or next
- * to its buttons). Renders the real unit only when PUBLIC_ADSENSE_CLIENT is set.
+ * to its buttons). Renders the real unit once it has a real 10-digit ad unit ID from AdSense;
+ * until then (the 0000000000 stand-in) it shows the labelled placeholder.
  *
  * Until then it shows a placeholder box of the size the ad will take, so the layout can be judged
  * on the live sites. Set the build variable PUBLIC_AD_PLACEHOLDERS=off to hide the boxes.
  * The real unit reserves the same height so the page doesn't jump when the ad loads.
  */
 import { shell } from "./shell";
+import { ADSENSE_CLIENT } from "./sites";
 
 interface Props {
   /** AdSense ad unit ID. (Not `slot`: in Astro that attribute assigns the element to a named slot
@@ -22,7 +24,7 @@ interface Props {
 const { unit, kind = "content", label } = Astro.props;
 const { chrome } = shell(Astro.locals);
 const text = label ?? chrome.adLabel ?? "Advertisement";
-const client = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const client = /^\d{10}$/.test(unit) && unit !== "0000000000" ? ADSENSE_CLIENT : "";
 const placeholders = import.meta.env.PUBLIC_AD_PLACEHOLDERS !== "off";
 ---
 {client ? (
