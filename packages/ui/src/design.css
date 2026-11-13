@@ -491,37 +491,6 @@ html.dark .bt-theme-icon {
   box-shadow: var(--elev);
   padding: clamp(20px, 5vw, 28px) clamp(16px, 5vw, 28px);
 }
-/* Specular rim light (fx/specular.ts, after React Bits SpecularButton): a bright band on the
-   border plus a fainter one opposite, turned toward the pointer; brightness in --sp-level. */
-.bt-specular {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  padding: 1.5px;
-  border-radius: inherit;
-  pointer-events: none;
-  /* Neutral light like the original (white line on dark, here graphite on light cards). */
-  --sp-line: color-mix(in oklab, var(--text) 70%, transparent);
-  --sp-back: color-mix(in oklab, var(--sp-line) 45%, transparent);
-  background: conic-gradient(
-    from calc(var(--sp-angle, -45deg) - 44deg),
-    transparent 0deg,
-    var(--sp-line) 34deg,
-    var(--sp-line) 54deg,
-    transparent 88deg,
-    transparent 180deg,
-    var(--sp-back) 214deg,
-    var(--sp-back) 234deg,
-    transparent 268deg
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: var(--sp-level, 0.35);
-}
-html.dark .bt-specular {
-  --sp-line: #fff;
-}
 .bt-card {
   position: relative;
   isolation: isolate;
