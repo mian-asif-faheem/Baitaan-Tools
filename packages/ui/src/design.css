@@ -1147,7 +1147,6 @@ li,
   flex-direction: column;
   gap: 6px;
   padding-top: 20px;
-  border-top: 1px solid var(--hair);
 }
 .bt-sources a {
   display: flex;
@@ -1459,7 +1458,8 @@ li,
   padding: 0 20px 20px;
 }
 html.dark .bt-foot {
-  --foot-card: color-mix(in oklab, var(--primary) 9%, #1d1d21);
+  /* The same dark surface as the site's cards (green, navy, purple or warm brown). */
+  --foot-card: var(--card);
   --foot-ink: #f4f4f5;
   --foot-muted: rgb(244 244 245 / 0.66);
   --foot-art: color-mix(in oklab, var(--primary) 40%, #6b6b75);
