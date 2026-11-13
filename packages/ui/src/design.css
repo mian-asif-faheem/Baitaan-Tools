@@ -1483,9 +1483,8 @@ html.dark .bt-foot__card {
   padding: 40px 40px 0;
   column-gap: 48px;
   row-gap: 32px;
-  grid-template-areas: "brand nav" "legal nav";
+  grid-template-areas: "brand nav" "legal legal";
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto 1fr;
 }
 .bt-foot__brand {
   grid-area: brand;
@@ -1563,10 +1562,11 @@ html.dark .bt-foot__card {
 }
 .bt-foot__legal {
   grid-area: legal;
-  align-self: end;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 6px 0;
   font-size: 13px;
 }
@@ -1597,7 +1597,6 @@ html.dark .bt-foot__card {
     padding: 28px 20px 0;
     grid-template-areas: "brand" "nav" "legal";
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
   }
   .bt-foot__nav {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));

@@ -122,7 +122,7 @@ const tile = Array.from({ length: 16 }, (_, i) => {
 
 <script>
   // Fit the word to the card: measure its ink, then size the viewBox so the letters fill the
-  // width and only their top 60% shows, with room above for the pattern to fade in.
+  // width and only their top 78% shows, with room above for the pattern to fade in.
   const fit = () => {
     const svg = document.querySelector<SVGSVGElement>("[data-bt-art]");
     const text = svg?.querySelector("text");
@@ -138,8 +138,8 @@ const tile = Array.from({ length: 16 }, (_, i) => {
     if (!(ink > 0 && glyph > 0)) return;
     const pad = ink * 0.035;
     const above = glyph * 0.46;
-    // Latin letters read from their top 60%; Arabic sits on the baseline, so show more of it.
-    const shown = /[\u0600-\u06ff]/.test(text.textContent ?? "") ? 0.9 : 0.6;
+    // Latin letters show their top 78%; Arabic sits on the baseline, so it shows in full.
+    const shown = /[\u0600-\u06ff]/.test(text.textContent ?? "") ? 1 : 0.78;
     const h = above + glyph * shown;
     // A short word would grow very tall: keep the art at least 4.5:1 and centre the word.
     const w = Math.max(ink + pad * 2, h * 4.5);
@@ -154,4 +154,46 @@ const tile = Array.from({ length: 16 }, (_, i) => {
   };
   fit();
   document.fonts?.ready.then(fit);
+
+  // Entrance, once, when the footer scrolls into view: the card's background, then its text
+  // (row by row), then the big word rising from the bottom of the card. Skipped when the footer
+  // is already on screen at load, without IntersectionObserver, and under "reduce motion".
+  const enter = () => {
+    const card = document.querySelector<HTMLElement>(".bt-foot__card");
+    if (!card || matchMedia("(prefers-reduced-motion: reduce)").matches || typeof IntersectionObserver !== "function") return;
+    if (card.getBoundingClientRect().top < innerHeight) return;
+    const ease = "cubic-bezier(0.215, 0.61, 0.355, 1)";
+    const rows = [
+      card.querySelector(".bt-foot__brand"),
+      ...card.querySelectorAll(".bt-foot__col"),
+      card.querySelector(".bt-foot__legal"),
+    ].filter(Boolean) as HTMLElement[];
+    const art = card.querySelector<HTMLElement>(".bt-foot__art svg");
+    const hidden = [card, ...rows, ...(art ? [art] : [])];
+    hidden.forEach((el) => (el.style.opacity = "0"));
+    const play = (el: HTMLElement, frames: Keyframe[], delay: number, duration: number) => {
+      const run = el.animate(frames, { duration, delay, easing: ease, fill: "both" });
+      run.onfinish = () => {
+        el.style.opacity = "";
+        run.cancel();
+      };
+    };
+    const io = new IntersectionObserver(
+      (seen) => {
+        if (!seen.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        // 1. The card (its background) fades and lifts in.
+        play(card, [{ opacity: 0, transform: "translateY(24px) scale(0.98)" }, { opacity: 1, transform: "none" }], 0, 600);
+        // 2. Its text comes up from below, one block after another.
+        rows.forEach((el, i) =>
+          play(el, [{ opacity: 0, transform: "translateY(28px)" }, { opacity: 1, transform: "none" }], 300 + i * 80, 600),
+        );
+        // 3. The big word rises from the bottom edge (the card clips it).
+        if (art) play(art, [{ opacity: 0, transform: "translateY(70%)" }, { opacity: 1, transform: "none" }], 300 + rows.length * 80, 900);
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(card);
+  };
+  enter();
 </script>
