@@ -2443,13 +2443,31 @@ html.dark .bt-foot__card {
     display: none;
   }
 }
-@media (max-width: 479.98px) {
-  /* Narrow phones: the language pill shows only its globe (it keeps its label for screen readers). */
+.bt-lang__flag {
+  display: none;
+}
+@media (max-width: 1023.98px) {
+  /* Small screens: the language switch is the flag of the other version (US for English, the
+     site's country to go back); its aria-label still names the language. */
   .bt-navbar__end .bt-lang {
-    font-size: 0;
-    gap: 0;
-    padding-inline: 12px;
+    width: 44px;
+    padding: 0;
+    justify-content: center;
   }
+  .bt-navbar__end .bt-lang__globe,
+  .bt-navbar__end .bt-lang__text {
+    display: none;
+  }
+  .bt-lang__flag {
+    display: block;
+    width: 24px;
+    height: 18px;
+    border-radius: 3px;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12);
+  }
+}
+@media (max-width: 479.98px) {
   .bt-navbar__end {
     gap: 6px;
   }

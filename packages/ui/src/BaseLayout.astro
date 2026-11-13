@@ -130,6 +130,8 @@ const smLinks = footer;
 const smLangs = nav.length
   ? (Object.keys(SITES) as (keyof typeof SITES)[]).filter((k) => k !== site).map((k) => ({ href: `${SITES[k].url}/`, label: k === "root" ? "baitaandessigns.com" : SITE_NAMES[k].label, lang: k === "root" ? "en" : SITE_NAMES[k].lang }))
   : [];
+/** Small screens show a flag in the language switch: the US for English, the site's country otherwise. */
+const FLAGS: Record<string, string> = { en: "us", es: "mx", pt: "br", ar: "sa" };
 const menuLabel = chrome.menu ?? "Menu";
 const closeLabel = chrome.menuClose ?? "Close";
 const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href })), redirect: langRedirect };
@@ -246,8 +248,9 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
               class="bt-lang"
               aria-label={`${chrome.languageLabel}: ${v.label}`}
             >
-              <Icon d={I.globe} size={17} />
-              {v.label}
+              <Icon d={I.globe} size={17} class="bt-lang__globe" />
+              <span class="bt-lang__text">{v.label}</span>
+              {FLAGS[v.code] && <img class="bt-lang__flag" src={`/img/flags/${FLAGS[v.code]}.svg`} alt="" width="24" height="18" loading="lazy" decoding="async" />}
             </a>
           ))}
           <button type="button" data-bt-theme class="bt-icon-btn" aria-label={chrome.themeToggle} title={chrome.themeToggle}>
