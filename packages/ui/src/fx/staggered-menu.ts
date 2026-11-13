@@ -7,13 +7,13 @@
  *
  * Kept: coloured layers that sweep in one after another (0.07s apart, 0.5s, power4.out), the
  * panel after them (0.65s), big labels rising from 140% with a 10° tilt (1s, 0.1s stagger),
- * numbers fading in, the extra links rising 25px, the "+" turning 225° into a "×", the label
- * rolling Menu → Close through a few lines, and the quick close (0.32s, power3.in).
- * Changed: the browser's own animations replace GSAP; the colours come from the site's palette;
+ * numbers fading in, the extra links rising 25px, and the quick close (0.32s, power3.in).
+ * Changed: the browser's own animations replace GSAP; an icon-only button whose three lines turn
+ * into a "×" (CSS, on aria-expanded) replaces the "Menu"/"Close" label; the colours come from the site's palette;
  * it slides in from the end side (right, or left in Arabic); it acts as a dialog (Escape closes,
  * focus stays inside, the page behind is inert and does not scroll). "Reduce motion": no movement.
  *
- * Markup: [data-sm-toggle] button (with [data-sm-text] and [data-sm-icon]) and [data-sm] overlay
+ * Markup: [data-sm-toggle] button and [data-sm] overlay
  * (with .bt-sm__layer elements and a [data-sm-panel]).
  */
 
@@ -21,7 +21,6 @@ const OUT4 = "cubic-bezier(0.165, 0.84, 0.44, 1)"; // power4.out
 const OUT3 = "cubic-bezier(0.215, 0.61, 0.355, 1)"; // power3.out
 const OUT2 = "cubic-bezier(0.25, 0.46, 0.45, 0.94)"; // power2.out
 const IN3 = "cubic-bezier(0.55, 0.055, 0.675, 0.19)"; // power3.in
-const INOUT3 = "cubic-bezier(0.645, 0.045, 0.355, 1)"; // power3.inOut
 
 export function staggeredMenu() {
   const btn = document.querySelector<HTMLButtonElement>("[data-sm-toggle]");
@@ -29,8 +28,6 @@ export function staggeredMenu() {
   if (!btn || !root) return;
   const panel = root.querySelector<HTMLElement>("[data-sm-panel]")!;
   const layers = [...root.querySelectorAll<HTMLElement>(".bt-sm__layer")];
-  const icon = btn.querySelector<HTMLElement>("[data-sm-icon]")!;
-  const textInner = btn.querySelector<HTMLElement>("[data-sm-text]")!;
   const [openLabel, closeLabel] = [btn.dataset.open ?? "Menu", btn.dataset.close ?? "Close"];
   const rtl = document.documentElement.dir === "rtl";
   const off = rtl ? "-100%" : "100%";
@@ -50,21 +47,6 @@ export function staggeredMenu() {
   };
   const behind = () => [...document.body.children].filter((el) => el !== root && !el.contains(btn)) as HTMLElement[];
 
-  const setText = (to: string) => {
-    // Roll through a few lines of Menu/Close and land on the target, like the original.
-    const from = to === closeLabel ? openLabel : closeLabel;
-    const seq = [from, to, from, to];
-    textInner.replaceChildren(...seq.map((t) => Object.assign(document.createElement("span"), { textContent: t })));
-    if (still()) {
-      textInner.style.transform = `translateY(-${((seq.length - 1) / seq.length) * 100}%)`;
-      return;
-    }
-    textInner.animate(
-      [{ transform: "translateY(0)" }, { transform: `translateY(-${((seq.length - 1) / seq.length) * 100}%)` }],
-      { duration: 500 + seq.length * 70, easing: OUT4, fill: "forwards" },
-    );
-  };
-
   const show = () => {
     stop();
     open = true;
@@ -75,16 +57,13 @@ export function staggeredMenu() {
     btn.setAttribute("aria-label", closeLabel);
     document.documentElement.classList.add("bt-sm-lock");
     behind().forEach((el) => el.setAttribute("inert", ""));
-    setText(closeLabel);
     const labels = [...panel.querySelectorAll<HTMLElement>(".bt-sm__label")];
     const nums = [...panel.querySelectorAll<HTMLElement>(".bt-sm__num")];
     const extras = [...panel.querySelectorAll<HTMLElement>(".bt-sm__extra > *")];
     if (still()) {
-      icon.style.transform = "rotate(225deg)";
       panel.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
       return;
     }
-    icon.animate([{ transform: "rotate(0)" }, { transform: "rotate(225deg)" }], { duration: 800, easing: OUT4, fill: "forwards" });
     layers.forEach((l, i) => play(l, [{ transform: `translateX(${off})` }, { transform: "none" }], { duration: 500, delay: i * 70, easing: OUT4 }));
     const panelAt = (layers.length - 1) * 70 + 80;
     play(panel, [{ transform: `translateX(${off})` }, { transform: "none" }], { duration: 650, delay: panelAt, easing: OUT4 });
@@ -107,7 +86,6 @@ export function staggeredMenu() {
     delete root.dataset.open;
     document.documentElement.classList.remove("bt-sm-lock");
     behind().forEach((el) => el.removeAttribute("inert"));
-    setText(openLabel);
     const done = () => {
       if (open) return;
       stop();
@@ -115,11 +93,9 @@ export function staggeredMenu() {
     };
     if (refocus) (returnFocus && document.contains(returnFocus) ? returnFocus : btn).focus({ preventScroll: true });
     if (still()) {
-      icon.style.transform = "";
       done();
       return;
     }
-    icon.animate([{ transform: "rotate(225deg)" }, { transform: "rotate(0)" }], { duration: 350, easing: INOUT3, fill: "forwards" });
     const all = [...layers, panel];
     const anims = all.map((el) =>
       el.animate([{ transform: getComputedStyle(el).transform === "none" ? "none" : getComputedStyle(el).transform }, { transform: `translateX(${off})` }], {

@@ -1557,6 +1557,19 @@ html.dark .bt-foot__card {
   flex: none;
   min-height: 44px;
 }
+/* Phones and tablets: the field and the button on two lines, both full width. */
+@media (max-width: 1023.98px) {
+  .bt-news__row {
+    flex-direction: column;
+  }
+  .bt-news__input {
+    flex: none;
+    width: 100%;
+  }
+  .bt-news__btn {
+    width: 100%;
+  }
+}
 .bt-news__trap {
   position: absolute;
   width: 1px;
@@ -2359,56 +2372,60 @@ html.dark .bt-foot__card {
 
 /* ── Small-screen menu (fx/staggered-menu.ts, React Bits StaggeredMenu) ── */
 .bt-sm-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 14px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: 0;
   border-radius: 12px;
   background: var(--bar-fill);
   color: var(--bar-ink);
-  font: inherit;
-  font-size: 15px;
-  font-weight: 600;
   cursor: pointer;
 }
 .bt-sm-toggle:focus-visible {
   outline: 2px solid var(--bar-ink);
   outline-offset: 2px;
 }
-.bt-sm-toggle__text {
-  display: inline-block;
-  height: 1.2em;
-  line-height: 1.2;
-  overflow: hidden;
-}
-.bt-sm-toggle__text > span {
-  display: flex;
-  flex-direction: column;
-}
-.bt-sm-toggle__text > span > span {
-  display: block;
-  height: 1.2em;
-  white-space: nowrap;
-}
+/* Three lines that fold into a "×" while the menu is open. */
 .bt-sm-toggle__icon {
   position: relative;
-  width: 14px;
+  width: 20px;
   height: 14px;
-  flex: none;
 }
 .bt-sm-toggle__icon i {
   position: absolute;
-  left: 0;
-  top: 6px;
-  width: 14px;
+  inset-inline: 0;
   height: 2px;
   border-radius: 2px;
   background: currentColor;
+  transition: transform 300ms var(--ease), opacity 200ms ease, top 300ms var(--ease);
 }
-.bt-sm-toggle__icon i + i {
-  transform: rotate(90deg);
+.bt-sm-toggle__icon i:nth-child(1) {
+  top: 0;
+}
+.bt-sm-toggle__icon i:nth-child(2) {
+  top: 6px;
+}
+.bt-sm-toggle__icon i:nth-child(3) {
+  top: 12px;
+}
+.bt-sm-toggle[aria-expanded="true"] .bt-sm-toggle__icon i:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+.bt-sm-toggle[aria-expanded="true"] .bt-sm-toggle__icon i:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.3);
+}
+.bt-sm-toggle[aria-expanded="true"] .bt-sm-toggle__icon i:nth-child(3) {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bt-sm-toggle__icon i {
+    transition: none;
+  }
 }
 @media (min-width: 1024px) {
   .bt-sm-toggle,
