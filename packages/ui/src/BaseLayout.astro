@@ -82,8 +82,6 @@ interface Props {
   wide?: boolean;
   /** Show the drawn "baitaan" wordmark instead of the typed site name (header and footer). */
   wordmark?: boolean;
-  /** Liquid-glass header (fx/glass.ts, from React Bits GlassSurface). */
-  glass?: boolean;
 }
 
 const {
@@ -104,7 +102,6 @@ const {
   bleed = false,
   wide = false,
   wordmark = false,
-  glass = false,
 } = Astro.props;
 const s = SITES[site];
 const abs = (path: string) => new URL(path, s.url).href;
@@ -194,27 +191,7 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
   </head>
   <body class="min-h-screen">
     <header class="bt-header">
-      <div class:list={["bt-navbar", nav.length > 0 && "has-menu", glass && "bt-navbar--glass"]} data-bt-glass={glass ? "" : undefined}>
-        {glass && (
-          <>
-            <svg class="bt-glass__svg" aria-hidden="true" focusable="false">
-              <filter id="bt-glass-filter" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
-                <feImage x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
-                <feDisplacementMap in="SourceGraphic" in2="map" result="dispRed" />
-                <feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
-                <feDisplacementMap in="SourceGraphic" in2="map" result="dispGreen" />
-                <feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green" />
-                <feDisplacementMap in="SourceGraphic" in2="map" result="dispBlue" />
-                <feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
-                <feBlend in="red" in2="green" mode="screen" result="rg" />
-                <feBlend in="rg" in2="blue" mode="screen" result="output" />
-                <feGaussianBlur in="output" stdDeviation="0.7" />
-              </filter>
-            </svg>
-            <span class="bt-glass__sheen" aria-hidden="true"></span>
-            <span class="bt-glass__rim" aria-hidden="true"></span>
-          </>
-        )}
+      <div class:list={["bt-navbar", nav.length > 0 && "has-menu"]}>
         <a href={homeHref} class="bt-brand">
           {wordmark && lang.startsWith("ar") ? (
             <span class="bt-brand__ar">{brand ?? s.name}</span>
@@ -287,9 +264,7 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
 
     <script>
       import { rubberNavAll } from "./fx/rubber";
-      import { glassAll } from "./fx/glass";
       rubberNavAll();
-      glassAll();
     </script>
 
     <script is:inline>
