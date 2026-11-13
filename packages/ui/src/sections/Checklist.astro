@@ -1,0 +1,13 @@
+---
+/** Things to have ready, as a two-column checklist. */
+import Glyph from "./Glyph.astro";
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+<ul class="bt-checklist">
+  {items.map((t) => (
+    <li><span class="bt-checklist__box"><Glyph name="check" size={14} /></span>{t}</li>
+  ))}
+</ul>

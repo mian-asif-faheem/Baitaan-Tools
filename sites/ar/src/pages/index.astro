@@ -2,6 +2,8 @@
 import Hero from "@bt/ui/Hero.astro";
 import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../components/Layout.astro";
+import HomeExtras from "../components/HomeExtras.astro";
+import PhoneShot from "@bt/ui/sections/PhoneShot.astro";
 import { toHijri, HIJRI_MONTHS_AR } from "@bt/tools/hijri";
 
 // Today's Hijri date as of the build; the script below refreshes it in the browser.
@@ -99,8 +101,12 @@ const groups: Group[] = [
 ];
 ---
 <Layout bleed wide title="أدوات مجانية بالعربية | بيتان" description="أدوات وحاسبات مجانية تعمل في متصفحك دون تسجيل: تحويل التاريخ الهجري، كم باقي على رمضان، مكافأة نهاية الخدمة، الضريبة، الزكاة، ضغط PDF.">
-  <Hero title="أدوات مجانية دون تسجيل" lead="حاسبات وأدوات تعمل في متصفحك. بياناتك لا تغادر جهازك." cta={{ href: "/tahweel-altareekh/", label: "حوّل التاريخ الآن" }} />
+  <Hero title="أدوات مجانية دون تسجيل" lead="حاسبات وأدوات تعمل في متصفحك. بياناتك لا تغادر جهازك." cta={{ href: "/tahweel-altareekh/", label: "حوّل التاريخ الآن" }}>
+    <PhoneShot slot="visual" brand="بيتان" title="مكافأة نهاية الخدمة" label="المكافأة · إنهاء العقد بعد 7 سنوات" value="36,000 ريال" rows={[["أول 5 سنوات", "20,000 ريال"], ["السنتان التاليتان", "16,000 ريال"]]} />
+  </Hero>
+  <HomeExtras lang="ar" part="top" />
   <ToolGrid {groups} />
+  <HomeExtras lang="ar" part="bottom" />
 </Layout>
 
 <script>

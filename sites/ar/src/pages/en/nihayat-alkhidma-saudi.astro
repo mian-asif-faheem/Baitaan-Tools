@@ -2,6 +2,10 @@
 import Layout from "../../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
+import Summary from "@bt/ui/sections/Summary.astro";
+import SplitBar from "@bt/ui/sections/SplitBar.astro";
+import Steps from "@bt/ui/sections/Steps.astro";
+import Checklist from "@bt/ui/sections/Checklist.astro";
 import EosCalc from "../../components/EosCalc.tsx";
 ---
 <Layout
@@ -20,6 +24,12 @@ import EosCalc from "../../components/EosCalc.tsx";
     <EosCalc client:load country="sa" lang="en" />
 
     <Fragment slot="guide">
+      <Summary heading="In short" items={[
+        { label: "If the employer ends the contract", title: "The full award", text: "Half a month’s wage for each of the first five years, and a full month for each year after.", featured: true },
+        { label: "If you resign", title: "A third, two thirds or all of it", text: "Depending on your years of service, and nothing before 2 years." },
+        { label: "When it is paid", title: "Within one or two weeks", text: "One week if the employer ends the contract, two weeks on resignation (Article 88)." },
+      ]} />
+
       <h2>How it is calculated (Article 84)</h2>
       <ul>
         <li>Half a month's wage for each of the first five years.</li>
@@ -44,7 +54,21 @@ import EosCalc from "../../components/EosCalc.tsx";
         <li>Resignation after 8 years on SAR 10,000: full award 55,000, two thirds due: <strong>SAR 36,666.67</strong>.</li>
       </ul>
 
+      <p>How the first example’s award of SAR 36,000 breaks down:</p>
+      <SplitBar label="Breakdown of the first example" parts={[{ label: "First 5 years at half a month", value: 20000, display: "SAR 20,000" }, { label: "Next 2 years at a full month", value: 16000, display: "SAR 16,000" }]} />
+
       <AdSlot unit="0000000000" label="Advertisement" />
+
+      <h2>When your service ends: step by step</h2>
+      <Steps items={[
+        { title: "Check your actual wage", text: "The award uses your last wage including the allowances due, not the basic wage alone." },
+        { title: "Calculate the award and keep the result", text: "Use the calculator above and compare the result with your employer’s figure." },
+        { title: "Expect payment on time", text: "Within one week if the employer ends the contract, and within two weeks on resignation (Article 88)." },
+        { title: "If you disagree: amicable settlement", text: "File a request with the Ministry of Human Resources. If there is no agreement within 21 working days of the first session, the case goes to the labour court." },
+      ]} />
+
+      <h2>Have these ready</h2>
+      <Checklist items={["Your employment contract", "Your start date and last working day", "Your latest payslip showing allowances", "The resignation or termination letter"]} />
 
       <h2>Frequently asked questions</h2>
       <details class="bt-faq"><summary>When must the award be paid?</summary><p>Within a week of the end of employment if the employer ended it, and within two weeks if the worker resigned (Article 88).</p></details>

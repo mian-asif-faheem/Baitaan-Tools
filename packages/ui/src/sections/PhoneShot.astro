@@ -1,0 +1,22 @@
+---
+/** Hero picture for a country site: a phone showing a real calculator result. */
+import ResultCard from "./ResultCard.astro";
+interface Props {
+  brand?: string;
+  title: string;
+  label: string;
+  value: string;
+  sub?: string;
+  rows?: [string, string][];
+}
+const { brand = "baitaan", title, ...card } = Astro.props;
+---
+<div class="bt-phone" aria-hidden="true">
+  <div class="bt-phone__screen">
+    <span class="bt-phone__brand">{brand}</span>
+    <span class="bt-phone__title">{title}</span>
+    <ResultCard {...card} class="bt-rcard--flat" />
+    <span class="bt-phone__bar"></span>
+    <span class="bt-phone__bar bt-phone__bar--short"></span>
+  </div>
+</div>

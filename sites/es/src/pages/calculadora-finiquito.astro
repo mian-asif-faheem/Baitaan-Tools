@@ -2,6 +2,10 @@
 import Layout from "../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
+import Summary from "@bt/ui/sections/Summary.astro";
+import SplitBar from "@bt/ui/sections/SplitBar.astro";
+import Steps from "@bt/ui/sections/Steps.astro";
+import Checklist from "@bt/ui/sections/Checklist.astro";
 import FiniquitoCalc from "../components/FiniquitoCalc.tsx";
 ---
 <Layout
@@ -21,6 +25,12 @@ import FiniquitoCalc from "../components/FiniquitoCalc.tsx";
     <FiniquitoCalc client:load />
 
     <Fragment slot="guide">
+      <Summary heading="En 30 segundos" items={[
+        { label: "Si renuncias", title: "Solo finiquito", text: "Salario pendiente, aguinaldo, vacaciones y prima vacacional." },
+        { label: "Si te despiden sin causa", title: "Finiquito y liquidación", text: "Más 3 meses de salario y la prima de antigüedad.", featured: true },
+        { label: "Para reclamar", title: "2 meses", text: "Desde el día del despido (art. 518 de la LFT)." },
+      ]} />
+
       <h2>Finiquito y liquidación: la diferencia</h2>
       <p>El <strong>finiquito</strong> es lo que tu empresa te debe por el trabajo que ya hiciste. Te corresponde siempre, renuncies o te despidan. La <strong>liquidación</strong> es una indemnización adicional y solo aplica cuando te despiden sin causa justificada o cuando tú terminas la relación por culpa del patrón (art. 51 y 52 de la LFT).</p>
 
@@ -41,6 +51,23 @@ import FiniquitoCalc from "../components/FiniquitoCalc.tsx";
       </ul>
       <p>Si ganas un juicio, también pueden corresponderte salarios vencidos (hasta 12 meses, art. 48). La calculadora no los incluye porque dependen de la resolución.</p>
 
+      <h2>Qué te toca en cada caso</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted"><th class="py-2 text-start font-medium">Concepto</th><th class="px-1.5 py-2 text-center font-medium">Renuncia</th><th class="px-1.5 py-2 text-center font-medium">Despido justificado</th><th class="px-1.5 py-2 text-center font-medium">Despido sin causa</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-1.5">Salario pendiente</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Aguinaldo proporcional</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Vacaciones y prima vacacional</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">3 meses de salario</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">Sí</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">20 días por año</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">En algunos casos</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Prima de antigüedad</td><td class="px-1.5 text-center">Con 15 años o más</td><td class="px-1.5 text-center">Sí</td><td class="px-1.5 text-center">Sí</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2>Ejemplo 1: renuncia a los 6 meses</h2>
       <p>Sueldo de $15,000 al mes ($500 diarios), del 1 de enero al 30 de junio de 2026 (181 días):</p>
       <ul>
@@ -59,10 +86,25 @@ import FiniquitoCalc from "../components/FiniquitoCalc.tsx";
         <li><strong>Total: $66,596.72</strong>, o $97,558.75 si además aplican los 20 días por año.</li>
       </ul>
 
+      <p>Así se reparte el total del ejemplo 2:</p>
+      <SplitBar label="Reparto del ejemplo 2" parts={[{ label: "Finiquito", value: 11038.36, display: "$11,038.36" }, { label: "3 meses de salario", value: 37923.29, display: "$37,923.29" }, { label: "Prima de antigüedad", value: 17635.07, display: "$17,635.07" }]} />
+
       <AdSlot unit="0000000000" />
 
       <h2>¿Paga impuestos el finiquito?</h2>
       <p>Una parte está exenta de ISR (art. 93 de la Ley del ISR): el aguinaldo hasta 30 UMA ($3,519.30), la prima vacacional hasta 15 UMA ($1,759.65), y las indemnizaciones y la prima de antigüedad hasta 90 UMA por año trabajado ($10,557.90 por año). Tu empresa retiene ISR sobre el resto, por eso el depósito puede ser menor que el total bruto de la calculadora.</p>
+
+      <h2>Si te despidieron: qué hacer, paso a paso</h2>
+      <Steps items={[
+        { title: "Pide el aviso de despido por escrito", text: "La empresa debe darte por escrito la causa y la fecha (art. 47). Si no lo hace, el despido se considera injustificado." },
+        { title: "Calcula lo que te toca", text: "Usa la calculadora de arriba y guarda el resultado." },
+        { title: "No firmes nada que no cuadre", text: "Compara los montos antes de firmar una renuncia o un recibo de finiquito." },
+        { title: "Busca asesoría gratis", text: "La PROFEDET te orienta sin costo sobre tu caso." },
+        { title: "Acude al Centro de Conciliación antes de 2 meses", text: "Es el paso obligatorio antes de demandar, y el plazo corre desde el despido (art. 518)." },
+      ]} />
+
+      <h2>Ten a la mano</h2>
+      <Checklist items={["Tu contrato o carta de oferta", "Tus últimos recibos de nómina (CFDI)", "Tu fecha exacta de ingreso", "Los días de vacaciones que no tomaste", "El aviso de despido o tu renuncia", "Una identificación oficial"]} />
 
       <h2>Preguntas frecuentes</h2>
       <details class="bt-faq"><summary>¿Me toca liquidación si renuncio?</summary><p>No. Al renunciar solo te toca el finiquito. Si tienes 15 años o más en la empresa, también te corresponde la prima de antigüedad.</p></details>

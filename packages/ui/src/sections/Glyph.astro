@@ -1,0 +1,24 @@
+---
+/** Small line icons for the content sections (24px grid, drawn with the current colour). Decorative. */
+interface Props {
+  name: "out" | "in" | "money" | "calendar" | "moon" | "scale" | "clock" | "doc" | "gift" | "percent" | "globe" | "form" | "check";
+  size?: number;
+}
+const { name, size = 22 } = Astro.props;
+const paths: Record<Props["name"], string> = {
+  out: "M10 4H5v16h5M15 8l4 4-4 4M19 12H9",
+  in: "M14 4h5v16h-5M10 8l-4 4 4 4M6 12h10",
+  money: "M3 7h18v10H3zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 1 0 0-5M6.5 12h.01M17.5 12h.01",
+  calendar: "M4 6h16v14H4zM4 10h16M9 3v4M15 3v4",
+  moon: "M19 15.5A8 8 0 0 1 8.5 5a8 8 0 1 0 10.5 10.5Z",
+  scale: "M12 4v16M7 20h10M5 8h14M5 8l-2.5 6a2.5 2.5 0 0 0 5 0zM19 8l-2.5 6a2.5 2.5 0 0 0 5 0z",
+  clock: "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 1 0 0-17M12 7.5V12l3 2",
+  doc: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6",
+  gift: "M4 9h16v4H4zM5.5 13h13v8h-13zM12 9v12M12 9c-2-4-6-4-6-1.5S9 9 12 9c3 0 6-.5 6-1.5S14 5 12 9",
+  percent: "M6 18 18 6M7.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M16.5 15a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3",
+  globe: "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 1 0 0-17M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17",
+  form: "M4 4h16v16H4zM8 9h8M8 13h8M8 17h4",
+  check: "M5 12.5l4.5 4.5L19 7.5",
+};
+---
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>

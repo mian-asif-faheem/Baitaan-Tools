@@ -1,0 +1,12 @@
+---
+/** Numbered steps with a short title and one line each. */
+interface Props {
+  items: { title: string; text: string }[];
+}
+const { items } = Astro.props;
+---
+<ol class="bt-steps">
+  {items.map((s) => (
+    <li><strong>{s.title}</strong><span>{s.text}</span></li>
+  ))}
+</ol>

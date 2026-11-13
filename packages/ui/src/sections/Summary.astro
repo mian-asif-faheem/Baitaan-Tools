@@ -1,0 +1,20 @@
+---
+/** "In 30 seconds": three short cards with the answer most people came for. */
+interface Props {
+  heading: string;
+  items: { label: string; title: string; text: string; featured?: boolean }[];
+}
+const { heading, items } = Astro.props;
+---
+<section class="bt-summary" aria-label={heading}>
+  <h2 class="bt-summary__h">{heading}</h2>
+  <ul>
+    {items.map((s) => (
+      <li class:list={[s.featured && "is-on"]}>
+        <span class="bt-summary__label">{s.label}</span>
+        <strong>{s.title}</strong>
+        <span>{s.text}</span>
+      </li>
+    ))}
+  </ul>
+</section>

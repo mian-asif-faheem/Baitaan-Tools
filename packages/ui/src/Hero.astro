@@ -2,7 +2,8 @@
 /**
  * Home-page hero: a big heading that sharpens in word by word (the page's one authored moment),
  * the lead, the trust promise as plain chips, and an optional call to action, on a quietly
- * tinted band. The text is readable from the first frame.
+ * tinted band. The text is readable from the first frame. An optional "visual" slot puts a
+ * picture beside the text on wide screens and under it on phones.
  */
 import Icon from "./Icon.astro";
 import * as I from "./icons";
@@ -16,9 +17,11 @@ interface Props {
 const { title, lead, cta } = Astro.props;
 const { chrome } = shell(Astro.locals);
 const words = title.split(" ");
+const visual = Astro.slots.has("visual");
 ---
-<section class="bt-hero">
-  <div class="mx-auto flex max-w-[1120px] flex-col items-start gap-4 px-5 pt-[clamp(24px,4vw,40px)] pb-[clamp(32px,4vw,48px)]">
+<section class:list={["bt-hero", visual && "bt-hero--visual"]}>
+  <div class="bt-hero__grid mx-auto max-w-[1120px] px-5 pt-[clamp(24px,4vw,40px)] pb-[clamp(32px,4vw,48px)]">
+  <div class="flex flex-col items-start gap-4">
     <h1 class="m-0 max-w-[13ch] text-[clamp(38px,10vw,72px)] leading-[1.08] font-[650] text-ink" style="letter-spacing:var(--ls-big)">
       {words.map((w, i) => (
         <>
@@ -40,5 +43,7 @@ const words = title.split(" ");
         <Icon d={I.arrowRight} size={18} class="bt-flip" />
       </a>
     )}
+  </div>
+  {visual && <div class="bt-hero__visual"><slot name="visual" /></div>}
   </div>
 </section>

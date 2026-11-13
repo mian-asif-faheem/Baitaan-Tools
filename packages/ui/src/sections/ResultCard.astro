@@ -1,0 +1,25 @@
+---
+/** A small picture of a calculator result (label, big total, a few lines), used in hero images. */
+interface Props {
+  label: string;
+  value: string;
+  sub?: string;
+  rows?: [string, string][];
+  lang?: string;
+  dir?: "ltr" | "rtl";
+  class?: string;
+}
+const { label, value, sub, rows = [], lang, dir, class: cls } = Astro.props;
+---
+<div class:list={["bt-rcard", cls]} lang={lang} dir={dir}>
+  <span class="bt-rcard__label">{label}</span>
+  <span class="bt-rcard__value">{value}</span>
+  {sub && <span class="bt-rcard__sub">{sub}</span>}
+  {rows.length > 0 && (
+    <span class="bt-rcard__rows">
+      {rows.map(([k, v]) => (
+        <span class="bt-rcard__row"><span>{k}</span><bdi>{v}</bdi></span>
+      ))}
+    </span>
+  )}
+</div>

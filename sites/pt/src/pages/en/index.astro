@@ -2,6 +2,8 @@
 import Hero from "@bt/ui/Hero.astro";
 import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../../components/Layout.astro";
+import HomeExtras from "../../components/HomeExtras.astro";
+import PhoneShot from "@bt/ui/sections/PhoneShot.astro";
 
 const groups: Group[] = [
   {
@@ -79,6 +81,10 @@ const groups: Group[] = [
 ];
 ---
 <Layout bleed wide lang="en" title="Free tools for Brazil, in English | Baitaan" description="Free Brazilian employment calculators and tools that run in your browser, no sign-up: termination, vacation, 13th salary, overtime, 3x4 photo and PDF.">
-  <Hero title="Free tools for Brazil, no sign-up" lead="Employment calculators under Brazilian law (CLT) and handy utilities that run in your browser. Your data never leaves your device." cta={{ href: "/en/calculadora-rescisao/", label: "Calculate termination pay" }} />
+  <Hero title="Free tools for Brazil, no sign-up" lead="Employment calculators under Brazilian law (CLT) and handy utilities that run in your browser. Your data never leaves your device." cta={{ href: "/en/calculadora-rescisao/", label: "Calculate termination pay" }}>
+    <PhoneShot slot="visual" title="Termination pay calculator" label="Net to receive · without cause" value="R$ 13.392,64" rows={[["Salary balance", "R$ 1.500,00"], ["Notice pay", "R$ 3.600,00"], ["Vacation + 1/3", "R$ 6.333,33"]]} />
+  </Hero>
+  <HomeExtras lang="en" part="top" />
   <ToolGrid {groups} />
+  <HomeExtras lang="en" part="bottom" />
 </Layout>

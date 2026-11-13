@@ -1,0 +1,17 @@
+---
+/** A home-page content section: heading, optional lead, then whatever goes in the slot. */
+interface Props {
+  id: string;
+  heading: string;
+  lead?: string;
+  class?: string;
+}
+const { id, heading, lead, class: cls } = Astro.props;
+---
+<section class:list={["bt-sec", cls]} aria-labelledby={id}>
+  <div class="bt-sec__head">
+    <h2 id={id}>{heading}</h2>
+    {lead && <p>{lead}</p>}
+  </div>
+  <slot />
+</section>

@@ -2,6 +2,8 @@
 import Hero from "@bt/ui/Hero.astro";
 import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../../components/Layout.astro";
+import HomeExtras from "../../components/HomeExtras.astro";
+import PhoneShot from "@bt/ui/sections/PhoneShot.astro";
 
 const groups: Group[] = [
   {
@@ -72,6 +74,10 @@ const groups: Group[] = [
 ];
 ---
 <Layout bleed wide lang="en" title="Free tools for Mexico, in English | Baitaan" description="Free Mexican labor calculators and everyday tools that run in your browser, with no sign-up: finiquito, net pay, aguinaldo, ID photos and PDF compression.">
-  <Hero title="Free tools, no sign-up" lead="Mexican labor calculators and everyday tools that run in your browser. Your data never leaves your device." cta={{ href: "/en/calculadora-finiquito/", label: "Calculate my finiquito" }} />
+  <Hero title="Free tools, no sign-up" lead="Mexican labor calculators and everyday tools that run in your browser. Your data never leaves your device." cta={{ href: "/en/calculadora-finiquito/", label: "Calculate my finiquito" }}>
+    <PhoneShot slot="visual" title="Finiquito calculator" label="Estimated total · resignation" value="$7,438.36" rows={[["Aguinaldo", "$3,719.18"], ["Vacation", "$2,975.34"], ["Vacation premium", "$743.84"]]} />
+  </Hero>
+  <HomeExtras lang="en" part="top" />
   <ToolGrid {groups} />
+  <HomeExtras lang="en" part="bottom" />
 </Layout>

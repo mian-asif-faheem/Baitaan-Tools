@@ -1,0 +1,13 @@
+---
+/** A row of big numbers with short labels. */
+interface Props {
+  items: { value: string; label: string }[];
+  label: string;
+}
+const { items, label } = Astro.props;
+---
+<ul class="bt-stats" aria-label={label} data-animate="stagger">
+  {items.map((s) => (
+    <li><strong>{s.value}</strong><span>{s.label}</span></li>
+  ))}
+</ul>

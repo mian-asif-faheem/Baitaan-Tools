@@ -2,6 +2,10 @@
 import Layout from "../../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
+import Summary from "@bt/ui/sections/Summary.astro";
+import SplitBar from "@bt/ui/sections/SplitBar.astro";
+import Steps from "@bt/ui/sections/Steps.astro";
+import Checklist from "@bt/ui/sections/Checklist.astro";
 import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
 ---
 <Layout
@@ -23,6 +27,12 @@ import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
     <FiniquitoCalc client:load lang="en" />
 
     <Fragment slot="guide">
+      <Summary heading="In 30 seconds" items={[
+        { label: "If you resign", title: "Finiquito only", text: "Unpaid salary, aguinaldo, vacation and vacation premium." },
+        { label: "If you are dismissed without cause", title: "Finiquito and severance", text: "Plus 3 months’ pay and the seniority premium.", featured: true },
+        { label: "To make a claim", title: "2 months", text: "From the day of the dismissal (LFT art. 518)." },
+      ]} />
+
       <h2>Finiquito vs. severance</h2>
       <p>The <strong>finiquito</strong> is what your employer owes you for work already done. You get it whether you resign or are dismissed. <strong>Severance</strong> (liquidación) is extra compensation, owed only when you are dismissed without just cause or when you end the job because of the employer's fault (arts. 51 and 52).</p>
 
@@ -43,6 +53,23 @@ import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
       </ul>
       <p>If you win a lawsuit, you may also be owed back pay of up to 12 months (art. 48). The calculator leaves it out because it depends on the ruling.</p>
 
+      <h2>What you get in each case</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted"><th class="py-2 text-start font-medium">Item</th><th class="px-1.5 py-2 text-center font-medium">Resignation</th><th class="px-1.5 py-2 text-center font-medium">Justified dismissal</th><th class="px-1.5 py-2 text-center font-medium">Dismissal without cause</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-1.5">Unpaid salary</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Proportional aguinaldo</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Vacation and vacation premium</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">3 months’ pay</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">Yes</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">20 days per year</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">No</td><td class="px-1.5 text-center">In some cases</td></tr>
+            <tr class="border-t border-hair"><td class="py-1.5">Seniority premium</td><td class="px-1.5 text-center">With 15+ years</td><td class="px-1.5 text-center">Yes</td><td class="px-1.5 text-center">Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2>Example 1: resigning after 6 months</h2>
       <p>Salary of $15,000 a month ($500 a day), from 1 January to 30 June 2026 (181 days):</p>
       <ul>
@@ -61,10 +88,25 @@ import FiniquitoCalc from "../../components/FiniquitoCalc.tsx";
         <li><strong>Total: $66,596.72</strong>, or $97,558.75 if the 20 days per year also apply.</li>
       </ul>
 
+      <p>How the total in example 2 breaks down:</p>
+      <SplitBar label="Breakdown of example 2" parts={[{ label: "Finiquito", value: 11038.36, display: "$11,038.36" }, { label: "3 months’ pay", value: 37923.29, display: "$37,923.29" }, { label: "Seniority premium", value: 17635.07, display: "$17,635.07" }]} />
+
       <AdSlot unit="0000000000" label="Advertisement" />
 
       <h2>Is the finiquito taxed?</h2>
       <p>Part of it is free of ISR (Income Tax Law, art. 93): the aguinaldo up to 30 UMA ($3,519.30), the vacation premium up to 15 UMA ($1,759.65), and severance and seniority premium up to 90 UMA per year worked ($10,557.90 per year). Your employer withholds ISR on the rest, so the payment can be lower than the calculator's gross total.</p>
+
+      <h2>If you were dismissed: what to do, step by step</h2>
+      <Steps items={[
+        { title: "Ask for the dismissal notice in writing", text: "Your employer must give you the reason and the date in writing (art. 47). Without it, the dismissal counts as unjustified." },
+        { title: "Work out what you are owed", text: "Use the calculator above and keep the result." },
+        { title: "Don’t sign anything that doesn’t add up", text: "Check the amounts before you sign a resignation or a finiquito receipt." },
+        { title: "Get free advice", text: "PROFEDET advises you on your case at no cost." },
+        { title: "Go to the Conciliation Center within 2 months", text: "It is the required step before a lawsuit, and the time limit runs from the dismissal (art. 518)." },
+      ]} />
+
+      <h2>Have these ready</h2>
+      <Checklist items={["Your contract or offer letter", "Your latest payslips (CFDI)", "Your exact start date", "Vacation days you didn’t take", "The dismissal notice or your resignation", "An official ID"]} />
 
       <h2>Frequently asked questions</h2>
       <details class="bt-faq"><summary>Do I get severance if I resign?</summary><p>No. If you resign you only get the finiquito. With 15 or more years at the company, you also get the seniority premium.</p></details>

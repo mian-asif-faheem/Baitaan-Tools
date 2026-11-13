@@ -1,0 +1,33 @@
+---
+/** A strong closing box that points to free official help, with a small drawing. */
+import Icon from "../Icon.astro";
+import * as I from "../icons";
+interface Props {
+  title: string;
+  text: string;
+  href: string;
+  label: string;
+}
+const { title, text, href, label } = Astro.props;
+---
+<aside class="bt-help" data-animate>
+  <div class="bt-help__body">
+    <h2>{title}</h2>
+    <p>{text}</p>
+    <a class="bt-btn bt-btn--sm bt-help__btn" href={href} rel="noopener" target="_blank" data-magnet>{label} <Icon d={I.arrowSquareOut} size={17} /></a>
+  </div>
+  <div class="bt-help__art" aria-hidden="true">
+    <svg viewBox="0 0 320 220" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M40 150h240" />
+      <path d="M70 150v50M250 150v50" />
+      <rect x="128" y="120" width="64" height="30" rx="4" class="bt-art-fill" />
+      <path d="M140 132h40M140 141h26" />
+      <circle cx="92" cy="70" r="18" class="bt-art-fill" />
+      <path d="M62 150c0-30 12-50 30-50s30 20 30 50" class="bt-art-fill" />
+      <circle cx="228" cy="70" r="18" class="bt-art-fill" />
+      <path d="M198 150c0-30 12-50 30-50s30 20 30 50" class="bt-art-fill" />
+      <path d="M130 30h60a10 10 0 0 1 10 10v22a10 10 0 0 1-10 10h-34l-12 11v-11h-14a10 10 0 0 1-10-10V40a10 10 0 0 1 10-10z" class="bt-art-fill" />
+      <path d="M142 46h36M142 56h22" />
+    </svg>
+  </div>
+</aside>

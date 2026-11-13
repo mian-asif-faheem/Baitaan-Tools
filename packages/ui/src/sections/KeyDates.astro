@@ -1,0 +1,21 @@
+---
+/** Important dates of the year, each with the tool that goes with it. */
+import Icon from "../Icon.astro";
+import * as I from "../icons";
+interface Props {
+  items: { day: string; month: string; title: string; text: string; href?: string; link?: string; featured?: boolean; id?: string; hijri?: string }[];
+  note?: string;
+}
+const { items, note } = Astro.props;
+---
+<ul class="bt-dates" data-animate="stagger">
+  {items.map((d) => (
+    <li class:list={["bt-date", d.featured && "bt-date--on"]} id={d.id} data-hijri={d.hijri}>
+      <span class="bt-date__when"><strong data-day>{d.day}</strong><span data-month>{d.month}</span></span>
+      <h3>{d.title}</h3>
+      <p>{d.text}</p>
+      {d.href && d.link && <a href={d.href}>{d.link} <Icon d={I.arrowRight} size={15} class="bt-flip" /></a>}
+    </li>
+  ))}
+</ul>
+{note && <p class="bt-sec__note">{note}</p>}

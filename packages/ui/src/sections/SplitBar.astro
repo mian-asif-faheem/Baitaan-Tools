@@ -1,0 +1,20 @@
+---
+/** One bar split into the parts of a total, with a legend that carries the numbers. */
+interface Props {
+  label: string;
+  parts: { label: string; value: number; display: string }[];
+}
+const { label, parts } = Astro.props;
+const total = parts.reduce((a, p) => a + p.value, 0);
+const pct = (v: number) => Math.round((v / total) * 100);
+---
+<figure class="bt-split">
+  <div class="bt-split__bar" role="img" aria-label={`${label}: ${parts.map((p) => `${p.label} ${pct(p.value)}%`).join(", ")}`}>
+    {parts.map((p, i) => <span class={`bt-split__p bt-split__p--${i}`} style={`flex-grow:${p.value}`}></span>)}
+  </div>
+  <figcaption class="bt-split__legend">
+    {parts.map((p, i) => (
+      <span><i class={`bt-split__p--${i}`} aria-hidden="true"></i><strong>{p.label}</strong><span><bdi>{p.display}</bdi> · {pct(p.value)}%</span></span>
+    ))}
+  </figcaption>
+</figure>

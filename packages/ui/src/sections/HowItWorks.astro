@@ -1,0 +1,27 @@
+---
+/** Three numbered steps, each with a small drawing: choose, fill in, read the result. */
+interface Props {
+  steps: { title: string; text: string }[];
+}
+const { steps } = Astro.props;
+---
+<ol class="bt-how" data-animate="stagger">
+  {steps.map((s, i) => (
+    <li>
+      <span class="bt-how__art" aria-hidden="true">
+        {i === 0 && (
+          <svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="10" width="120" height="80" rx="12" class="bt-art-fill" /><circle cx="56" cy="50" r="18" /><path d="M38 50h36M56 32c8 8 8 28 0 36M56 32c-8 8-8 28 0 36" /><path d="M88 38h36M88 50h26M88 62h32" /></svg>
+        )}
+        {i === 1 && (
+          <svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="10" width="120" height="80" rx="12" class="bt-art-fill" /><rect x="36" y="24" width="88" height="16" rx="6" /><path d="M44 32h30" /><rect x="36" y="50" width="40" height="16" rx="6" /><rect x="84" y="50" width="40" height="16" rx="6" /><path d="M118 76l-6-6" /></svg>
+        )}
+        {i === 2 && (
+          <svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="10" width="120" height="80" rx="12" class="bt-art-fill" /><path d="M38 34h46" stroke-width="6" /><path d="M38 54h84M38 68h84" opacity=".55" /><path d="M102 30l7 7 13-13" /></svg>
+        )}
+      </span>
+      <span class="bt-how__num">{String(i + 1).padStart(2, "0")}</span>
+      <h3>{s.title}</h3>
+      <p>{s.text}</p>
+    </li>
+  ))}
+</ol>

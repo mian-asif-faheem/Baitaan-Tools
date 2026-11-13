@@ -2,6 +2,8 @@
 import Hero from "@bt/ui/Hero.astro";
 import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../../components/Layout.astro";
+import HomeExtras from "../../components/HomeExtras.astro";
+import PhoneShot from "@bt/ui/sections/PhoneShot.astro";
 import { toHijri, HIJRI_MONTHS_EN } from "@bt/tools/hijri";
 
 // Today's Hijri date as of the build; the script below refreshes it in the browser.
@@ -99,8 +101,12 @@ const groups: Group[] = [
 ];
 ---
 <Layout bleed wide lang="en" title="Free tools for the Gulf, in English | Baitaan" description="Free tools and calculators that run in your browser, no sign-up: Hijri date converter, Ramadan countdown, Saudi and UAE end-of-service, VAT, zakat and PDF.">
-  <Hero title="Free tools for the Gulf, no sign-up" lead="Calculators and tools for Saudi Arabia, the UAE and the Gulf that run in your browser. Your data never leaves your device." cta={{ href: "/en/tahweel-altareekh/", label: "Convert a date now" }} />
+  <Hero title="Free tools for the Gulf, no sign-up" lead="Calculators and tools for Saudi Arabia, the UAE and the Gulf that run in your browser. Your data never leaves your device." cta={{ href: "/en/tahweel-altareekh/", label: "Convert a date now" }}>
+    <PhoneShot slot="visual" title="End-of-service benefit" label="Award · contract ended after 7 years" value="SAR 36,000" rows={[["First 5 years", "SAR 20,000"], ["Next 2 years", "SAR 16,000"]]} />
+  </Hero>
+  <HomeExtras lang="en" part="top" />
   <ToolGrid {groups} />
+  <HomeExtras lang="en" part="bottom" />
 </Layout>
 
 <script>

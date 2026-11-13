@@ -23,7 +23,8 @@
     "./icons": "./src/icons.ts",
     "./shell": "./src/shell.ts",
     "./design.css": "./src/design.css",
-    "./NotFound.astro": "./src/NotFound.astro"
+    "./NotFound.astro": "./src/NotFound.astro",
+    "./sections/*": "./src/sections/*"
   },
   "dependencies": {
     "pdf-lib": "1.17.1",

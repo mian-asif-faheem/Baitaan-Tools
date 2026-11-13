@@ -1,0 +1,106 @@
+---
+/**
+ * Extra home-page sections for pt.: "what happened?" above the tools (part="top"), and key
+ * dates, worked examples and free help below them (part="bottom"). Portuguese and English.
+ * The examples are the ones worked through on the calculator pages.
+ */
+import Section from "@bt/ui/sections/Section.astro";
+import Situations from "@bt/ui/sections/Situations.astro";
+import KeyDates from "@bt/ui/sections/KeyDates.astro";
+import Examples from "@bt/ui/sections/Examples.astro";
+import HelpBox from "@bt/ui/sections/HelpBox.astro";
+
+interface Props {
+  lang: "pt" | "en";
+  part: "top" | "bottom";
+}
+const { lang, part } = Astro.props;
+const p = lang === "en" ? "/en" : "";
+
+const t = {
+  pt: {
+    sitH: "O que aconteceu?",
+    sitL: "Escolha a sua situação e vá direto para a calculadora certa.",
+    sit: [
+      { href: "/calculadora-rescisao/", title: "Fui demitido", sub: "Verbas rescisórias e multa do FGTS", icon: "out" },
+      { href: "/calculadora-rescisao/", title: "Vou pedir demissão", sub: "O que você recebe ao sair", icon: "in" },
+      { href: "/calculadora-salario-liquido/", title: "Quanto cai no meu salário?", sub: "INSS e IR de 2026", icon: "money" },
+      { href: "/calculadora-ferias/", title: "Vou sair de férias", sub: "1/3 e venda de 10 dias", icon: "calendar" },
+      { href: "/calculadora-13-salario/", title: "Chegou o 13º", sub: "1ª e 2ª parcela", icon: "gift" },
+      { href: "/calculadora-horas-extras/", title: "Fiz hora extra", sub: "50%, 100% e adicional noturno", icon: "clock" },
+    ],
+    datesH: "Datas importantes de 2026",
+    datesL: "Os prazos do ano para quem trabalha com carteira assinada, com a calculadora de cada um.",
+    dates: [
+      { day: "1º", month: "jan", title: "Novo salário mínimo", text: "R$ 1.621 por mês, e isenção de IR na fonte para quem ganha até R$ 5.000.", href: "/calculadora-salario-liquido/", link: "Salário líquido" },
+      { day: "29", month: "mai", title: "Declaração do IR", text: "Fim do prazo para entregar a declaração do Imposto de Renda 2026." },
+      { day: "30", month: "nov", title: "1ª parcela do 13º", text: "Metade do 13º, sem descontos, até 30 de novembro.", href: "/calculadora-13-salario/", link: "Calcular 13º", featured: true },
+      { day: "20", month: "dez", title: "2ª parcela do 13º", text: "O restante, com desconto de INSS e IR, até 20 de dezembro.", href: "/calculadora-13-salario/", link: "Calcular 13º" },
+    ],
+    exH: "Exemplos com números reais",
+    exL: "Casos comuns calculados com as regras de 2026. Mude os dados e calcule o seu.",
+    cta: "Calcular o meu",
+    ex: [
+      { label: "Demissão sem justa causa · salário de R$ 3.000", total: "R$ 13.392,64", href: "/calculadora-rescisao/",
+        rows: [["Verbas rescisórias", "R$ 13.683,33"], ["INSS", "−R$ 290,69"], ["Multa do FGTS, depositada à parte", "R$ 3.115,20"]] },
+      { label: "Salário líquido · R$ 5.000 brutos", total: "R$ 4.498,49", href: "/calculadora-salario-liquido/",
+        rows: [["Salário bruto", "R$ 5.000,00"], ["INSS", "−R$ 501,51"], ["IRRF", "R$ 0,00"]] },
+      { label: "Férias de 30 dias · salário de R$ 3.000", total: "R$ 3.631,40", href: "/calculadora-ferias/",
+        rows: [["Férias", "R$ 3.000,00"], ["1/3 de férias", "R$ 1.000,00"], ["INSS", "−R$ 368,60"]] },
+    ],
+    helpH: "Foi demitido sem justa causa?",
+    helpT: "Peça o seguro-desemprego do 7º ao 120º dia após a demissão, pelo app Carteira de Trabalho Digital ou pelo gov.br. Você vai precisar do requerimento que a empresa entrega na dispensa e do seu CPF.",
+    helpB: "Pedir pelo gov.br",
+  },
+  en: {
+    sitH: "What happened?",
+    sitL: "Pick your situation and go straight to the right calculator.",
+    sit: [
+      { href: "/calculadora-rescisao/", title: "I was dismissed", sub: "Termination pay and the FGTS fine", icon: "out" },
+      { href: "/calculadora-rescisao/", title: "I’m resigning", sub: "What you get when you leave", icon: "in" },
+      { href: "/calculadora-salario-liquido/", title: "What’s my take-home pay?", sub: "2026 INSS and income tax", icon: "money" },
+      { href: "/calculadora-ferias/", title: "I’m going on vacation", sub: "The 1/3 bonus and selling 10 days", icon: "calendar" },
+      { href: "/calculadora-13-salario/", title: "My 13th salary is due", sub: "First and second installment", icon: "gift" },
+      { href: "/calculadora-horas-extras/", title: "I worked overtime", sub: "50%, 100% and night premium", icon: "clock" },
+    ],
+    datesH: "Key dates in 2026",
+    datesL: "The year’s deadlines for employees with a signed work card (CLT), with the calculator for each.",
+    dates: [
+      { day: "1", month: "Jan", title: "New minimum wage", text: "R$ 1.621 a month, and no income tax withheld for pay up to R$ 5.000.", href: "/calculadora-salario-liquido/", link: "Net salary" },
+      { day: "29", month: "May", title: "Income tax return", text: "Deadline for filing the 2026 income tax return." },
+      { day: "30", month: "Nov", title: "13th salary, 1st installment", text: "Half of the 13th salary, with no deductions, by November 30.", href: "/calculadora-13-salario/", link: "Calculate 13th", featured: true },
+      { day: "20", month: "Dec", title: "13th salary, 2nd installment", text: "The rest, minus INSS and income tax, by December 20.", href: "/calculadora-13-salario/", link: "Calculate 13th" },
+    ],
+    exH: "Worked examples",
+    exL: "Common cases worked out with the 2026 rules. Change the figures to get your own.",
+    cta: "Calculate mine",
+    ex: [
+      { label: "Dismissal without cause · R$ 3.000 salary", total: "R$ 13.392,64", href: "/calculadora-rescisao/",
+        rows: [["Termination items", "R$ 13.683,33"], ["INSS", "−R$ 290,69"], ["FGTS fine, paid in separately", "R$ 3.115,20"]] },
+      { label: "Net salary · R$ 5.000 gross", total: "R$ 4.498,49", href: "/calculadora-salario-liquido/",
+        rows: [["Gross salary", "R$ 5.000,00"], ["INSS", "−R$ 501,51"], ["Income tax", "R$ 0,00"]] },
+      { label: "30 days’ vacation · R$ 3.000 salary", total: "R$ 3.631,40", href: "/calculadora-ferias/",
+        rows: [["Vacation pay", "R$ 3.000,00"], ["1/3 vacation bonus", "R$ 1.000,00"], ["INSS", "−R$ 368,60"]] },
+    ],
+    helpH: "Dismissed without cause?",
+    helpT: "Apply for unemployment insurance (seguro-desemprego) from the 7th to the 120th day after the dismissal, in the Carteira de Trabalho Digital app or on gov.br. You need the form your employer gives you when you are let go, and your CPF.",
+    helpB: "Apply on gov.br",
+  },
+}[lang];
+const sit = t.sit.map((s) => ({ ...s, href: p + s.href })) as any;
+const dates = t.dates.map((d) => ({ ...d, href: d.href && p + d.href }));
+const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
+---
+<div class="mx-auto max-w-[1120px] px-5">
+  {part === "top" ? (
+    <Section id="situacao" heading={t.sitH} lead={t.sitL} class="bt-sec--first">
+      <Situations items={sit} />
+    </Section>
+  ) : (
+    <>
+      <Section id="datas" heading={t.datesH} lead={t.datesL}><KeyDates items={dates} /></Section>
+      <Section id="exemplos" heading={t.exH} lead={t.exL}><Examples items={ex} /></Section>
+      <HelpBox title={t.helpH} text={t.helpT} href="https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego" label={t.helpB} />
+    </>
+  )}
+</div>

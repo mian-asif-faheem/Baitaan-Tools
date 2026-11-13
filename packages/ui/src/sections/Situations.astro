@@ -1,0 +1,21 @@
+---
+/** "What happened?" Pick your situation and go straight to the right tool. */
+import Glyph from "./Glyph.astro";
+import Icon from "../Icon.astro";
+import * as I from "../icons";
+interface Props {
+  items: { href: string; title: string; sub: string; icon: "out" | "in" | "money" | "calendar" | "moon" | "scale" | "clock" | "doc" | "gift" | "percent" }[];
+}
+const { items } = Astro.props;
+---
+<ul class="bt-situations">
+  {items.map((s) => (
+    <li>
+      <a href={s.href}>
+        <span class="bt-situations__icon"><Glyph name={s.icon} /></span>
+        <span class="bt-situations__text"><strong>{s.title}</strong><span>{s.sub}</span></span>
+        <Icon d={I.arrowRight} size={18} class="bt-situations__go bt-flip" />
+      </a>
+    </li>
+  ))}
+</ul>

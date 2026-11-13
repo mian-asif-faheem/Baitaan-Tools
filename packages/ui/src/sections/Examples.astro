@@ -1,0 +1,23 @@
+---
+/** Worked examples with real figures, each linking to the calculator to try your own. */
+import Icon from "../Icon.astro";
+import * as I from "../icons";
+interface Props {
+  items: { label: string; total: string; rows: [string, string][]; href: string; cta: string }[];
+}
+const { items } = Astro.props;
+---
+<ul class="bt-examples" data-animate="stagger">
+  {items.map((e) => (
+    <li>
+      <span class="bt-examples__label">{e.label}</span>
+      <bdi class="bt-examples__total">{e.total}</bdi>
+      <dl>
+        {e.rows.map(([k, v]) => (
+          <div><dt>{k}</dt><dd><bdi>{v}</bdi></dd></div>
+        ))}
+      </dl>
+      <a href={e.href}>{e.cta} <Icon d={I.arrowRight} size={15} class="bt-flip" /></a>
+    </li>
+  ))}
+</ul>

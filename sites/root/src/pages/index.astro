@@ -4,6 +4,11 @@ import Icon from "@bt/ui/Icon.astro";
 import { arrowLeft, arrowRight, arrowUpRight, bookOpen, calendarBlank, checkCircle, lockSimple } from "@bt/ui/icons";
 import { SITES } from "@bt/ui/sites";
 import Layout from "../components/Layout.astro";
+import Skyline from "../components/Skyline.astro";
+import HeroCollage from "@bt/ui/sections/HeroCollage.astro";
+import Stats from "@bt/ui/sections/Stats.astro";
+import HowItWorks from "@bt/ui/sections/HowItWorks.astro";
+import Section from "@bt/ui/sections/Section.astro";
 
 /**
  * Each card carries a hint of its own site's palette: three swatch dots and the arrow button,
@@ -56,6 +61,45 @@ const popular = [
     alt: "End-of-service calculator answer in Saudi riyals with its breakdown" },
 ];
 
+/** Real results from the calculators' own worked examples, as the hero picture. */
+const heroCards = [
+  { label: "Finiquito · renuncia", value: "$7,438.36", lang: "es",
+    rows: [["Aguinaldo", "$3,719.18"], ["Vacaciones", "$2,975.34"], ["Prima vacacional", "$743.84"]] as [string, string][] },
+  { label: "Salário líquido · R$ 5.000", value: "R$ 4.498,49", lang: "pt",
+    rows: [["INSS", "−R$ 501,51"], ["IRRF", "R$ 0,00"]] as [string, string][] },
+  { label: "مكافأة نهاية الخدمة · 7 سنوات", value: "36,000 ر.س", sub: "على الأجر الفعلي 8,000 ريال", lang: "ar", dir: "rtl" as const },
+];
+
+// Tool counts: 6 on es., 9 on pt., 14 on ar. Update when a tool is added.
+const stats = [
+  { value: "29", label: "free tools" },
+  { value: "3", label: "languages, each with English" },
+  { value: "2026", label: "tax tables and minimum wages" },
+  { value: "0", label: "numbers or files uploaded" },
+];
+
+const how = [
+  { title: "Pick your country", text: "Each site follows its own country’s laws: Mexico, Brazil or the Gulf." },
+  { title: "Enter your numbers", text: "Salary, dates or a file. Everything stays in your browser." },
+  { title: "Read the breakdown", text: "Every line of the result is explained, with the article of law it comes from." },
+];
+
+const countries = [
+  { place: "mx" as const, site: SITES.es, name: "Mexico", count: "6 tools in Spanish",
+    text: "Ley Federal del Trabajo, ISR and IMSS. The 2026 minimum wage of $315.04 a day and the UMA of $117.31." },
+  { place: "br" as const, site: SITES.pt, name: "Brazil", count: "9 tools in Portuguese",
+    text: "CLT, INSS and income tax. Since January 2026, pay up to R$ 5.000 a month has no income tax withheld." },
+  { place: "gulf" as const, site: SITES.ar, name: "The Gulf", count: "14 tools in Arabic",
+    text: "Saudi and UAE labour laws, VAT and zakat, and the Umm al-Qura Hijri calendar." },
+];
+
+const updates = [
+  { date: "Feb 2026", title: "Mexico: UMA of $117.31", text: "The tax-free parts of finiquito, aguinaldo and prima vacacional were recalculated." },
+  { date: "Jan 2026", title: "Brazil: no income tax up to R$ 5.000", text: "Salário líquido, 13º, férias and rescisão use the new reduction." },
+  { date: "Jan 2026", title: "Brazil: minimum wage of R$ 1.621", text: "The INSS and wage tables were updated for the new year." },
+  { date: "Jan 2026", title: "Mexico: new minimum wage and ISR table", text: "Finiquito, sueldo neto and aguinaldo use the 2026 figures." },
+];
+
 const reasons = [
   { icon: bookOpen, title: "Each country’s own rules",
     text: "Mexican, Brazilian and Gulf tools follow their own labour and tax laws, and every page links to the official source it uses." },
@@ -76,7 +120,9 @@ const faqs = [
 ];
 ---
 <Layout bleed wide title="Baitaan: free tools that speak your language" description="Free calculators and everyday tools in Spanish, Portuguese and Arabic. They run in your browser, with no sign-up.">
-  <Hero title="Free tools that speak your language" lead="Calculators that follow each country’s own rules, running in your browser with no sign-up. Choose your language." />
+  <Hero title="Free tools that speak your language" lead="Calculators that follow each country’s own rules, running in your browser with no sign-up. Choose your language.">
+    <HeroCollage slot="visual" cards={heroCards} />
+  </Hero>
   <div class="mx-auto max-w-[1120px] px-5">
     <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3.5 p-0">
       {langs.map(({ site, name, go, desc, style }) => {
@@ -100,6 +146,12 @@ const faqs = [
       })}
     </ul>
 
+    <div class="mt-10"><Stats items={stats} label="Baitaan in numbers" /></div>
+
+    <Section id="how" heading="How it works" lead="Three steps and about a minute. Nothing to install and no account.">
+      <HowItWorks steps={how} />
+    </Section>
+
     <section class="bt-hub-section" aria-labelledby="popular">
       <div class="bt-hub-section__head">
         <h2 id="popular">Popular tools</h2>
@@ -121,6 +173,31 @@ const faqs = [
         ))}
       </ul>
     </section>
+
+    <Section id="countries" heading="Made for each country" lead="Not one tool translated three times: each site is built on its own country’s laws and official tables.">
+      <ul class="bt-countries" data-animate="stagger">
+        {countries.map((c) => (
+          <li>
+            <a class="bt-card bt-country" href={c.site.url}>
+              <span class="bt-country__art"><Skyline place={c.place} /></span>
+              <span class="bt-country__body">
+                <span class="bt-country__name">{c.name}</span>
+                <span class="bt-country__text">{c.text}</span>
+                <span class="bt-country__go">{c.count} <Icon d={arrowRight} size={15} /></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section id="updates" heading="Updated for 2026" lead="What changed this year, already in the calculators." class="bt-updates">
+      <ol class="bt-updates__list">
+        {updates.map((u) => (
+          <li><span class="bt-updates__date">{u.date}</span><span><strong>{u.title}</strong><span>{u.text}</span></span></li>
+        ))}
+      </ol>
+    </Section>
 
     <section class="bt-hub-section" aria-labelledby="why">
       <div class="bt-hub-section__head">
@@ -153,6 +230,93 @@ const faqs = [
 </Layout>
 
 <style>
+  .bt-countries {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 16px;
+  }
+  .bt-country {
+    padding: 0;
+    gap: 0;
+  }
+  .bt-country__art {
+    display: grid;
+    place-items: end center;
+    height: 170px;
+    padding: 16px 16px 0;
+    background: var(--tint);
+    color: var(--link);
+    border-bottom: 1px solid var(--hair);
+  }
+  .bt-country__art :global(svg) {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+  }
+  .bt-country__body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 24px 24px;
+    flex: 1;
+  }
+  .bt-country__name {
+    font-size: 20px;
+    font-weight: 650;
+  }
+  .bt-country__text {
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .bt-country__go {
+    margin-top: auto;
+    padding-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--link);
+  }
+  .bt-updates__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--hair);
+  }
+  .bt-updates__list li {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .bt-updates__list li > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .bt-updates__list strong {
+    font-weight: 600;
+  }
+  .bt-updates__list li > span:last-child span {
+    color: var(--muted);
+  }
+  .bt-updates__date {
+    font-size: 14px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    padding-top: 2px;
+  }
+  @media (max-width: 520px) {
+    .bt-updates__list li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
   .bt-hub-section {
     margin-top: clamp(56px, 8vw, 96px);
   }

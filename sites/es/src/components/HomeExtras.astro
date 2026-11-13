@@ -1,0 +1,109 @@
+---
+/**
+ * Extra home-page sections for es.: "what happened?" above the tools (part="top"), and key
+ * dates, worked examples and free help below them (part="bottom"). Spanish and English.
+ * The examples are the ones worked through on the calculator pages; net pay is computed.
+ */
+import Section from "@bt/ui/sections/Section.astro";
+import Situations from "@bt/ui/sections/Situations.astro";
+import KeyDates from "@bt/ui/sections/KeyDates.astro";
+import Examples from "@bt/ui/sections/Examples.astro";
+import HelpBox from "@bt/ui/sections/HelpBox.astro";
+import { sueldoNeto } from "@bt/tools/mx";
+
+interface Props {
+  lang: "es" | "en";
+  part: "top" | "bottom";
+}
+const { lang, part } = Astro.props;
+const p = lang === "en" ? "/en" : "";
+const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+const sn = sueldoNeto({ monthlyGross: 15000 });
+
+const t = {
+  es: {
+    sitH: "¿Qué te pasó?",
+    sitL: "Elige tu situación y te llevamos a la calculadora correcta.",
+    sit: [
+      { href: "/calculadora-finiquito/", title: "Me despidieron", sub: "Finiquito y liquidación", icon: "out" },
+      { href: "/calculadora-finiquito/", title: "Voy a renunciar", sub: "Lo que te deben al irte", icon: "in" },
+      { href: "/calculadora-sueldo-neto/", title: "¿Cuánto me llega de sueldo?", sub: "ISR e IMSS de 2026", icon: "money" },
+      { href: "/calculadora-aguinaldo/", title: "Ya viene diciembre", sub: "Cuánto te toca de aguinaldo", icon: "gift" },
+      { href: "/calculadora-vacaciones/", title: "Quiero tomar vacaciones", sub: "Días y prima vacacional", icon: "calendar" },
+      { href: "/foto-tamano-infantil/", title: "Necesito una foto para un trámite", sub: "Tamaño infantil, pasaporte y más", icon: "doc" },
+    ],
+    datesH: "Fechas importantes de 2026",
+    datesL: "Lo que marca la ley en el año laboral, con la calculadora de cada fecha.",
+    dates: [
+      { day: "1", month: "ene", title: "Nuevo salario mínimo", text: "$315.04 diarios en general y $440.87 en la zona libre de la frontera norte.", href: "/calculadora-sueldo-neto/", link: "Sueldo neto" },
+      { day: "30", month: "abr", title: "Declaración anual", text: "Último día para que las personas físicas la presenten ante el SAT." },
+      { day: "30", month: "may", title: "Reparto de utilidades (PTU)", text: "Último día para que las empresas (personas morales) la paguen." },
+      { day: "20", month: "dic", title: "Aguinaldo", text: "Al menos 15 días de salario, a más tardar el 20 de diciembre (art. 87 de la LFT).", href: "/calculadora-aguinaldo/", link: "Calcular aguinaldo", featured: true },
+    ],
+    exH: "Ejemplos con números reales",
+    exL: "Casos comunes resueltos con las reglas de 2026. Cambia los datos y calcula el tuyo.",
+    cta: "Calcular el mío",
+    ex: [
+      { label: "Renuncia a los 6 meses · $15,000 al mes", total: "$7,438.36", href: "/calculadora-finiquito/",
+        rows: [["Aguinaldo", "$3,719.18"], ["Vacaciones", "$2,975.34"], ["Prima vacacional", "$743.84"]] },
+      { label: "Despido injustificado con 3 años y 8 meses · $12,000 al mes", total: "$66,596.72", href: "/calculadora-finiquito/",
+        rows: [["Finiquito", "$11,038.36"], ["3 meses de salario", "$37,923.29"], ["Prima de antigüedad", "$17,635.07"]] },
+      { label: "Sueldo neto · $15,000 brutos al mes", total: mxn.format(sn.net), href: "/calculadora-sueldo-neto/",
+        rows: [["Sueldo bruto", mxn.format(15000)], ["ISR", "−" + mxn.format(sn.isr)], ["IMSS", "−" + mxn.format(sn.imss)]] },
+    ],
+    helpH: "¿No te quieren pagar lo que te toca?",
+    helpT: "La PROFEDET te asesora gratis sobre finiquitos y despidos. Tienes dos meses desde el despido para reclamar (art. 518 de la LFT), y antes de demandar hay que pasar por el Centro de Conciliación.",
+    helpB: "Ir a la PROFEDET",
+  },
+  en: {
+    sitH: "What happened?",
+    sitL: "Pick your situation and go straight to the right calculator.",
+    sit: [
+      { href: "/calculadora-finiquito/", title: "I was dismissed", sub: "Finiquito and severance", icon: "out" },
+      { href: "/calculadora-finiquito/", title: "I’m resigning", sub: "What you are owed when you leave", icon: "in" },
+      { href: "/calculadora-sueldo-neto/", title: "What’s my take-home pay?", sub: "2026 ISR and IMSS", icon: "money" },
+      { href: "/calculadora-aguinaldo/", title: "December is coming", sub: "Your aguinaldo (Christmas bonus)", icon: "gift" },
+      { href: "/calculadora-vacaciones/", title: "I’m planning a vacation", sub: "Days and vacation premium", icon: "calendar" },
+      { href: "/foto-tamano-infantil/", title: "I need a photo for paperwork", sub: "Infantil, passport and more", icon: "doc" },
+    ],
+    datesH: "Key dates in 2026",
+    datesL: "The dates Mexican labor and tax law sets during the year, with the calculator for each.",
+    dates: [
+      { day: "1", month: "Jan", title: "New minimum wage", text: "$315.04 a day in general and $440.87 in the northern border free zone.", href: "/calculadora-sueldo-neto/", link: "Net pay" },
+      { day: "30", month: "Apr", title: "Annual tax return", text: "Last day for individuals to file with the SAT." },
+      { day: "30", month: "May", title: "Profit sharing (PTU)", text: "Last day for companies (legal entities) to pay it." },
+      { day: "20", month: "Dec", title: "Aguinaldo", text: "At least 15 days of pay, no later than December 20 (LFT art. 87).", href: "/calculadora-aguinaldo/", link: "Calculate aguinaldo", featured: true },
+    ],
+    exH: "Worked examples",
+    exL: "Common cases worked out with the 2026 rules. Change the figures to get your own.",
+    cta: "Calculate mine",
+    ex: [
+      { label: "Resigning after 6 months · $15,000 a month", total: "$7,438.36", href: "/calculadora-finiquito/",
+        rows: [["Aguinaldo", "$3,719.18"], ["Vacation", "$2,975.34"], ["Vacation premium", "$743.84"]] },
+      { label: "Unjustified dismissal after 3 years 8 months · $12,000 a month", total: "$66,596.72", href: "/calculadora-finiquito/",
+        rows: [["Finiquito", "$11,038.36"], ["3 months’ pay", "$37,923.29"], ["Seniority premium", "$17,635.07"]] },
+      { label: "Net pay · $15,000 gross a month", total: mxn.format(sn.net), href: "/calculadora-sueldo-neto/",
+        rows: [["Gross pay", mxn.format(15000)], ["ISR", "−" + mxn.format(sn.isr)], ["IMSS", "−" + mxn.format(sn.imss)]] },
+    ],
+    helpH: "Not being paid what you’re owed?",
+    helpT: "PROFEDET, Mexico’s federal labor advocacy office, gives free advice on finiquitos and dismissals. You have two months from a dismissal to make a claim (LFT art. 518), and you must go to the Conciliation Center before suing.",
+    helpB: "Go to PROFEDET",
+  },
+}[lang];
+const sit = t.sit.map((s) => ({ ...s, href: p + s.href })) as any;
+const dates = t.dates.map((d) => ({ ...d, href: d.href && p + d.href }));
+const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
+---
+<div class="mx-auto max-w-[1120px] px-5">
+  {part === "top" ? (
+    <Section id="situacion" heading={t.sitH} lead={t.sitL} class="bt-sec--first">
+      <Situations items={sit} />
+    </Section>
+  ) : (
+    <>
+      <Section id="fechas" heading={t.datesH} lead={t.datesL}><KeyDates items={dates} /></Section>
+      <Section id="ejemplos" heading={t.exH} lead={t.exL}><Examples items={ex} /></Section>
+      <HelpBox title={t.helpH} text={t.helpT} href="https://www.gob.mx/profedet" label={t.helpB} />
+    </>
+  )}
+</div>

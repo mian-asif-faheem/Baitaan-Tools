@@ -1,0 +1,19 @@
+---
+/** Hero picture for the hub: three result cards, one per language, slightly fanned out. */
+import ResultCard from "./ResultCard.astro";
+interface Card {
+  label: string;
+  value: string;
+  sub?: string;
+  rows?: [string, string][];
+  lang?: string;
+  dir?: "ltr" | "rtl";
+}
+interface Props {
+  cards: Card[];
+}
+const { cards } = Astro.props;
+---
+<div class="bt-collage" aria-hidden="true">
+  {cards.map((c) => <ResultCard {...c} />)}
+</div>

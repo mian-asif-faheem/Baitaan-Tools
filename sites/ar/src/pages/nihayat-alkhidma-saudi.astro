@@ -2,6 +2,10 @@
 import Layout from "../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
+import Summary from "@bt/ui/sections/Summary.astro";
+import SplitBar from "@bt/ui/sections/SplitBar.astro";
+import Steps from "@bt/ui/sections/Steps.astro";
+import Checklist from "@bt/ui/sections/Checklist.astro";
 import EosCalc from "../components/EosCalc.tsx";
 ---
 <!-- TODO (native review): Arabic copy. -->
@@ -20,6 +24,12 @@ import EosCalc from "../components/EosCalc.tsx";
     <EosCalc client:load country="sa" />
 
     <Fragment slot="guide">
+      <Summary heading="باختصار" items={[
+        { label: "إذا أنهى صاحب العمل العقد", title: "المكافأة كاملة", text: "نصف أجر شهر عن كل سنة من الخمس الأولى، وأجر شهر عن كل سنة بعدها.", featured: true },
+        { label: "إذا استقلت", title: "ثلث أو ثلثان أو كاملة", text: "بحسب مدة الخدمة، ولا شيء قبل سنتين." },
+        { label: "موعد الصرف", title: "خلال أسبوع أو أسبوعين", text: "أسبوع إذا أنهى صاحب العمل العقد، وأسبوعان عند الاستقالة (المادة 88)." },
+      ]} />
+
       <h2>طريقة الحساب (المادة 84)</h2>
       <ul>
         <li>نصف أجر شهر عن كل سنة من السنوات الخمس الأولى.</li>
@@ -44,7 +54,21 @@ import EosCalc from "../components/EosCalc.tsx";
         <li>استقالة بعد 8 سنوات بأجر 10,000 ريال: المكافأة الكاملة 55,000، ويستحق الثلثين: <strong>36,666.67 ريال</strong>.</li>
       </ul>
 
+      <p>كيف تتوزع مكافأة المثال الأول (36,000 ريال):</p>
+      <SplitBar label="توزيع المثال الأول" parts={[{ label: "أول 5 سنوات بنصف أجر", value: 20000, display: "20,000 ريال" }, { label: "السنتان التاليتان بأجر كامل", value: 16000, display: "16,000 ريال" }]} />
+
       <AdSlot unit="0000000000" label="إعلان" />
+
+      <h2>عند انتهاء خدمتك: خطوة بخطوة</h2>
+      <Steps items={[
+        { title: "تأكد من أجرك الفعلي", text: "المكافأة تُحسب على آخر أجر شامل البدلات المستحقة، لا على الأساسي وحده." },
+        { title: "احسب المكافأة واحفظ النتيجة", text: "استخدم الحاسبة أعلاه وقارن النتيجة بما يعرضه صاحب العمل." },
+        { title: "انتظر الصرف في موعده", text: "خلال أسبوع إذا أنهى صاحب العمل العقد، وخلال أسبوعين عند الاستقالة (المادة 88)." },
+        { title: "عند الخلاف: التسوية الودية", text: "قدّم الطلب لدى وزارة الموارد البشرية. وإذا لم يُتفق خلال 21 يوم عمل من أول جلسة، تُحال القضية إلى المحكمة العمالية." },
+      ]} />
+
+      <h2>جهّز ما يلي</h2>
+      <Checklist items={["عقد العمل", "تاريخ المباشرة وآخر يوم عمل", "آخر مسيّر رواتب يوضح البدلات", "خطاب الاستقالة أو إنهاء العقد"]} />
 
       <h2>أسئلة شائعة</h2>
       <details class="bt-faq"><summary>متى يجب صرف المكافأة؟</summary><p>خلال أسبوع من انتهاء العلاقة إذا أنهاها صاحب العمل، وخلال أسبوعين إذا كانت الاستقالة من العامل (المادة 88).</p></details>

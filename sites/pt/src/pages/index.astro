@@ -2,6 +2,8 @@
 import Hero from "@bt/ui/Hero.astro";
 import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../components/Layout.astro";
+import HomeExtras from "../components/HomeExtras.astro";
+import PhoneShot from "@bt/ui/sections/PhoneShot.astro";
 
 const groups: Group[] = [
   {
@@ -79,6 +81,10 @@ const groups: Group[] = [
 ];
 ---
 <Layout bleed wide title="Ferramentas grátis em português | Baitaan" description="Calculadoras trabalhistas e ferramentas gratuitas que rodam no seu navegador, sem cadastro: rescisão, férias, 13º, horas extras, foto 3x4 e PDF.">
-  <Hero title="Ferramentas grátis, sem cadastro" lead="Calculadoras trabalhistas e utilidades que rodam no seu navegador. Seus dados não saem do seu aparelho." cta={{ href: "/calculadora-rescisao/", label: "Calcular rescisão" }} />
+  <Hero title="Ferramentas grátis, sem cadastro" lead="Calculadoras trabalhistas e utilidades que rodam no seu navegador. Seus dados não saem do seu aparelho." cta={{ href: "/calculadora-rescisao/", label: "Calcular rescisão" }}>
+    <PhoneShot slot="visual" title="Calculadora de rescisão" label="Líquido a receber · sem justa causa" value="R$ 13.392,64" rows={[["Saldo de salário", "R$ 1.500,00"], ["Aviso prévio", "R$ 3.600,00"], ["Férias + 1/3", "R$ 6.333,33"]]} />
+  </Hero>
+  <HomeExtras lang="pt" part="top" />
   <ToolGrid {groups} />
+  <HomeExtras lang="pt" part="bottom" />
 </Layout>

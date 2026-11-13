@@ -1,0 +1,148 @@
+---
+/**
+ * Extra home-page sections for ar.: "what do you need?" above the tools (part="top"), and
+ * the coming Hijri occasions, worked examples and free help below them (part="bottom").
+ * Arabic and English. The occasion dates come from the Umm al-Qura calendar at build time
+ * and are worked out again in the browser, so they stay current between deploys.
+ */
+import Section from "@bt/ui/sections/Section.astro";
+import Situations from "@bt/ui/sections/Situations.astro";
+import KeyDates from "@bt/ui/sections/KeyDates.astro";
+import Examples from "@bt/ui/sections/Examples.astro";
+import HelpBox from "@bt/ui/sections/HelpBox.astro";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+
+interface Props {
+  lang: "ar" | "en";
+  part: "top" | "bottom";
+}
+const { lang, part } = Astro.props;
+const p = lang === "en" ? "/en" : "";
+const ar = lang === "ar";
+const MONTHS = ar
+  ? ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+  : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const occasions = [
+  { m: 9, d: 1, href: "/kam-baqi-ala-ramadan/",
+    ar: ["أول رمضان", "1 رمضان حسب تقويم أم القرى.", "العد التنازلي"],
+    en: ["First day of Ramadan", "1 Ramadan, by the Umm al-Qura calendar.", "Countdown"] },
+  { m: 10, d: 1, href: "/kam-baqi-ala-eid-alfitr/",
+    ar: ["عيد الفطر", "1 شوال حسب تقويم أم القرى.", "العد التنازلي"],
+    en: ["Eid al-Fitr", "1 Shawwal, by the Umm al-Qura calendar.", "Countdown"] },
+  { m: 12, d: 9, href: "/kam-baqi-ala-eid-aladha/",
+    ar: ["يوم عرفة", "9 ذو الحجة حسب تقويم أم القرى.", "العد التنازلي"],
+    en: ["Day of Arafah", "9 Dhu al-Hijjah, by the Umm al-Qura calendar.", "Countdown"] },
+  { m: 12, d: 10, href: "/kam-baqi-ala-eid-aladha/",
+    ar: ["عيد الأضحى", "10 ذو الحجة حسب تقويم أم القرى.", "العد التنازلي"],
+    en: ["Eid al-Adha", "10 Dhu al-Hijjah, by the Umm al-Qura calendar.", "Countdown"] },
+];
+const dates = occasions
+  .map((o) => ({ o, g: nextHijriOccurrence(o.m, o.d).gregorian }))
+  .sort((a, b) => a.g.getTime() - b.g.getTime())
+  .map(({ o, g }, i) => {
+    const [title, text, link] = o[lang];
+    return { day: String(g.getUTCDate()), month: MONTHS[g.getUTCMonth()], title, text, link, href: p + o.href, hijri: `${o.m}-${o.d}`, featured: i === 0 };
+  });
+
+const t = {
+  ar: {
+    sitH: "ماذا تحتاج؟",
+    sitL: "اختر ما تبحث عنه وننقلك إلى الأداة المناسبة.",
+    sit: [
+      { href: "/kam-baqi-ala-ramadan/", title: "كم باقي على رمضان؟", sub: "عد تنازلي بالأيام والساعات", icon: "moon" },
+      { href: "/tahweel-altareekh/", title: "أريد تحويل تاريخ", sub: "من هجري إلى ميلادي وبالعكس", icon: "calendar" },
+      { href: "/nihayat-alkhidma-saudi/", title: "انتهى عقدي في السعودية", sub: "مكافأة نهاية الخدمة", icon: "out" },
+      { href: "/nihayat-alkhidma-uae/", title: "انتهى عقدي في الإمارات", sub: "مكافأة نهاية الخدمة", icon: "out" },
+      { href: "/hasibat-azzakat/", title: "أريد حساب الزكاة", sub: "مع النصاب بسعر الذهب أو الفضة", icon: "percent" },
+      { href: "/hasibat-addariba/", title: "ضريبة القيمة المضافة", sub: "إضافة الضريبة أو استخراجها", icon: "money" },
+    ],
+    datesH: "المناسبات القادمة",
+    datesL: "مواعيد المناسبات القادمة بالتاريخ الميلادي، مع العد التنازلي لكل منها.",
+    note: "المواعيد حسب تقويم أم القرى، وقد يتقدم الموعد الرسمي أو يتأخر يومًا بحسب رؤية الهلال.",
+    exH: "أمثلة بأرقام حقيقية",
+    exL: "حالات شائعة محسوبة خطوة بخطوة. غيّر الأرقام واحسب حالتك.",
+    cta: "احسب حالتي",
+    ex: [
+      { label: "إنهاء العقد بعد 7 سنوات · أجر فعلي 8,000 ريال", total: "36,000 ريال", href: "/nihayat-alkhidma-saudi/",
+        rows: [["5 سنوات × نصف أجر", "20,000 ريال"], ["سنتان × أجر كامل", "16,000 ريال"]] },
+      { label: "استقالة بعد 4 سنوات · أجر 6,000 ريال", total: "4,000 ريال", href: "/nihayat-alkhidma-saudi/",
+        rows: [["المكافأة الكاملة", "12,000 ريال"], ["نصيب المستقيل", "الثلث"]] },
+      { label: "زكاة 60,000 ريال · الذهب بسعر 400 ريال للغرام", total: "1,500 ريال", href: "/hasibat-azzakat/",
+        rows: [["النصاب: 85 غرامًا × 400", "34,000 ريال"], ["النسبة", "2.5%"]] },
+    ],
+    helpH: "خلاف مع صاحب العمل على مستحقاتك؟",
+    helpT: "في السعودية ابدأ بخدمة التسوية الودية لدى وزارة الموارد البشرية والتنمية الاجتماعية. وإذا لم يتفق الطرفان خلال 21 يوم عمل من أول جلسة، تُحال القضية إلى المحكمة العمالية.",
+    helpB: "خدمة التسوية الودية",
+    helpHref: "https://www.hrsd.gov.sa/ar/ministry-services/services/269970",
+  },
+  en: {
+    sitH: "What do you need?",
+    sitL: "Pick what you are looking for and go straight to the right tool.",
+    sit: [
+      { href: "/kam-baqi-ala-ramadan/", title: "How long until Ramadan?", sub: "Countdown in days and hours", icon: "moon" },
+      { href: "/tahweel-altareekh/", title: "Convert a date", sub: "Hijri to Gregorian and back", icon: "calendar" },
+      { href: "/nihayat-alkhidma-saudi/", title: "My contract ended in Saudi Arabia", sub: "End-of-service benefit", icon: "out" },
+      { href: "/nihayat-alkhidma-uae/", title: "My contract ended in the UAE", sub: "End-of-service gratuity", icon: "out" },
+      { href: "/hasibat-azzakat/", title: "Work out my zakat", sub: "With the nisab at the gold or silver price", icon: "percent" },
+      { href: "/hasibat-addariba/", title: "VAT", sub: "Add VAT or take it out", icon: "money" },
+    ],
+    datesH: "Coming occasions",
+    datesL: "The next Islamic occasions in Gregorian dates, each with its countdown.",
+    note: "Dates follow the Umm al-Qura calendar. The official date can move a day either way with the moon sighting.",
+    exH: "Worked examples",
+    exL: "Common cases worked out step by step. Change the figures to get your own.",
+    cta: "Calculate mine",
+    ex: [
+      { label: "Saudi Arabia: contract ended after 7 years · actual wage SAR 8,000", total: "SAR 36,000", href: "/nihayat-alkhidma-saudi/",
+        rows: [["5 years × half a month", "SAR 20,000"], ["2 years × a full month", "SAR 16,000"]] },
+      { label: "Saudi Arabia: resigned after 4 years · wage SAR 6,000", total: "SAR 4,000", href: "/nihayat-alkhidma-saudi/",
+        rows: [["Full award", "SAR 12,000"], ["Share on resignation", "One third"]] },
+      { label: "Zakat on SAR 60,000 · gold at SAR 400 a gram", total: "SAR 1,500", href: "/hasibat-azzakat/",
+        rows: [["Nisab: 85 g × 400", "SAR 34,000"], ["Rate", "2.5%"]] },
+    ],
+    helpH: "A dispute with your employer over what you’re owed?",
+    helpT: "In Saudi Arabia, start with the amicable settlement service of the Ministry of Human Resources and Social Development. If the two sides don’t agree within 21 working days of the first session, the case goes to the labour court.",
+    helpB: "Amicable settlement service",
+    helpHref: "https://www.hrsd.gov.sa/ministry-services/services/269970",
+  },
+}[lang];
+const sit = t.sit.map((s) => ({ ...s, href: p + s.href })) as any;
+const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
+---
+<div class="mx-auto max-w-[1120px] px-5">
+  {part === "top" ? (
+    <Section id="need" heading={t.sitH} lead={t.sitL} class="bt-sec--first">
+      <Situations items={sit} />
+    </Section>
+  ) : (
+    <>
+      <Section id="occasions" heading={t.datesH} lead={t.datesL}>
+        <div id="bt-occasions" data-months={MONTHS.join(",")}><KeyDates items={dates} note={t.note} /></div>
+      </Section>
+      <Section id="examples" heading={t.exH} lead={t.exL}><Examples items={ex} /></Section>
+      <HelpBox title={t.helpH} text={t.helpT} href={t.helpHref} label={t.helpB} />
+    </>
+  )}
+</div>
+
+<script>
+  import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+  // Recompute the occasions in the browser (a deploy can be weeks old) and keep them in date order.
+  const box = document.getElementById("bt-occasions");
+  const list = box?.querySelector("ul");
+  if (box && list) {
+    const months = (box.dataset.months ?? "").split(",");
+    const items = [...list.querySelectorAll<HTMLElement>("li[data-hijri]")].map((li) => {
+      const [m, d] = (li.dataset.hijri ?? "").split("-").map(Number);
+      const g = nextHijriOccurrence(m, d).gregorian;
+      li.querySelector("[data-day]")!.textContent = String(g.getUTCDate());
+      li.querySelector("[data-month]")!.textContent = months[g.getUTCMonth()];
+      return { li, t: g.getTime() };
+    });
+    items.sort((a, b) => a.t - b.t).forEach(({ li }, i) => {
+      li.classList.toggle("bt-date--on", i === 0);
+      list.append(li);
+    });
+  }
+</script>

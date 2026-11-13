@@ -2,6 +2,8 @@
 import Hero from "@bt/ui/Hero.astro";
 import ToolGrid, { type Group } from "@bt/ui/ToolGrid.astro";
 import Layout from "../components/Layout.astro";
+import HomeExtras from "../components/HomeExtras.astro";
+import PhoneShot from "@bt/ui/sections/PhoneShot.astro";
 
 const groups: Group[] = [
   {
@@ -72,6 +74,10 @@ const groups: Group[] = [
 ];
 ---
 <Layout bleed wide title="Herramientas gratis en español | Baitaan" description="Calculadoras laborales y herramientas gratuitas que funcionan en tu navegador, sin registro: finiquito, sueldo neto, aguinaldo, fotos tamaño infantil y comprimir PDF.">
-  <Hero title="Herramientas gratis, sin registro" lead="Calculadoras laborales y utilidades que funcionan en tu navegador. Tus datos nunca salen de tu dispositivo." cta={{ href: "/calculadora-finiquito/", label: "Calcular mi finiquito" }} />
+  <Hero title="Herramientas gratis, sin registro" lead="Calculadoras laborales y utilidades que funcionan en tu navegador. Tus datos nunca salen de tu dispositivo." cta={{ href: "/calculadora-finiquito/", label: "Calcular mi finiquito" }}>
+    <PhoneShot slot="visual" title="Calculadora de finiquito" label="Total estimado · renuncia" value="$7,438.36" rows={[["Aguinaldo", "$3,719.18"], ["Vacaciones", "$2,975.34"], ["Prima vacacional", "$743.84"]]} />
+  </Hero>
+  <HomeExtras lang="es" part="top" />
   <ToolGrid {groups} />
+  <HomeExtras lang="es" part="bottom" />
 </Layout>
