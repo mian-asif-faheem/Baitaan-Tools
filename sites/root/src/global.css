@@ -9,6 +9,6 @@
 @source "../../../packages/ui/src";
 
 @theme {
-  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans Arabic", "Plex Fallback", system-ui, sans-serif;
 }
 

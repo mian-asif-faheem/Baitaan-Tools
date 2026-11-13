@@ -9,7 +9,56 @@ import Situations from "@bt/ui/sections/Situations.astro";
 import KeyDates from "@bt/ui/sections/KeyDates.astro";
 import Examples from "@bt/ui/sections/Examples.astro";
 import HelpBox from "@bt/ui/sections/HelpBox.astro";
+import Explain from "@bt/ui/sections/Explain.astro";
 import { sueldoNeto } from "@bt/tools/mx";
+
+/** "About these calculators": the law they follow, what changed, how to use them. */
+const EXPLAIN = {
+  "es": {
+    "h": "Sobre estas calculadoras",
+    "l": "Qué ley siguen, qué cambió en 2026 y cómo obtener un resultado preciso.",
+    "items": [
+      {
+        "title": "Qué ley siguen",
+        "text": "Las calculadoras laborales siguen la Ley Federal del Trabajo. El finiquito suma el salario pendiente, el aguinaldo proporcional (art. 87), las vacaciones según la tabla de «vacaciones dignas» (art. 76) y la prima vacacional (art. 80). La liquidación agrega la indemnización de tres meses (arts. 48 y 50) y la prima de antigüedad (art. 162). El sueldo neto aplica la tarifa mensual de ISR (art. 96 de la Ley del ISR), el subsidio para el empleo y las cuotas obreras del IMSS."
+      },
+      {
+        "title": "Qué cambió en 2026",
+        "text": "El salario mínimo general subió a $315.04 diarios, y a $440.87 en la zona libre de la frontera norte. Desde el 1 de febrero la UMA vale $117.31, lo que mueve los límites exentos de ISR del aguinaldo (30 UMA), la prima vacacional (15 UMA) y las indemnizaciones (90 UMA por año). El SAT actualizó la tarifa de ISR por inflación, y el subsidio para el empleo es el 15.02 % de la UMA mensual para sueldos de hasta $11,492.66."
+      },
+      {
+        "title": "Cómo obtener un resultado preciso",
+        "text": "Usa tu salario bruto, como aparece en tu recibo de nómina, y las fechas exactas de ingreso y de salida. Si tu empresa da más de lo que marca la ley, por ejemplo 30 días de aguinaldo o una prima vacacional mayor al 25 %, cámbialo en «Prestaciones de tu empresa». Los resultados son brutos: tu empresa retiene ISR sobre la parte gravable."
+      },
+      {
+        "title": "Tus datos se quedan contigo",
+        "text": "Todo se calcula dentro de tu navegador. No guardamos tu salario, tus fechas ni tus archivos, y no necesitas crear una cuenta. Cada página indica sus fuentes oficiales y la fecha de su última revisión."
+      }
+    ]
+  },
+  "en": {
+    "h": "About these calculators",
+    "l": "Which law they follow, what changed in 2026 and how to get an accurate result.",
+    "items": [
+      {
+        "title": "Which law they follow",
+        "text": "The labor calculators follow Mexico's Ley Federal del Trabajo. The finiquito adds up unpaid salary, proportional aguinaldo (art. 87), vacation from the “vacaciones dignas” table (art. 76) and the vacation premium (art. 80). Severance adds three months’ pay (arts. 48 and 50) and the seniority premium (art. 162). Net pay applies the monthly ISR tariff (art. 96 of the ISR Law), the employment subsidy and the employee’s IMSS contributions."
+      },
+      {
+        "title": "What changed in 2026",
+        "text": "The general minimum wage rose to $315.04 a day, and to $440.87 in the northern border free zone. Since 1 February the UMA is $117.31, which moves the ISR-free limits for aguinaldo (30 UMA), the vacation premium (15 UMA) and severance (90 UMA per year). The SAT updated the ISR tariff for inflation, and the employment subsidy is 15.02% of the monthly UMA for pay up to $11,492.66."
+      },
+      {
+        "title": "How to get an accurate result",
+        "text": "Use your gross pay as it appears on your payslip, and your exact start and end dates. If your employer gives more than the law requires, such as 30 days of aguinaldo or a vacation premium above 25%, change it under “Your employer’s benefits”. Results are gross: your employer withholds ISR on the taxable part."
+      },
+      {
+        "title": "Your data stays with you",
+        "text": "Everything is calculated inside your browser. We do not keep your salary, your dates or your files, and you need no account. Every page lists its official sources and the date it was last checked."
+      }
+    ]
+  }
+};
 
 interface Props {
   lang: "es" | "en";
@@ -103,6 +152,7 @@ const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
     <>
       <Section id="fechas" heading={t.datesH} lead={t.datesL}><KeyDates items={dates} /></Section>
       <Section id="ejemplos" heading={t.exH} lead={t.exL}><Examples items={ex} /></Section>
+      <Section id="about-tools" heading={EXPLAIN[lang].h} lead={EXPLAIN[lang].l}><Explain items={EXPLAIN[lang].items} /></Section>
       <HelpBox title={t.helpH} text={t.helpT} href="https://www.gob.mx/profedet" label={t.helpB} />
     </>
   )}

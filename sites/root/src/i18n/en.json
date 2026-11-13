@@ -48,6 +48,9 @@
       "error": "Couldn't save that. Please try again."
     },
     "menu": "Menu",
-    "menuClose": "Close"
+    "menuClose": "Close",
+    "methodTitle": "How we calculate",
+    "methodText": "With the law and official tables cited here, and checked against the worked examples on this page. If you spot a mistake,",
+    "methodLink": "write to us"
   }
 }

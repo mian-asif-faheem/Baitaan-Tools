@@ -1,0 +1,12 @@
+---
+/** Short headed paragraphs that explain the tools: the law they follow, what changed, how to use them. */
+interface Props {
+  items: { title: string; text: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="bt-explain" data-animate="stagger">
+  {items.map((i) => (
+    <div><h3>{i.title}</h3><p>{i.text}</p></div>
+  ))}
+</div>

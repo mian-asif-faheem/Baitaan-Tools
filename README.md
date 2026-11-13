@@ -38,6 +38,27 @@ The look comes from the Claude Design boards (design system, home pages, calcula
 - **Content sections:** `packages/ui/src/sections/` holds the home-page and guide blocks: hero pictures (`HeroCollage`, `PhoneShot`, passed to `Hero` as `slot="visual"`), `Stats`, `HowItWorks`, `Situations` ("what happened?"), `KeyDates`, `Examples`, `HelpBox`, and for tool guides `Summary`, `SplitBar`, `Steps` and `Checklist`. Each country site's `components/HomeExtras.astro` holds its home copy in both languages. The illustrations are inline line drawings in the site colour, so they follow light and dark mode. Figures in examples come from the calculator pages' own worked examples; keep them in step when the yearly tables change. The Arabic occasions are worked out from the Umm al-Qura calendar at build time and again in the browser.
 - **Motion:** one easing (`cubic-bezier(.2,.7,.2,1)`): home headings sharpen in word by word (the one authored moment), call-to-action buttons lean toward the pointer (`fx/magnet.ts`, ported from [React Bits](https://github.com/DavidHDev/react-bits) Magnet; MIT + Commons Clause, so it can be used on these sites but not resold on its own, so keep the headers in `fx/`), sections below the fold slide in once as they scroll into view (`fx/animated-content.ts`, React Bits AnimatedContent; mark blocks with `data-animate` or `data-animate="stagger"`), result and countdown digits roll to each new value like an odometer (`fx/Counter.tsx`, ported from React Bits Counter), the menu and toggle highlight stretches to the new choice and squashes into place (`fx/rubber.ts`, ported from React Bits Rubber Segment; in the menu the page changes as it lands). Below 1024px the menu moves into a "Menu" button that opens a full-screen staggered menu (`fx/staggered-menu.ts`, ported from React Bits StaggeredMenu): two layers in the site's own colours sweep in, then the panel, then the links rise in one by one. It slides from the right, or from the left in Arabic, and acts as a dialog (Escape closes, focus stays inside). Everything is instant under "reduce motion". Nothing animates near ad slots or inside fields.
 
+
+## Search engines and launch
+
+- **Crawl files:** `scripts/seo-files.mjs` runs after the build and writes `robots.txt` (with the
+  sitemap address) and `sitemap.xml` (a copy of Astro's `sitemap-index.xml`) into all four sites. When
+  `PUBLIC_ADSENSE_CLIENT` (ca-pub-…) is set as a GitHub variable it also writes `ads.txt`.
+- **hreflang:** each page lists its own language versions; pages that do the same job on several
+  sites (home pages, compress PDF, merge PDF) list each other, from `CLUSTERS` in
+  `packages/ui/src/sites.ts`. English twins on the subdomains use en-MX, en-BR and en-SA; the hub
+  is `en` and the x-default for the home pages.
+- **Structured data:** tool pages carry WebApplication, BreadcrumbList and FAQPage (built from
+  the guide's FAQ); home pages carry WebSite and Organization; the hub carries its FAQ.
+- **Share images:** `node scripts/og-images.mjs` draws `public/img/og-<lang>.png` per site;
+  run it again when a tagline or colour changes.
+- **Trust pages:** About, Contact, Terms and Privacy on every site and language; each tool page
+  ends with a "how we calculate" note that links to Contact.
+- **Fonts and layout shift:** the Latin font is preloaded with a size-matched Arial fallback
+  ("Plex Fallback" in theme.css); the Arabic font is preloaded and uses `font-display: optional`.
+  `--hh` starts at the real header height. Local Lighthouse (mobile): performance 91–99,
+  accessibility, best practices and SEO 100, CLS ≈ 0.
+
 ## Outside resources
 
 [RESOURCES.md](RESOURCES.md) lists the outside repositories this project uses or takes ideas from, with a short note on each.

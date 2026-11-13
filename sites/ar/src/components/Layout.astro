@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "@bt/ui/BaseLayout.astro";
+import arabic400 from "@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-400-normal.woff2?url";
+import arabic700 from "@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-700-normal.woff2?url";
 import { NATIVE, dirOf, getT, versionsFor, type Lang } from "../i18n";
 import "../global.css";
 
@@ -19,7 +21,7 @@ const t = getT(lang);
 const versions = versionsFor(notFound ? (lang === "en" ? "/en/" : "/") : Astro.url.pathname);
 ---
 <BaseLayout
-  site="ar"
+  site="ar" preload={[arabic700, arabic400]}
   wordmark
   {title}
   {description}

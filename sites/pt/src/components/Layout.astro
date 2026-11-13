@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@bt/ui/BaseLayout.astro";
+import plex from "@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url";
 import { NATIVE, getT, versionsFor, type Lang } from "../i18n";
 import "../global.css";
 
@@ -19,7 +20,7 @@ const t = getT(lang);
 const versions = versionsFor(notFound ? (lang === "en" ? "/en/" : "/") : Astro.url.pathname);
 ---
 <BaseLayout
-  site="pt"
+  site="pt" preload={[plex]}
   wordmark
   {title}
   {description}

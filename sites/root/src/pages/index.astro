@@ -213,6 +213,7 @@ const faqs = [
       </ul>
     </section>
 
+    <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })} />
     <section class="bt-hub-section bt-guide bt-hub-faq" data-animate>
       <div class="bt-faqs">
         <header class="bt-faqs__head">

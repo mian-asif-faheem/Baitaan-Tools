@@ -105,6 +105,15 @@ html {
 }
 /* On pages that open with a hero band, the band runs up behind the floating bar.
    --hh is the header's height, kept up to date by fx/rubber.ts. */
+/* Start from the measured header height, so the hero does not jump when the script sets it. */
+:root {
+  --hh: 74px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --hh: 76px;
+  }
+}
 body:has(main > .bt-hero:first-child) .bt-header {
   margin-bottom: calc(var(--hh, 0px) * -1);
 }
@@ -2605,4 +2614,39 @@ html.bt-sm-lock {
 }
 .bt-sm__group a:hover {
   color: var(--link);
+}
+/* The "how we calculate" note under the sources: an inline link, not a source row. */
+.bt-sources .bt-method {
+  margin-top: 8px;
+}
+.bt-sources .bt-method a {
+  display: inline;
+  min-height: 0;
+  font-size: inherit;
+}
+
+/* Home pages: "about these calculators", short headed paragraphs in two columns. */
+.bt-explain {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 28px 48px;
+}
+.bt-explain h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 600;
+}
+.bt-explain p {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+/* Buttons inside text pages keep button colours, not link colours. */
+.bt-prose a.bt-btn,
+.bt-guide a.bt-btn {
+  color: var(--on-primary);
+  text-decoration: none;
 }

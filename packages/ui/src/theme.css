@@ -42,3 +42,25 @@ html.theme-ready header,
 html.theme-ready footer {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
+
+/* Fallback while IBM Plex Sans loads: Arial (or Roboto) scaled to Plex's widths and line
+   metrics, so text wraps the same before and after the swap and the page does not jump (CLS).
+   Measured: Plex 400 is 0.9% wider than Arial 400; Plex 650 is 2.2% narrower than Arial Bold. */
+@font-face {
+  font-family: "Plex Fallback";
+  src: local("Arial"), local("ArialMT"), local("Helvetica"), local("Roboto");
+  font-weight: 100 549;
+  size-adjust: 100.9%;
+  ascent-override: 101.6%;
+  descent-override: 27.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Plex Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"), local("Roboto Bold");
+  font-weight: 550 900;
+  size-adjust: 97.8%;
+  ascent-override: 104.8%;
+  descent-override: 28.1%;
+  line-gap-override: 0%;
+}

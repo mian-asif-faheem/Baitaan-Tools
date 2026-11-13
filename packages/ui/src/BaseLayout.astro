@@ -8,7 +8,7 @@
  * - Consent: Google Consent Mode v2 defaults to denied; the banner stores the choice in
  *   `bt_consent` and updates Google's tags. bt_theme and bt_consent are shared across *.baitaandessigns.com.
  */
-import { SITES, type SiteKey } from "./sites";
+import { SITES, CLUSTERS, EN_REGION, type SiteKey } from "./sites";
 import ConsentBanner from "./ConsentBanner.astro";
 import Footer, { type FooterStrings, type NewsletterStrings } from "./Footer.astro";
 import Wordmark from "./Wordmark.astro";
@@ -49,6 +49,10 @@ export interface Chrome {
   newsletter?: NewsletterStrings;
   /** Footer column titles. */
   footer?: FooterStrings;
+  /** Tool pages: "How we calculate" note above the sources. */
+  methodTitle?: string;
+  methodText?: string;
+  methodLink?: string;
   /** Small-screen menu button: "Menu" and "Close". */
   menu?: string;
   menuClose?: string;
@@ -57,6 +61,10 @@ export interface Chrome {
 /** What the layout shares with components rendered inside it (ToolPage, ToolGrid…). */
 export interface ShellContext {
   chrome: Chrome;
+  site: SiteKey;
+  lang: string;
+  /** This page's canonical URL. */
+  canonical: string;
   nav: { href: string; label: string }[];
   homeHref: string;
   dir: "ltr" | "rtl";
@@ -66,6 +74,8 @@ export interface ShellContext {
 
 interface Props {
   site: SiteKey;
+  /** Font files to preload (URLs from `?url` imports), so text renders in its real font sooner. */
+  preload?: string[];
   title: string;
   description: string;
   /** Language code of this page (one of versions[].code). */
@@ -99,6 +109,7 @@ const {
   versions = [],
   nav = [],
   footer = [],
+  preload = [],
   footerNote = "",
   brand,
   homeHref = "/",
@@ -115,8 +126,8 @@ const others = versions.filter((v) => v.code !== code);
 const xDefault = versions[0];
 const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-XXXXXXXXXXXXXXXX
 const here = Astro.url.pathname;
-const contact = footer.find((f) => /^mailto:|\/contact/.test(f.href))?.href;
-(Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir, contact };
+const contact = footer.find((f) => /^mailto:|\/(contact|contacto|contato)\//.test(f.href))?.href;
+(Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir, contact, site, lang, canonical };
 // Small-screen menu: the tool links (or, on the hub, the language sites), then the site's own pages.
 const SITE_NAMES: Record<string, { label: string; lang: string }> = {
   es: { label: "Español", lang: "es" },
@@ -134,12 +145,47 @@ const smLangs = nav.length
 const FLAGS: Record<string, string> = { en: "us", es: "mx", pt: "br", ar: "sa" };
 const menuLabel = chrome.menu ?? "Menu";
 const closeLabel = chrome.menuClose ?? "Close";
+// hreflang: this page's own versions, widened to the matching pages on the other sites when the
+// page is in a cross-site cluster (home pages, PDF tools). Every page in a cluster lists the same set.
+const nativePath = site === "root" ? here : (versions.find((v) => v.code !== "en")?.href ?? here);
+const cluster = CLUSTERS.find((c) => c[site as SiteKey] === nativePath);
+const alternates: { hreflang: string; href: string }[] = cluster
+  ? [
+      ...(Object.entries(cluster) as [SiteKey, string][]).flatMap(([k, path]) =>
+        k === "root"
+          ? [{ hreflang: "en", href: SITES.root.url + path }]
+          : [
+              { hreflang: SITES[k].lang, href: SITES[k].url + path },
+              { hreflang: EN_REGION[k]!, href: SITES[k].url + (path === "/" ? "/en/" : `/en${path}`) },
+            ],
+      ),
+      { hreflang: "x-default", href: cluster.root ? SITES.root.url + cluster.root : abs(xDefault.href) },
+    ]
+  : versions.length > 1
+    ? [
+        ...versions.map((v) => ({ hreflang: v.code === "en" ? (EN_REGION[site as SiteKey] ?? "en") : v.hreflang, href: abs(v.href) })),
+        { hreflang: "x-default", href: abs(xDefault.href) },
+      ]
+    : [];
+// Share image: one per site and language (scripts/og-images.mjs).
+const ogImage = abs(`/img/og-${lang.startsWith("en") ? "en" : code}.png`);
+// Home pages describe the site and who publishes it.
+const isHome = here === homeHref;
+const publisher = { "@type": "Organization", name: "Baitaan", url: `${SITES.root.url}/`, email: "hello@baitaandessigns.com", parentOrganization: { "@type": "Organization", name: "MAAF Studios", url: "https://maafstudios.com" } };
+const siteLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", name: s.name, url: canonical, inLanguage: lang, description, publisher: { "@id": `${SITES.root.url}/#org` } },
+    { ...publisher, "@id": `${SITES.root.url}/#org` },
+  ],
+};
 const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href })), redirect: langRedirect };
 ---
 <!doctype html>
 <html lang={lang} dir={dir}>
   <head>
     <meta charset="utf-8" />
+    {preload.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {!langRedirect && <meta name="robots" content="noindex" />}
     <script is:inline define:vars={{ head }}>
@@ -195,12 +241,19 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
-    {versions.length > 1 && versions.map((v) => <link rel="alternate" hreflang={v.hreflang} href={abs(v.href)} />)}
-    {versions.length > 1 && <link rel="alternate" hreflang="x-default" href={abs(xDefault.href)} />}
+    {alternates.map((v) => <link rel="alternate" hreflang={v.hreflang} href={v.href} />)}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang.replace("-", "_")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={s.name} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(siteLd)} />}
     <meta name="theme-color" content="#0f766e" />
     {adClient && (
       <script

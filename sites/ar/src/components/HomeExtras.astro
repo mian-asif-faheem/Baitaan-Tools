@@ -10,7 +10,56 @@ import Situations from "@bt/ui/sections/Situations.astro";
 import KeyDates from "@bt/ui/sections/KeyDates.astro";
 import Examples from "@bt/ui/sections/Examples.astro";
 import HelpBox from "@bt/ui/sections/HelpBox.astro";
+import Explain from "@bt/ui/sections/Explain.astro";
 import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
+
+/** "About these calculators": the law they follow, what changed, how to use them. */
+const EXPLAIN = {
+  "ar": {
+    "h": "عن هذه الأدوات",
+    "l": "الأنظمة التي تتبعها، والتقويم الذي تعتمد عليه، وما تحسبه بالضبط.",
+    "items": [
+      {
+        "title": "الأنظمة التي تتبعها",
+        "text": "تتبع حاسبة نهاية الخدمة السعودية المواد 84 و85 و87 من نظام العمل: نصف أجر شهر عن كل سنة من السنوات الخمس الأولى، وأجر شهر عن كل سنة بعدها، مع حصة المستقيل بحسب مدة خدمته. وتتبع الحاسبة الإماراتية المادة 51 من المرسوم بقانون اتحادي رقم 33 لسنة 2021: أجر 21 يومًا من الراتب الأساسي عن كل سنة من السنوات الخمس الأولى، و30 يومًا عن كل سنة بعدها، بحد أقصى أجر سنتين."
+      },
+      {
+        "title": "التقويم الهجري",
+        "text": "تعتمد أدوات التاريخ والعد التنازلي على تقويم أم القرى المعتمد في المملكة العربية السعودية. ويُعلن أول رمضان والعيدان رسميًا بعد تحرّي رؤية الهلال، لذلك قد يختلف الموعد الرسمي يومًا واحدًا."
+      },
+      {
+        "title": "الضريبة والزكاة",
+        "text": "تضيف حاسبة ضريبة القيمة المضافة الضريبة أو تستخرجها بنسبة 15% في السعودية، و5% في الإمارات وعُمان، و10% في البحرين. وتقارن حاسبة الزكاة أموالك بالنصاب، وهو 85 غرامًا من الذهب أو 595 غرامًا من الفضة، وتحسب 2.5% منها إذا بلغته."
+      },
+      {
+        "title": "بياناتك تبقى معك",
+        "text": "يجري كل حساب داخل متصفحك. لا نحفظ راتبك ولا تواريخك ولا ملفاتك، ولا تحتاج إلى حساب. وتذكر كل صفحة مصادرها الرسمية وتاريخ آخر مراجعة لها."
+      }
+    ]
+  },
+  "en": {
+    "h": "About these tools",
+    "l": "The laws they follow, the calendar they use and exactly what they calculate.",
+    "items": [
+      {
+        "title": "The laws they follow",
+        "text": "The Saudi end-of-service calculator follows articles 84, 85 and 87 of the Labour Law: half a month’s wage for each of the first five years and a full month for each year after, with a resigning worker’s share set by years of service. The UAE calculator follows article 51 of Federal Decree-Law 33 of 2021: 21 days of basic wage for each of the first five years and 30 days for each year after, capped at two years’ wage."
+      },
+      {
+        "title": "The Hijri calendar",
+        "text": "The date tools and countdowns use the Umm al-Qura calendar, the official calendar of Saudi Arabia. The start of Ramadan and both Eids is announced after the moon sighting, so the official date can differ by one day."
+      },
+      {
+        "title": "VAT and zakat",
+        "text": "The VAT calculator adds or removes VAT at 15% in Saudi Arabia, 5% in the UAE and Oman, and 10% in Bahrain. The zakat calculator compares your wealth with the nisab, 85 grams of gold or 595 grams of silver, and works out 2.5% once you reach it."
+      },
+      {
+        "title": "Your data stays with you",
+        "text": "Everything is calculated inside your browser. We do not keep your salary, your dates or your files, and you need no account. Every page lists its official sources and the date it was last checked."
+      }
+    ]
+  }
+};
 
 interface Props {
   lang: "ar" | "en";
@@ -42,7 +91,7 @@ const dates = occasions
   .sort((a, b) => a.g.getTime() - b.g.getTime())
   .map(({ o, g }, i) => {
     const [title, text, link] = o[lang];
-    return { day: String(g.getUTCDate()), month: MONTHS[g.getUTCMonth()], title, text, link, href: p + o.href, hijri: `${o.m}-${o.d}`, featured: i === 0 };
+    return { day: String(g.getUTCDate()), month: `${MONTHS[g.getUTCMonth()]} ${g.getUTCFullYear()}`, title, text, link, href: p + o.href, hijri: `${o.m}-${o.d}`, featured: i === 0 };
   });
 
 const t = {
@@ -121,6 +170,7 @@ const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
         <div id="bt-occasions" data-months={MONTHS.join(",")}><KeyDates items={dates} note={t.note} /></div>
       </Section>
       <Section id="examples" heading={t.exH} lead={t.exL}><Examples items={ex} /></Section>
+      <Section id="about-tools" heading={EXPLAIN[lang].h} lead={EXPLAIN[lang].l}><Explain items={EXPLAIN[lang].items} /></Section>
       <HelpBox title={t.helpH} text={t.helpT} href={t.helpHref} label={t.helpB} />
     </>
   )}
@@ -137,7 +187,7 @@ const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
       const [m, d] = (li.dataset.hijri ?? "").split("-").map(Number);
       const g = nextHijriOccurrence(m, d).gregorian;
       li.querySelector("[data-day]")!.textContent = String(g.getUTCDate());
-      li.querySelector("[data-month]")!.textContent = months[g.getUTCMonth()];
+      li.querySelector("[data-month]")!.textContent = `${months[g.getUTCMonth()]} ${g.getUTCFullYear()}`;
       return { li, t: g.getTime() };
     });
     items.sort((a, b) => a.t - b.t).forEach(({ li }, i) => {

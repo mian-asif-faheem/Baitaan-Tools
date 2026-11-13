@@ -36,7 +36,11 @@
       "label": "Privacidade"
     },
     {
-      "href": "mailto:hello@baitaandessigns.com",
+      "href": "/termos/",
+      "label": "Termos de uso"
+    },
+    {
+      "href": "/contato/",
       "label": "Contato"
     }
   ],
@@ -273,6 +277,9 @@
       "error": "Não foi possível salvar. Tente de novo."
     },
     "menu": "Menu",
-    "menuClose": "Fechar"
+    "menuClose": "Fechar",
+    "methodTitle": "Como calculamos",
+    "methodText": "Com a lei e as tabelas oficiais citadas aqui, e conferido com os exemplos resolvidos desta página. Se encontrar um erro,",
+    "methodLink": "escreva para nós"
   }
 }

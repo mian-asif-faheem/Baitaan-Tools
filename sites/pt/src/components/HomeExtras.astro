@@ -9,6 +9,55 @@ import Situations from "@bt/ui/sections/Situations.astro";
 import KeyDates from "@bt/ui/sections/KeyDates.astro";
 import Examples from "@bt/ui/sections/Examples.astro";
 import HelpBox from "@bt/ui/sections/HelpBox.astro";
+import Explain from "@bt/ui/sections/Explain.astro";
+
+/** "About these calculators": the law they follow, what changed, how to use them. */
+const EXPLAIN = {
+  "pt": {
+    "h": "Sobre estas calculadoras",
+    "l": "Que lei elas seguem, o que mudou em 2026 e como chegar a um resultado preciso.",
+    "items": [
+      {
+        "title": "Que lei elas seguem",
+        "text": "As calculadoras seguem a CLT e as tabelas oficiais. A rescisão soma saldo de salário, aviso prévio proporcional (Lei 12.506/2011), 13º e férias proporcionais com 1/3 e a multa de 40% do FGTS (Lei 8.036/1990, art. 18), conforme o tipo de desligamento. O salário líquido desconta o INSS progressivo e o Imposto de Renda pela tabela mensal."
+      },
+      {
+        "title": "O que mudou em 2026",
+        "text": "O salário mínimo passou para R$ 1.621 e o teto do INSS para R$ 8.475,55. Pela Lei 15.270/2025, quem ganha até R$ 5.000 por mês não tem Imposto de Renda retido na fonte, e entre R$ 5.000 e R$ 7.350 o imposto tem uma redução que diminui aos poucos. A redução também vale para o 13º salário."
+      },
+      {
+        "title": "Como chegar a um resultado preciso",
+        "text": "Use o salário bruto do holerite e as datas exatas de admissão e de saída. Informe a média de horas extras e comissões, que entra no 13º, nas férias e na rescisão. Para a multa do FGTS, use o saldo do aplicativo FGTS; sem ele, a calculadora faz uma estimativa."
+      },
+      {
+        "title": "Seus dados ficam com você",
+        "text": "Tudo é calculado dentro do seu navegador. Não guardamos o seu salário, as suas datas nem os seus arquivos, e você não precisa criar conta. Cada página mostra as fontes oficiais e a data da última revisão."
+      }
+    ]
+  },
+  "en": {
+    "h": "About these calculators",
+    "l": "Which law they follow, what changed in 2026 and how to get an accurate result.",
+    "items": [
+      {
+        "title": "Which law they follow",
+        "text": "The calculators follow the CLT and the official tables. Termination pay adds the salary balance, proportional notice (Lei 12.506/2011), proportional 13th salary and vacation with the 1/3 bonus, and the 40% FGTS fine (Lei 8.036/1990, art. 18), depending on how the job ended. Net salary deducts progressive INSS and income tax by the monthly table."
+      },
+      {
+        "title": "What changed in 2026",
+        "text": "The minimum wage rose to R$ 1.621 and the INSS ceiling to R$ 8.475,55. Under Lei 15.270/2025, pay up to R$ 5.000 a month has no income tax withheld, and between R$ 5.000 and R$ 7.350 the tax gets a reduction that tapers off. The reduction also applies to the 13th salary."
+      },
+      {
+        "title": "How to get an accurate result",
+        "text": "Use the gross salary on your payslip and your exact start and end dates. Enter your average overtime and commissions, which count towards the 13th salary, vacation and termination pay. For the FGTS fine, use the balance in the FGTS app; without it, the calculator estimates it."
+      },
+      {
+        "title": "Your data stays with you",
+        "text": "Everything is calculated inside your browser. We do not keep your salary, your dates or your files, and you need no account. Every page lists its official sources and the date it was last checked."
+      }
+    ]
+  }
+};
 
 interface Props {
   lang: "pt" | "en";
@@ -100,6 +149,7 @@ const ex = t.ex.map((e) => ({ ...e, href: p + e.href, cta: t.cta })) as any;
     <>
       <Section id="datas" heading={t.datesH} lead={t.datesL}><KeyDates items={dates} /></Section>
       <Section id="exemplos" heading={t.exH} lead={t.exL}><Examples items={ex} /></Section>
+      <Section id="about-tools" heading={EXPLAIN[lang].h} lead={EXPLAIN[lang].l}><Explain items={EXPLAIN[lang].items} /></Section>
       <HelpBox title={t.helpH} text={t.helpT} href="https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego" label={t.helpB} />
     </>
   )}

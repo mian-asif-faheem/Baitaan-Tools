@@ -28,7 +28,11 @@
       "label": "Privacidad"
     },
     {
-      "href": "mailto:hello@baitaandessigns.com",
+      "href": "/terminos/",
+      "label": "Términos"
+    },
+    {
+      "href": "/contacto/",
       "label": "Contacto"
     }
   ],
@@ -197,6 +201,9 @@
       "error": "No se pudo guardar. Inténtalo de nuevo."
     },
     "menu": "Menú",
-    "menuClose": "Cerrar"
+    "menuClose": "Cerrar",
+    "methodTitle": "Cómo lo calculamos",
+    "methodText": "Con la ley y las tablas oficiales que citamos aquí, y comprobado con los ejemplos resueltos de esta página. Si ves un error,",
+    "methodLink": "escríbenos"
   }
 }

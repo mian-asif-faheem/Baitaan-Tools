@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@bt/ui/BaseLayout.astro";
+import plex from "@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url";
 import t from "../i18n/en.json";
 import "../global.css";
 
@@ -14,9 +15,10 @@ const { title, description, notFound = false, bleed = false, wide = false } = As
 const footer = [
   { href: "/about/", label: "About" },
   { href: "/privacy/", label: "Privacy" },
+  { href: "/terms/", label: "Terms" },
   { href: "/contact/", label: "Contact" },
 ];
 ---
-<BaseLayout site="root" wordmark {title} {description} code="en" lang="en" dir="ltr" {footer} footerNote="Free tools that speak your language." chrome={t.chrome} langRedirect={!notFound} {bleed} {wide}>
+<BaseLayout site="root" preload={[plex]} wordmark {title} {description} code="en" lang="en" dir="ltr" {footer} footerNote="Free tools that speak your language." chrome={t.chrome} langRedirect={!notFound} {bleed} {wide}>
   <slot />
 </BaseLayout>
