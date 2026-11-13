@@ -83,7 +83,7 @@ const faqs = [
         const rtl = site.dir === "rtl";
         return (
           <li>
-            <a href={site.url} lang={site.lang} dir={site.dir} class="bt-card bt-lang-card min-h-[220px] gap-2.5 p-6" style={style} data-spotlight>
+            <a href={site.url} lang={site.lang} dir={site.dir} class="bt-card bt-lang-card min-h-[220px] gap-2.5 p-6" style={style} data-specular>
               <span class="flex items-center gap-2.5">
                 <span class="flex gap-[3px]" aria-hidden="true"><i></i><i></i><i></i></span>
                 <span class="font-['IBM_Plex_Sans_Variable',sans-serif] text-[13px] text-muted">{new URL(site.url).host}</span>
@@ -92,7 +92,7 @@ const faqs = [
               <span class:list={["text-base text-muted text-pretty", rtl && "font-['IBM_Plex_Sans_Arabic',sans-serif] leading-[1.7]"]}>{desc}</span>
               <span class:list={["mt-auto flex items-center justify-between gap-3 text-[15px] font-semibold", rtl && "font-['IBM_Plex_Sans_Arabic',sans-serif]"]}>
                 <span>{go}</span>
-                <span class="bt-lang-card__btn"><Icon d={rtl ? arrowLeft : arrowRight} size={18} /></span>
+                <span class="bt-lang-card__btn" data-magnet><Icon d={rtl ? arrowLeft : arrowRight} size={18} /></span>
               </span>
             </a>
           </li>
@@ -105,10 +105,10 @@ const faqs = [
         <h2 id="popular">Popular tools</h2>
         <p>A few of the most used calculators. Each one follows its country’s official rules and shows its sources.</p>
       </div>
-      <ul class="bt-shots">
+      <ul class="bt-shots" data-animate="stagger">
         {popular.map((t) => (
           <li>
-            <a class="bt-card bt-shot" href={t.site.url + t.path} data-spotlight>
+            <a class="bt-card bt-shot" href={t.site.url + t.path} data-specular>
               <img src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
               <span class="bt-shot__body">
                 <span class="bt-shot__tag" lang={t.site.lang} dir={t.site.dir}>{t.tag}</span>
@@ -126,7 +126,7 @@ const faqs = [
       <div class="bt-hub-section__head">
         <h2 id="why">Why Baitaan</h2>
       </div>
-      <ul class="bt-reasons">
+      <ul class="bt-reasons" data-animate="stagger">
         {reasons.map((r) => (
           <li>
             <h3><Icon d={r.icon} size={20} class="bt-reasons__icon" />{r.title}</h3>
@@ -136,7 +136,7 @@ const faqs = [
       </ul>
     </section>
 
-    <section class="bt-hub-section bt-guide bt-hub-faq">
+    <section class="bt-hub-section bt-guide bt-hub-faq" data-animate>
       <div class="bt-faqs">
         <header class="bt-faqs__head">
           <h2>Frequently asked questions</h2>
@@ -288,7 +288,3 @@ const faqs = [
   :global(html.dark) .bt-lang-card__btn { background: var(--b-d); color: var(--o-d); }
 </style>
 
-<script>
-  import { spotlightAll } from "@bt/ui/fx/spotlight";
-  spotlightAll();
-</script>

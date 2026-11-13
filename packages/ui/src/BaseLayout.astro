@@ -264,7 +264,13 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
 
     <script>
       import { rubberNavAll } from "./fx/rubber";
+      import { magnetAll } from "./fx/magnet";
+      import { specularAll } from "./fx/specular";
+      import { animateContentAll } from "./fx/animated-content";
       rubberNavAll();
+      magnetAll();
+      specularAll();
+      animateContentAll();
     </script>
 
     <script is:inline>

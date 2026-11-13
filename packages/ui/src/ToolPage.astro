@@ -30,7 +30,7 @@ const faqHead = (h: string) =>
   `</header>`;
 const guide = guideHtml.replace(
   /<h2(?:\s[^>]*)?>((?:(?!<\/h2>)[\s\S])*)<\/h2>\s*((?:<details class="bt-faq"[\s\S]*?<\/details>\s*)+)/g,
-  (_m: string, h: string, items: string) => `<section class="bt-faqs">${faqHead(h)}<div class="bt-faqs__list">${items}</div></section>`,
+  (_m: string, h: string, items: string) => `<section class="bt-faqs" data-animate>${faqHead(h)}<div class="bt-faqs__list">${items}</div></section>`,
 );
 const here = Astro.url.pathname;
 const crumb = nav.find((n) => n.href === here)?.label;
