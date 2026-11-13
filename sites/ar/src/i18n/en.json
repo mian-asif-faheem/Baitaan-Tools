@@ -140,12 +140,15 @@
     "from": "From",
     "to": "To",
     "includeEnd": "Include the last day",
+    "weekend": "Weekend",
+    "weekendFriSat": "Friday and Saturday",
+    "weekendSatSun": "Saturday and Sunday (UAE)",
     "result": "Time between the dates",
     "totalDays": "Total days",
     "weeks": "Weeks",
     "gregorianDiff": "In the Gregorian calendar",
     "hijriDiff": "In the Hijri calendar",
-    "workDays": "Working days (excluding Friday and Saturday)",
+    "workDays": "Working days",
     "error": "Check the two dates"
   },
   "age": {
@@ -282,6 +285,8 @@
       "already": "This email is already subscribed.",
       "invalid": "Enter a valid email address.",
       "error": "Couldn't save that. Please try again."
-    }
+    },
+    "menu": "Menu",
+    "menuClose": "Close"
   }
 }

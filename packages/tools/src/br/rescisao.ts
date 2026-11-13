@@ -31,6 +31,12 @@ const ymd = (t: number) => {
   return { y: d.getUTCFullYear(), m: d.getUTCMonth(), d: d.getUTCDate() };
 };
 const daysInMonth = (y: number, m: number) => new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+/** Same day of the month `k` months later, clamped to the month's length (31 Jan + 1 → 28/29 Feb). */
+const addMonths = (y: number, m: number, d: number, k: number) => {
+  const yy = y + Math.floor((m + k) / 12);
+  const mm = (((m + k) % 12) + 12) % 12;
+  return Date.UTC(yy, mm, Math.min(d, daysInMonth(yy, mm)));
+};
 
 /** Completed years between two dates. */
 function completedYears(start: number, end: number) {
@@ -69,7 +75,7 @@ function avosFerias(a: number, b: number) {
   let months = 0;
   let cursor = a;
   for (;;) {
-    const next = Date.UTC(s.y, s.m + months + 1, s.d);
+    const next = addMonths(s.y, s.m, s.d, months + 1);
     if (next - DAY > b) break;
     months++;
     cursor = next;
@@ -125,7 +131,9 @@ export function rescisao(input: RescisaoInput, rates: BrRates = BR_2026) {
   // Saldo de salário: days worked in the last month (commercial month of 30 days).
   const e = ymd(end);
   const monthStart = Math.max(start, Date.UTC(e.y, e.m, 1));
-  const saldoDays = Math.min(30, Math.round((end - monthStart) / DAY) + 1);
+  // A whole month worked is a whole salary (30 commercial days), February included.
+  const wholeMonth = monthStart === Date.UTC(e.y, e.m, 1) && e.d === daysInMonth(e.y, e.m);
+  const saldoDays = wholeMonth ? 30 : Math.min(30, Math.round((end - monthStart) / DAY) + 1);
   const saldo = round2((monthlySalary / 30) * saldoDays);
 
   // Aviso prévio.
@@ -153,8 +161,8 @@ export function rescisao(input: RescisaoInput, rates: BrRates = BR_2026) {
     // Current acquisition period starts at the last anniversary of the start date.
     const s = ymd(start);
     let annY = pe.y;
-    if (Date.UTC(annY, s.m, s.d) > projectedEnd) annY -= 1;
-    const periodStart = Math.max(start, Date.UTC(annY, s.m, s.d));
+    if (addMonths(annY, s.m, s.d, 0) > projectedEnd) annY -= 1;
+    const periodStart = Math.max(start, addMonths(annY, s.m, s.d, 0));
     avosFer = avosFerias(periodStart, projectedEnd);
     feriasProp = round2((pay / 12) * avosFer);
     lines.push({ key: "decimo", amount: decimo, detail: `${avosDecimo}/12` });

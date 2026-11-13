@@ -2,7 +2,7 @@ import type { Widen } from "../widen";
 /**
  * Mexico 2026 payroll figures. Update every January (UMA changes on 1 February).
  *
- * ISR: monthly tarifa, Anexo 8 RMF 2026 (art. 96 LISR) — unchanged from 2025.
+ * ISR: monthly tarifa, Anexo 8 RMF 2026 (art. 96 LISR), updated for inflation in 2026 (DOF 28 Dec 2025).
  * UMA: INEGI, comunicado 1/26, in force from 1 Feb 2026.
  * Minimum wage: CONASAMI, from 1 Jan 2026.
  * Subsidio para el empleo: decree DOF 31 Dec 2025 — 15.02% of the monthly UMA

@@ -1728,6 +1728,12 @@ html.dark .bt-foot__card {
   display: flex;
   justify-content: center;
 }
+/* Phones: the text and the tools come first; the picture is for wider screens. */
+@media (max-width: 639.98px) {
+  .bt-hero__visual {
+    display: none;
+  }
+}
 
 /* A result card as a picture */
 .bt-rcard {
@@ -1877,7 +1883,7 @@ html.dark .bt-foot__card {
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
   gap: 12px;
 }
 .bt-stats li {
@@ -2349,4 +2355,219 @@ html.dark .bt-foot__card {
 .bt-sec--first {
   margin-top: 0;
   margin-bottom: 56px;
+}
+
+/* ── Small-screen menu (fx/staggered-menu.ts, React Bits StaggeredMenu) ── */
+.bt-sm-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--bar-fill);
+  color: var(--bar-ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-sm-toggle:focus-visible {
+  outline: 2px solid var(--bar-ink);
+  outline-offset: 2px;
+}
+.bt-sm-toggle__text {
+  display: inline-block;
+  height: 1.2em;
+  line-height: 1.2;
+  overflow: hidden;
+}
+.bt-sm-toggle__text > span {
+  display: flex;
+  flex-direction: column;
+}
+.bt-sm-toggle__text > span > span {
+  display: block;
+  height: 1.2em;
+  white-space: nowrap;
+}
+.bt-sm-toggle__icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+.bt-sm-toggle__icon i {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.bt-sm-toggle__icon i + i {
+  transform: rotate(90deg);
+}
+@media (min-width: 1024px) {
+  .bt-sm-toggle,
+  .bt-sm {
+    display: none !important;
+  }
+}
+@media (max-width: 1023.98px) {
+  /* The menu moves into the button; the bar keeps one row. */
+  .bt-navbar.has-menu {
+    grid-template-areas: "brand . end";
+    row-gap: 0;
+  }
+  .bt-navbar .bt-menu {
+    display: none;
+  }
+}
+@media (max-width: 479.98px) {
+  /* Narrow phones: the language pill shows only its globe (it keeps its label for screen readers). */
+  .bt-navbar__end .bt-lang {
+    font-size: 0;
+    gap: 0;
+    padding-inline: 12px;
+  }
+  .bt-navbar__end {
+    gap: 6px;
+  }
+}
+html.bt-sm-lock {
+  overflow: hidden;
+}
+.bt-sm {
+  position: fixed;
+  inset: 0;
+  z-index: 25; /* under the floating header, so its bar and the Close button stay on top */
+  overflow: hidden;
+}
+.bt-sm[hidden] {
+  display: none;
+}
+.bt-sm__layer,
+.bt-sm__panel {
+  position: absolute;
+  inset: 0;
+  transform: translateX(100%);
+}
+:root[dir="rtl"] .bt-sm__layer,
+:root[dir="rtl"] .bt-sm__panel {
+  transform: translateX(-100%);
+}
+.bt-sm[data-open] .bt-sm__layer,
+.bt-sm[data-open] .bt-sm__panel {
+  transform: none;
+}
+.bt-sm__layer:nth-of-type(1) {
+  background: color-mix(in oklab, var(--primary) 35%, var(--bg));
+}
+.bt-sm__layer:nth-of-type(2) {
+  background: var(--primary);
+}
+.bt-sm__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: calc(var(--hh, 76px) + 28px) 24px max(28px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  background: var(--bg);
+  color: var(--text);
+}
+@media (min-width: 640px) {
+  .bt-sm__panel {
+    padding-inline: 40px;
+  }
+}
+.bt-sm__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bt-sm__list li {
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+.bt-sm__item {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--text);
+  font-size: clamp(36px, 10vw, 60px);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+:root[dir="rtl"] .bt-sm__item,
+.bt-sm__item:lang(ar) {
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-transform: none;
+}
+.bt-sm__label {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+.bt-sm__item[aria-current="page"],
+.bt-sm__item:hover {
+  color: var(--link);
+}
+.bt-sm__item:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.bt-sm__num {
+  margin-top: 0.3em;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--link);
+  font-variant-numeric: tabular-nums;
+}
+.bt-sm__extra {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hair);
+}
+.bt-sm__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bt-sm__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--link);
+}
+.bt-sm__group ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bt-sm__group a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.bt-sm__group a:hover {
+  color: var(--link);
 }

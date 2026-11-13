@@ -46,6 +46,8 @@
       "already": "This email is already subscribed.",
       "invalid": "Enter a valid email address.",
       "error": "Couldn't save that. Please try again."
-    }
+    },
+    "menu": "Menu",
+    "menuClose": "Close"
   }
 }

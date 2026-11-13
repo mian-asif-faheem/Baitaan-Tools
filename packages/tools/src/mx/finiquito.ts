@@ -102,12 +102,13 @@ export function finiquito(input: FiniquitoInput, rates: MxRates = MX_2026): Fini
   const yearStart = Date.UTC(new Date(end).getUTCFullYear(), 0, 1);
   const aguinaldoWorked = daysInclusive(Math.max(start, yearStart), end);
   const agDays = Math.max(15, aguinaldoDays);
-  const aguinaldoProp = (agDays * aguinaldoWorked) / 365;
+  // A full leap year (366 days) is still one year's aguinaldo, not a little more.
+  const aguinaldoProp = Math.min(agDays, (agDays * aguinaldoWorked) / 365);
 
   // Vacation: proportional share of the current service year's entitlement, plus untaken days.
   const currentYearDays = vacationDays(completedYears + 1);
   const daysIntoServiceYear = daysInclusive(anniv, end);
-  const vacProp = (currentYearDays * daysIntoServiceYear) / 365 + pendingVacationDays;
+  const vacProp = Math.min(currentYearDays, (currentYearDays * daysIntoServiceYear) / 365) + pendingVacationDays;
   const prima = Math.max(25, primaVacacionalPercent) / 100;
 
   const fin: Line[] = [

@@ -271,6 +271,8 @@
       "already": "Este e-mail já está inscrito.",
       "invalid": "Digite um e-mail válido.",
       "error": "Não foi possível salvar. Tente de novo."
-    }
+    },
+    "menu": "Menu",
+    "menuClose": "Fechar"
   }
 }

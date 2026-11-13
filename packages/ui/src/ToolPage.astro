@@ -40,7 +40,7 @@ const others = nav.filter((n) => n.href !== here);
   <div class="bt-page__main">
     <div class="flex flex-col gap-3 pt-6 pb-6 sm:pt-10">
       <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted">
-        <a href={homeHref} class="text-muted no-underline hover:text-link hover:underline">{chrome.home ?? "Home"}</a>
+        <a href={homeHref} class="-my-1.5 inline-flex min-h-7 items-center py-1.5 text-muted no-underline hover:text-link hover:underline">{chrome.home ?? "Home"}</a>
         {crumb && (
           <>
             <Icon d={I.caretRight} size={12} class="bt-flip" />

@@ -121,3 +121,10 @@ describe("finiquito and liquidación", () => {
     ).toThrow();
   });
 });
+
+describe("finiquito in a leap year", () => {
+  it("gives no more than a full year's aguinaldo for all of 2028", () => {
+    const r = finiquito({ dailySalary: 500, startDate: "2020-01-01", endDate: "2028-12-31", motivo: "renuncia" });
+    expect(r.finiquito.find((l) => l.key === "aguinaldo")!.amount).toBe(7500);
+  });
+});

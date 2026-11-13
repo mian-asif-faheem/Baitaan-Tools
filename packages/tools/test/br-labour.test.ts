@@ -174,3 +174,19 @@ describe("salário proporcional", () => {
     expect(r.total).toBe(2800);
   });
 });
+
+describe("rescisão edge cases", () => {
+  it("pays a whole February as a whole month of salary", () => {
+    const r = rescisao({ monthlySalary: 3000, startDate: "2024-01-10", endDate: "2026-02-28", tipo: "pedidoDemissao", avisoIndenizado: false });
+    expect(r.lines.find((l) => l.key === "saldo")!.amount).toBe(3000);
+  });
+  it("pays part of February by the days worked", () => {
+    const r = rescisao({ monthlySalary: 3000, startDate: "2024-01-10", endDate: "2026-02-20", tipo: "pedidoDemissao", avisoIndenizado: false });
+    expect(r.lines.find((l) => l.key === "saldo")!.amount).toBe(2000);
+  });
+  it("counts vacation months from a 31st start date by calendar months", () => {
+    // 31 Jan → 30 Jun is 5 whole months (31 Jan–27 Feb, 28 Feb–30 Mar, …) plus a short remainder.
+    const r = rescisao({ monthlySalary: 3000, startDate: "2026-01-31", endDate: "2026-06-30", tipo: "pedidoDemissao", avisoIndenizado: false });
+    expect(r.lines.find((l) => l.key === "feriasProp")!.detail).toBe("5/12");
+  });
+});

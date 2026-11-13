@@ -24,17 +24,19 @@ export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
     return { year: String(h.year + 1), month: "1", day: "1" };
   });
   const [includeEnd, setIncludeEnd] = useState(false);
+  // Saudi Arabia and most of the Gulf rest on Friday and Saturday; the UAE on Saturday and Sunday.
+  const [weekend, setWeekend] = useState<"fs" | "ss">("fs");
 
   const r = useMemo(() => {
     try {
       const da = cal === "g" ? new Date(`${a}T00:00:00Z`) : toGregorian({ year: +ha.year, month: +ha.month, day: +ha.day });
       const db = cal === "g" ? new Date(`${b}T00:00:00Z`) : toGregorian({ year: +hb.year, month: +hb.month, day: +hb.day });
       if (Number.isNaN(da.getTime()) || Number.isNaN(db.getTime())) return null;
-      return { g: dateDiff(da, db, includeEnd), h: hijriDiff(da, db), w: workingDays(da, db, [5, 6], includeEnd) };
+      return { g: dateDiff(da, db, includeEnd), h: hijriDiff(da, db), w: workingDays(da, db, weekend === "fs" ? [5, 6] : [6, 0], includeEnd) };
     } catch {
       return "error" as const;
     }
-  }, [cal, a, b, ha, hb, includeEnd]);
+  }, [cal, a, b, ha, hb, includeEnd, weekend]);
 
   return (
     <div class="bt-tool">
@@ -66,6 +68,16 @@ export default function DateDiffCalc({ lang = "ar" }: { lang?: Lang }) {
           <HijriDateInput lang={lang} label={L.to} value={hb} onChange={setHb} />
         </>
       )}
+      <Toggle
+        class="sm:col-span-2"
+        legend={L.weekend}
+        value={weekend}
+        onChange={setWeekend}
+        options={[
+          { value: "fs", label: L.weekendFriSat },
+          { value: "ss", label: L.weekendSatSun },
+        ]}
+      />
       <Check class="sm:col-span-2" label={L.includeEnd} checked={includeEnd} onChange={setIncludeEnd} />
 
       </form>

@@ -49,6 +49,9 @@ export interface Chrome {
   newsletter?: NewsletterStrings;
   /** Footer column titles. */
   footer?: FooterStrings;
+  /** Small-screen menu button: "Menu" and "Close". */
+  menu?: string;
+  menuClose?: string;
 }
 
 /** What the layout shares with components rendered inside it (ToolPage, ToolGrid…). */
@@ -114,6 +117,21 @@ const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-XXXXXXXXX
 const here = Astro.url.pathname;
 const contact = footer.find((f) => /^mailto:|\/contact/.test(f.href))?.href;
 (Astro.locals as { bt?: ShellContext }).bt = { chrome, nav, homeHref, dir, contact };
+// Small-screen menu: the tool links (or, on the hub, the language sites), then the site's own pages.
+const SITE_NAMES: Record<string, { label: string; lang: string }> = {
+  es: { label: "Español", lang: "es" },
+  pt: { label: "Português", lang: "pt-BR" },
+  ar: { label: "العربية", lang: "ar" },
+};
+const smMain = nav.length
+  ? [{ href: homeHref, label: chrome.home ?? "Home", lang: undefined as string | undefined }, ...nav.map((n) => ({ ...n, lang: undefined as string | undefined }))]
+  : [{ href: homeHref, label: chrome.home ?? "Home", lang: undefined as string | undefined }, ...Object.entries(SITE_NAMES).map(([k, v]) => ({ href: `${SITES[k as keyof typeof SITES].url}/`, label: v.label, lang: v.lang }))];
+const smLinks = footer;
+const smLangs = nav.length
+  ? (Object.keys(SITES) as (keyof typeof SITES)[]).filter((k) => k !== site).map((k) => ({ href: `${SITES[k].url}/`, label: k === "root" ? "baitaandessigns.com" : SITE_NAMES[k].label, lang: k === "root" ? "en" : SITE_NAMES[k].lang }))
+  : [];
+const menuLabel = chrome.menu ?? "Menu";
+const closeLabel = chrome.menuClose ?? "Close";
 const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href })), redirect: langRedirect };
 ---
 <!doctype html>
@@ -238,9 +256,43 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
               <Icon d={I.sun} size={19} class="hidden dark:block" />
             </span>
           </button>
+          <button type="button" class="bt-sm-toggle" data-sm-toggle aria-expanded="false" aria-controls="bt-sm-panel" aria-label={menuLabel} data-open={menuLabel} data-close={closeLabel}>
+            <span class="bt-sm-toggle__text" aria-hidden="true"><span data-sm-text><span>{menuLabel}</span></span></span>
+            <span class="bt-sm-toggle__icon" data-sm-icon aria-hidden="true"><i></i><i></i></span>
+          </button>
         </div>
       </div>
     </header>
+    <div class="bt-sm" data-sm hidden>
+      <span class="bt-sm__layer" aria-hidden="true"></span>
+      <span class="bt-sm__layer" aria-hidden="true"></span>
+      <div class="bt-sm__panel" id="bt-sm-panel" data-sm-panel role="dialog" aria-modal="true" aria-label={menuLabel}>
+        <ul class="bt-sm__list">
+          {smMain.map((n, i) => (
+            <li>
+              <a class="bt-sm__item" href={n.href} lang={n.lang} aria-current={here === n.href ? "page" : undefined}>
+                <span class="bt-sm__label">{n.label}</span>
+                <span class="bt-sm__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="bt-sm__extra">
+          {smLinks.length > 0 && (
+            <div class="bt-sm__group">
+              <span class="bt-sm__title">{chrome.footer?.site ?? "Site"}</span>
+              <ul>{smLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+            </div>
+          )}
+          {smLangs.length > 0 && (
+            <div class="bt-sm__group">
+              <span class="bt-sm__title">{chrome.footer?.languages ?? "Other languages"}</span>
+              <ul>{smLangs.map((l) => <li><a href={l.href} lang={l.lang}>{l.label}</a></li>)}</ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
     {bleed ? (
       <main><slot /></main>
     ) : (
@@ -270,9 +322,11 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
       import { rubberNavAll } from "./fx/rubber";
       import { magnetAll } from "./fx/magnet";
       import { animateContentAll } from "./fx/animated-content";
+  import { staggeredMenu } from "./fx/staggered-menu";
       rubberNavAll();
       magnetAll();
       animateContentAll();
+  staggeredMenu();
     </script>
 
     <script is:inline>
