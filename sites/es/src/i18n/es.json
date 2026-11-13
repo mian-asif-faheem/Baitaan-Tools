@@ -186,6 +186,18 @@
     },
     "faqMore": "¿No encuentras tu respuesta?",
     "faqAsk": "Escríbenos",
-    "moreTools": "Más herramientas"
+    "moreTools": "Más herramientas",
+    "newsletter": {
+      "title": "Nuevas herramientas en tu correo",
+      "placeholder": "Tu correo electrónico",
+      "button": "Suscribirme",
+      "busy": "Enviando…",
+      "note": "Te avisamos cuando haya herramientas nuevas. Sin spam; puedes darte de baja cuando quieras.",
+      "ok": "¡Listo! Te avisaremos de las herramientas nuevas.",
+      "already": "Este correo ya está suscrito.",
+      "invalid": "Escribe un correo válido.",
+      "error": "No se pudo guardar. Inténtalo de nuevo.",
+      "privacy": "Privacidad"
+    }
   }
 }

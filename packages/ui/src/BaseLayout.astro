@@ -10,7 +10,7 @@
  */
 import { SITES, type SiteKey } from "./sites";
 import ConsentBanner from "./ConsentBanner.astro";
-import Footer, { type FooterStrings } from "./Footer.astro";
+import Footer, { type FooterStrings, type NewsletterStrings } from "./Footer.astro";
 import Wordmark from "./Wordmark.astro";
 import Icon from "./Icon.astro";
 import * as I from "./icons";
@@ -45,6 +45,8 @@ export interface Chrome {
   faqAsk?: string;
   /** Tool-page sidebar title. */
   moreTools?: string;
+  /** Footer newsletter form. */
+  newsletter?: NewsletterStrings;
   /** Footer column titles. */
   footer?: FooterStrings;
 }
@@ -258,6 +260,8 @@ const head = { code, versions: versions.map((v) => ({ code: v.code, href: v.href
       word={lang.startsWith("ar") ? "بيتان" : "Baitaan"}
       {wordmark}
       arabic={lang.startsWith("ar")}
+      newsletter={chrome.newsletter}
+      {lang}
     />
 
     <ConsentBanner t={chrome.consent} />

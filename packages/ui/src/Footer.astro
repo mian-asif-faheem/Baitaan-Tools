@@ -9,6 +9,19 @@
 import { SITES, type SiteKey } from "./sites";
 import Wordmark from "./Wordmark.astro";
 
+export interface NewsletterStrings {
+  title: string;
+  placeholder: string;
+  button: string;
+  busy: string;
+  note: string;
+  ok: string;
+  already: string;
+  invalid: string;
+  error: string;
+  privacy: string;
+}
+
 export interface FooterStrings {
   tools: string;
   site: string;
@@ -30,9 +43,13 @@ interface Props {
   wordmark?: boolean;
   /** Arabic pages show the name as Arabic text instead of the Latin wordmark. */
   arabic?: boolean;
+  /** Newsletter form (posts to /api/subscribe.php). */
+  newsletter?: NewsletterStrings;
+  lang?: string;
 }
 
-const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word, wordmark = false, arabic = false } = Astro.props;
+const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word, wordmark = false, arabic = false, newsletter, lang = "en" } = Astro.props;
+const privacyHref = links.find((l) => /priva/.test(l.href))?.href;
 const s: FooterStrings = strings ?? { tools: "Tools", site: "Site", languages: "Other languages" };
 const LANG_NAMES: Record<SiteKey, { label: string; lang: string }> = {
   root: { label: "baitaandessigns.com", lang: "en" },
@@ -67,6 +84,45 @@ const tile = Array.from({ length: 16 }, (_, i) => {
           )}
         </a>
         {note && <p>{note}</p>}
+        {newsletter && (
+          <form
+            id="newsletter"
+            class="bt-news"
+            action="/api/subscribe.php"
+            method="post"
+            novalidate
+            data-bt-news
+            data-ok={newsletter.ok}
+            data-already={newsletter.already}
+            data-invalid={newsletter.invalid}
+            data-error={newsletter.error}
+            data-busy={newsletter.busy}
+          >
+            <label for="bt-news-email" class="bt-news__title">{newsletter.title}</label>
+            <div class="bt-news__row">
+              <input
+                id="bt-news-email"
+                class="bt-news__input"
+                type="email"
+                name="email"
+                required
+                maxlength="254"
+                autocomplete="email"
+                inputmode="email"
+                placeholder={newsletter.placeholder}
+                aria-describedby="bt-news-msg"
+              />
+              <button type="submit" class="bt-btn bt-btn--sm bt-news__btn">{newsletter.button}</button>
+            </div>
+            {/* Left empty by people, filled by bots. */}
+            <input class="bt-news__trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="lang" value={lang} />
+            <p id="bt-news-msg" class="bt-news__note" role="status" aria-live="polite">
+              <span data-msg>{newsletter.note}</span>
+              {privacyHref && <> <a href={privacyHref}>{newsletter.privacy}</a></>}
+            </p>
+          </form>
+        )}
       </div>
 
       <nav class="bt-foot__nav" aria-label={s.site}>
@@ -196,4 +252,46 @@ const tile = Array.from({ length: 16 }, (_, i) => {
     io.observe(card);
   };
   enter();
+
+  // Newsletter: send without leaving the page and show the answer under the field.
+  const news = document.querySelector<HTMLFormElement>("[data-bt-news]");
+  if (news) {
+    const msg = news.querySelector<HTMLElement>("[data-msg]");
+    const btn = news.querySelector<HTMLButtonElement>("button[type=submit]");
+    const input = news.querySelector<HTMLInputElement>("input[type=email]");
+    const show = (status: string) => {
+      const text = news.dataset[status] ?? news.dataset.error;
+      if (msg && text) msg.textContent = text;
+      news.dataset.state = status;
+    };
+    // Coming back from the no-JavaScript fallback: ?newsletter=ok
+    const back = new URLSearchParams(location.search).get("newsletter");
+    if (back && ["ok", "already", "invalid", "error"].includes(back)) show(back);
+    news.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!input?.checkValidity()) {
+        show("invalid");
+        input?.focus();
+        return;
+      }
+      const label = btn?.textContent ?? "";
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = news.dataset.busy ?? label;
+      }
+      try {
+        const res = await fetch(news.action, { method: "POST", body: new FormData(news), headers: { Accept: "application/json" } });
+        const data = await res.json().catch(() => ({ status: "error" }));
+        show(typeof data.status === "string" ? data.status : "error");
+        if (data.status === "ok" || data.status === "already") news.reset();
+      } catch {
+        show("error");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = label;
+        }
+      }
+    });
+  }
 </script>

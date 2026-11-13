@@ -122,6 +122,10 @@ The workflow uploads nothing until all four folder variables are set, and it ref
 
 Each site has the same `public/.htaccess` (keep the four copies identical): HTTPS and www redirects, `index.html` before `index.php`, the 404 page, the `.mjs` type for the PDF worker, compression, security headers, one-year caching for hashed assets, and blocked dotfiles. Tested on Apache 2.4.
 
+## Newsletter sign-ups
+
+The footer form posts to `/api/subscribe.php` on each site (source: `scripts/subscribe.php`, copied into every build by `scripts/copy-php.mjs`). It needs PHP, which cPanel has. Sign-ups are saved to `baitaan/_subscribers/subscribers.csv`, next to the four site folders and outside every website, so it can't be opened from a browser. Download it from **cPanel → File Manager**. Columns: date (UTC), email, site, language. Each address is saved once; requests from other websites are refused, a hidden field catches bots, and one visitor can sign up at most 5 times an hour. To send the emails, import the CSV into any mail service (Mailchimp, Brevo, MailerLite…). Each privacy page has a "Newsletter" section saying what is stored.
+
 ## Turning on ads
 
 Ads render nothing until this is set. After AdSense approves `baitaandessigns.com`, add a **repository variable** `PUBLIC_ADSENSE_CLIENT` = `ca-pub-XXXXXXXXXXXXXXXX` in GitHub and re-run the workflow.
