@@ -1280,6 +1280,22 @@ li,
   max-width: 300px;
   min-height: 600px;
 }
+.bt-ad__short {
+  display: none;
+}
+/* Screens too short for 600px under the header (most laptops): a 300×250 unit, so the
+   sticky ad keeps its label and its gap below the header. */
+@media (max-height: 780px) {
+  .bt-ad--side .bt-ad__unit {
+    min-height: 250px;
+  }
+  .bt-ad__tall {
+    display: none;
+  }
+  .bt-ad__short {
+    display: inline;
+  }
+}
 /* Grey stand-ins with the size each unit will take. */
 .bt-ad__mock {
   display: grid;
