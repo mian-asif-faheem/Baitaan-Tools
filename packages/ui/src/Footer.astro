@@ -10,16 +10,13 @@ import { SITES, type SiteKey } from "./sites";
 import Wordmark from "./Wordmark.astro";
 
 export interface NewsletterStrings {
-  title: string;
   placeholder: string;
   button: string;
   busy: string;
-  note: string;
   ok: string;
   already: string;
   invalid: string;
   error: string;
-  privacy: string;
 }
 
 export interface FooterStrings {
@@ -49,7 +46,6 @@ interface Props {
 }
 
 const { site, brand, homeHref, note = "", nav, links, cookieSettings, strings, word, wordmark = false, arabic = false, newsletter, lang = "en" } = Astro.props;
-const privacyHref = links.find((l) => /priva/.test(l.href))?.href;
 const s: FooterStrings = strings ?? { tools: "Tools", site: "Site", languages: "Other languages" };
 const LANG_NAMES: Record<SiteKey, { label: string; lang: string }> = {
   root: { label: "baitaandessigns.com", lang: "en" },
@@ -98,7 +94,7 @@ const tile = Array.from({ length: 16 }, (_, i) => {
             data-error={newsletter.error}
             data-busy={newsletter.busy}
           >
-            <label for="bt-news-email" class="bt-news__title">{newsletter.title}</label>
+            <label for="bt-news-email" class="sr-only">{newsletter.placeholder}</label>
             <div class="bt-news__row">
               <input
                 id="bt-news-email"
@@ -112,15 +108,13 @@ const tile = Array.from({ length: 16 }, (_, i) => {
                 placeholder={newsletter.placeholder}
                 aria-describedby="bt-news-msg"
               />
-              <button type="submit" class="bt-btn bt-btn--sm bt-news__btn">{newsletter.button}</button>
+              <button type="submit" class="bt-btn bt-btn--sm bt-news__btn" data-magnet>{newsletter.button}</button>
             </div>
             {/* Left empty by people, filled by bots. */}
             <input class="bt-news__trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <input type="hidden" name="lang" value={lang} />
-            <p id="bt-news-msg" class="bt-news__note" role="status" aria-live="polite">
-              <span data-msg>{newsletter.note}</span>
-              {privacyHref && <> <a href={privacyHref}>{newsletter.privacy}</a></>}
-            </p>
+            {/* Empty until the visitor presses the button: then the answer appears here. */}
+            <p id="bt-news-msg" class="bt-news__note" role="status" aria-live="polite"><span data-msg></span></p>
           </form>
         )}
       </div>

@@ -28,7 +28,7 @@
       "label": "Privacidad"
     },
     {
-      "href": "mailto:hola@baitaandessigns.com",
+      "href": "mailto:hello@baitaandessigns.com",
       "label": "Contacto"
     }
   ],
@@ -188,16 +188,13 @@
     "faqAsk": "Escríbenos",
     "moreTools": "Más herramientas",
     "newsletter": {
-      "title": "Nuevas herramientas en tu correo",
-      "placeholder": "Tu correo electrónico",
+      "placeholder": "Tu correo para el boletín",
       "button": "Suscribirme",
       "busy": "Enviando…",
-      "note": "Te avisamos cuando haya herramientas nuevas. Sin spam; puedes darte de baja cuando quieras.",
       "ok": "¡Listo! Te avisaremos de las herramientas nuevas.",
       "already": "Este correo ya está suscrito.",
       "invalid": "Escribe un correo válido.",
-      "error": "No se pudo guardar. Inténtalo de nuevo.",
-      "privacy": "Privacidad"
+      "error": "No se pudo guardar. Inténtalo de nuevo."
     }
   }
 }

@@ -42,12 +42,7 @@ const placeholders = import.meta.env.PUBLIC_AD_PLACEHOLDERS !== "off";
   <aside class={`bt-ad bt-ad--${kind}`} data-bt-ad-placeholder aria-hidden="true">
     <span class="bt-ad__label">{text}</span>
     <div class="bt-ad__unit bt-ad__mock">
-      <span>{kind === "banner" ? "Ad · 970 × 90 (phone: 300 × 250)" : kind === "side" ? (
-        <>
-          <span class="bt-ad__tall">Ad · 300 × 600</span>
-          <span class="bt-ad__short">Ad · 300 × 250</span>
-        </>
-      ) : "Ad · up to 728 × 280 (phone: 336 × 280)"}</span>
+      <span>{kind === "banner" ? "Ad · 970 × 90 (phone: 300 × 250)" : kind === "side" ? "Ad · 300 × 600" : "Ad · up to 728 × 280 (phone: 336 × 280)"}</span>
     </div>
   </aside>
 )}

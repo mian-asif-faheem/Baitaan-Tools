@@ -1202,7 +1202,12 @@ li,
   }
   .bt-page__side .bt-ad--side {
     display: flex;
-    /* Stays in view just under the floating header while the page scrolls. */
+  }
+}
+/* Stays in view just under the floating header while the page scrolls, on screens tall
+   enough for the whole standard 300×600 unit. On shorter screens it scrolls with the page. */
+@media (min-width: 1024px) and (min-height: 781px) {
+  .bt-page__side .bt-ad--side {
     position: sticky;
     top: calc(var(--hh, 88px) + 16px);
   }
@@ -1279,22 +1284,6 @@ li,
 .bt-ad--side .bt-ad__unit {
   max-width: 300px;
   min-height: 600px;
-}
-.bt-ad__short {
-  display: none;
-}
-/* Screens too short for 600px under the header (most laptops): a 300×250 unit, so the
-   sticky ad keeps its label and its gap below the header. */
-@media (max-height: 780px) {
-  .bt-ad--side .bt-ad__unit {
-    min-height: 250px;
-  }
-  .bt-ad__tall {
-    display: none;
-  }
-  .bt-ad__short {
-    display: inline;
-  }
 }
 /* Grey stand-ins with the size each unit will take. */
 .bt-ad__mock {
@@ -1575,6 +1564,9 @@ html.dark .bt-foot__card {
   overflow: hidden;
   clip-path: inset(50%);
   opacity: 0;
+}
+.bt-news__note:has([data-msg]:empty) {
+  display: none;
 }
 .bt-news__note {
   margin: 0;

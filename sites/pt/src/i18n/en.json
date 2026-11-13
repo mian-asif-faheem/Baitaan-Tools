@@ -36,7 +36,7 @@
       "label": "Privacy"
     },
     {
-      "href": "mailto:ola@baitaandessigns.com",
+      "href": "mailto:hello@baitaandessigns.com",
       "label": "Contact"
     }
   ],
@@ -264,16 +264,13 @@
     "faqAsk": "Write to us",
     "moreTools": "More tools",
     "newsletter": {
-      "title": "New tools in your inbox",
-      "placeholder": "Your email",
+      "placeholder": "Your email for newsletters",
       "button": "Subscribe",
       "busy": "Sending…",
-      "note": "We'll tell you when new tools are added. No spam; unsubscribe any time.",
       "ok": "Done! We'll tell you about new tools.",
       "already": "This email is already subscribed.",
       "invalid": "Enter a valid email address.",
-      "error": "Couldn't save that. Please try again.",
-      "privacy": "Privacy"
+      "error": "Couldn't save that. Please try again."
     }
   }
 }

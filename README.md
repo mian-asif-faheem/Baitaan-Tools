@@ -147,6 +147,6 @@ Note: the prop is `unit`, not `slot`. In Astro, `slot="…"` moves an element in
 
 - [ ] Native review of all Spanish, Portuguese and Arabic copy (search for `TODO (native review)`)
 - [ ] Review the privacy pages (`TODO` comments)
-- [ ] Set up the `hello@`, `hola@`, `ola@` and `salam@` email addresses, or change them in the i18n files
+- [ ] Set up the `hello@baitaandessigns.com` mailbox (every site and language uses it; change it in the i18n files)
 - [ ] Brand names in `packages/ui/src/sites.ts` are placeholders: change them if you prefer others
 - [ ] 25–30 solid pages per site, per the roadmap

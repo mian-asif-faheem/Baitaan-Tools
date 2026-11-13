@@ -36,7 +36,7 @@
       "label": "Privacidade"
     },
     {
-      "href": "mailto:ola@baitaandessigns.com",
+      "href": "mailto:hello@baitaandessigns.com",
       "label": "Contato"
     }
   ],
@@ -264,16 +264,13 @@
     "faqAsk": "Fale com a gente",
     "moreTools": "Mais ferramentas",
     "newsletter": {
-      "title": "Novas ferramentas no seu e-mail",
-      "placeholder": "Seu e-mail",
+      "placeholder": "Seu e-mail para a newsletter",
       "button": "Inscrever-me",
       "busy": "Enviando…",
-      "note": "Avisamos quando houver ferramentas novas. Sem spam; cancele quando quiser.",
       "ok": "Pronto! Vamos avisar sobre as ferramentas novas.",
       "already": "Este e-mail já está inscrito.",
       "invalid": "Digite um e-mail válido.",
-      "error": "Não foi possível salvar. Tente de novo.",
-      "privacy": "Privacidade"
+      "error": "Não foi possível salvar. Tente de novo."
     }
   }
 }
