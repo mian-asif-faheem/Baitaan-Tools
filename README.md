@@ -50,6 +50,13 @@ The look comes from the Claude Design boards (design system, home pages, calcula
   is `en` and the x-default for the home pages.
 - **Structured data:** tool pages carry WebApplication, BreadcrumbList and FAQPage (built from
   the guide's FAQ); home pages carry WebSite and Organization; the hub carries its FAQ.
+- **lastmod:** each sitemap entry carries the date of the newest commit to the page, its components
+  or the calculation code it uses (`scripts/lastmod.mjs`; the deploy checks out full history).
+- **IndexNow (Bing):** the build writes `indexnow-pages.json` per site (a hash of each page);
+  the deploy compares it with the live one and, after uploading, sends only the changed URLs to
+  IndexNow (`scripts/indexnow.mjs`). The key file `/<key>.txt` is on every site.
+- **Redirects:** old addresses live in `public/.htaccess` (identical on all four sites), e.g.
+  ar. `/mukafat-nihayat-alkhidma/` → `/nihayat-alkhidma-saudi/`.
 - **Share images:** `node scripts/og-images.mjs` draws `public/img/og-<lang>.png` per site;
   run it again when a tagline or colour changes.
 - **Trust pages:** About, Contact, Terms and Privacy on every site and language; each tool page

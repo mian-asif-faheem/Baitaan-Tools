@@ -44,6 +44,9 @@ jobs:
       HAS_FTP: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' && vars.FTP_DIR_ROOT != '' && vars.FTP_DIR_ES != '' && vars.FTP_DIR_PT != '' && vars.FTP_DIR_AR != '' }}
     steps:
       - uses: actions/checkout@v7.0.1
+        with:
+          # Full history: the sitemaps' lastmod dates come from git (scripts/lastmod.mjs).
+          fetch-depth: 0
 
       - uses: actions/setup-node@v7.1.0
         with:
@@ -106,6 +109,11 @@ jobs:
             esac
           done
 
+      - name: Find changed pages for IndexNow
+        if: env.HAS_FTP == 'true'
+        continue-on-error: true
+        run: node scripts/indexnow.mjs prepare
+
       - name: Deploy baitaandessigns.com
         if: env.HAS_FTP == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
@@ -161,6 +169,11 @@ jobs:
           local-dir: sites/ar/dist/
           server-dir: ${{ vars.FTP_DIR_AR }}
           log-level: minimal
+
+      - name: Tell Bing which pages changed (IndexNow)
+        if: env.HAS_FTP == 'true'
+        continue-on-error: true
+        run: node scripts/indexnow.mjs send
 
       - name: Summary
         if: env.HAS_FTP == 'true'
