@@ -8,6 +8,7 @@ import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 const next = nextHijriOccurrence(9, 1);
 const y = next.hijri.year;
 const gYear = next.gregorian.getUTCFullYear();
+const dateText = new Intl.DateTimeFormat("ar-u-nu-latn", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(next.gregorian);
 ---
 <!-- TODO (native review): Arabic copy. -->
 <Layout
@@ -39,6 +40,16 @@ const gYear = next.gregorian.getUTCFullYear();
         <li>احسب زكاة مالك مبكرًا مع <a class="text-link underline" href="/hasibat-azzakat/">حاسبة الزكاة</a>، فكثيرون يُخرجونها في رمضان.</li>
         <li>حوّل أي تاريخ بين الهجري والميلادي مع <a class="text-link underline" href="/tahweel-altareekh/">محوّل التاريخ</a>.</li>
       </ul>
+
+      <h2>كيف يعمل العد التنازلي؟</h2>
+      <p>يعدّ الوقت المتبقي حتى منتصف الليل بتوقيت مكة المكرمة في بداية الأول من رمضان {y} هـ، الموافق {dateText} حسب تقويم أم القرى. ويتحدّث كل ثانية، وبعد دخول رمضان ينتقل إلى العام التالي.</p>
+      <h2>لماذا يتقدّم رمضان كل عام؟</h2>
+      <p>تتبع السنة الهجرية القمر وتبلغ نحو 354 يومًا، أي أقصر من السنة الميلادية بنحو 11 يومًا. لذلك يبدأ رمضان كل عام قبل موعده في العام السابق بنحو 11 يومًا، ويمر على فصول السنة كلها في قرابة 33 عامًا.</p>
+      <h2>أسئلة شائعة</h2>
+      <details class="bt-faq"><summary>متى يبدأ رمضان {gYear}؟</summary><p>حسب تقويم أم القرى يوافق الأول من رمضان {y} هـ {dateText}. ويُعلَن البدء رسميًا بعد تحرّي الهلال مساء 29 شعبان، لذلك قد يختلف الموعد يومًا.</p></details>
+      <details class="bt-faq"><summary>كم يومًا يكون رمضان؟</summary><p>29 أو 30 يومًا. ينتهي برؤية هلال شوال مساء 29 رمضان، فإن لم يُرَ أُكمل رمضان ثلاثين يومًا.</p></details>
+      <details class="bt-faq"><summary>متى عيد الفطر؟</summary><p>في الأول من شوال، أي اليوم التالي لنهاية رمضان. اطّلع على <a class="text-link underline" href="/kam-baqi-ala-eid-alfitr/">العد التنازلي لعيد الفطر</a>.</p></details>
+      <details class="bt-faq"><summary>هل تبدأ دول الخليج رمضان في اليوم نفسه؟</summary><p>تعلن كل دولة بداية الشهر بنفسها. وغالبًا ما تبدأ دول الخليج في اليوم نفسه مع السعودية، وقد يقع فرق يوم واحد.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

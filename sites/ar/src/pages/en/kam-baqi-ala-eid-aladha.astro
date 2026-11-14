@@ -16,7 +16,7 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
 <Layout
   bleed
   lang="en"
-  title={`How long until Eid al-Adha ${gYear} (${y} AH)? And the Day of Arafah | Baitaan`}
+  title={`How long until Eid al-Adha ${gYear}? Day of Arafah too | Baitaan`}
   description={`Countdown to Eid al-Adha ${y} AH (10 Dhu al-Hijjah), with the expected date of the Day of Arafah from the Umm al-Qura calendar.`}
 >
   <ToolPage
@@ -42,6 +42,13 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
         <li><a class="text-link underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
         <li><a class="text-link underline" href="/en/kam-baqi-ala-eid-alfitr/">How long until Eid al-Fitr</a></li>
       </ul>
+
+      <h2>How the countdown works</h2>
+      <p>It counts down to midnight, Makkah time, at the start of 10 Dhu al-Hijjah {y} AH, {fmt.format(next.gregorian)} on the Umm al-Qura calendar. After Eid it moves on to the following year.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>When is the Day of Arafah?</summary><p>On 9 Dhu al-Hijjah, the day before Eid: {arafah} on the Umm al-Qura calendar. Pilgrims stand at Arafat, and many people who are not on Hajj fast that day.</p></details>
+      <details class="bt-faq"><summary>When can the sacrifice (udhiyah) be offered?</summary><p>From after the Eid prayer on 10 Dhu al-Hijjah until sunset on 13 Dhu al-Hijjah, the last of the days of Tashreeq, in the view of many scholars.</p></details>
+      <details class="bt-faq"><summary>How long after Eid al-Fitr does Eid al-Adha come?</summary><p>About two months and ten days: the rest of Shawwal, all of Dhu al-Qadah and the first ten days of Dhu al-Hijjah, between 67 and 69 days.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

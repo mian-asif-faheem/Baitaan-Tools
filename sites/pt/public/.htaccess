@@ -44,6 +44,9 @@ Options -Indexes
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
   Header always set X-Frame-Options "SAMEORIGIN"
+  # Browsers stay on HTTPS for a year. Per host only (no includeSubDomains), so mail and cPanel
+  # hosts are not affected; add includeSubDomains and preload only once every subdomain is HTTPS.
+  Header always set Strict-Transport-Security "max-age=31536000"
 
   # Pages: always check for a new version, so updates show at once.
   <FilesMatch "\.(html|xml|txt)$">

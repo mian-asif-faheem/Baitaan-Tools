@@ -171,7 +171,7 @@ const alternates: { hreflang: string; href: string }[] = cluster
 const ogImage = abs(`/img/og-${lang.startsWith("en") ? "en" : code}.png`);
 // Home pages describe the site and who publishes it.
 const isHome = here === homeHref;
-const publisher = { "@type": "Organization", name: "Baitaan", url: `${SITES.root.url}/`, email: "hello@baitaandessigns.com", parentOrganization: { "@type": "Organization", name: "MAAF Studios", url: "https://maafstudios.com" } };
+const publisher = { "@type": "Organization", name: "Baitaan", url: `${SITES.root.url}/`, email: "hello@baitaandessigns.com", logo: { "@type": "ImageObject", url: `${SITES.root.url}/img/logo-512.png`, width: 512, height: 512 }, parentOrganization: { "@type": "Organization", name: "MAAF Studios", url: "https://maafstudios.com" } };
 const siteLd = {
   "@context": "https://schema.org",
   "@graph": [

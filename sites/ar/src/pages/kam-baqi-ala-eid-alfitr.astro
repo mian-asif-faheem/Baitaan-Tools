@@ -8,6 +8,7 @@ import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 const next = nextHijriOccurrence(10, 1);
 const y = next.hijri.year;
 const gYear = next.gregorian.getUTCFullYear();
+const dateText = new Intl.DateTimeFormat("ar-u-nu-latn", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(next.gregorian);
 ---
 <!-- TODO (native review): Arabic copy. -->
 <Layout
@@ -36,6 +37,13 @@ const gYear = next.gregorian.getUTCFullYear();
         <li><a class="text-link underline" href="/kam-baqi-ala-ramadan/">كم باقي على رمضان</a></li>
         <li><a class="text-link underline" href="/kam-baqi-ala-eid-aladha/">كم باقي على عيد الأضحى</a></li>
       </ul>
+
+      <h2>كيف يعمل العد التنازلي؟</h2>
+      <p>يعدّ الوقت المتبقي حتى منتصف الليل بتوقيت مكة المكرمة في بداية الأول من شوال {y} هـ، الموافق {dateText} حسب تقويم أم القرى. وبعد العيد ينتقل إلى العام التالي.</p>
+      <h2>أسئلة شائعة</h2>
+      <details class="bt-faq"><summary>متى عيد الفطر {gYear}؟</summary><p>حسب تقويم أم القرى يوافق الأول من شوال {y} هـ {dateText}. ويُعلَن رسميًا بعد تحرّي الهلال مساء 29 رمضان، لذلك قد يختلف الموعد يومًا.</p></details>
+      <details class="bt-faq"><summary>ما زكاة الفطر ومتى تُخرَج؟</summary><p>صدقة مقدّرة تُخرَج عن كل فرد من أفراد الأسرة قبل صلاة العيد، وقدرها صاع (نحو 3 كيلوغرامات) من غالب قوت البلد. وهي غير زكاة المال التي تحسبها <a class="text-link underline" href="/hasibat-azzakat/">حاسبة الزكاة</a>.</p></details>
+      <details class="bt-faq"><summary>كم أيام إجازة العيد؟</summary><p>تعلن كل دولة الإجازة الرسمية قبيل العيد، وقد تختلف بين القطاعين العام والخاص.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

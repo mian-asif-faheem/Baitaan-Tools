@@ -8,6 +8,7 @@ import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 const next = nextHijriOccurrence(9, 1);
 const y = next.hijri.year;
 const gYear = next.gregorian.getUTCFullYear();
+const dateText = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(next.gregorian);
 ---
 <Layout
   bleed
@@ -39,6 +40,16 @@ const gYear = next.gregorian.getUTCFullYear();
         <li>Work out your zakat early with the <a class="text-link underline" href="/en/hasibat-azzakat/">zakat calculator</a>; many people pay it in Ramadan.</li>
         <li>Convert any date between Hijri and Gregorian with the <a class="text-link underline" href="/en/tahweel-altareekh/">date converter</a>.</li>
       </ul>
+
+      <h2>How the countdown works</h2>
+      <p>It counts down to midnight, Makkah time, at the start of 1 Ramadan {y} AH, which falls on {dateText} on the Umm al-Qura calendar. It updates every second, and once Ramadan begins it moves on to the following year.</p>
+      <h2>Why Ramadan comes earlier every year</h2>
+      <p>The Hijri year follows the moon and has about 354 days, around 11 fewer than the Gregorian year. So Ramadan starts about 11 days earlier each year and passes through every season in roughly 33 years.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>When does Ramadan {gYear} start?</summary><p>On the Umm al-Qura calendar, 1 Ramadan {y} AH is {dateText}. The official start is confirmed after the moon sighting on the evening of 29 Shaban, so it can move by a day.</p></details>
+      <details class="bt-faq"><summary>How many days is Ramadan?</summary><p>29 or 30 days. It ends when the Shawwal moon is sighted on the evening of 29 Ramadan; if it is not seen, Ramadan completes 30 days.</p></details>
+      <details class="bt-faq"><summary>When is Eid al-Fitr?</summary><p>On 1 Shawwal, the day after Ramadan ends. See the <a class="text-link underline" href="/en/kam-baqi-ala-eid-alfitr/">Eid al-Fitr countdown</a>.</p></details>
+      <details class="bt-faq"><summary>Does every Gulf country start on the same day?</summary><p>Each country announces the start itself. Gulf countries usually begin on the same day as Saudi Arabia, but a one-day difference is possible.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

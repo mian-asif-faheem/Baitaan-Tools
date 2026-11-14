@@ -8,6 +8,7 @@ import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 const next = nextHijriOccurrence(10, 1);
 const y = next.hijri.year;
 const gYear = next.gregorian.getUTCFullYear();
+const dateText = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(next.gregorian);
 ---
 <Layout
   bleed
@@ -36,6 +37,13 @@ const gYear = next.gregorian.getUTCFullYear();
         <li><a class="text-link underline" href="/en/kam-baqi-ala-ramadan/">How long until Ramadan</a></li>
         <li><a class="text-link underline" href="/en/kam-baqi-ala-eid-aladha/">How long until Eid al-Adha</a></li>
       </ul>
+
+      <h2>How the countdown works</h2>
+      <p>It counts down to midnight, Makkah time, at the start of 1 Shawwal {y} AH, which falls on {dateText} on the Umm al-Qura calendar. After Eid it moves on to the following year.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>When is Eid al-Fitr {gYear}?</summary><p>On the Umm al-Qura calendar, 1 Shawwal {y} AH is {dateText}. It is confirmed after the moon sighting on the evening of 29 Ramadan, so it can move by a day.</p></details>
+      <details class="bt-faq"><summary>What is zakat al-fitr and when is it paid?</summary><p>A small, fixed charity paid for each member of the household before the Eid prayer, traditionally one saa (about 3 kg) of the local staple food. It is different from zakat on wealth, which the <a class="text-link underline" href="/en/hasibat-azzakat/">zakat calculator</a> works out.</p></details>
+      <details class="bt-faq"><summary>How long is the Eid holiday?</summary><p>Each government announces the official holiday shortly before Eid, and it can differ between the public and private sectors.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>
