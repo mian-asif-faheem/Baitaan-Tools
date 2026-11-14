@@ -294,6 +294,10 @@
     "menuClose": "Close",
     "methodTitle": "How we calculate",
     "methodText": "With the law and official tables cited here, and checked against the worked examples on this page. If you spot a mistake,",
-    "methodLink": "write to us"
+    "methodLink": "write to us",
+    "reviewedBy": "Reviewed by",
+    "reviewerName": "Mian Asif Faheem",
+    "reviewerRole": ", founder of Baitaan",
+    "reviewerHref": "/en/about/#reviewer"
   }
 }

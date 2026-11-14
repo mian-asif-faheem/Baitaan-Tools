@@ -294,6 +294,10 @@
     "menuClose": "إغلاق",
     "methodTitle": "كيف نحسب",
     "methodText": "وفق النظام والجداول الرسمية المذكورة هنا، ونتحقق من النتائج بالأمثلة المحلولة في هذه الصفحة. إن وجدت خطأً",
-    "methodLink": "فراسلنا"
+    "methodLink": "فراسلنا",
+    "reviewedBy": "راجعها",
+    "reviewerName": "ميان آصف فهيم",
+    "reviewerRole": "، مؤسس بيتان",
+    "reviewerHref": "/about/#reviewer"
   }
 }

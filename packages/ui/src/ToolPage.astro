@@ -45,6 +45,8 @@ const faq = [...guideHtml.matchAll(/<details class="bt-faq"[^>]*>\s*<summary[^>]
 }));
 const CURRENCY: Record<string, string> = { es: "MXN", pt: "BRL", ar: "SAR", root: "USD" };
 const finance = /calculadora|nihayat|hasibat|zakat|addariba/.test(here);
+// Pages with official sources (the calculators) name who reviews them.
+const reviewed = sources.length > 0 && !!chrome.reviewerName && !!chrome.reviewerHref;
 const ld = {
   "@context": "https://schema.org",
   "@graph": [
@@ -69,6 +71,15 @@ const ld = {
       ],
     },
     ...(faq.length ? [{ "@type": "FAQPage", mainEntity: faq }] : []),
+    ...(reviewed
+      ? [{
+          "@type": "WebPage",
+          url: pageUrl,
+          name: heading,
+          inLanguage: bt?.lang,
+          reviewedBy: { "@type": "Person", name: "Mian Asif Faheem", jobTitle: "Founder", url: new URL(chrome.reviewerHref!, origin).href, worksFor: { "@type": "Organization", name: "MAAF Studios" } },
+        }]
+      : []),
   ],
 };
 const crumb = nav.find((n) => n.href === here)?.label;
@@ -124,6 +135,11 @@ const others = nav.filter((n) => n.href !== here);
             <p class="bt-method m-0 text-sm text-muted">
               <strong class="font-semibold text-ink">{chrome.methodTitle}:</strong> {chrome.methodText}{" "}
               <a href={contact ?? "mailto:hello@baitaandessigns.com"}>{chrome.methodLink}</a>.
+            </p>
+          )}
+          {reviewed && (
+            <p class="bt-method m-0 text-sm text-muted">
+              {chrome.reviewedBy} <a href={chrome.reviewerHref}>{chrome.reviewerName}</a>{chrome.reviewerRole}.
             </p>
           )}
         </section>

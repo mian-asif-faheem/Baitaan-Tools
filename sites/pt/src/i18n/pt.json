@@ -280,6 +280,10 @@
     "menuClose": "Fechar",
     "methodTitle": "Como calculamos",
     "methodText": "Com a lei e as tabelas oficiais citadas aqui, e conferido com os exemplos resolvidos desta página. Se encontrar um erro,",
-    "methodLink": "escreva para nós"
+    "methodLink": "escreva para nós",
+    "reviewedBy": "Revisado por",
+    "reviewerName": "Mian Asif Faheem",
+    "reviewerRole": ", fundador do Baitaan",
+    "reviewerHref": "/sobre/#reviewer"
   }
 }
