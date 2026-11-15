@@ -105,6 +105,11 @@ const how = [
   { title: "Read the breakdown", text: "Every line of the result is explained, with the article of law it comes from." },
 ];
 
+/** Each site's main colour, for the coloured bar of its movie blocks (white text passes AA on all three). */
+const tone = { es: "#5A3B8C", pt: "#2F5597", ar: "#3E5A3F" } as Record<string, string>;
+const short = { es: "México", pt: "Brasil", ar: "الخليج" } as Record<string, string>;
+const law = { es: "Ley Federal del Trabajo", pt: "CLT", ar: "نظام العمل" } as Record<string, string>;
+
 const countries = [
   { photo: "mexico", alt: "Paseo de la Reforma in Mexico City, Mexico", site: SITES.es, name: "Mexico", count: "6 tools in Spanish",
     text: "Ley Federal del Trabajo, ISR and IMSS. The 2026 minimum wage of $315.04 a day and the UMA of $117.31." },
@@ -214,11 +219,14 @@ const faqs = [
       <ul class="bt-shots" data-animate="stagger">
         {popular.map((t) => (
           <li>
-            <a class="bt-card bt-shot bt-lift" href={t.site.url + t.path}>
-              <img src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
+            <a class="bt-card bt-shot" href={t.site.url + t.path}>
+              <span class="bt-mb bt-mb--wide" style={`--mb:${tone[t.site.lang.slice(0, 2)]}`}>
+                <span class="bt-mb__top" aria-hidden="true">Open the calculator</span>
+                <span class="bt-mb__main" aria-hidden="true"><span class="bt-mb__main-in"><span class="bt-mb__big">{t.title}</span><span class="bt-mb__sub" lang={t.site.lang}>{t.tag}</span></span></span>
+                <span class="bt-mb__bar"><span class="bt-mb__bar-in"><span class="bt-mb__t">{t.title}</span><span class="bt-mb__s" lang={t.site.lang}>{t.tag}</span></span></span>
+                <img class="bt-mb__cover" src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
+              </span>
               <span class="bt-shot__body">
-                <span class="bt-shot__tag" lang={t.site.lang} dir={t.site.dir}>{t.tag}</span>
-                <span class="bt-shot__title">{t.title}</span>
                 <span class="bt-shot__desc">{t.desc}</span>
                 <span class="bt-shot__go">Open <Icon d={arrowUpRight} size={15} /></span>
               </span>
@@ -232,10 +240,15 @@ const faqs = [
       <ul class="bt-countries" data-animate="stagger">
         {countries.map((c) => (
           <li>
-            <a class="bt-card bt-country bt-lift" href={c.site.url}>
-              <img class="bt-country__photo" src={`/img/countries/${c.photo}.webp`} width="498" height="374" alt={c.alt} loading="lazy" decoding="async" />
+            <a class="bt-card bt-country" href={c.site.url}>
+              <span class="bt-mb" style={`--mb:${tone[c.site.lang.slice(0, 2)]}`}>
+                <span class="bt-mb__top" aria-hidden="true">{c.count}</span>
+                <span class="bt-mb__main" aria-hidden="true"><span class="bt-mb__main-in"><span class="bt-mb__big">{c.name}</span><span class="bt-mb__sub" lang={c.site.lang}>{law[c.site.lang.slice(0, 2)]}</span></span></span>
+                <span class="bt-mb__rise" aria-hidden="true" lang={c.site.lang}>{short[c.site.lang.slice(0, 2)]}</span>
+                <span class="bt-mb__bar"><span class="bt-mb__bar-in"><span class="bt-mb__t">{c.name}</span><span class="bt-mb__s">{new URL(c.site.url).host}</span></span></span>
+                <img class="bt-mb__cover" src={`/img/countries/${c.photo}.webp`} width="498" height="374" alt={c.alt} loading="lazy" decoding="async" />
+              </span>
               <span class="bt-country__body">
-                <span class="bt-country__name">{c.name}</span>
                 <span class="bt-country__text">{c.text}</span>
                 <span class="bt-country__go">{c.count} <Icon d={arrowRight} size={15} /></span>
               </span>
@@ -296,15 +309,6 @@ const faqs = [
   .bt-country {
     padding: 0;
     gap: 0;
-  }
-  .bt-country__photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    background: var(--tint);
-    border-bottom: 1px solid var(--hair);
   }
   .bt-hero-photo {
     display: block;
@@ -468,7 +472,7 @@ const faqs = [
     text-decoration: none;
     color: var(--text);
   }
-  .bt-shot img {
+  .bt-shot img.unused {
     display: block;
     width: 100%;
     height: auto;
@@ -588,43 +592,175 @@ const faqs = [
   :global(html.dark) .bt-blobs b:nth-child(3) { background: var(--d3-d); }
   :global(html.dark) .bt-blobs b:nth-child(4) { background: var(--d1-d); }
 
-  /*
-   * Hover test 2, photo cards: the photo sits inset with a large rounded top corner, and the
-   * whole card grows slightly with a long soft shadow under it.
-   */
-  .bt-lift {
-    padding: 5px;
-    transition: transform 500ms var(--ease), box-shadow 500ms var(--ease), border-color 500ms var(--ease);
-  }
-  .bt-lift img {
-    border-radius: 11px 56px 11px 11px;
-    border-bottom: 0 !important;
-  }
-  .bt-lift .bt-shot__body,
-  .bt-lift .bt-country__body {
-    padding: 16px 19px 19px;
-  }
-  a.bt-lift:hover,
-  a.bt-lift:focus-visible {
-    transform: scale(1.03);
-    box-shadow: 0 50px 30px -20px rgba(100, 100, 111, 0.22);
-  }
-  :global(html.dark) a.bt-lift:hover,
-  :global(html.dark) a.bt-lift:focus-visible {
-    box-shadow: 0 50px 30px -20px rgba(0, 0, 0, 0.5);
-  }
-  a.bt-lift:active {
-    transform: scale(1.01);
-  }
   @media (prefers-reduced-motion: reduce) {
-    .bt-blobs b,
-    .bt-lift {
+    .bt-blobs b {
       transition: none;
     }
-    .bt-lang-card:hover .bt-blobs b,
-    a.bt-lift:hover,
-    a.bt-lift:focus-visible {
+    .bt-lang-card:hover .bt-blobs b {
       transform: none !important;
+    }
+  }
+
+  /*
+   * Movie blocks (photo cards): at rest the photo is dimmed with its name on it and a thin bar in
+   * the site's colour at the bottom. On hover or keyboard focus the dark layer slides up, a strip
+   * drops in from the top, the coloured bar grows with the title, a big label rises and the photo
+   * moves up a little. Based on "Movie Blocks" by Elegant Division.
+   */
+  .bt-mb {
+    --t: 0.5s;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    font-size: 16px;
+    color: #fff;
+    background: #2b2b2b;
+  }
+  .bt-mb--wide {
+    aspect-ratio: 16 / 10;
+  }
+  .bt-mb > span {
+    position: absolute;
+    inset-inline: 0;
+  }
+  .bt-mb__top,
+  .bt-mb__main-in,
+  .bt-mb__rise,
+  .bt-mb__bar-in {
+    padding-inline: 14px;
+  }
+  .bt-mb__cover {
+    display: block;
+    width: 100%;
+    height: calc(100% + 1.25em);
+    object-fit: cover;
+    transition: transform var(--t) ease-out;
+  }
+  .bt-mb__top {
+    z-index: 4;
+    top: -2.25em;
+    height: 2.25em;
+    padding-top: 2.25em;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.5);
+    transition: top calc(var(--t) / 2) cubic-bezier(0.22, 0.61, 0.36, 1),
+      padding calc(var(--t) / 2) cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--t) / 2);
+  }
+  .bt-mb__main {
+    z-index: 3;
+    top: 0;
+    bottom: -0.875em;
+    overflow: hidden;
+    background: rgba(24, 24, 27, 0.55);
+    border-bottom: 2.125em solid var(--mb);
+    transition: bottom calc(var(--t) / 1.2) cubic-bezier(0.17, 0.84, 0.44, 1) calc(var(--t) / 6),
+      border-bottom calc(var(--t) / 1.5) cubic-bezier(0.39, 0.58, 0.57, 1) calc(var(--t) / 3);
+  }
+  .bt-mb__main-in {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0.875em;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: bottom var(--t) ease-out;
+  }
+  .bt-mb__big {
+    font-size: 1.75em;
+    font-weight: 650;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .bt-mb__sub {
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  .bt-mb__rise {
+    z-index: 2;
+    bottom: -0.536em;
+    font-size: 2.4em;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+    transition: bottom calc(var(--t) / 3) ease-out;
+  }
+  .bt-mb__bar {
+    z-index: 4;
+    bottom: 0;
+    height: 1.25em;
+    overflow: hidden;
+    border-top: 0 solid #fff;
+    background: var(--mb);
+    transition: height var(--t) cubic-bezier(0.17, 0.84, 0.44, 1);
+  }
+  .bt-mb__bar-in {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 4.6em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 4.6em;
+    gap: 2px;
+    transition: bottom var(--t) ease-out calc(var(--t) / 6);
+  }
+  .bt-mb__t {
+    font-size: 18px;
+    font-weight: 650;
+    line-height: 1.2;
+  }
+  .bt-mb__s {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  a:hover > .bt-mb .bt-mb__top,
+  a:focus-visible > .bt-mb .bt-mb__top {
+    top: 0;
+    padding-top: 0.6em;
+    transition-delay: var(--t), calc(var(--t) / 0.85);
+  }
+  a:hover > .bt-mb .bt-mb__main,
+  a:focus-visible > .bt-mb .bt-mb__main {
+    bottom: 100%;
+    border-bottom-width: 0;
+  }
+  a:hover > .bt-mb .bt-mb__main-in,
+  a:focus-visible > .bt-mb .bt-mb__main-in {
+    bottom: -30em;
+  }
+  a:hover > .bt-mb .bt-mb__bar,
+  a:focus-visible > .bt-mb .bt-mb__bar {
+    height: 4.6em;
+    animation: bt-mb-bounce var(--t) ease;
+  }
+  a:hover > .bt-mb .bt-mb__bar-in,
+  a:focus-visible > .bt-mb .bt-mb__bar-in {
+    bottom: 0;
+  }
+  a:hover > .bt-mb .bt-mb__rise,
+  a:focus-visible > .bt-mb .bt-mb__rise {
+    bottom: 2.2em;
+    transition-duration: var(--t);
+    transition-delay: calc(var(--t) / 6);
+  }
+  a:hover > .bt-mb .bt-mb__cover,
+  a:focus-visible > .bt-mb .bt-mb__cover {
+    transform: translateY(-1.25em);
+  }
+  @keyframes bt-mb-bounce {
+    0%, 100% { border-top-width: 0; }
+    50% { border-top-width: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-mb *,
+    .bt-mb {
+      transition: none !important;
+      animation: none !important;
     }
   }
 
