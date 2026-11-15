@@ -11,7 +11,7 @@ import AguinaldoCalc from "../components/AguinaldoCalc.tsx";
 >
   <ToolPage
     heading="Calculadora de aguinaldo 2026"
-    lead="El aguinaldo mínimo en México es de 15 días de salario por año completo trabajado, y se paga proporcional si trabajaste menos tiempo."
+    lead="El aguinaldo mínimo en México es de 15 días de salario por año completo trabajado, y se paga proporcionalmente si trabajaste menos tiempo."
     updated="Actualizado: noviembre de 2026"
     sources={[{ href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Ley Federal del Trabajo, artículo 87" }]}
   >
@@ -32,10 +32,10 @@ import AguinaldoCalc from "../components/AguinaldoCalc.tsx";
 
       <h2>Preguntas frecuentes</h2>
       <!-- TODO (native review): add 5–8 questions from Google's "Más preguntas" for "aguinaldo 2026". -->
-      <ul>
-        <li>¿El aguinaldo paga impuestos? Está exento hasta 30 UMA ($3,519.30 en 2026); el excedente paga ISR.</li>
-        <li>¿Me toca aguinaldo si renuncié? Sí, la parte proporcional se incluye en tu <a class="text-link underline" href="/calculadora-finiquito/">finiquito</a>.</li>
-      </ul>
+      <details class="bt-faq"><summary>¿El aguinaldo paga impuestos?</summary><p>Está exento hasta 30 UMA ($3,519.30 en 2026); el excedente paga ISR.</p></details>
+      <details class="bt-faq"><summary>¿Me toca aguinaldo si renuncié?</summary><p>Sí, la parte proporcional se incluye en tu <a class="text-link underline" href="/calculadora-finiquito/">finiquito</a>.</p></details>
+      <details class="bt-faq"><summary>¿Me toca aguinaldo si no trabajé el año completo?</summary><p>Sí. Te corresponde la parte proporcional a los días que trabajaste en el año, aunque ya no estés en la empresa el día del pago (art. 87 de la LFT).</p></details>
+      <details class="bt-faq"><summary>¿Qué hago si no me pagan el aguinaldo?</summary><p>Pídelo por escrito a la empresa y, si no lo paga, acude a la PROFEDET, que atiende gratis a los trabajadores. Tienes un año para reclamarlo (art. 516 de la LFT).</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

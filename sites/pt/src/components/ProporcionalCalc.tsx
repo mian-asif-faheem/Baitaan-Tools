@@ -40,8 +40,8 @@ export default function ProporcionalCalc({ lang = "pt" }: { lang?: Lang }) {
             rows={[
               { label: L.daily, value: brl.format(r.daily), muted: true },
               { label: `${L.base} · ${days} ${C.days}`, value: brl.format(r.base) },
-              ...(r.absenceDeduction > 0 ? [{ label: L.absenceLine, value: brl.format(-r.absenceDeduction) }] : []),
-              ...(r.dsrDeduction > 0 ? [{ label: L.dsrLine, value: brl.format(-r.dsrDeduction) }] : []),
+              ...(r.absenceDeduction > 0 ? [{ label: L.absenceLine, value: brl.format(-r.absenceDeduction || 0) }] : []),
+              ...(r.dsrDeduction > 0 ? [{ label: L.dsrLine, value: brl.format(-r.dsrDeduction || 0) }] : []),
               { label: L.result, value: brl.format(r.total), strong: true },
             ]}
           />

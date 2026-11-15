@@ -21,6 +21,10 @@ Options -Indexes
   # ar.: earlier address of the Saudi end-of-service calculator (and its English twin).
   RewriteCond %{HTTP_HOST} ^ar\. [NC]
   RewriteRule ^(en/)?mukafat-nihayat-alkhidma/?$ https://%{HTTP_HOST}/$1nihayat-alkhidma-saudi/ [L,R=301]
+RewriteCond %{HTTP_HOST} ^ar\. [NC]
+RewriteRule ^(en/)?daght-pdf/?$ https://%{HTTP_HOST}/$1dagt-pdf/ [L,R=301]
+RewriteCond %{HTTP_HOST} ^ar\. [NC]
+RewriteRule ^(en/)?daribat-alqima-almudafa/?$ https://%{HTTP_HOST}/$1hasibat-addariba/ [L,R=301]
 
   # Old WordPress URLs: send wp-admin, wp-login and feeds home instead of a 404.
   RewriteRule ^(wp-admin|wp-login\.php|wp-content|feed)(/.*)?$ https://%{HTTP_HOST}/ [L,R=301,NC]

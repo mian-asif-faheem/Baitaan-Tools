@@ -105,7 +105,7 @@
     "fgtsFine": "FGTS penalty",
     "fgtsBalance": "FGTS balance",
     "fgtsEstimated": "estimated",
-    "fgtsWithdraw": "You can withdraw",
+    "fgtsWithdraw": "Balance you can withdraw",
     "fgtsNoWithdraw": "With this type of termination you can't withdraw your FGTS.",
     "totalWithFine": "Net + FGTS penalty",
     "seguro": "You can apply for unemployment insurance (seguro-desemprego) if you meet the work-time requirements.",
@@ -114,7 +114,8 @@
     "years": "full years",
     "avisoDays": "Notice period",
     "disclaimer": "Simulation with the CLT rules and the 2026 tables. The employer must pay within 10 days after the contract ends (art. 477). Check with your union or an employment lawyer.",
-    "extrasSummary": "Overtime, commissions and dependents"
+    "extrasSummary": "Overtime, commissions and dependents",
+    "fgtsDeposit": "Deposit on termination pay (8%)"
   },
   "ferias": {
     "absences": "Unexcused absences in the accrual period",

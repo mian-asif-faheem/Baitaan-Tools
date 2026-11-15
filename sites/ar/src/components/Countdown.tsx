@@ -70,7 +70,7 @@ export default function Countdown({ month, day, name, lang = "ar" }: { month: nu
       <div class="bt-result">
         <span class="bt-result__label">{L.expected}</span>
         <span class="text-2xl font-[650] leading-snug">{gregLong.format(next.gregorian)}</span>
-        <span class="bt-result__sub">{hijriText(next.hijri, lang)}</span>
+        <span class="bt-result__sub">{L.hijriPrefix ? `${L.hijriPrefix} ` : ""}{hijriText(next.hijri, lang)}</span>
       </div>
       <Note>{L.note}</Note>
     </div>

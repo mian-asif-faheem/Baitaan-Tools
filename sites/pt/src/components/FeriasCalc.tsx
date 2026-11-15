@@ -58,10 +58,10 @@ export default function FeriasCalc({ lang = "pt" }: { lang?: Lang }) {
                     ]
                   : []),
                 { label: C.gross, value: brl.format(r.gross), strong: true },
-                { label: C.inss, value: brl.format(-r.inss) },
+                { label: C.inss, value: brl.format(-r.inss || 0) },
                 { label: C.irTable, value: brl.format(r.irTable), muted: true },
-                ...(r.irReduction > 0 ? [{ label: C.irReduction, value: brl.format(-r.irReduction), muted: true }] : []),
-                { label: C.irrf, value: brl.format(-r.irrf) },
+                ...(r.irReduction > 0 ? [{ label: C.irReduction, value: brl.format(-r.irReduction || 0), muted: true }] : []),
+                { label: C.irrf, value: brl.format(-r.irrf || 0) },
                 { label: L.result, value: brl.format(r.net), strong: true },
               ]}
             />

@@ -16,7 +16,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
 >
   <ToolPage
     heading="Calculadora de sueldo neto 2026"
-    lead="Tu sueldo neto es tu sueldo bruto menos el ISR y las cuotas del IMSS. Si ganas hasta $11,492.66 al mes, el subsidio para el empleo reduce tu ISR en hasta $535.65."
+    lead="Tu sueldo neto es tu sueldo bruto menos el ISR y las cuotas del IMSS. Si ganas hasta $11,492.66 al mes, el subsidio para el empleo reduce tu ISR hasta en $535.65."
     updated="Actualizado: noviembre de 2026 · Tarifa ISR 2026, UMA $117.31"
     sources={[
       { href: "https://www.sat.gob.mx/", label: "SAT: Anexo 8 de la Resolución Miscelánea Fiscal 2026" },
@@ -31,7 +31,7 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <ol class="ms-5 list-decimal space-y-1">
         <li><strong>ISR:</strong> busca tu sueldo bruto mensual en la tarifa del SAT. Al excedente sobre el límite inferior aplica el porcentaje de tu renglón y suma la cuota fija.</li>
         <li><strong>Subsidio para el empleo:</strong> si ganas hasta $11,492.66, resta $535.65 a tu ISR. El subsidio nunca se paga en efectivo: si es mayor que tu ISR, tu ISR queda en cero.</li>
-        <li><strong>IMSS:</strong> multiplica tu salario base de cotización (salario diario × factor de integración) por los porcentajes del trabajador y por 30.4 días.</li>
+        <li><strong>IMSS:</strong> multiplica tu salario base de cotización (salario diario × factor de integración) por 30.4 días y aplica los porcentajes del trabajador.</li>
         <li>Resta el ISR y el IMSS a tu sueldo bruto.</li>
       </ol>
 

@@ -105,7 +105,7 @@
     "fgtsFine": "Multa do FGTS",
     "fgtsBalance": "Saldo do FGTS",
     "fgtsEstimated": "estimado",
-    "fgtsWithdraw": "Você pode sacar",
+    "fgtsWithdraw": "Saldo que você pode sacar",
     "fgtsNoWithdraw": "Neste tipo de rescisão você não saca o FGTS.",
     "totalWithFine": "Líquido + multa do FGTS",
     "seguro": "Você tem direito a pedir o seguro-desemprego, se cumprir os requisitos de tempo de trabalho.",
@@ -114,7 +114,8 @@
     "years": "anos completos",
     "avisoDays": "Aviso prévio",
     "disclaimer": "Simulação com as regras da CLT e as tabelas de 2026. A empresa deve pagar em até 10 dias após o fim do contrato (art. 477). Confira com o sindicato ou um advogado trabalhista.",
-    "extrasSummary": "Horas extras, comissões e dependentes"
+    "extrasSummary": "Horas extras, comissões e dependentes",
+    "fgtsDeposit": "Depósito sobre a rescisão (8%)"
   },
   "ferias": {
     "absences": "Faltas sem justificativa no período aquisitivo",
@@ -129,7 +130,7 @@
       "abono": "Abono pecuniário",
       "tercoAbono": "1/3 sobre o abono"
     },
-    "disclaimer": "Simulação. O abono e o seu 1/3 não pagam INSS nem IR. A empresa deve pagar até 2 dias antes do início das férias (art. 145).",
+    "disclaimer": "Simulação. Sobre o abono e o seu 1/3 não incidem INSS nem IR. A empresa deve pagar até 2 dias antes do início das férias (art. 145).",
     "split": "{rest} dias de descanso + {sold} vendidos"
   },
   "decimo": {

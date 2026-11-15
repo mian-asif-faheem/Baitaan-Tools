@@ -170,6 +170,7 @@
     "left": "Time left until",
     "today": "Today!",
     "expected": "Expected date",
+    "hijriPrefix": "",
     "hours": "hours",
     "minutes": "minutes",
     "seconds": "seconds",

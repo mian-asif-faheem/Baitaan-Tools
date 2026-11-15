@@ -108,7 +108,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
               <Rows
                 rows={r.deductions
                   .filter((d) => d.amount > 0)
-                  .map((d) => ({ label: L.lines[d.key as keyof typeof L.lines], value: brl.format(-d.amount) }))}
+                  .map((d) => ({ label: L.lines[d.key as keyof typeof L.lines], value: brl.format(-d.amount || 0) }))}
               />
             </>
           )}
@@ -118,6 +118,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
               <Rows
                 rows={[
                   { label: `${L.fgtsBalance}${r.fgts.estimated ? ` (${L.fgtsEstimated})` : ""}`, value: brl.format(r.fgts.balance), muted: true },
+                  { label: L.fgtsDeposit, value: brl.format(r.fgts.monthDeposit), muted: true },
                   { label: `${L.fgtsFine} (${r.fgts.fineRate * 100}%)`, value: brl.format(r.fgts.fine) },
                   { label: `${L.fgtsWithdraw} (${r.fgts.withdrawRate * 100}%)`, value: brl.format(r.fgts.withdrawable), muted: true },
                   { label: L.totalWithFine, value: brl.format(r.totalWithFine), strong: true },

@@ -44,10 +44,10 @@ export default function SueldoNetoCalc({ lang = "es" }: { lang?: Lang }) {
           <Rows
             rows={[
               { label: L.isrBefore, value: mxn.format(r.isrBeforeSubsidio), muted: true },
-              ...(r.subsidio > 0 ? [{ label: L.subsidio, value: mxn.format(-r.subsidio), muted: true }] : []),
-              { label: L.isr, value: mxn.format(-r.isr) },
-              { label: L.imss, value: mxn.format(-r.imss) },
-              ...(r.otherDeductions > 0 ? [{ label: L.otherLine, value: mxn.format(-r.otherDeductions) }] : []),
+              ...(r.subsidio > 0 ? [{ label: L.subsidio, value: mxn.format(-r.subsidio || 0), muted: true }] : []),
+              { label: L.isr, value: mxn.format(-r.isr || 0) },
+              { label: L.imss, value: mxn.format(-r.imss || 0) },
+              ...(r.otherDeductions > 0 ? [{ label: L.otherLine, value: mxn.format(-r.otherDeductions || 0) }] : []),
               { label: L.result, value: mxn.format(r.net), strong: true },
             ]}
           />

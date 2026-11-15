@@ -41,10 +41,10 @@ export default function DecimoCalc({ lang = "pt" }: { lang?: Lang }) {
             rows={[
               { label: L.gross, value: brl.format(r.gross), muted: true },
               { label: L.first, value: brl.format(r.firstInstallment), strong: true },
-              { label: C.inss, value: brl.format(-r.inss) },
+              { label: C.inss, value: brl.format(-r.inss || 0) },
               { label: C.irTable, value: brl.format(r.irTable), muted: true },
-              ...(r.irReduction > 0 ? [{ label: C.irReduction, value: brl.format(-r.irReduction), muted: true }] : []),
-              { label: C.irrf, value: brl.format(-r.irrf) },
+              ...(r.irReduction > 0 ? [{ label: C.irReduction, value: brl.format(-r.irReduction || 0), muted: true }] : []),
+              { label: C.irrf, value: brl.format(-r.irrf || 0) },
               { label: L.second, value: brl.format(r.secondInstallment), strong: true },
             ]}
           />

@@ -60,7 +60,7 @@ const ld = {
       operatingSystem: "Any",
       browserRequirements: "Requires JavaScript",
       isAccessibleForFree: true,
-      offers: { "@type": "Offer", price: "0", priceCurrency: CURRENCY[bt?.site ?? "root"] },
+      offers: { "@type": "Offer", price: "0", priceCurrency: /-uae\//.test(here) ? "AED" : CURRENCY[bt?.site ?? "root"] },
       publisher: { "@type": "Organization", name: "Baitaan", url: "https://baitaandessigns.com/" },
     },
     {
