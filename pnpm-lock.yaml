@@ -131,6 +131,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.4
         version: 3.7.4
+      '@bt/tools':
+        specifier: workspace:*
+        version: link:../../packages/tools
       '@bt/ui':
         specifier: workspace:*
         version: link:../../packages/ui

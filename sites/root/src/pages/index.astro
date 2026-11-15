@@ -4,8 +4,7 @@ import Icon from "@bt/ui/Icon.astro";
 import { arrowLeft, arrowRight, arrowUpRight, bookOpen, calendarBlank, checkCircle, lockSimple } from "@bt/ui/icons";
 import { SITES } from "@bt/ui/sites";
 import Layout from "../components/Layout.astro";
-import Skyline from "../components/Skyline.astro";
-import HeroCollage from "@bt/ui/sections/HeroCollage.astro";
+import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 import Stats from "@bt/ui/sections/Stats.astro";
 import HowItWorks from "@bt/ui/sections/HowItWorks.astro";
 import Section from "@bt/ui/sections/Section.astro";
@@ -61,14 +60,36 @@ const popular = [
     alt: "End-of-service calculator answer in Saudi riyals with its breakdown" },
 ];
 
-/** Real results from the calculators' own worked examples, as the hero picture. */
-const heroCards = [
-  { label: "Finiquito · renuncia", value: "$7,438.36", lang: "es",
-    rows: [["Aguinaldo", "$3,719.18"], ["Vacaciones", "$2,975.34"], ["Prima vacacional", "$743.84"]] as [string, string][] },
-  { label: "Salário líquido · R$ 5.000", value: "R$ 4.498,49", lang: "pt",
-    rows: [["INSS", "−R$ 501,51"], ["IRRF", "R$ 0,00"]] as [string, string][] },
-  { label: "مكافأة نهاية الخدمة · 7 سنوات", value: "36,000 ر.س", sub: "على الأجر الفعلي 8,000 ريال", lang: "ar", dir: "rtl" as const },
-];
+/**
+ * "Coming up": the next payment deadlines and Ramadan, worked out at build time. Each item also
+ * carries its end date, and a small script hides it once that day has passed (the page is static
+ * between deploys); the strip disappears when nothing is left.
+ */
+const now = new Date();
+const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+const dayMs = 86_400_000;
+const ymd = (d: number) => new Date(d).toISOString().slice(0, 10);
+const fmt = (d: number) => new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(d);
+/** Next 30 Nov / 20 Dec (this year, or next once it has passed). */
+const nextOn = (m: number, day: number) => {
+  const d = Date.UTC(now.getUTCFullYear(), m - 1, day);
+  return d >= today ? d : Date.UTC(now.getUTCFullYear() + 1, m - 1, day);
+};
+/** Brazil: when the deadline falls on a weekend, the 13th salary is paid on the Friday before. */
+const workdayBefore = (d: number) => {
+  const w = new Date(d).getUTCDay();
+  return w === 0 ? d - 2 * dayMs : w === 6 ? d - dayMs : d;
+};
+const br1 = workdayBefore(nextOn(11, 30));
+const br2 = workdayBefore(nextOn(12, 20));
+const mx = nextOn(12, 20);
+const ramadan = nextHijriOccurrence(9, 1).gregorian.getTime();
+const comingUp = [
+  { end: ymd(br1), when: br1, place: "Brazil", text: "13th salary, 1st instalment", href: SITES.pt.url + "/calculadora-13-salario/", by: `by ${fmt(br1)}` },
+  { end: ymd(mx - dayMs), when: mx, place: "Mexico", text: "Aguinaldo", href: SITES.es.url + "/calculadora-aguinaldo/", by: `before ${fmt(mx)}` },
+  { end: ymd(br2), when: br2, place: "Brazil", text: "13th salary, 2nd instalment", href: SITES.pt.url + "/calculadora-13-salario/", by: `by ${fmt(br2)}` },
+  { end: ymd(ramadan), when: ramadan, place: "Gulf", text: "Ramadan starts", href: SITES.ar.url + "/en/kam-baqi-ala-ramadan/", by: `around ${fmt(ramadan)}` },
+].filter((c) => c.when >= today).sort((a, b) => a.when - b.when).slice(0, 4);
 
 // Tool counts: 6 on es., 9 on pt., 14 on ar. Update when a tool is added.
 const stats = [
@@ -85,11 +106,11 @@ const how = [
 ];
 
 const countries = [
-  { place: "mx" as const, site: SITES.es, name: "Mexico", count: "6 tools in Spanish",
+  { photo: "mexico", alt: "Paseo de la Reforma in Mexico City, Mexico", site: SITES.es, name: "Mexico", count: "6 tools in Spanish",
     text: "Ley Federal del Trabajo, ISR and IMSS. The 2026 minimum wage of $315.04 a day and the UMA of $117.31." },
-  { place: "br" as const, site: SITES.pt, name: "Brazil", count: "9 tools in Portuguese",
+  { photo: "brazil", alt: "Avenida Paulista in São Paulo, Brazil", site: SITES.pt, name: "Brazil", count: "9 tools in Portuguese",
     text: "CLT, INSS and income tax. Since January 2026, pay up to R$ 5.000 a month has no income tax withheld." },
-  { place: "gulf" as const, site: SITES.ar, name: "The Gulf", count: "14 tools in Arabic",
+  { photo: "gulf", alt: "Riyadh skyline at sunset, Saudi Arabia", site: SITES.ar, name: "The Gulf", count: "14 tools in Arabic",
     text: "Saudi and UAE labour laws, VAT and zakat, and the Umm al-Qura Hijri calendar." },
 ];
 
@@ -121,9 +142,41 @@ const faqs = [
 ---
 <Layout bleed wide title="Baitaan: free tools that speak your language" description="Free calculators and everyday tools in Spanish, Portuguese and Arabic. They run in your browser, with no sign-up.">
   <Hero title="Free tools that speak your language" lead="Calculators that follow each country’s own rules, running in your browser with no sign-up. Choose your language.">
-    <HeroCollage slot="visual" cards={heroCards} />
+    <img
+      slot="visual"
+      class="bt-hero-photo"
+      src="/img/hero-pay-calculator.webp"
+      srcset="/img/hero-pay-calculator-800.webp 800w, /img/hero-pay-calculator.webp 1600w"
+      sizes="(min-width: 1024px) 540px, calc(100vw - 40px)"
+      width="1600"
+      height="1067"
+      alt="Person checking take-home pay on a phone calculator next to a payslip"
+      fetchpriority="high"
+      decoding="async"
+    />
   </Hero>
   <div class="mx-auto max-w-[1120px] px-5">
+    {comingUp.length > 0 && (
+      <aside class="bt-soon" aria-labelledby="soon" data-soon>
+        <h2 id="soon">Coming up</h2>
+        <ul>
+          {comingUp.map((c) => (
+            <li data-end={c.end}>
+              <a href={c.href}><span class="bt-soon__place">{c.place}</span> {c.text} <strong>{c.by}</strong></a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+    <script is:inline>
+      (function () {
+        var box = document.querySelector("[data-soon]");
+        if (!box) return;
+        var t = new Date().toISOString().slice(0, 10);
+        box.querySelectorAll("[data-end]").forEach(function (li) { if (li.getAttribute("data-end") < t) li.remove(); });
+        if (!box.querySelector("li")) box.remove();
+      })();
+    </script>
     <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3.5 p-0">
       {langs.map(({ site, name, go, desc, style }) => {
         const rtl = site.dir === "rtl";
@@ -179,7 +232,7 @@ const faqs = [
         {countries.map((c) => (
           <li>
             <a class="bt-card bt-country" href={c.site.url}>
-              <span class="bt-country__art"><Skyline place={c.place} /></span>
+              <img class="bt-country__photo" src={`/img/countries/${c.photo}.webp`} width="498" height="374" alt={c.alt} loading="lazy" decoding="async" />
               <span class="bt-country__body">
                 <span class="bt-country__name">{c.name}</span>
                 <span class="bt-country__text">{c.text}</span>
@@ -243,19 +296,79 @@ const faqs = [
     padding: 0;
     gap: 0;
   }
-  .bt-country__art {
-    display: grid;
-    place-items: end center;
-    height: 170px;
-    padding: 16px 16px 0;
+  .bt-country__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     background: var(--tint);
-    color: var(--link);
     border-bottom: 1px solid var(--hair);
   }
-  .bt-country__art :global(svg) {
+  .bt-hero-photo {
+    display: block;
     width: 100%;
-    max-width: 320px;
     height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 20px;
+    background: var(--tint);
+    box-shadow: 0 1px 0 var(--hair), 0 18px 40px -24px rgba(0, 0, 0, 0.35);
+  }
+  /* The hub shows its photo on phones too, under the text (other sites hide the hero picture there). */
+  @media (max-width: 639.98px) {
+    :global(.bt-hero__visual) {
+      display: flex;
+    }
+    :global(.bt-hero--visual .bt-hero__grid) {
+      gap: 24px;
+    }
+  }
+  .bt-soon {
+    margin: 0 0 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 20px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--tint);
+  }
+  .bt-soon h2 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .bt-soon ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+  }
+  .bt-soon a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .bt-soon a:hover strong,
+  .bt-soon a:focus-visible strong {
+    text-decoration: underline;
+  }
+  .bt-soon strong {
+    font-weight: 600;
+    color: var(--link);
+  }
+  .bt-soon__place {
+    color: var(--muted);
+  }
+  .bt-soon__place::after {
+    content: " ·";
   }
   .bt-country__body {
     display: flex;
