@@ -220,13 +220,10 @@ const faqs = [
         {popular.map((t) => (
           <li>
             <a class="bt-card bt-shot" href={t.site.url + t.path}>
-              <span class="bt-mb bt-mb--wide" style={`--mb:${tone[t.site.lang.slice(0, 2)]}`}>
-                <span class="bt-mb__top" aria-hidden="true">Open the calculator</span>
-                <span class="bt-mb__main" aria-hidden="true"><span class="bt-mb__main-in"><span class="bt-mb__big">{t.title}</span><span class="bt-mb__sub" lang={t.site.lang}>{t.tag}</span></span></span>
-                <span class="bt-mb__bar"><span class="bt-mb__bar-in"><span class="bt-mb__t">{t.title}</span><span class="bt-mb__s" lang={t.site.lang}>{t.tag}</span></span></span>
-                <img class="bt-mb__cover" src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
-              </span>
+              <img src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
               <span class="bt-shot__body">
+                <span class="bt-shot__tag" lang={t.site.lang} dir={t.site.dir}>{t.tag}</span>
+                <span class="bt-shot__title">{t.title}</span>
                 <span class="bt-shot__desc">{t.desc}</span>
                 <span class="bt-shot__go">Open <Icon d={arrowUpRight} size={15} /></span>
               </span>
@@ -472,7 +469,7 @@ const faqs = [
     text-decoration: none;
     color: var(--text);
   }
-  .bt-shot img.unused {
+  .bt-shot img {
     display: block;
     width: 100%;
     height: auto;
@@ -602,7 +599,7 @@ const faqs = [
   }
 
   /*
-   * Movie blocks (photo cards): at rest the photo is dimmed with its name on it and a thin bar in
+   * Movie blocks (country cards): at rest the photo sits under frosted glass with its name on it and a thin bar in
    * the site's colour at the bottom. On hover or keyboard focus the dark layer slides up, a strip
    * drops in from the top, the coloured bar grows with the title, a big label rises and the photo
    * moves up a little. Based on "Movie Blocks" by Elegant Division.
@@ -616,9 +613,8 @@ const faqs = [
     font-size: 16px;
     color: #fff;
     background: #2b2b2b;
-  }
-  .bt-mb--wide {
-    aspect-ratio: 16 / 10;
+    /* The site's colour, toned down so it doesn't glare once the bar opens. */
+    --mb-dim: color-mix(in srgb, var(--mb) 72%, #111);
   }
   .bt-mb > span {
     position: absolute;
@@ -656,8 +652,11 @@ const faqs = [
     top: 0;
     bottom: -0.875em;
     overflow: hidden;
-    background: rgba(24, 24, 27, 0.55);
-    border-bottom: 2.125em solid var(--mb);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(20, 20, 24, 0.30));
+    -webkit-backdrop-filter: blur(3px) saturate(1.1);
+    backdrop-filter: blur(3px) saturate(1.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border-bottom: 2.125em solid var(--mb-dim);
     transition: bottom calc(var(--t) / 1.2) cubic-bezier(0.17, 0.84, 0.44, 1) calc(var(--t) / 6),
       border-bottom calc(var(--t) / 1.5) cubic-bezier(0.39, 0.58, 0.57, 1) calc(var(--t) / 3);
   }
@@ -669,6 +668,10 @@ const faqs = [
     flex-direction: column;
     gap: 2px;
     transition: bottom var(--t) ease-out;
+  }
+  .bt-mb__big,
+  .bt-mb__sub {
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
   }
   .bt-mb__big {
     font-size: 1.75em;
@@ -694,8 +697,8 @@ const faqs = [
     bottom: 0;
     height: 1.25em;
     overflow: hidden;
-    border-top: 0 solid #fff;
-    background: var(--mb);
+    border-top: 0 solid rgba(255, 255, 255, 0.7);
+    background: var(--mb-dim);
     transition: height var(--t) cubic-bezier(0.17, 0.84, 0.44, 1);
   }
   .bt-mb__bar-in {
