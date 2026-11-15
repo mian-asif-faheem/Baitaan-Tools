@@ -183,6 +183,7 @@ const faqs = [
         return (
           <li>
             <a href={site.url} lang={site.lang} dir={site.dir} class="bt-card bt-lang-card min-h-[220px] gap-2.5 p-6" style={style}>
+              <span class="bt-blobs" aria-hidden="true"><b></b><b></b><b></b><b></b></span>
               <span class="flex items-center gap-2.5">
                 <span class="flex gap-[3px]" aria-hidden="true"><i></i><i></i><i></i></span>
                 <span class="font-['IBM_Plex_Sans_Variable',sans-serif] text-[13px] text-muted">{new URL(site.url).host}</span>
@@ -213,7 +214,7 @@ const faqs = [
       <ul class="bt-shots" data-animate="stagger">
         {popular.map((t) => (
           <li>
-            <a class="bt-card bt-shot" href={t.site.url + t.path}>
+            <a class="bt-card bt-shot bt-lift" href={t.site.url + t.path}>
               <img src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
               <span class="bt-shot__body">
                 <span class="bt-shot__tag" lang={t.site.lang} dir={t.site.dir}>{t.tag}</span>
@@ -231,7 +232,7 @@ const faqs = [
       <ul class="bt-countries" data-animate="stagger">
         {countries.map((c) => (
           <li>
-            <a class="bt-card bt-country" href={c.site.url}>
+            <a class="bt-card bt-country bt-lift" href={c.site.url}>
               <img class="bt-country__photo" src={`/img/countries/${c.photo}.webp`} width="498" height="374" alt={c.alt} loading="lazy" decoding="async" />
               <span class="bt-country__body">
                 <span class="bt-country__name">{c.name}</span>
@@ -541,6 +542,92 @@ const faqs = [
     max-width: 760px;
     margin-inline: auto;
   }
+  /*
+   * Hover test 1, language cards: four soft circles in the site's own colours, blurred at rest,
+   * that sharpen and drift apart on hover. They sit behind the text (the card isolates its
+   * stacking) and mirror for the Arabic card.
+   */
+  .bt-blobs {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    --x: 1;
+  }
+  .bt-lang-card[dir="rtl"] .bt-blobs {
+    --x: -1;
+  }
+  .bt-blobs b {
+    position: absolute;
+    border-radius: 999px;
+    opacity: 0.2;
+    filter: blur(8px);
+    transition: transform 500ms var(--ease), filter 500ms var(--ease), opacity 500ms var(--ease);
+  }
+  .bt-blobs b:nth-child(1) { width: 220px; height: 220px; inset-inline-end: 4px; bottom: -130px; background: var(--d2-l); }
+  .bt-blobs b:nth-child(2) { width: 48px; height: 48px; inset-inline-end: 56px; bottom: 56px; background: var(--b-l); }
+  .bt-blobs b:nth-child(3) { width: 130px; height: 130px; inset-inline-end: 4px; top: -70px; background: var(--d3-l); }
+  .bt-blobs b:nth-child(4) { width: 84px; height: 84px; inset-inline-start: 40%; bottom: -44px; background: var(--d1-l); }
+  .bt-lang-card:hover .bt-blobs b,
+  .bt-lang-card:focus-visible .bt-blobs b {
+    filter: blur(0);
+    opacity: 0.28;
+  }
+  .bt-lang-card:hover .bt-blobs b:nth-child(1),
+  .bt-lang-card:focus-visible .bt-blobs b:nth-child(1) { transform: translate(calc(48px * var(--x)), 48px); }
+  .bt-lang-card:hover .bt-blobs b:nth-child(2),
+  .bt-lang-card:focus-visible .bt-blobs b:nth-child(2) { transform: translate(calc(48px * var(--x)), 8px); }
+  .bt-lang-card:hover .bt-blobs b:nth-child(3),
+  .bt-lang-card:focus-visible .bt-blobs b:nth-child(3) { transform: translate(calc(48px * var(--x)), -48px); }
+  .bt-lang-card:hover .bt-blobs b:nth-child(4),
+  .bt-lang-card:focus-visible .bt-blobs b:nth-child(4) { transform: translateX(calc(-48px * var(--x))); }
+  :global(html.dark) .bt-blobs b { opacity: 0.3; }
+  :global(html.dark) .bt-lang-card:hover .bt-blobs b { opacity: 0.42; }
+  :global(html.dark) .bt-blobs b:nth-child(1) { background: var(--d2-d); }
+  :global(html.dark) .bt-blobs b:nth-child(2) { background: var(--b-d); }
+  :global(html.dark) .bt-blobs b:nth-child(3) { background: var(--d3-d); }
+  :global(html.dark) .bt-blobs b:nth-child(4) { background: var(--d1-d); }
+
+  /*
+   * Hover test 2, photo cards: the photo sits inset with a large rounded top corner, and the
+   * whole card grows slightly with a long soft shadow under it.
+   */
+  .bt-lift {
+    padding: 5px;
+    transition: transform 500ms var(--ease), box-shadow 500ms var(--ease), border-color 500ms var(--ease);
+  }
+  .bt-lift img {
+    border-radius: 11px 56px 11px 11px;
+    border-bottom: 0 !important;
+  }
+  .bt-lift .bt-shot__body,
+  .bt-lift .bt-country__body {
+    padding: 16px 19px 19px;
+  }
+  a.bt-lift:hover,
+  a.bt-lift:focus-visible {
+    transform: scale(1.03);
+    box-shadow: 0 50px 30px -20px rgba(100, 100, 111, 0.22);
+  }
+  :global(html.dark) a.bt-lift:hover,
+  :global(html.dark) a.bt-lift:focus-visible {
+    box-shadow: 0 50px 30px -20px rgba(0, 0, 0, 0.5);
+  }
+  a.bt-lift:active {
+    transform: scale(1.01);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-blobs b,
+    .bt-lift {
+      transition: none;
+    }
+    .bt-lang-card:hover .bt-blobs b,
+    a.bt-lift:hover,
+    a.bt-lift:focus-visible {
+      transform: none !important;
+    }
+  }
+
   .bt-lang-card i {
     width: 12px;
     height: 12px;
