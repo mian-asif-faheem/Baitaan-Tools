@@ -242,7 +242,7 @@ const faqs = [
                 <span class="bt-mb__top" aria-hidden="true">{c.count}</span>
                 <span class="bt-mb__main" aria-hidden="true"><span class="bt-mb__main-in"><span class="bt-mb__big">{c.name}</span><span class="bt-mb__sub" lang={c.site.lang}>{law[c.site.lang.slice(0, 2)]}</span></span></span>
                 <span class="bt-mb__rise" aria-hidden="true" lang={c.site.lang}>{short[c.site.lang.slice(0, 2)]}</span>
-                <span class="bt-mb__bar"><span class="bt-mb__bar-in"><span class="bt-mb__t">{c.name}</span><span class="bt-mb__s">{new URL(c.site.url).host}</span></span></span>
+                <span class="bt-mb__bar"><span class="bt-mb__bar-in"><span class="bt-mb__t">{c.name}</span><span class="bt-mb__s" aria-hidden="true">{new URL(c.site.url).host}</span></span></span>
                 <img class="bt-mb__cover" src={`/img/countries/${c.photo}.webp`} width="498" height="374" alt={c.alt} loading="lazy" decoding="async" />
               </span>
               <span class="bt-country__body">
@@ -685,6 +685,7 @@ const faqs = [
   }
   .bt-mb__rise {
     z-index: 2;
+    text-align: center;
     bottom: -0.536em;
     font-size: 2.4em;
     font-weight: 700;
@@ -698,7 +699,12 @@ const faqs = [
     height: 1.25em;
     overflow: hidden;
     border-top: 0 solid rgba(255, 255, 255, 0.7);
-    background: var(--mb-dim);
+    /* Glass in the site's colour: see-through tint, blurred photo behind, a light top edge. */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
+      color-mix(in srgb, var(--mb-dim) 62%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    backdrop-filter: blur(12px) saturate(1.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
     transition: height var(--t) cubic-bezier(0.17, 0.84, 0.44, 1);
   }
   .bt-mb__bar-in {
@@ -708,23 +714,31 @@ const faqs = [
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     height: 4.6em;
     gap: 2px;
     transition: bottom var(--t) ease-out calc(var(--t) / 6);
   }
+  /* The country name is already on the card; in the bar it stays only for screen readers. */
   .bt-mb__t {
-    font-size: 18px;
-    font-weight: 650;
-    line-height: 1.2;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .bt-mb__s {
-    font-size: 13px;
-    opacity: 0.8;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
   a:hover > .bt-mb .bt-mb__top,
   a:focus-visible > .bt-mb .bt-mb__top {
     top: 0;
-    padding-top: 0.6em;
+    padding-top: 0.3em;
     transition-delay: var(--t), calc(var(--t) / 0.85);
   }
   a:hover > .bt-mb .bt-mb__main,
