@@ -604,6 +604,12 @@ const faqs = [
    * drops in from the top, the coloured bar grows with the title, a big label rises and the photo
    * moves up a little. Based on "Movie Blocks" by Elegant Division.
    */
+  /* Country cards keep their place and border on hover: no lift, no gold outline. */
+  a.bt-country:hover,
+  a.bt-country:focus-visible {
+    transform: none;
+    border-color: var(--hair);
+  }
   .bt-mb {
     --t: 0.5s;
     position: relative;
@@ -685,7 +691,6 @@ const faqs = [
   }
   .bt-mb__rise {
     z-index: 2;
-    text-align: center;
     bottom: -0.536em;
     font-size: 2.4em;
     font-weight: 700;
@@ -710,13 +715,11 @@ const faqs = [
   .bt-mb__bar-in {
     position: absolute;
     inset-inline: 0;
-    bottom: 4.6em;
+    bottom: 2em;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 4.6em;
+    height: 2em;
     gap: 2px;
     transition: bottom var(--t) ease-out calc(var(--t) / 6);
   }
@@ -752,7 +755,7 @@ const faqs = [
   }
   a:hover > .bt-mb .bt-mb__bar,
   a:focus-visible > .bt-mb .bt-mb__bar {
-    height: 4.6em;
+    height: 2em;
     animation: bt-mb-bounce var(--t) ease;
   }
   a:hover > .bt-mb .bt-mb__bar-in,
@@ -761,7 +764,7 @@ const faqs = [
   }
   a:hover > .bt-mb .bt-mb__rise,
   a:focus-visible > .bt-mb .bt-mb__rise {
-    bottom: 2.2em;
+    bottom: 1em;
     transition-duration: var(--t);
     transition-delay: calc(var(--t) / 6);
   }
