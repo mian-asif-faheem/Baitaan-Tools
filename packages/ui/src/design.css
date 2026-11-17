@@ -516,11 +516,34 @@ html.dark .bt-theme-icon {
   box-shadow: var(--elev);
   color: var(--text);
   text-decoration: none;
-  transition: transform 200ms var(--ease), box-shadow 200ms var(--ease), border-color 200ms var(--ease);
+  transition: box-shadow 200ms var(--ease), transform 200ms var(--ease);
 }
-a.bt-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--primary);
+/* Every card lifts with a shadow on hover, links or not. The border and the position stay put,
+   so nothing around the card moves. */
+.bt-card:hover,
+a.bt-card:focus-visible {
+  box-shadow: var(--elev-h);
+}
+/* The same shadow on the information cards that aren't links (summaries, steps, examples, side
+   notes, FAQs), so every card on the sites answers the pointer the same way. */
+.bt-side-card,
+.bt-rcard,
+.bt-stats li,
+.bt-how li,
+.bt-examples li,
+.bt-summary li,
+.bt-checklist,
+.bt-faq {
+  transition: box-shadow 200ms var(--ease);
+}
+.bt-side-card:hover,
+.bt-rcard:hover,
+.bt-stats li:hover,
+.bt-how li:hover,
+.bt-examples li:hover,
+.bt-summary li:hover,
+.bt-checklist:hover,
+.bt-faq:hover {
   box-shadow: var(--elev-h);
 }
 a.bt-card:active {
@@ -1052,13 +1075,12 @@ li,
   background: var(--card);
   border: 1px solid var(--hair);
   font-size: 16px;
-  transition: border-color 200ms var(--ease);
+  transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease);
 }
 .bt-guide .bt-faq,
 :root[dir="rtl"] .bt-guide .bt-faq {
   max-width: none;
 }
-.bt-faq:hover,
 .bt-faq[open] {
   border-color: var(--border);
 }
@@ -1995,11 +2017,11 @@ html.dark .bt-foot__card {
   background: var(--card);
   color: var(--text);
   text-decoration: none;
-  transition: border-color 200ms var(--ease), transform 200ms var(--ease);
+  box-shadow: var(--elev);
+  transition: box-shadow 200ms var(--ease), transform 200ms var(--ease);
 }
 .bt-situations a:hover {
-  border-color: var(--primary);
-  transform: translateY(-2px);
+  box-shadow: var(--elev-h);
 }
 .bt-situations a:active {
   transform: scale(0.98);
