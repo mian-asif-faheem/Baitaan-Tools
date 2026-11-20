@@ -900,6 +900,8 @@ input.bt-switch:disabled {
 .bt-result__value {
   display: block;
   text-align: start;
+  /* A number is written left to right (dir="ltr"), but on an Arabic page it still lines up
+     with its label on the right. */
   font-size: 2.5rem;
   line-height: 1.15;
   font-weight: 650;
@@ -907,6 +909,9 @@ input.bt-switch:disabled {
   font-variant-numeric: tabular-nums;
   font-family: inherit;
   overflow-wrap: anywhere;
+}
+:root[dir="rtl"] .bt-result__value[dir="ltr"] {
+  text-align: right;
 }
 .bt-result__sub {
   font-size: 14px;

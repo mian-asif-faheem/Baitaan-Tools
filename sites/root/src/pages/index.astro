@@ -8,6 +8,8 @@ import { nextHijriOccurrence } from "@bt/tools/hijri-dates";
 import Stats from "@bt/ui/sections/Stats.astro";
 import HowItWorks from "@bt/ui/sections/HowItWorks.astro";
 import Section from "@bt/ui/sections/Section.astro";
+import Situations from "@bt/ui/sections/Situations.astro";
+import Examples from "@bt/ui/sections/Examples.astro";
 
 /**
  * Each card carries a hint of its own site's palette: three swatch dots and the arrow button,
@@ -58,6 +60,87 @@ const popular = [
   { img: "end-of-service", site: SITES.ar, path: "/nihayat-alkhidma-saudi/", tag: "العربية · السعودية", title: "End-of-service benefit",
     desc: "The Saudi end-of-service award under the Labour Law, articles 84 to 87, for resignation or termination.",
     alt: "End-of-service calculator answer in Saudi riyals with its breakdown" },
+  { img: "13-salario", site: SITES.pt, path: "/calculadora-13-salario/", tag: "Português · Brasil", title: "13º salário",
+    desc: "Both instalments of Brazil’s 13th salary, with INSS and income tax on the second one.",
+    alt: "13th salary calculator answer: R$ 2.751,40 net, with the 1st instalment of R$ 1.500,00" },
+  { img: "ramadan", site: SITES.ar, path: "/kam-baqi-ala-ramadan/", tag: "العربية · الخليج", title: "Ramadan countdown",
+    desc: "How long until Ramadan, Eid al-Fitr and Eid al-Adha, by the Umm al-Qura calendar.",
+    alt: "Ramadan countdown answer: expected start Monday 8 February 2027, 1 Ramadan 1448" },
+  { img: "zakat", site: SITES.ar, path: "/hasibat-azzakat/", tag: "العربية · الخليج", title: "Zakat calculator",
+    desc: "Zakat on money and gold: the nisab (85 g of gold or 595 g of silver) and 2.5% of what you own.",
+    alt: "Zakat calculator answer: 1,500 due on 60,000 of savings" },
+];
+
+/** "Find your tool": start from the situation, not the tool name. */
+const situations = [
+  { href: SITES.es.url + "/calculadora-finiquito/", title: "I was dismissed in Mexico. What am I owed?", sub: "Finiquito y liquidación", icon: "out" as const },
+  { href: SITES.pt.url + "/calculadora-salario-liquido/", title: "What is my take-home pay in Brazil?", sub: "Salário líquido", icon: "money" as const },
+  { href: SITES.ar.url + "/en/kam-baqi-ala-ramadan/", title: "When is Ramadan, and when is Eid?", sub: "Ramadan countdown", icon: "moon" as const },
+  { href: SITES.ar.url + "/en/nihayat-alkhidma-saudi/", title: "How much is my Saudi end-of-service award?", sub: "End-of-service benefit (Saudi)", icon: "scale" as const },
+  { href: SITES.es.url + "/en/comprimir-pdf/", title: "My PDF is too big for the portal.", sub: "Compress PDF to 1 MB", icon: "doc" as const },
+  { href: SITES.ar.url + "/en/hasibat-azzakat/", title: "What is 2.5% zakat on my savings?", sub: "Zakat calculator", icon: "percent" as const },
+];
+
+/** Worked examples: each figure is pinned by a unit test in packages/tools/test. */
+const examples = [
+  { label: "Mexico · resigning after 6 months", total: "$7,438.36",
+    rows: [["Salary", "$15,000 a month"], ["Days worked", "181"], ["Aguinaldo", "$3,719.18"], ["Holidays", "$2,975.34"], ["Holiday bonus", "$743.84"]] as [string, string][],
+    href: SITES.es.url + "/en/calculadora-finiquito/", cta: "Calculate yours" },
+  { label: "Brazil · dismissed without just cause", total: "R$ 13.392,64",
+    rows: [["Salary", "R$ 3.000"], ["Worked", "1 Mar 2024 to 15 Aug 2026"], ["Plus 40% FGTS fine", "R$ 3.115,20"]] as [string, string][],
+    href: SITES.pt.url + "/en/calculadora-rescisao/", cta: "Calculate yours" },
+  { label: "Brazil · net salary", total: "R$ 4.498,49",
+    rows: [["Gross", "R$ 5.000 a month"], ["INSS", "−R$ 501,51"], ["Income tax", "R$ 0,00 (none up to R$ 5.000 in 2026)"]] as [string, string][],
+    href: SITES.pt.url + "/en/calculadora-salario-liquido/", cta: "Calculate yours" },
+  { label: "Saudi Arabia · end of service after 7 years", total: "36,000 SAR",
+    rows: [["Actual wage", "8,000 SAR a month"], ["First 5 years, half a month each", "20,000 SAR"], ["Next 2 years, a full month each", "16,000 SAR"]] as [string, string][],
+    href: SITES.ar.url + "/en/nihayat-alkhidma-saudi/", cta: "Calculate yours" },
+];
+
+/** Every tool, by site. Paths are the native-language pages; each also has an /en/ version. */
+const allTools = [
+  { site: SITES.es, name: "Español · México", tools: [
+    ["/calculadora-finiquito/", "Finiquito y liquidación", "What you are owed when you resign or are dismissed."],
+    ["/calculadora-sueldo-neto/", "Sueldo neto", "Take-home pay after ISR and IMSS."],
+    ["/calculadora-aguinaldo/", "Aguinaldo", "At least 15 days’ pay, or the proportional part."],
+    ["/calculadora-vacaciones/", "Vacaciones y prima vacacional", "Holiday days under article 76 and the 25% bonus."],
+    ["/foto-tamano-infantil/", "Foto tamaño infantil", "Passport, ID and child-size photos, ready to print."],
+    ["/comprimir-pdf/", "Comprimir PDF", "Shrink a PDF to 1 MB or 2 MB, without uploading it."],
+  ] },
+  { site: SITES.pt, name: "Português · Brasil", tools: [
+    ["/calculadora-rescisao/", "Rescisão trabalhista", "Severance for each type of dismissal, with the 40% FGTS fine."],
+    ["/calculadora-salario-liquido/", "Salário líquido", "Net salary after INSS and income tax."],
+    ["/calculadora-ferias/", "Férias", "Holiday pay with the 1/3 bonus, and selling up to 10 days."],
+    ["/calculadora-13-salario/", "13º salário", "Both instalments, with INSS and income tax."],
+    ["/calculadora-horas-extras/", "Horas extras e adicional noturno", "Overtime at 50% or 100%, night work and the DSR."],
+    ["/calculadora-salario-proporcional/", "Salário proporcional", "Pay for part of a month, and absence deductions."],
+    ["/foto-3x4/", "Foto 3x4", "3x4 photos on a 10x15 sheet, ready to print."],
+    ["/comprimir-pdf/", "Comprimir PDF", "Shrink a PDF to 1 MB or 2 MB in your browser."],
+    ["/juntar-pdf/", "Juntar PDF", "Join PDFs and photos into a single PDF."],
+  ] },
+  { site: SITES.ar, name: "العربية · الخليج", tools: [
+    ["/tahweel-altareekh/", "Hijri date converter", "Hijri (Umm al-Qura) to Gregorian, either way."],
+    ["/kam-baqi-ala-ramadan/", "Ramadan countdown", "How long until Ramadan."],
+    ["/kam-baqi-ala-eid-alfitr/", "Eid al-Fitr countdown", "How long until 1 Shawwal."],
+    ["/kam-baqi-ala-eid-aladha/", "Eid al-Adha countdown", "How long until 10 Dhul-Hijjah."],
+    ["/hisab-alumr-bilhijri/", "Hijri age", "Your age in Hijri years."],
+    ["/alfarq-bayna-tarikhayn/", "Date difference", "The time between two dates."],
+    ["/nihayat-alkhidma-saudi/", "Saudi end-of-service benefit", "Labour Law articles 84, 85 and 87."],
+    ["/nihayat-alkhidma-uae/", "UAE end-of-service benefit", "Federal Decree-Law No. 33 of 2021."],
+    ["/hasibat-addariba/", "VAT calculator", "15% Saudi Arabia, 5% UAE and Oman, 10% Bahrain."],
+    ["/hasibat-azzakat/", "Zakat calculator", "The nisab and 2.5% of what you own."],
+    ["/maqas-assura/", "Photo size for printing", "Passport and ID photos sized for printing."],
+    ["/dagt-pdf/", "Compress PDF", "Shrink a PDF to 1 MB, without uploading it."],
+    ["/damj-pdf/", "Merge PDF", "Join PDFs and photos into one file."],
+    ["/adad-alkalimat/", "Word counter", "Words and characters in Arabic or English."],
+  ] },
+];
+const toolCount = allTools.reduce((n, g) => n + g.tools.length, 0);
+
+const news = [
+  { date: "Nov 2026", title: "A named reviewer on every calculator", text: "Each calculator says who checks it, and the About pages explain how." },
+  { date: "Nov 2026", title: "Wording checked page by page", text: "The Spanish, Portuguese and Arabic sites were reviewed line by line; a few labels and examples were made clearer." },
+  { date: "Nov 2026", title: "Longer guides where people search most", text: "Ramadan and Eid countdowns, the Hijri converter, VAT, zakat and the PDF tools now explain how they work, with FAQs." },
 ];
 
 /**
@@ -93,7 +176,7 @@ const comingUp = [
 
 // Tool counts: 6 on es., 9 on pt., 14 on ar. Update when a tool is added.
 const stats = [
-  { value: "29", label: "free tools" },
+  { value: String(toolCount), label: "free tools" },
   { value: "3", label: "languages, each with English" },
   { value: "2026", label: "tax tables and minimum wages" },
   { value: "0", label: "numbers or files uploaded" },
@@ -102,7 +185,7 @@ const stats = [
 const how = [
   { title: "Pick your country", text: "Each site follows its own country’s laws: Mexico, Brazil or the Gulf." },
   { title: "Enter your numbers", text: "Salary, dates or a file. Everything stays in your browser." },
-  { title: "Read the breakdown", text: "Every line of the result is explained, with the article of law it comes from." },
+  { title: "Read the breakdown", text: "Each result shows how it was worked out, and the page links to the law and tables it uses." },
 ];
 
 /** Each site's main colour, for the coloured bar of its movie blocks (white text passes AA on all three). */
@@ -142,11 +225,20 @@ const faqs = [
   { q: "Are the results official?", a: "They are estimates made with the official rules and tables of each country, and each page links to its sources. Your employer, bank or authority has the final figure." },
   { q: "Do you keep my data?", a: "No. The calculators and the PDF and photo tools work inside your browser, so your numbers and files never reach a server." },
   { q: "Why Spanish, Portuguese and Arabic?", a: "Most free tools are made in English. These sites are written for people in Mexico, Brazil and the Gulf, in their own language, with their own country’s rules." },
+  { q: "Which language should I choose?", a: "Mexico: Spanish. Brazil: Portuguese. Saudi Arabia, the UAE and the rest of the Gulf: Arabic. Every tool also has an English version; use the language switch at the top of the page." },
+  { q: "Do the tools work on my phone?", a: "Yes. Everything runs in your phone’s browser, with nothing to install, and the photo and PDF tools work there too." },
+  { q: "Can I use a result with my employer or in a claim?", a: "A Baitaan result is an estimate, not an official document. Show the breakdown and the sources the page links to, and confirm the final figure with your employer, the authority or a professional before you rely on it." },
+  { q: "How often are the tables updated?", a: "Every January, when minimum wages and tax tables change, and in February in Mexico, when the UMA changes. Each page shows the date it was last checked." },
+  { q: "I found a wrong result. What do I do?", a: "Write to hello@baitaandessigns.com with the page, the figures you entered and the result you expected. Every report is checked, the page is corrected if needed, and its date is updated." },
   { q: "Can I suggest a tool?", a: "Yes, please write to us. New tools are added when many people need the same calculation." },
 ];
 ---
-<Layout bleed wide title="Baitaan: free tools that speak your language" description="Free calculators and everyday tools in Spanish, Portuguese and Arabic. They run in your browser, with no sign-up.">
-  <Hero title="Free tools that speak your language" lead="Calculators that follow each country’s own rules, running in your browser with no sign-up. Choose your language.">
+<Layout bleed wide title="Free calculators for Mexico, Brazil & the Gulf | Baitaan" description={`${toolCount} free tools in Spanish, Portuguese and Arabic: severance, take-home pay, 13th salary, Hijri dates, zakat, VAT, PDF and photo tools. No account needed.`}>
+  <Hero
+    title="Free tools that speak your language"
+    lead={`${toolCount} free calculators and everyday tools for Mexico, Brazil and the Gulf, in Spanish, Portuguese and Arabic, each with an English version. No account and no paywall, and what you type into a tool stays in your browser.`}
+    cta={{ href: "#all-tools", label: `Browse all ${toolCount} tools` }}
+  >
     <img
       slot="visual"
       class="bt-hero-photo"
@@ -161,6 +253,10 @@ const faqs = [
     />
   </Hero>
   <div class="mx-auto max-w-[1120px] px-5">
+    <p class="bt-checked-line">
+      <Icon d={checkCircle} size={16} />
+      <span>Checked by a person: every calculator is reviewed by <a href="/about/#reviewer">Mian Asif Faheem</a>, founder of Baitaan, against the official law and tables it uses.</span>
+    </p>
     {comingUp.length > 0 && (
       <aside class="bt-soon" aria-labelledby="soon" data-soon>
         <h2 id="soon">Coming up</h2>
@@ -182,7 +278,11 @@ const faqs = [
         if (!box.querySelector("li")) box.remove();
       })();
     </script>
-    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3.5 p-0">
+    <div class="bt-hub-section__head bt-hub-section__head--tight">
+      <h2 id="languages">Choose your language</h2>
+      <p>Each site follows its own country’s laws and official tables. Pick yours, or read any tool in English.</p>
+    </div>
+    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3.5 p-0" aria-labelledby="languages">
       {langs.map(({ site, name, go, desc, style }) => {
         const rtl = site.dir === "rtl";
         return (
@@ -211,6 +311,10 @@ const faqs = [
       <HowItWorks steps={how} />
     </Section>
 
+    <Section id="find" heading="Find your tool in 30 seconds" lead="Start from your situation, not from a tool name.">
+      <Situations items={situations} />
+    </Section>
+
     <section class="bt-hub-section" aria-labelledby="popular">
       <div class="bt-hub-section__head">
         <h2 id="popular">Popular tools</h2>
@@ -232,6 +336,10 @@ const faqs = [
         ))}
       </ul>
     </section>
+
+    <Section id="examples" heading="Worked examples" lead="Real cases, worked out step by step with the 2026 rules. Change the numbers and calculate your own.">
+      <div class="bt-ex2"><Examples items={examples} /></div>
+    </Section>
 
     <Section id="countries" heading="Made for each country" lead="Not one tool translated three times: each site is built on its own country’s laws and official tables.">
       <ul class="bt-countries" data-animate="stagger">
@@ -255,6 +363,27 @@ const faqs = [
       </ul>
     </Section>
 
+    <section class="bt-hub-section" id="all-tools" aria-labelledby="all-tools-h">
+      <div class="bt-hub-section__head">
+        <h2 id="all-tools-h">All {toolCount} tools</h2>
+        <p>Every tool on Baitaan, by language. Each one is free, needs no account and runs in your browser.</p>
+      </div>
+      <div class="bt-all">
+        {allTools.map((g) => (
+          <section class="bt-all__group" aria-label={`${g.name}, ${g.tools.length} tools`}>
+            <h3><span lang={g.site.lang} dir={g.site.dir}>{g.name}</span> <span class="bt-all__n">{g.tools.length}</span></h3>
+            <ul>
+              {g.tools.map(([path, name, line]) => (
+                <li>
+                  <a href={g.site.url + path}><span class="bt-all__name">{name}</span><span class="bt-all__line">{line}</span></a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
+
     <Section id="updates" heading="Updated for 2026" lead="What changed this year, already in the calculators." class="bt-updates">
       <ol class="bt-updates__list">
         {updates.map((u) => (
@@ -277,11 +406,22 @@ const faqs = [
       </ul>
     </section>
 
+    <section class="bt-hub-section bt-person" aria-labelledby="person">
+      <div class="bt-hub-section__head">
+        <h2 id="person">Checked by a person, not just published</h2>
+      </div>
+      <div class="bt-person__body">
+        <p>Baitaan is built and run by MAAF Studios, a small independent web studio. Mian Asif Faheem, founder of Baitaan and MAAF Studios, reviews every calculator before it is published and after each change in the law or the official tables. He checks the formulas against the official sources linked on each page and works through the published examples by hand.</p>
+        <p>He is a software engineer, not a lawyer or accountant, so the results are careful estimates, not legal or tax advice. Your employer, the authorities or a court have the final figure.</p>
+        <p><a class="bt-person__link" href="/about/#reviewer">How we check every calculator <Icon d={arrowRight} size={15} /></a></p>
+      </div>
+    </section>
+
     <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })} />
     <section class="bt-hub-section bt-guide bt-hub-faq" data-animate>
       <div class="bt-faqs">
         <header class="bt-faqs__head">
-          <h2>Frequently asked questions</h2>
+          <h2>Questions, answered</h2>
           <p>Didn’t find your answer? <a href="/contact/">Write to us<span class="bt-faqs__arrow" aria-hidden="true"></span></a></p>
         </header>
         <div class="bt-faqs__list">
@@ -291,10 +431,124 @@ const faqs = [
         </div>
       </div>
     </section>
+
+    <Section id="news" heading="New and updated" lead="The latest changes across all three sites." class="bt-updates">
+      <ol class="bt-updates__list">
+        {news.map((u) => (
+          <li><span class="bt-updates__date">{u.date}</span><span><strong>{u.title}</strong><span>{u.text}</span></span></li>
+        ))}
+      </ol>
+    </Section>
   </div>
 </Layout>
 
 <style>
+  .bt-checked-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .bt-checked-line :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--link);
+  }
+  .bt-checked-line a {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+  }
+  .bt-hub-section__head--tight {
+    margin-bottom: 18px;
+  }
+  /* Four worked examples: two by two on wide screens, so none is left alone on a row. */
+  .bt-ex2 :global(.bt-examples) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  }
+  .bt-all {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 28px 32px;
+    align-items: start;
+  }
+  .bt-all__group h3 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 0 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 17px;
+    font-weight: 650;
+  }
+  .bt-all__n {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .bt-all ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .bt-all li + li {
+    border-top: 1px solid var(--hair);
+  }
+  .bt-all a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 0;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .bt-all__name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .bt-all a:hover .bt-all__name,
+  .bt-all a:focus-visible .bt-all__name {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .bt-all__line {
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  .bt-person__body {
+    max-width: 68ch;
+  }
+  .bt-person__body p {
+    margin: 0 0 14px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .bt-person__body p:first-child {
+    color: var(--text);
+  }
+  .bt-person__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--link);
+    text-decoration: none;
+  }
+  .bt-person__link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
   .bt-countries {
     margin: 0;
     padding: 0;
