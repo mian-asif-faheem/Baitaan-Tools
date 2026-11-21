@@ -324,7 +324,7 @@ const faqs = [
         {popular.map((t) => (
           <li>
             <a class="bt-card bt-shot" href={t.site.url + t.path}>
-              <img src={`/img/tools/${t.img}.webp`} width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
+              <img src={`/img/tools/${t.img}-480.webp`} srcset={`/img/tools/${t.img}-480.webp 480w, /img/tools/${t.img}.webp 960w`} sizes="(min-width: 1120px) 350px, (min-width: 700px) 45vw, calc(100vw - 40px)" width="960" height="600" alt={t.alt} loading="lazy" decoding="async" />
               <span class="bt-shot__body">
                 <span class="bt-shot__tag" lang={t.site.lang} dir={t.site.dir}>{t.tag}</span>
                 <span class="bt-shot__title">{t.title}</span>
