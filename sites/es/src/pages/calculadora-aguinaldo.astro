@@ -3,6 +3,20 @@ import Layout from "../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
 import AguinaldoCalc from "../components/AguinaldoCalc.tsx";
+import { aguinaldo, MX_2026 } from "@bt/tools/mx";
+
+const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+const exempt = Math.round(MX_2026.uma.daily * 30 * 100) / 100;
+const minDaily = 315.04;
+const bySalary = [minDaily * 30, 10000, 12000, 15000, 20000, 30000].map((m) => {
+  const a = aguinaldo({ dailySalary: m / 30, daysWorked: 365 }).fullYearAmount;
+  return { m, d: m / 30, a, ex: Math.min(a, exempt), tax: Math.max(0, Math.round((a - exempt) * 100) / 100) };
+});
+const dayMs = 86_400_000;
+const byStart = [1, 3, 5, 7, 9, 11].map((mo) => {
+  const days = Math.round((Date.UTC(2026, 11, 31) - Date.UTC(2026, mo, 1)) / dayMs) + 1;
+  return { mo, days, a: aguinaldo({ dailySalary: 400, daysWorked: days }).proportionalAmount };
+});
 ---
 <Layout
   bleed
@@ -25,16 +39,79 @@ import AguinaldoCalc from "../components/AguinaldoCalc.tsx";
       <h2>Ejemplo</h2>
       <p>Con un salario mensual de $12,000, el salario diario es $400. Si trabajaste 182 días: 400 × 15 × 182 ÷ 365 = <strong>$2,991.78</strong>.</p>
 
-      <h2>¿Cuándo se paga?</h2>
-      <p>La empresa debe pagarlo antes del 20 de diciembre.</p>
+      <h2>¿Cuándo se paga el aguinaldo 2026?</h2>
+      <p>La ley dice que se paga <strong>antes del 20 de diciembre</strong> (art. 87 de la LFT). En 2026 el 20 cae en domingo, así que la fecha límite real es el <strong>sábado 19 de diciembre</strong>; muchas empresas lo pagan el viernes 18 o con la primera quincena de diciembre. Se puede pagar antes, en una o varias partes, siempre que el total esté completo antes del 20.</p>
+
+      <h2>Aguinaldo 2026 por salario</h2>
+      <p>Año completo y el mínimo legal de 15 días. El aguinaldo está exento de ISR hasta 30 UMA ({mxn.format(exempt)}); lo que pasa de esa cantidad se suma a tu ingreso del mes para calcular el ISR, así que lo que recibes en mano puede ser un poco menor.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted">
+              <th class="py-2 text-start font-medium">Salario mensual</th>
+              <th class="py-2 text-end font-medium">Salario diario</th>
+              <th class="py-2 text-end font-medium">Aguinaldo</th>
+              <th class="py-2 text-end font-medium">Exento</th>
+              <th class="py-2 text-end font-medium">Gravado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bySalary.map((r, i) => (
+              <tr class="border-t border-hair">
+                <td class="py-2 tabular-nums">{mxn.format(r.m)}{i === 0 && <span class="text-muted"> (salario mínimo)</span>}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.d)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{mxn.format(r.a)}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.ex)}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.tax)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-muted">Regla rápida: con 15 días, el aguinaldo de un año completo es la mitad de tu salario mensual.</p>
+
+      <h2>Si entraste a trabajar en 2026</h2>
+      <p>Te toca la parte proporcional. Con un salario de $12,000 al mes ($400 diarios):</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted">
+              <th class="py-2 text-start font-medium">Fecha de ingreso</th>
+              <th class="py-2 text-end font-medium">Días trabajados en el año</th>
+              <th class="py-2 text-end font-medium">Aguinaldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {byStart.map((r) => (
+              <tr class="border-t border-hair">
+                <td class="py-2">1 de {["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"][r.mo]}</td>
+                <td class="py-2 text-end tabular-nums">{r.days}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{mxn.format(r.a)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Casos comunes</h2>
+      <ul class="ms-5 list-disc space-y-2">
+        <li><strong>Renuncia o despido:</strong> te pagan la parte proporcional en tu <a class="text-link underline" href="/calculadora-finiquito/">finiquito</a>, sin importar el motivo de la salida.</li>
+        <li><strong>Medio tiempo:</strong> se calcula con tu salario diario real, igual que a cualquier otro trabajador.</li>
+        <li><strong>Horas extra, bonos y comisiones:</strong> el mínimo legal se calcula con el salario diario ordinario, sin horas extra. Si tu contrato o tu empresa dan más días o incluyen otros pagos, vale lo que digan.</li>
+        <li><strong>Trabajadoras del hogar:</strong> también tienen derecho, con el mismo mínimo de 15 días.</li>
+        <li><strong>Trabajadores del gobierno federal:</strong> se rigen por otra ley y reciben 40 días: la mitad antes del 15 de diciembre y la otra mitad a más tardar el 15 de enero.</li>
+        <li><strong>Honorarios o freelance:</strong> no hay aguinaldo. Pero si en la práctica eres empleado (horario, jefe, pago fijo cada quincena), puedes reclamarlo.</li>
+      </ul>
 
       <AdSlot unit="0000000000" />
 
       <h2>Preguntas frecuentes</h2>
-      <!-- TODO (native review): add 5–8 questions from Google's "Más preguntas" for "aguinaldo 2026". -->
       <details class="bt-faq"><summary>¿El aguinaldo paga impuestos?</summary><p>Está exento hasta 30 UMA ($3,519.30 en 2026); el excedente paga ISR.</p></details>
       <details class="bt-faq"><summary>¿Me toca aguinaldo si renuncié?</summary><p>Sí, la parte proporcional se incluye en tu <a class="text-link underline" href="/calculadora-finiquito/">finiquito</a>.</p></details>
       <details class="bt-faq"><summary>¿Me toca aguinaldo si no trabajé el año completo?</summary><p>Sí. Te corresponde la parte proporcional a los días que trabajaste en el año, aunque ya no estés en la empresa el día del pago (art. 87 de la LFT).</p></details>
+      <details class="bt-faq"><summary>¿Cuánto es el aguinaldo con el salario mínimo 2026?</summary><p>Con el salario mínimo general de $315.04 diarios, el aguinaldo de un año completo es de <strong>{mxn.format(minDaily * 15)}</strong> (15 días). Si trabajaste menos, usa la calculadora con tus días.</p></details>
+      <details class="bt-faq"><summary>¿Me lo pueden pagar en vales o en especie?</summary><p>No. El aguinaldo es parte del salario y debe pagarse en dinero.</p></details>
+      <details class="bt-faq"><summary>¿Se cuentan las incapacidades y las vacaciones?</summary><p>Las vacaciones sí cuentan como días trabajados. Con las incapacidades hay criterios distintos según el tipo; si tu empresa te descontó días, revisa tu caso con la PROFEDET.</p></details>
       <details class="bt-faq"><summary>¿Qué hago si no me pagan el aguinaldo?</summary><p>Pídelo por escrito a la empresa y, si no lo paga, acude a la PROFEDET, que atiende gratis a los trabajadores. Tienes un año para reclamarlo (art. 516 de la LFT).</p></details>
     </Fragment>
   </ToolPage>

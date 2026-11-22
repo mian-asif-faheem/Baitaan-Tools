@@ -3,11 +3,13 @@ import Layout from "../../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
 import DecimoCalc from "../../components/DecimoCalc.tsx";
-import { decimoTerceiro } from "@bt/tools/br";
+import { decimoTerceiro, decimoTerceiroGross } from "@bt/tools/br";
 import { money } from "../../components/form";
 
 const brl = money("en");
 const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTerceiro({ monthlySalary: s, monthsWorked: 12 }) }));
+const byMonths = [3, 6, 9, 12].map((m) => ({ m, ...decimoTerceiroGross(3000, m) }));
+const minWage = decimoTerceiro({ monthlySalary: 1621, monthsWorked: 12 });
 ---
 <Layout
   bleed
@@ -34,7 +36,47 @@ const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTercei
         <li>The 1st installment is half of that amount.</li>
         <li>From the 2nd installment, take off INSS on the whole 13th and income tax, which is calculated separately from your salary.</li>
       </ol>
-      <p>In 2026, 20 December is a Sunday, so the 2nd installment must be paid by Friday, 18 December.</p>
+
+      <h2>13th salary dates in 2026</h2>
+      <ul class="ms-5 list-disc space-y-2">
+        <li><strong>1st installment: by Monday, 30 November.</strong> Half the amount, with no deductions. If you asked for it in January, it is paid with your holiday pay.</li>
+        <li><strong>2nd installment: by Friday, 18 December.</strong> The legal deadline is 20 December, but in 2026 the 20th is a Sunday, so payment has to come earlier.</li>
+        <li><strong>Single payment:</strong> the employer may pay it all at once, as long as it is by 30 November. Paying the whole 13th only in December is not allowed.</li>
+      </ul>
+
+      <h2>Proportional 13th salary</h2>
+      <p>If you did not work the whole year, you get 1/12 for each month worked. On a salary of R$ 3,000:</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted">
+              <th class="py-2 text-start font-medium">Months worked</th>
+              <th class="py-2 text-end font-medium">Gross 13th</th>
+              <th class="py-2 text-end font-medium">1st installment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {byMonths.map((r) => (
+              <tr class="border-t border-hair">
+                <td class="py-2 tabular-nums">{r.m}/12</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.gross)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{brl.format(r.firstInstallment)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Cases that change the amount</h2>
+      <ul class="ms-5 list-disc space-y-2">
+        <li><strong>Absences:</strong> a month only counts if you worked 15 days or more in it. Unjustified absences can take a month off the count.</li>
+        <li><strong>Sick leave:</strong> the employer pays the 13th for the months worked, including the first 15 days of leave. For the time on sickness benefit, INSS pays it as an annual bonus.</li>
+        <li><strong>Maternity leave:</strong> counts as normal; you get the full 13th.</li>
+        <li><strong>Resigning or dismissed without just cause:</strong> the proportional part is included in your <a class="text-link underline" href="/en/calculadora-rescisao/">termination pay</a>. If you are dismissed for just cause, the year's proportional 13th is lost.</li>
+        <li><strong>Trial or temporary contract:</strong> also entitled to the proportional part.</li>
+        <li><strong>Domestic workers:</strong> same right, same dates.</li>
+        <li><strong>INSS retirees and pensioners:</strong> get the annual bonus paid by INSS itself, on its own calendar.</li>
+      </ul>
 
       <h2>2026 examples (full year, no dependents)</h2>
       <div class="overflow-x-auto">
@@ -66,6 +108,10 @@ const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTercei
 
       <h2>Frequently asked questions</h2>
       <details class="bt-faq"><summary>Does the R$ 5,000 income tax exemption apply to the 13th?</summary><p>Yes. Law 15.270/2025 says explicitly that the reduction also applies to income tax on the 13th salary. Between R$ 5,000 and R$ 7,350 the tax is reduced; above that the normal table applies.</p></details>
+      <details class="bt-faq"><summary>How much is the 13th on the 2026 minimum wage?</summary><p>On the minimum wage of R$ 1,621, a full year's 13th is {brl.format(minWage.gross)}: the 1st installment is {brl.format(minWage.firstInstallment)} and the 2nd, after INSS of {brl.format(minWage.inss)}, is <strong>{brl.format(minWage.secondInstallment)}</strong>. There is no income tax.</p></details>
+      <details class="bt-faq"><summary>Why is the 2nd installment smaller than the 1st?</summary><p>Because INSS and income tax are worked out on the whole 13th but taken only from the 2nd installment. The 1st comes with no deductions.</p></details>
+      <details class="bt-faq"><summary>Is FGTS deducted from the 13th?</summary><p>No. The employer deposits 8% of the 13th into your FGTS, but that money doesn't come out of your pay.</p></details>
+      <details class="bt-faq"><summary>What if my employer pays late?</summary><p>The employer can be fined by labour inspectors. Raise it with HR in writing, contact your union or report it to the Ministry of Labour. You can claim it in the Labour Court for up to 5 years, as long as you do so within 2 years of leaving the job.</p></details>
       <details class="bt-faq"><summary>Does overtime count toward the 13th?</summary><p>Yes. The monthly average of overtime, commissions and allowances over the year is included.</p></details>
       <details class="bt-faq"><summary>I was dismissed. Do I get a 13th?</summary><p>Yes, the proportional 13th is part of your termination pay, except when you are dismissed for just cause. See the <a class="text-link underline" href="/en/calculadora-rescisao/">termination calculator</a>.</p></details>
     </Fragment>

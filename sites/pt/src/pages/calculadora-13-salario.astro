@@ -3,10 +3,12 @@ import Layout from "../components/Layout.astro";
 import ToolPage from "@bt/ui/ToolPage.astro";
 import AdSlot from "@bt/ui/AdSlot.astro";
 import DecimoCalc from "../components/DecimoCalc.tsx";
-import { decimoTerceiro } from "@bt/tools/br";
+import { decimoTerceiro, decimoTerceiroGross } from "@bt/tools/br";
 
 const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTerceiro({ monthlySalary: s, monthsWorked: 12 }) }));
+const byMonths = [3, 6, 9, 12].map((m) => ({ m, ...decimoTerceiroGross(3000, m) }));
+const minWage = decimoTerceiro({ monthlySalary: 1621, monthsWorked: 12 });
 ---
 <Layout
   bleed
@@ -32,7 +34,47 @@ const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTercei
         <li>A 1ª parcela é metade desse valor.</li>
         <li>Na 2ª parcela, desconte o INSS sobre o 13º inteiro e o IR, que é calculado separadamente do salário.</li>
       </ol>
-      <p>Em 2026, 20 de dezembro cai num domingo, então a 2ª parcela deve ser paga até sexta-feira, 18 de dezembro.</p>
+
+      <h2>Datas do 13º em 2026</h2>
+      <ul class="ms-5 list-disc space-y-2">
+        <li><strong>1ª parcela: até segunda-feira, 30 de novembro.</strong> Metade do valor, sem nenhum desconto. Quem pediu em janeiro recebe a 1ª parcela junto com as férias.</li>
+        <li><strong>2ª parcela: até sexta-feira, 18 de dezembro.</strong> O prazo legal é 20 de dezembro, mas em 2026 o dia 20 cai num domingo, então o pagamento deve ser antecipado.</li>
+        <li><strong>Parcela única:</strong> a empresa pode pagar tudo de uma vez, desde que seja até 30 de novembro. Pagar o 13º inteiro só em dezembro não é permitido.</li>
+      </ul>
+
+      <h2>13º proporcional</h2>
+      <p>Quem não trabalhou o ano inteiro recebe 1/12 por mês trabalhado. Com salário de R$ 3.000:</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted">
+              <th class="py-2 text-start font-medium">Meses trabalhados</th>
+              <th class="py-2 text-end font-medium">13º bruto</th>
+              <th class="py-2 text-end font-medium">1ª parcela</th>
+            </tr>
+          </thead>
+          <tbody>
+            {byMonths.map((r) => (
+              <tr class="border-t border-hair">
+                <td class="py-2 tabular-nums">{r.m}/12</td>
+                <td class="py-2 text-end tabular-nums">{brl.format(r.gross)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{brl.format(r.firstInstallment)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Casos que mudam o valor</h2>
+      <ul class="ms-5 list-disc space-y-2">
+        <li><strong>Faltas:</strong> o mês só conta se você trabalhou 15 dias ou mais nele. Faltas sem justificativa podem tirar um mês da conta.</li>
+        <li><strong>Afastamento por doença:</strong> a empresa paga o 13º dos meses trabalhados, incluindo os primeiros 15 dias de afastamento. Pelo período em auxílio-doença, quem paga é o INSS, como abono anual.</li>
+        <li><strong>Licença-maternidade:</strong> conta normalmente; você recebe o 13º inteiro.</li>
+        <li><strong>Pedido de demissão ou demissão sem justa causa:</strong> o proporcional entra na <a class="text-link underline" href="/calculadora-rescisao/">rescisão</a>. Na demissão por justa causa, o 13º proporcional do ano é perdido.</li>
+        <li><strong>Contrato de experiência ou temporário:</strong> também dá direito ao proporcional.</li>
+        <li><strong>Empregada doméstica:</strong> tem o mesmo direito, com as mesmas datas.</li>
+        <li><strong>Aposentados e pensionistas do INSS:</strong> recebem o abono anual pago pelo próprio INSS, com calendário próprio.</li>
+      </ul>
 
       <h2>Exemplos 2026 (ano completo, sem dependentes)</h2>
       <div class="overflow-x-auto">
@@ -64,6 +106,10 @@ const examples = [2000, 3000, 5000, 6000, 8000].map((s) => ({ s, ...decimoTercei
 
       <h2>Perguntas frequentes</h2>
       <details class="bt-faq"><summary>A isenção do IR até R$ 5 mil vale para o 13º?</summary><p>Sim. A Lei 15.270/2025 diz expressamente que a redução também se aplica ao IR do 13º salário. Entre R$ 5.000 e R$ 7.350 o imposto é reduzido; acima disso vale a tabela normal.</p></details>
+      <details class="bt-faq"><summary>Quanto é o 13º de quem ganha um salário mínimo em 2026?</summary><p>Com o salário mínimo de R$ 1.621, o 13º do ano inteiro é de {brl.format(minWage.gross)}: a 1ª parcela é de {brl.format(minWage.firstInstallment)} e a 2ª, depois do INSS de {brl.format(minWage.inss)}, é de <strong>{brl.format(minWage.secondInstallment)}</strong>. Não há IR.</p></details>
+      <details class="bt-faq"><summary>Por que a 2ª parcela é menor que a 1ª?</summary><p>Porque o INSS e o IR são calculados sobre o 13º inteiro, mas descontados só na 2ª parcela. A 1ª parcela vem sem nenhum desconto.</p></details>
+      <details class="bt-faq"><summary>O 13º tem desconto de FGTS?</summary><p>Não. A empresa deposita 8% do 13º no seu FGTS, mas esse valor não sai do seu bolso.</p></details>
+      <details class="bt-faq"><summary>E se a empresa não pagar no prazo?</summary><p>A empresa pode ser multada pela fiscalização do trabalho. Fale com o RH por escrito, procure o seu sindicato ou faça uma denúncia ao Ministério do Trabalho. Você pode cobrar na Justiça do Trabalho até 5 anos depois, desde que dentro de 2 anos após sair da empresa.</p></details>
       <details class="bt-faq"><summary>Horas extras entram no 13º?</summary><p>Sim. A média mensal de horas extras, comissões e adicionais do ano entra no cálculo.</p></details>
       <details class="bt-faq"><summary>Fui demitido. Recebo 13º?</summary><p>Sim, o proporcional entra na rescisão, exceto na demissão por justa causa. Veja na <a class="text-link underline" href="/calculadora-rescisao/">calculadora de rescisão</a>.</p></details>
     </Fragment>
