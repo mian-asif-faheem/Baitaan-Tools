@@ -4,8 +4,8 @@
  * to its buttons). Renders the real unit once it has a real 10-digit ad unit ID from AdSense;
  * until then (the 0000000000 stand-in) it shows the labelled placeholder.
  *
- * Until then it shows a placeholder box of the size the ad will take, so the layout can be judged
- * on the live sites. Set the build variable PUBLIC_AD_PLACEHOLDERS=off to hide the boxes.
+ * Until then it renders nothing: empty ad boxes on a site under AdSense review read as "made for
+ * ads". Set the build variable PUBLIC_AD_PLACEHOLDERS=on to preview the boxes locally.
  * The real unit reserves the same height so the page doesn't jump when the ad loads.
  */
 import { shell } from "./shell";
@@ -25,7 +25,7 @@ const { unit, kind = "content", label } = Astro.props;
 const { chrome } = shell(Astro.locals);
 const text = label ?? chrome.adLabel ?? "Advertisement";
 const client = /^\d{10}$/.test(unit) && unit !== "0000000000" ? ADSENSE_CLIENT : "";
-const placeholders = import.meta.env.PUBLIC_AD_PLACEHOLDERS !== "off";
+const placeholders = import.meta.env.PUBLIC_AD_PLACEHOLDERS === "on";
 ---
 {client ? (
   <aside class={`bt-ad bt-ad--${kind}`} aria-label={text}>
