@@ -9,6 +9,16 @@ import { money } from "../../components/form";
 const fmt = money("en");
 const pct = (r: number) => `${(r * 100).toLocaleString("en-US", { maximumFractionDigits: 3 })}%`;
 const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ monthlyGross: g }));
+// Worked example: every figure comes from the calculator for $15,000.
+const ex = sueldoNeto({ monthlyGross: 15000 });
+const exRow = [...MX_2026.isrMonthly].reverse().find((b) => ex.monthlyGross >= b.lower)!;
+const exExcess = Math.round((ex.monthlyGross - exRow.lower) * 100) / 100;
+const exMarginal = Math.round(exExcess * exRow.rate * 100) / 100;
+// Take-home pay by pay period. Weekly = monthly × 7 ÷ 30.4 (an approximation; payroll may round differently).
+const periods = [10000, 12000, 15000, 20000, 25000, 30000].map((g) => {
+  const n = sueldoNeto({ monthlyGross: g }).net;
+  return { g, n, q: Math.round((n / 2) * 100) / 100, w: Math.round(((n * 7) / 30.4) * 100) / 100 };
+});
 ---
 <Layout
   bleed
@@ -38,6 +48,16 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
         <li>Subtract ISR and IMSS from your gross salary.</li>
       </ol>
 
+      <h2>Step by step: a MX$15,000 salary</h2>
+      <ol class="ms-5 list-decimal space-y-2">
+        <li><strong>Daily salary:</strong> MX$15,000 ÷ 30.4 days = {fmt.format(ex.dailySalary)}.</li>
+        <li><strong>ISR:</strong> MX$15,000 falls in the row that starts at {fmt.format(exRow.lower)}. The excess is {fmt.format(exExcess)}; at {pct(exRow.rate)} that is {fmt.format(exMarginal)}. Plus the fixed amount of {fmt.format(exRow.fixed)}: <strong>ISR of {fmt.format(ex.isr)}</strong>.</li>
+        <li><strong>Employment subsidy:</strong> does not apply, because MX$15,000 is above the MX$11,492.66 ceiling.</li>
+        <li><strong>IMSS:</strong> the contribution base is {fmt.format(ex.dailySalary)} × 1.0493 = {fmt.format(ex.sbcDaily)} a day. With the employee rates over 30.4 days: <strong>IMSS of {fmt.format(ex.imss)}</strong>.</li>
+        <li><strong>Net pay:</strong> MX$15,000 − {fmt.format(ex.isr)} − {fmt.format(ex.imss)} = <strong>{fmt.format(ex.net)}</strong> a month.</li>
+      </ol>
+      <p>In other words, you keep about MX${Math.round((ex.net / ex.monthlyGross) * 100)} of every MX$100 you earn.</p>
+
       <h2>2026 examples</h2>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -64,6 +84,42 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <p class="text-sm text-muted">With the legal minimum integration factor (1.0493). At $10,000 the subsidy is already applied.</p>
 
       <AdSlot unit="0000000000" label="Advertisement" />
+
+      <h2>Net pay per month, fortnight and week</h2>
+      <p>If you are paid fortnightly or weekly, this is what you keep each payday, before any other deductions:</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted">
+              <th class="py-2 text-start font-medium">Gross monthly salary</th>
+              <th class="py-2 text-end font-medium">Net monthly</th>
+              <th class="py-2 text-end font-medium">Net fortnightly</th>
+              <th class="py-2 text-end font-medium">Net weekly (approx.)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {periods.map((r) => (
+              <tr class="border-t border-hair">
+                <td class="py-2 tabular-nums">{fmt.format(r.g)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{fmt.format(r.n)}</td>
+                <td class="py-2 text-end tabular-nums">{fmt.format(r.q)}</td>
+                <td class="py-2 text-end tabular-nums">{fmt.format(r.w)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Other deductions you may see on your payslip</h2>
+      <p>The calculator takes off only ISR and IMSS, which apply to almost every employee. Your payslip may also show:</p>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>Infonavit loan:</strong> if you have a housing loan, the repayment comes out of your pay.</li>
+        <li><strong>Fonacot loan:</strong> consumer loans for workers are also collected through payroll.</li>
+        <li><strong>Child support:</strong> when a judge orders it, the employer withholds it and pays it on.</li>
+        <li><strong>Savings fund:</strong> it is your money; you get it back, usually at the end of the year.</li>
+        <li><strong>Absences:</strong> days missed without permission are deducted from your pay.</li>
+      </ul>
+      <p>You can enter these amounts in the calculator's other-deductions field to see your real net pay.</p>
 
       <h2>2026 monthly ISR table</h2>
       <div class="overflow-x-auto">
@@ -100,6 +156,9 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <h2>Frequently asked questions</h2>
       <details class="bt-faq"><summary>Is ISR deducted if I earn the minimum wage?</summary><p>No. Anyone earning only the minimum wage ($315.04 a day in 2026) pays no ISR, and the employer covers their IMSS contributions.</p></details>
       <details class="bt-faq"><summary>How do I work out my fortnightly net pay?</summary><p>Divide the monthly result by two. Your payslip may differ by a few pesos because employers calculate a fortnight as 15 or 15.2 days.</p></details>
+      <details class="bt-faq"><summary>What is the difference between gross and net salary?</summary><p>Gross salary is what your contract says. Net salary is what reaches your account after ISR, IMSS and any other deductions.</p></details>
+      <details class="bt-faq"><summary>Why doesn't my payslip match exactly?</summary><p>Most often: your employer uses a different integration factor because it gives more benefits, counts a fortnight as 15 days instead of 15.2, or adds overtime, bonuses or absences. The difference is usually a few pesos; if it is large, ask HR for the breakdown.</p></details>
+      <details class="bt-faq"><summary>Does the aguinaldo change my December net pay?</summary><p>The aguinaldo is free of ISR up to 30 UMA ($3,519.30 in 2026). Anything above that is taxed, so December's deduction can be bigger. Work out your aguinaldo with the <a class="text-link underline" href="/en/calculadora-aguinaldo/">aguinaldo calculator</a>.</p></details>
       <details class="bt-faq"><summary>What is the integration factor?</summary><p>It turns your daily salary into your contribution base by adding the daily share of your aguinaldo and vacation premium. If your employer gives more benefits, your factor is higher.</p></details>
     </Fragment>
   </ToolPage>

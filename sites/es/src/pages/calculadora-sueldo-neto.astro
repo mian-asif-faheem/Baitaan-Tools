@@ -8,6 +8,16 @@ import { MX_2026, sueldoNeto } from "@bt/tools/mx";
 const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
 const pct = (r: number) => `${(r * 100).toLocaleString("es-MX", { maximumFractionDigits: 3 })} %`;
 const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ monthlyGross: g }));
+// Worked example: every figure comes from the calculator for $15,000.
+const ex = sueldoNeto({ monthlyGross: 15000 });
+const exRow = [...MX_2026.isrMonthly].reverse().find((b) => ex.monthlyGross >= b.lower)!;
+const exExcess = Math.round((ex.monthlyGross - exRow.lower) * 100) / 100;
+const exMarginal = Math.round(exExcess * exRow.rate * 100) / 100;
+// Take-home pay by pay period. Weekly = monthly × 7 ÷ 30.4 (an approximation; payroll may round differently).
+const periods = [10000, 12000, 15000, 20000, 25000, 30000].map((g) => {
+  const n = sueldoNeto({ monthlyGross: g }).net;
+  return { g, n, q: Math.round((n / 2) * 100) / 100, w: Math.round(((n * 7) / 30.4) * 100) / 100 };
+});
 ---
 <Layout
   bleed
@@ -35,6 +45,16 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
         <li>Resta el ISR y el IMSS a tu sueldo bruto.</li>
       </ol>
 
+      <h2>Ejemplo paso a paso: sueldo de $15,000</h2>
+      <ol class="ms-5 list-decimal space-y-2">
+        <li><strong>Salario diario:</strong> $15,000 ÷ 30.4 días = {mxn.format(ex.dailySalary)}.</li>
+        <li><strong>ISR:</strong> $15,000 cae en el renglón que empieza en {mxn.format(exRow.lower)}. El excedente es {mxn.format(exExcess)}; por {pct(exRow.rate)} da {mxn.format(exMarginal)}. Más la cuota fija de {mxn.format(exRow.fixed)}: <strong>ISR de {mxn.format(ex.isr)}</strong>.</li>
+        <li><strong>Subsidio para el empleo:</strong> no aplica, porque $15,000 es más que el tope de $11,492.66.</li>
+        <li><strong>IMSS:</strong> el salario base de cotización es {mxn.format(ex.dailySalary)} × 1.0493 = {mxn.format(ex.sbcDaily)} al día. Con las cuotas del trabajador por 30.4 días: <strong>IMSS de {mxn.format(ex.imss)}</strong>.</li>
+        <li><strong>Sueldo neto:</strong> $15,000 − {mxn.format(ex.isr)} − {mxn.format(ex.imss)} = <strong>{mxn.format(ex.net)}</strong> al mes.</li>
+      </ol>
+      <p>Es decir, de cada $100 que ganas te quedan unos ${Math.round((ex.net / ex.monthlyGross) * 100)}.</p>
+
       <h2>Ejemplos 2026</h2>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -59,6 +79,42 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
         </table>
       </div>
       <p class="text-sm text-muted">Con el factor de integración mínimo de ley (1.0493). En $10,000 ya está restado el subsidio.</p>
+
+      <h2>Sueldo neto mensual, quincenal y semanal</h2>
+      <p>Si te pagan por quincena o por semana, esto es lo que te queda en cada pago, sin otras deducciones:</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-muted">
+              <th class="py-2 text-start font-medium">Sueldo bruto mensual</th>
+              <th class="py-2 text-end font-medium">Neto mensual</th>
+              <th class="py-2 text-end font-medium">Neto quincenal</th>
+              <th class="py-2 text-end font-medium">Neto semanal (aprox.)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {periods.map((r) => (
+              <tr class="border-t border-hair">
+                <td class="py-2 tabular-nums">{mxn.format(r.g)}</td>
+                <td class="py-2 text-end font-semibold tabular-nums">{mxn.format(r.n)}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.q)}</td>
+                <td class="py-2 text-end tabular-nums">{mxn.format(r.w)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Otros descuentos que pueden aparecer en tu recibo</h2>
+      <p>La calculadora resta solo el ISR y el IMSS, que se aplican a casi todos los trabajadores. Tu recibo puede tener además:</p>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>Crédito Infonavit:</strong> si tienes un crédito de vivienda, el pago se descuenta de tu sueldo.</li>
+        <li><strong>Crédito Fonacot:</strong> los préstamos de consumo para trabajadores también se cobran por nómina.</li>
+        <li><strong>Pensión alimenticia:</strong> cuando la ordena un juez, la empresa la retiene y la entrega.</li>
+        <li><strong>Fondo o caja de ahorro:</strong> es tu dinero; lo recibes de vuelta, normalmente a fin de año.</li>
+        <li><strong>Faltas:</strong> los días no trabajados sin permiso se descuentan del sueldo.</li>
+      </ul>
+      <p>Puedes poner estos montos en el campo de otras deducciones de la calculadora para ver tu neto real.</p>
 
       <AdSlot unit="0000000000" />
 
@@ -97,6 +153,9 @@ const examples = [10000, 15000, 20000, 30000, 50000].map((g) => sueldoNeto({ mon
       <h2>Preguntas frecuentes</h2>
       <details class="bt-faq"><summary>¿Si gano el salario mínimo me quitan ISR?</summary><p>No. Quien gana solo el salario mínimo ($315.04 diarios en 2026) no paga ISR, y su patrón cubre sus cuotas del IMSS.</p></details>
       <details class="bt-faq"><summary>¿Cómo calculo mi sueldo neto quincenal?</summary><p>Divide el resultado mensual entre dos. Tu recibo puede variar unos pesos porque las empresas calculan la quincena con 15 o 15.2 días.</p></details>
+      <details class="bt-faq"><summary>¿Cuál es la diferencia entre sueldo bruto y sueldo neto?</summary><p>El sueldo bruto es lo que dice tu contrato. El sueldo neto es lo que te depositan después de restar el ISR, el IMSS y cualquier otro descuento.</p></details>
+      <details class="bt-faq"><summary>¿Por qué mi recibo no coincide exactamente?</summary><p>Lo más común: tu empresa usa otro factor de integración porque da más prestaciones, calcula con 15 días por quincena en lugar de 15.2, o agrega horas extra, bonos o faltas. La diferencia suele ser de pocos pesos; si es grande, pide a Recursos Humanos el desglose.</p></details>
+      <details class="bt-faq"><summary>¿El aguinaldo cambia mi sueldo neto de diciembre?</summary><p>El aguinaldo está exento de ISR hasta 30 UMA ($3,519.30 en 2026). Lo que pasa de esa cantidad paga ISR, así que en diciembre el descuento puede ser mayor. Calcula tu aguinaldo con la <a class="text-link underline" href="/calculadora-aguinaldo/">calculadora de aguinaldo</a>.</p></details>
       <details class="bt-faq"><summary>¿Qué es el factor de integración?</summary><p>Es el número que convierte tu salario diario en salario base de cotización, sumando la parte diaria de aguinaldo y prima vacacional. Si tu empresa da más prestaciones, tu factor es mayor.</p></details>
     </Fragment>
   </ToolPage>
