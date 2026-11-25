@@ -16,6 +16,8 @@ import t from "../../i18n/en.json";
     heading="Photo size for printing"
     lead="Choose a photo from your phone, fit your face in the frame and download a 10×15 or A4 sheet with several copies at the size you need, ready to print."
     updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html", label: "US Department of State: visa photo requirements" }]}
   >
     <PhotoTool client:visible presets={PRESETS_AR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="photo" />
 
@@ -37,6 +39,30 @@ import t from "../../i18n/en.json";
         <li>Natural light from the front, for example next to a window.</li>
         <li>Print at actual size (100%), then cut along the grey lines.</li>
       </ul>
+
+      <h2>Sizes in centimetres and pixels</h2>
+      <p>Pixels are at 300 dots per inch, the usual print resolution. The last two columns show how many copies the tool fits on each sheet.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">Size</th><th class="py-2 text-end font-medium">Pixels</th><th class="py-2 text-end font-medium">10 × 15 cm sheet</th><th class="py-2 text-end font-medium">A4 sheet</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">4 × 6 cm</td><td class="py-2 text-end tabular-nums">472 × 709</td><td class="py-2 text-end tabular-nums">4</td><td class="py-2 text-end tabular-nums">18</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">3.5 × 4.5 cm</td><td class="py-2 text-end tabular-nums">413 × 531</td><td class="py-2 text-end tabular-nums">6</td><td class="py-2 text-end tabular-nums">30</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">5 × 5 cm (US visa)</td><td class="py-2 text-end tabular-nums">600 × 600</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>Which size for which document?</h2>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>4 × 6 cm:</strong> the size most often asked for on paper forms in Saudi Arabia and the Gulf: government offices, universities and employers.</li>
+        <li><strong>3.5 × 4.5 cm:</strong> passports and visas of many countries, including the Schengen visa.</li>
+        <li><strong>5 × 5 cm:</strong> the US visa, which also takes a square digital photo of at least 600 × 600 pixels.</li>
+      </ul>
+      <p>Many Gulf government services now take a digital photo uploaded through their app or taken at the service centre. Check what the office asks for first, and use this tool when you need printed photos.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>Why was my photo rejected?</summary><p>Most often: a background that isn't white or has a shadow, a face not looking at the camera, glasses reflecting light, or a photo printed with “fit to page”, which changes the size. Always print at actual size, 100%.</p></details>
+      <details class="bt-faq"><summary>Print at home or at a photo shop?</summary><p>A 10 × 15 cm sheet prints cheaply and better on photo paper at any photo shop. A4 suits a home printer if you have glossy photo paper.</p></details>
+      <details class="bt-faq"><summary>Is my photo uploaded anywhere?</summary><p>No. It is cropped and prepared in your browser and never leaves your device.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

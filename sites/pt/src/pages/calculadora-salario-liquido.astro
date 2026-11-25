@@ -36,6 +36,13 @@ import SalarioLiquidoCalc from "../components/SalarioLiquidoCalc.tsx";
       <h2>Quem ganha entre R$ 5 mil e R$ 7.350</h2>
       <p>Nessa faixa o imposto não é zerado, mas cai. A redução é de R$ 978,62 menos 13,3145% do salário bruto do mês (e não da base de cálculo). Ela é subtraída do imposto calculado pela tabela. Acima de R$ 7.350 vale a tabela normal.</p>
       <!-- TODO (native review): add FAQ from Google's "As pessoas também perguntam". -->
+
+      <h2>Perguntas frequentes</h2>
+      <details class="bt-faq"><summary>Quem ganha até R$ 5.000 não paga IR em 2026?</summary><p>Isso. Com a Lei 15.270/2025, o imposto de quem tem até R$ 5.000 de rendimentos tributáveis no mês é zerado pela redução. Com salário de R$ 5.000, por exemplo, a tabela daria R$ 312,89 de IR e a redução tira exatamente esse valor: o líquido fica em R$ 4.498,49.</p></details>
+      <details class="bt-faq"><summary>O que é o desconto simplificado?</summary><p>É um desconto fixo de R$ 607,20 por mês que substitui as deduções legais (INSS, dependentes e pensão). A calculadora usa o que for melhor para você: o simplificado ou as deduções.</p></details>
+      <details class="bt-faq"><summary>Quanto desconta cada dependente?</summary><p>R$ 189,59 por mês na base do IR. Para quem ganha até R$ 5.000 não muda nada, porque o imposto já é zero.</p></details>
+      <details class="bt-faq"><summary>A isenção vale também para o 13º e as férias?</summary><p>Sim, a redução também se aplica ao IR do 13º salário e das férias. Veja a <a class="text-link underline" href="/calculadora-13-salario/">calculadora de 13º</a>.</p></details>
+      <details class="bt-faq"><summary>Por que meu holerite não bate exatamente?</summary><p>Além do INSS e do IR, o holerite pode ter vale-transporte (até 6% do salário), plano de saúde, vale-refeição, faltas, horas extras ou adiantamento. Coloque esses valores em outros descontos para conferir.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

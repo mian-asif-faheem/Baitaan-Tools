@@ -23,6 +23,8 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
     heading={`How long until Eid al-Adha ${gYear}?`}
     lead={`Eid al-Adha falls on 10 Dhu al-Hijjah, after the Day of Arafah on 9 Dhu al-Hijjah. This is the expected date for ${y} AH under the Umm al-Qura calendar.`}
     updated="The countdown updates every second"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar" }]}
   >
     <Countdown client:load month={12} day={10} name="Eid al-Adha" lang="en" />
 

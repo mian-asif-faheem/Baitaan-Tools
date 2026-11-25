@@ -115,7 +115,8 @@
     "avisoDays": "Aviso prévio",
     "disclaimer": "Simulação com as regras da CLT e as tabelas de 2026. A empresa deve pagar em até 10 dias após o fim do contrato (art. 477). Confira com o sindicato ou um advogado trabalhista.",
     "extrasSummary": "Horas extras, comissões e dependentes",
-    "fgtsDeposit": "Depósito sobre a rescisão (8%)"
+    "fgtsDeposit": "Depósito sobre a rescisão (8%)",
+    "fgtsTotal": "Total do FGTS para você (saldo + multa)"
   },
   "ferias": {
     "absences": "Faltas sem justificativa no período aquisitivo",

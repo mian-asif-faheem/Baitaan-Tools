@@ -14,6 +14,8 @@ import t from "../i18n/pt.json";
     heading="Juntar PDF"
     lead="Escolha os PDFs e fotos, coloque na ordem certa e baixe tudo num único PDF. Seus documentos não saem do seu aparelho."
     updated="Atualizado: novembro de 2026"
+    sourcesHeading="Como é feita"
+    sources={[{ href: "https://pdf-lib.js.org/", label: "pdf-lib: copia as páginas e monta o PDF no seu navegador" }]}
   >
     <MergePdfTool client:visible t={t.merge} outputName="documentos.pdf" locale="pt-BR" />
 
@@ -37,6 +39,9 @@ import t from "../i18n/pt.json";
       <details class="bt-faq"><summary>Dá para juntar fotos e PDFs no mesmo arquivo?</summary><p>Sim. Cada foto JPG ou PNG vira uma página A4, na ordem que você escolher com as setas.</p></details>
       <details class="bt-faq"><summary>Tem limite de arquivos?</summary><p>Não há um limite fixo; depende da memória do aparelho. Em celulares mais antigos, arquivos muito grandes podem demorar: junte em duas partes se for preciso.</p></details>
       <details class="bt-faq"><summary>Meus documentos são enviados para algum lugar?</summary><p>Não. Tudo acontece no seu aparelho, e nada é enviado para nossos servidores.</p></details>
+
+      <h2>Exemplo</h2>
+      <p>Você fotografou as 3 páginas de um contrato com o celular (3 arquivos JPG) e tem o comprovante de residência em PDF. Escolha os 4 arquivos, coloque na ordem com as setas e toque em juntar: sai um único PDF de 4 páginas, com cada foto numa página A4. As páginas do PDF são copiadas como estão, sem perder qualidade.</p>
     </Fragment>
   </ToolPage>
 </Layout>

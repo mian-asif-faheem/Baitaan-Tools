@@ -14,6 +14,8 @@ import DateDiffCalc from "../components/DateDiffCalc.tsx";
     heading="حساب المدة بين تاريخين"
     lead="أدخل التاريخين بالهجري أو بالميلادي لتعرف عدد الأيام بينهما، والمدة بالسنوات والأشهر والأيام في التقويمين، وعدد أيام العمل."
     updated="آخر تحديث: نوفمبر 2026"
+    sourcesHeading="المصادر"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "تقويم أم القرى" }]}
   >
     <DateDiffCalc client:load />
 
@@ -26,13 +28,29 @@ import DateDiffCalc from "../components/DateDiffCalc.tsx";
       </ul>
 
       <h2>لماذا يختلف الحساب الهجري عن الميلادي؟</h2>
-      <p>الشهر الهجري 29 أو 30 يومًا، والسنة الهجرية نحو 354 يومًا. لذلك قد تكون المدة نفسها «سنة واحدة» بالهجري و«نحو 11 شهرًا و20 يومًا» بالميلادي.</p>
+      <p>الشهر الهجري 29 أو 30 يومًا، والسنة الهجرية نحو 354 يومًا. لذلك قد تكون المدة نفسها «سنة واحدة» بالهجري و«11 شهرًا و21 يومًا» بالميلادي.</p>
 
       <AdSlot unit="0000000000" label="إعلان" />
 
       <h2>أيام العمل</h2>
       <p>تحسب الأداة أيام العمل بعد استبعاد الجمعة والسبت، وهي عطلة نهاية الأسبوع في السعودية ومعظم دول الخليج. أما في الإمارات فاختر السبت والأحد. ولا تستبعد الأداة الإجازات الرسمية، فاستبعدها يدويًا عند الحاجة.</p>
       <p>تريد عمرك بالهجري؟ استخدم <a class="text-link underline" href="/hisab-alumr-bilhijri/">حساب العمر بالهجري</a>.</p>
+
+      <h2>أمثلة محسوبة بالأداة</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">من</th><th class="py-2 text-end font-medium">إلى</th><th class="py-2 text-end font-medium">النتيجة</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">1 محرم 1447 (26 يونيو 2025)</td><td class="py-2 text-end tabular-nums">1 محرم 1448 (16 يونيو 2026)</td><td class="py-2 text-end tabular-nums">سنة هجرية واحدة = 355 يومًا = 11 شهرًا و21 يومًا ميلاديًا</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">1 ديسمبر 2026</td><td class="py-2 text-end tabular-nums">31 ديسمبر 2026</td><td class="py-2 text-end tabular-nums">30 يومًا، أو 31 يومًا مع احتساب اليوم الأخير</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">1 ديسمبر 2026</td><td class="py-2 text-end tabular-nums">31 ديسمبر 2026</td><td class="py-2 text-end tabular-nums">22 يوم عمل، أو 23 مع احتساب اليوم الأخير (عطلة الجمعة والسبت)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>أسئلة شائعة</h2>
+      <details class="bt-faq"><summary>هل يُحتسب اليوم الأخير؟</summary><p>بشكل افتراضي لا: من 1 إلى 31 ديسمبر 30 يومًا. فعّل خيار احتساب اليوم الأخير إذا كانت المدة تشمل اليومين، كما في الإجازات: من 1 إلى 31 ديسمبر عندئذ 31 يومًا.</p></details>
+      <details class="bt-faq"><summary>أي أيام تُعدّ عطلة نهاية الأسبوع؟</summary><p>الجمعة والسبت في السعودية ومعظم دول الخليج، والسبت والأحد في الإمارات. اختر ما يناسبك قبل حساب أيام العمل.</p></details>
+      <details class="bt-faq"><summary>لماذا تختلف المدة بالهجري عن الميلادي؟</summary><p>الشهر الهجري 29 أو 30 يومًا حسب تقويم أم القرى، والسنة الهجرية 354 أو 355 يومًا، أي أقصر من الميلادية بنحو 11 يومًا.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

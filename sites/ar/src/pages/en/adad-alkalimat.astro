@@ -32,6 +32,21 @@ import WordCounter from "../../components/WordCounter.tsx";
 
       <h2>How are sentences counted?</h2>
       <p>A sentence ends at each full stop, question mark (؟ or ?), exclamation mark or new line. Paragraphs are separated by a blank line.</p>
+
+      <h2>Example</h2>
+      <p>The text: «الحمدُ للهِ ربِّ العالمين. هذه أداةٌ مجانيةٌ لعدِّ الكلمات.» (“Praise be to God, Lord of the worlds. This is a free tool for counting words.”)</p>
+      <ul class="ms-5 list-disc space-y-1">
+        <li>Words: 9.</li>
+        <li>Characters with spaces and diacritics: 59.</li>
+        <li>Diacritics: 8, so 51 characters without them.</li>
+        <li>Sentences: 2, because the text has two full stops.</li>
+      </ul>
+      <p>Counting diacritics as letters would make the text look eight characters longer than it is.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>Why is the count different from Word?</summary><p>Word counts by spaces and may count “و”, numbers or symbols standing alone as separate words. This tool also counts by spaces, but doesn't count punctuation on its own as a word, so the totals can differ slightly.</p></details>
+      <details class="bt-faq"><summary>Do diacritics count?</summary><p>You see the character count with and without diacritics, and the number of diacritics on its own. The word count isn't affected by them.</p></details>
+      <details class="bt-faq"><summary>Is “وقال” one word or two?</summary><p>One, because it is written joined with no space. The tool counts whatever sits between spaces as a word, as most platforms and university word limits do.</p></details>
+      <details class="bt-faq"><summary>Is my text saved?</summary><p>No. Counting happens in your browser and the text is never sent to a server.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

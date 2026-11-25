@@ -14,6 +14,8 @@ import t from "../i18n/es.json";
     heading="Comprimir PDF a 1 MB"
     lead="Elige tu PDF y el tamaño máximo que te pide el portal. La herramienta lo reduce en tu navegador, sin subirlo a ningún servidor."
     updated="Actualizado: noviembre de 2026"
+    sourcesHeading="Cómo está hecha"
+    sources={[{ href: "https://mozilla.github.io/pdf.js/", label: "PDF.js de Mozilla: lee y dibuja cada página en tu navegador" }, { href: "https://pdf-lib.js.org/", label: "pdf-lib: arma el PDF nuevo, también en tu navegador" }]}
   >
     <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="es-MX" />
 
@@ -50,6 +52,9 @@ import t from "../i18n/es.json";
       <details class="bt-faq"><summary>¿Funciona en el celular?</summary><p>Sí, en el navegador del teléfono, sin instalar nada.</p></details>
       <details class="bt-faq"><summary>¿Se guarda mi documento en algún lado?</summary><p>No. Se procesa en tu dispositivo y desaparece al cerrar la página.</p></details>
       <details class="bt-faq"><summary>¿Funciona con un PDF protegido con contraseña?</summary><p>No. Quita la contraseña antes, en la aplicación con la que se creó el PDF.</p></details>
+
+      <h2>Ejemplo</h2>
+      <p>Un escaneo de 6 páginas hecho con el celular pesa 4 MB y el portal solo acepta 1 MB. La herramienta convierte cada página en una imagen JPG y prueba calidades de mayor a menor hasta que el archivo baja de 1 MB, unos 170 KB por página. El texto se sigue leyendo, pero pasa a ser parte de la imagen, así que después ya no se puede copiar ni buscar.</p>
     </Fragment>
   </ToolPage>
 </Layout>

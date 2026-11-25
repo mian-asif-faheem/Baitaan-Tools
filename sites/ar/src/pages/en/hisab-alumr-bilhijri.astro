@@ -14,6 +14,8 @@ import HijriAgeCalc from "../../components/HijriAgeCalc.tsx";
     heading="Hijri age calculator"
     lead="Enter your date of birth in the Gregorian or Hijri calendar to see your age in both calendars, your matching date of birth and how many days you have lived."
     updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar" }]}
   >
     <HijriAgeCalc client:load lang="en" />
 
@@ -32,6 +34,18 @@ import HijriAgeCalc from "../../components/HijriAgeCalc.tsx";
 
       <p>The tool uses the Umm al-Qura calendar. If your country relied on moon sighting when you were born, your recorded Hijri date may differ by one day.</p>
       <p>To count the time between any two dates, use the <a class="text-link underline" href="/en/alfarq-bayna-tarikhayn/">days between two dates</a> calculator.</p>
+
+      <h2>Example</h2>
+      <p>Someone born on 1 January 1993 was born on 8 Rajab 1413 AH. On 1 December 2026 their age is:</p>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>Gregorian:</strong> 33 years and 11 months.</li>
+        <li><strong>Hijri:</strong> 34 years, 11 months and 13 days.</li>
+      </ul>
+      <p>The gap is almost a full Hijri year, because 34 Hijri years are about a year shorter than 34 Gregorian years.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>Why is my Hijri age higher?</summary><p>Because a Hijri year is about 11 days shorter, so Hijri years add up faster: your Hijri age gains about one year every 33 years.</p></details>
+      <details class="bt-faq"><summary>Which calendar do Saudi documents use?</summary><p>Saudi government bodies use the Umm al-Qura calendar for Hijri dates, and many recent documents show both dates.</p></details>
+      <details class="bt-faq"><summary>Can my Hijri birth date be a day off?</summary><p>Yes. If months in your country began by moon sighting when you were born, the date may differ by a day from Umm al-Qura. Go by the date on your official documents.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

@@ -16,6 +16,8 @@ import t from "../../i18n/en.json";
     heading="ID photo sizes: infantil and more"
     lead="Pick a photo from your phone, fit it to the size you need, and download a 10 × 15 cm or letter-size sheet ready to print. Your photo never leaves your device."
     updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html", label: "US Department of State: visa photo requirements" }]}
   >
     <PhotoTool client:visible presets={PRESETS_MX_ES} t={t.photo} sheets={["10x15", "carta"]} />
 
@@ -48,6 +50,33 @@ import t from "../../i18n/en.json";
         <li>Good light from the front: next to a window works well.</li>
       </ul>
       <p>Each institution may ask for something different (white or coloured background, glasses or not). Check their requirements before printing.</p>
+
+      <h2>How many photos fit on each sheet</h2>
+      <p>Pixels are for printing at 300 dpi. The last two columns show how many photos the tool fits on each sheet.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">Size</th><th class="py-2 text-end font-medium">Pixels</th><th class="py-2 text-end font-medium">10 × 15 cm sheet</th><th class="py-2 text-end font-medium">Letter sheet</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">Infantil 2.5 × 3 cm</td><td class="py-2 text-end tabular-nums">295 × 354</td><td class="py-2 text-end tabular-nums">12</td><td class="py-2 text-end tabular-nums">56</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Passport 3.5 × 4.5 cm</td><td class="py-2 text-end tabular-nums">413 × 531</td><td class="py-2 text-end tabular-nums">6</td><td class="py-2 text-end tabular-nums">28</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Credencial 3.5 × 5 cm</td><td class="py-2 text-end tabular-nums">413 × 591</td><td class="py-2 text-end tabular-nums">4</td><td class="py-2 text-end tabular-nums">25</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Título 6 × 9 cm</td><td class="py-2 text-end tabular-nums">709 × 1063</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">8</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">US visa 5 × 5 cm</td><td class="py-2 text-end tabular-nums">600 × 600</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>Which size for which paperwork?</h2>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>Infantil:</strong> school enrolment, school and work ID cards, job applications and most paper forms.</li>
+        <li><strong>Credencial:</strong> some club, gym and company cards. If no size is given, it is almost always infantil.</li>
+        <li><strong>Título:</strong> printed diplomas from some schools and universities; several ask for an oval photo and formal clothes, so check with yours.</li>
+        <li><strong>Passports and visas:</strong> the Mexican passport doesn't use a printed photo, but many other countries' visas ask for 3.5 × 4.5 cm.</li>
+      </ul>
+      <p>The INE voter card and the Mexican passport don't need a photo either: it is taken at the office.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>What if my photo is rejected?</summary><p>The usual reasons are a shadowed or coloured background, a tilted face, glasses reflecting light and printing with “fit to page”, which changes the size. Retake the photo by a window and print at 100%.</p></details>
+      <details class="bt-faq"><summary>Print at home or at a shop?</summary><p>At a photo shop the 10 × 15 cm sheet is cheap and on photo paper. At home, use photo paper and the letter sheet.</p></details>
+      <details class="bt-faq"><summary>Is my photo uploaded anywhere?</summary><p>No. Cropping and the sheet are done in your browser and the photo never leaves your device.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

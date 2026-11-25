@@ -155,18 +155,28 @@ export function rescisao(input: RescisaoInput, rates: BrRates = BR_2026) {
   let avosDecimo = 0;
   let avosFer = 0;
   if (tipo !== "justaCausa") {
-    const pe = ymd(projectedEnd);
-    avosDecimo = monthsWith15Days(Math.max(start, Date.UTC(pe.y, 0, 1)), projectedEnd);
+    // Both are counted from the real last day and carried to the projected end. When the
+    // indemnified notice crosses into a new year (or past an anniversary), the year (period)
+    // just finished is still owed in full and the projected months are added on top.
+    const ey = ymd(end).y;
+    const yearEnd = Date.UTC(ey, 11, 31);
+    const decimoThisYear = monthsWith15Days(Math.max(start, Date.UTC(ey, 0, 1)), Math.min(projectedEnd, yearEnd));
+    const decimoNextYear = projectedEnd > yearEnd ? monthsWith15Days(yearEnd + DAY, projectedEnd) : 0;
+    avosDecimo = decimoThisYear + decimoNextYear;
     decimo = round2((pay / 12) * avosDecimo);
-    // Current acquisition period starts at the last anniversary of the start date.
+    // Current acquisition period starts at the last anniversary on or before the real last day.
     const s = ymd(start);
-    let annY = pe.y;
-    if (addMonths(annY, s.m, s.d, 0) > projectedEnd) annY -= 1;
+    let annY = ymd(end).y;
+    if (addMonths(annY, s.m, s.d, 0) > end) annY -= 1;
     const periodStart = Math.max(start, addMonths(annY, s.m, s.d, 0));
-    avosFer = avosFerias(periodStart, projectedEnd);
+    const nextPeriod = addMonths(annY, s.m, s.d, 12);
+    const ferThisPeriod = avosFerias(periodStart, Math.min(projectedEnd, nextPeriod - DAY));
+    const ferNextPeriod = projectedEnd >= nextPeriod ? avosFerias(nextPeriod, projectedEnd) : 0;
+    avosFer = ferThisPeriod + ferNextPeriod;
     feriasProp = round2((pay / 12) * avosFer);
-    lines.push({ key: "decimo", amount: decimo, detail: `${avosDecimo}/12` });
-    lines.push({ key: "feriasProp", amount: feriasProp, detail: `${avosFer}/12` });
+    const split = (a: number, b: number) => (b > 0 ? `${a}/12 + ${b}/12` : `${a}/12`);
+    lines.push({ key: "decimo", amount: decimo, detail: split(decimoThisYear, decimoNextYear) });
+    lines.push({ key: "feriasProp", amount: feriasProp, detail: split(ferThisPeriod, ferNextPeriod) });
     lines.push({ key: "tercoProp", amount: round2(feriasProp / 3) });
   }
   const vencidas = round2(pay * Math.max(0, Math.floor(feriasVencidas)));

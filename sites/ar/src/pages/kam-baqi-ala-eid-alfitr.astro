@@ -20,6 +20,8 @@ const dateText = new Intl.DateTimeFormat("ar-u-nu-latn", { weekday: "long", day:
     heading={`كم باقي على عيد الفطر ${y}؟`}
     lead={`عيد الفطر هو أول أيام شهر شوال. هذا موعده المتوقع لعام ${y} هـ حسب تقويم أم القرى، ويُعلن رسميًا بعد تحرّي هلال شوال مساء 29 رمضان.`}
     updated="يُحدَّث العد تلقائيًا كل ثانية"
+    sourcesHeading="المصادر"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "تقويم أم القرى" }]}
   >
     <Countdown client:load month={10} day={1} name="عيد الفطر" />
 

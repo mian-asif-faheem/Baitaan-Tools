@@ -23,6 +23,8 @@ const tarwiyah = fmt.format(toGregorian({ year: y, month: 12, day: 8 }));
     heading={`كم باقي على عيد الأضحى ${y}؟`}
     lead={`عيد الأضحى يوم 10 ذو الحجة، ويسبقه يوم عرفة في 9 ذو الحجة. هذا الموعد المتوقع لعام ${y} هـ حسب تقويم أم القرى.`}
     updated="يُحدَّث العد تلقائيًا كل ثانية"
+    sourcesHeading="المصادر"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "تقويم أم القرى" }]}
   >
     <Countdown client:load month={12} day={10} name="عيد الأضحى" />
 

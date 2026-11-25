@@ -190,3 +190,22 @@ describe("rescisão edge cases", () => {
     expect(r.lines.find((l) => l.key === "feriasProp")!.detail).toBe("5/12");
   });
 });
+
+describe("indemnified notice that crosses a year end or an anniversary", () => {
+  it("dismissed 30 Nov: the year's 13º and the just-finished holiday period stay owed in full", () => {
+    // 2021-12-01 → 2026-11-30, 42 days' notice projects the end to 11 Jan 2027.
+    const r = rescisao({ monthlySalary: 3000, startDate: "2021-12-01", endDate: "2026-11-30", tipo: "semJustaCausa", avisoIndenizado: true });
+    const byKey = Object.fromEntries(r.lines.map((l) => [l.key, l]));
+    expect(byKey.decimo.amount).toBe(3000); // 12/12 of 2026; 11 days of Jan 2027 don't make a month
+    expect(byKey.decimo.detail).toBe("12/12");
+    expect(byKey.feriasProp.amount).toBe(3250); // completed period + 1/12 projected
+    expect(byKey.feriasProp.detail).toBe("12/12 + 1/12");
+    expect(byKey.tercoProp.amount).toBe(1083.33);
+  });
+  it("dismissed 20 Dec: the projected January counts toward the next year's 13º", () => {
+    const r = rescisao({ monthlySalary: 3000, startDate: "2025-06-10", endDate: "2026-12-20", tipo: "semJustaCausa", avisoIndenizado: true });
+    const d = r.lines.find((l) => l.key === "decimo")!;
+    expect(d.detail).toBe("12/12 + 1/12");
+    expect(d.amount).toBe(3250);
+  });
+});

@@ -1,0 +1,48 @@
+---
+/** Shared frame for a guide: title, lead, the reviewer line and sources. */
+import Layout from "../../components/Layout.astro";
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  lead: string;
+  updated: string;
+  sources: { href: string; label: string }[];
+}
+const { title, description, heading, lead, updated, sources } = Astro.props;
+const url = new URL(Astro.url.pathname, "https://baitaandessigns.com").href;
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: heading,
+  description,
+  url,
+  inLanguage: "en",
+  dateModified: "2026-11-25",
+  author: { "@type": "Organization", name: "Baitaan", url: "https://baitaandessigns.com/" },
+  reviewedBy: { "@type": "Person", name: "Mian Asif Faheem", jobTitle: "Founder", url: "https://baitaandessigns.com/about/#reviewer" },
+};
+---
+<Layout {title} {description}>
+  <article class="bt-guide space-y-4 leading-relaxed text-ink">
+    <p class="m-0 text-sm text-muted"><a class="text-link underline" href="/guides/">Guides</a></p>
+    <h1 class="text-3xl font-bold tracking-tight text-ink">{heading}</h1>
+    <p class="text-lg">{lead}</p>
+    <p class="text-sm text-muted">{updated} · Reviewed by <a class="text-link underline" href="/about/#reviewer">Mian Asif Faheem</a>, founder of Baitaan</p>
+    <slot />
+    <h2 class="text-xl font-semibold">Sources</h2>
+    <ul class="ms-5 list-disc space-y-1">
+      {sources.map((s) => <li><a class="text-link underline" href={s.href} rel="noopener">{s.label}</a></li>)}
+    </ul>
+    <p class="text-sm text-muted">These are estimates made with the official rules, not legal or tax advice. Your employer, the authorities or a court have the final figure, and your contract can give you more. Found a mistake? Write to <a class="text-link underline" href="mailto:hello@baitaandessigns.com">hello@baitaandessigns.com</a>.</p>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+</Layout>
+<style>
+  .bt-guide :global(h2) { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; }
+  .bt-guide :global(table) { width: 100%; font-size: 0.875rem; border-collapse: collapse; }
+  .bt-guide :global(th) { padding: 0.5rem 0.5rem 0.5rem 0; text-align: start; font-weight: 500; color: var(--muted); }
+  .bt-guide :global(td) { padding: 0.5rem 0.5rem 0.5rem 0; border-top: 1px solid var(--hair); vertical-align: top; }
+  .bt-guide :global(td.n), .bt-guide :global(th.n) { text-align: end; font-variant-numeric: tabular-nums; }
+  .bt-guide :global(td.n) { white-space: nowrap; }
+</style>

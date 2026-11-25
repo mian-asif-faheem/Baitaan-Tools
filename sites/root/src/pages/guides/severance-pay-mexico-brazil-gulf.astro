@@ -1,0 +1,79 @@
+---
+import Guide from "./_Guide.astro";
+import { finiquito } from "@bt/tools/mx";
+import { rescisao } from "@bt/tools/br";
+import { saudiEos, uaeGratuity } from "@bt/tools/gulf";
+import { SITES } from "@bt/ui/sites";
+
+// One shared case: five years of service, last day 30 November 2026.
+const start = "2021-12-01";
+const end = "2026-11-30";
+const mxQuit = finiquito({ dailySalary: 500, startDate: start, endDate: end, motivo: "renuncia" });
+const mxFired = finiquito({ dailySalary: 500, startDate: start, endDate: end, motivo: "despidoInjustificado" });
+const brQuit = rescisao({ monthlySalary: 3000, startDate: start, endDate: end, tipo: "pedidoDemissao", avisoIndenizado: false });
+const brFired = rescisao({ monthlySalary: 3000, startDate: start, endDate: end, tipo: "semJustaCausa", avisoIndenizado: true });
+const saQuit = saudiEos({ monthlyWage: 8000, years: 5, reason: "resignation" });
+const saFired = saudiEos({ monthlyWage: 8000, years: 5, reason: "employer" });
+const ae = uaeGratuity({ basicWage: 8000, years: 5 });
+
+const mxn = new Intl.NumberFormat("en-US", { style: "currency", currency: "MXN", currencyDisplay: "code" });
+const brl = new Intl.NumberFormat("en-US", { style: "currency", currency: "BRL", currencyDisplay: "code" });
+const sar = new Intl.NumberFormat("en-US", { style: "currency", currency: "SAR", currencyDisplay: "code" });
+const aed = new Intl.NumberFormat("en-US", { style: "currency", currency: "AED", currencyDisplay: "code" });
+const mxLiq = Object.fromEntries(mxFired.liquidacion.map((l) => [l.key, l.amount]));
+---
+<Guide
+  title="Severance pay in Mexico, Brazil, Saudi Arabia and the UAE (2026) | Baitaan"
+  description="What you are owed when you resign or are dismissed in Mexico, Brazil, Saudi Arabia and the UAE, with one five-year example worked out under each country's 2026 rules."
+  heading="Severance pay in Mexico, Brazil, Saudi Arabia and the UAE"
+  lead="Leave a job after five years and you are owed money in all four countries, but how much depends far more on why the job ended than on where. Being dismissed without cause pays about five times as much as resigning in Mexico and three times as much in Saudi Arabia, and in Brazil it also unlocks your FGTS savings and a 40% fine. In the UAE, the amount is the same whether you resign or are dismissed."
+  updated="Last checked: November 2026"
+  sources={[
+    { href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Mexico: Ley Federal del Trabajo, articles 48, 50, 87, 162" },
+    { href: "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm", label: "Brazil: CLT (Consolidação das Leis do Trabalho), articles 477 and 487" },
+    { href: "https://www.planalto.gov.br/ccivil_03/leis/l8036consol.htm", label: "Brazil: Law 8.036/1990 (FGTS), article 18" },
+    { href: "https://www.hrsd.gov.sa/", label: "Saudi Arabia: Ministry of Human Resources, Labour Law articles 84, 85 and 87" },
+    { href: "https://u.ae/en/information-and-services/jobs/employment-in-the-private-sector/end-of-service-benefits-for-employees-in-the-private-sector", label: "UAE: end-of-service benefits, Federal Decree-Law No. 33 of 2021" },
+  ]}
+>
+  <h2>The example</h2>
+  <p>One worker in each country, five years in the same job, from 1 December 2021 to 30 November 2026, with a typical local salary: MXN 15,000 a month in Mexico, BRL 3,000 in Brazil, SAR 8,000 in Saudi Arabia (actual wage) and AED 8,000 basic in the UAE. Every figure below comes from the same code as the calculators linked under the table.</p>
+  <div class="overflow-x-auto">
+    <table>
+      <thead><tr><th>Country</th><th class="n">Resign</th><th class="n">Dismissed without cause</th></tr></thead>
+      <tbody>
+        <tr><td>Mexico</td><td class="n">{mxn.format(mxQuit.total)}</td><td class="n">{mxn.format(mxFired.total)}</td></tr>
+        <tr><td>Brazil (net)</td><td class="n">{brl.format(brQuit.net)}</td><td class="n">{brl.format(brFired.net)}</td></tr>
+        <tr><td>Saudi Arabia</td><td class="n">{sar.format(saQuit.award)}</td><td class="n">{sar.format(saFired.award)}</td></tr>
+        <tr><td>UAE</td><td class="n">{aed.format(ae.gratuity)}</td><td class="n">{aed.format(ae.gratuity)}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm text-muted">Mexico without the optional 20 days per year. Brazil with notice paid in lieu; on dismissal the worker also withdraws the FGTS balance and receives the 40% fine.</p>
+
+  <h2>Mexico: finiquito and liquidación</h2>
+  <p>Whoever ends the job, you get the <strong>finiquito</strong>: the days worked and not yet paid, the proportional aguinaldo, untaken holidays and the 25% holiday bonus. In the example that is {mxn.format(mxQuit.totalFiniquito)}.</p>
+  <p>If you are dismissed without a justified cause, the employer also owes the <strong>liquidación</strong>: three months of integrated salary ({mxn.format(mxLiq.tresMeses)}) plus the seniority premium of 12 days a year ({mxn.format(mxLiq.primaAntiguedad)}). Together: {mxn.format(mxFired.total)}. In some cases, such as when the employer refuses to reinstate you after a court ruling, 20 days per year of service are added on top.</p>
+  <p><a class="text-link underline" href={SITES.es.url + "/en/calculadora-finiquito/"}>Calculate your finiquito and liquidación</a></p>
+
+  <h2>Brazil: rescisão and FGTS</h2>
+  <p>When you resign (<em>pedido de demissão</em>) you receive the salary for the last month, the proportional 13th salary and your holiday pay with its one-third bonus, but you can't withdraw your FGTS and there is no fine. Net, {brl.format(brQuit.net)}.</p>
+  <p>Dismissed without just cause (<em>sem justa causa</em>), you also get notice pay (30 days plus 3 per year, 42 days here), and the notice counts as service: it pushes the end of the contract into January, so the full 2026 13th salary is owed. Net, {brl.format(brFired.net)}. On top of that you can withdraw your whole FGTS balance, and the employer pays a fine of 40% of it.</p>
+  <p><a class="text-link underline" href={SITES.pt.url + "/en/calculadora-rescisao/"}>Calculate your rescisão</a></p>
+
+  <h2>Saudi Arabia: end-of-service award</h2>
+  <p>The award is half a month's actual wage for each of the first five years and a full month for each year after that. Actual wage means basic pay plus housing, transport and other fixed allowances. For five years at SAR 8,000 the full award is {sar.format(saFired.fullAward)}, paid in full when the employer ends the contract.</p>
+  <p>Resigning cuts it: nothing before two years, a third from two to five years, two thirds from five to ten, and the full award after ten. At exactly five years the worker gets a third: {sar.format(saQuit.award)}.</p>
+  <p><a class="text-link underline" href={SITES.ar.url + "/en/nihayat-alkhidma-saudi/"}>Calculate your Saudi end-of-service award</a></p>
+
+  <h2>UAE: gratuity</h2>
+  <p>Under the 2021 law, the gratuity is 21 days of basic wage for each of the first five years and 30 days for each year after, capped at two years' wage. It doesn't fall when you resign. Five years on AED 8,000 basic is 105 days: {aed.format(ae.gratuity)}. Allowances don't count, so the basic wage on your contract matters.</p>
+  <p><a class="text-link underline" href={SITES.ar.url + "/en/nihayat-alkhidma-uae/"}>Calculate your UAE gratuity</a></p>
+
+  <h2>What to check before you sign</h2>
+  <ul class="ms-5 list-disc space-y-1">
+    <li><strong>The salary the calculation uses.</strong> Mexico uses an integrated daily salary, Saudi Arabia the actual wage with allowances, the UAE the basic wage only. A payslip that uses the wrong one is the most common error.</li>
+    <li><strong>Why the job ended, in writing.</strong> In three of the four countries, resignation versus dismissal changes the amount more than anything else.</li>
+    <li><strong>The deadline.</strong> Brazil: 10 days after the contract ends. Saudi Arabia: a week, or two weeks if you resigned. UAE: 14 days. Mexico has no fixed day, but you have one year to claim the finiquito and two months to contest a dismissal.</li>
+  </ul>
+</Guide>

@@ -16,6 +16,8 @@ import t from "../i18n/ar.json";
     heading="مقاس الصورة للطباعة"
     lead="اختر صورة من جوالك، وضع وجهك في الإطار، ونزّل ورقة 10×15 أو A4 فيها عدة نسخ بالمقاس المطلوب، جاهزة للطباعة."
     updated="آخر تحديث: نوفمبر 2026"
+    sourcesHeading="المصادر"
+    sources={[{ href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html", label: "وزارة الخارجية الأمريكية: مواصفات صورة التأشيرة" }]}
   >
     <PhotoTool client:visible presets={PRESETS_AR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="photo" />
 
@@ -37,6 +39,30 @@ import t from "../i18n/ar.json";
         <li>إضاءة طبيعية من الأمام، بجانب نافذة مثلًا.</li>
         <li>عند الطباعة اختر الحجم الفعلي 100%، ثم قصّ بمحاذاة الخطوط الرمادية.</li>
       </ul>
+
+      <h2>المقاسات بالسنتيمتر والبكسل</h2>
+      <p>البكسل هنا بدقة 300 نقطة في البوصة، وهي دقة طباعة الصور. والعمودان الأخيران يبيّنان عدد النسخ التي تضعها الأداة في كل ورقة.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">المقاس</th><th class="py-2 text-end font-medium">بالبكسل</th><th class="py-2 text-end font-medium">ورقة 10 × 15 سم</th><th class="py-2 text-end font-medium">ورقة A4</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">4 × 6 سم</td><td class="py-2 text-end tabular-nums">472 × 709</td><td class="py-2 text-end tabular-nums">4</td><td class="py-2 text-end tabular-nums">18</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">3.5 × 4.5 سم</td><td class="py-2 text-end tabular-nums">413 × 531</td><td class="py-2 text-end tabular-nums">6</td><td class="py-2 text-end tabular-nums">30</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">5 × 5 سم (التأشيرة الأمريكية)</td><td class="py-2 text-end tabular-nums">600 × 600</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>أي مقاس لأي معاملة؟</h2>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>4 × 6 سم:</strong> أكثر ما يُطلب في المعاملات الورقية في السعودية ودول الخليج، مثل نماذج الجهات الحكومية والجامعات والشركات.</li>
+        <li><strong>3.5 × 4.5 سم:</strong> مقاس جوازات السفر وتأشيرات كثير من الدول، ومنها تأشيرة شنغن.</li>
+        <li><strong>5 × 5 سم:</strong> التأشيرة الأمريكية، وتُرفع أيضًا صورة رقمية مربعة لا تقل عن 600 × 600 بكسل.</li>
+      </ul>
+      <p>كثير من الخدمات الحكومية في الخليج صارت تطلب صورة رقمية تُرفع عبر تطبيقاتها أو تُلتقط في مكتب الخدمة. لذلك اقرأ متطلبات الجهة أولًا، واستخدم هذه الأداة عندما تحتاج صورًا مطبوعة.</p>
+      <h2>أسئلة شائعة</h2>
+      <details class="bt-faq"><summary>لماذا رُفضت صورتي؟</summary><p>أكثر الأسباب: خلفية غير بيضاء أو فيها ظل، أو وجه غير مواجه للكاميرا، أو نظارة تعكس الضوء، أو صورة طُبعت بخيار «ملاءمة الصفحة» فتغيّر مقاسها. اطبع دائمًا بالحجم الفعلي 100%.</p></details>
+      <details class="bt-faq"><summary>هل أطبع في البيت أم في الاستوديو؟</summary><p>ورقة 10 × 15 سم تُطبع على ورق صور في أي محل تصوير بتكلفة قليلة وبجودة أفضل. ورقة A4 مناسبة لطابعة البيت إذا كان عندك ورق صور لامع.</p></details>
+      <details class="bt-faq"><summary>هل تُرفع صورتي إلى أي مكان؟</summary><p>لا. تُقص الصورة وتُجهَّز في متصفحك، ولا تغادر جهازك.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

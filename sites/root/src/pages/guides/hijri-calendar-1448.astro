@@ -1,0 +1,60 @@
+---
+import Guide from "./_Guide.astro";
+import { toGregorian, hijriMonthLength, HIJRI_MONTHS_EN, HIJRI_MONTHS_AR } from "@bt/tools/hijri";
+import { SITES } from "@bt/ui/sites";
+
+const Y = 1448;
+const fmt = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const months = HIJRI_MONTHS_EN.map((name, i) => ({
+  n: i + 1,
+  name,
+  ar: HIJRI_MONTHS_AR[i],
+  start: fmt.format(toGregorian({ year: Y, month: i + 1, day: 1 })),
+  days: hijriMonthLength(Y, i + 1),
+}));
+const total = months.reduce((s, m) => s + m.days, 0);
+const d = (m: number, day: number) => fmt.format(toGregorian({ year: Y, month: m, day }));
+const next = fmt.format(toGregorian({ year: Y + 1, month: 1, day: 1 }));
+---
+<Guide
+  title="Hijri calendar 1448 AH: Gregorian dates of every month (Umm al-Qura) | Baitaan"
+  description="The Umm al-Qura calendar for 1448 AH: the Gregorian start date and length of each Hijri month, with Ramadan, Eid al-Fitr, the Day of Arafah and Eid al-Adha."
+  heading={`Hijri calendar ${Y} AH (Umm al-Qura)`}
+  lead={`The Hijri year ${Y} runs from ${months[0].start} to the day before ${next}: ${total} days. Ramadan begins on ${d(9, 1)} and Eid al-Adha falls on ${d(12, 10)}.`}
+  updated="Last checked: November 2026"
+  sources={[
+    { href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar (Saudi Arabia)" },
+  ]}
+>
+  <h2>Every month of {Y}</h2>
+  <div class="overflow-x-auto">
+    <table>
+      <thead><tr><th>Month</th><th></th><th>Begins</th><th class="n">Days</th></tr></thead>
+      <tbody>
+        {months.map((m) => (
+          <tr><td>{m.n}. {m.name}</td><td lang="ar" dir="rtl">{m.ar}</td><td>{m.start}</td><td class="n">{m.days}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Key dates in {Y}</h2>
+  <ul class="ms-5 list-disc space-y-1">
+    <li><strong>1 Ramadan:</strong> {d(9, 1)}</li>
+    <li><strong>Eid al-Fitr (1 Shawwal):</strong> {d(10, 1)}</li>
+    <li><strong>Day of Arafah (9 Dhu al-Hijjah):</strong> {d(12, 9)}</li>
+    <li><strong>Eid al-Adha (10 Dhu al-Hijjah):</strong> {d(12, 10)}</li>
+    <li><strong>Hijri new year {Y + 1}:</strong> {next}</li>
+  </ul>
+  <p>
+    <a class="text-link underline" href={SITES.ar.url + "/en/kam-baqi-ala-ramadan/"}>Ramadan countdown</a> ·
+    <a class="text-link underline" href={SITES.ar.url + "/en/tahweel-altareekh/"}>Hijri date converter</a> ·
+    <a class="text-link underline" href={SITES.ar.url + "/en/hisab-alumr-bilhijri/"}>Age in Hijri years</a>
+  </p>
+
+  <h2>Why these dates can move by a day</h2>
+  <p>Umm al-Qura is the calculated calendar Saudi Arabia uses for official dates. The start of Ramadan, Shawwal and Dhu al-Hijjah is still announced after the crescent moon is sighted on the evening of the 29th, so the day actually observed can be one day later than the table, and other countries that follow their own sighting can differ by a day too.</p>
+
+  <h2>Why the Hijri year is shorter</h2>
+  <p>A Hijri month follows the moon and has 29 or 30 days, so a Hijri year has 354 or 355 days, about 11 days fewer than a Gregorian year. That is why Ramadan comes about 11 days earlier each year and moves through all the seasons in about 33 years.</p>
+</Guide>

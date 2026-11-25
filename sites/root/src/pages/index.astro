@@ -406,6 +406,18 @@ const faqs = [
       </ul>
     </section>
 
+    <section class="bt-hub-section" aria-labelledby="guides-h">
+      <div class="bt-hub-section__head">
+        <h2 id="guides-h">Guides</h2>
+        <p>The rules compared across countries, with worked examples. <a class="text-link underline" href="/guides/">All guides</a></p>
+      </div>
+      <ul class="bt-all__guides">
+        <li><a href="/guides/severance-pay-mexico-brazil-gulf/"><span class="bt-all__name">Severance pay in Mexico, Brazil, Saudi Arabia and the UAE</span><span class="bt-all__line">What you are owed when you resign or are dismissed, worked out for five years in each country.</span></a></li>
+        <li><a href="/guides/year-end-bonus-aguinaldo-13th-salary/"><span class="bt-all__name">Year-end bonus 2026: aguinaldo and 13th salary</span><span class="bt-all__line">How much, the 2026 deadlines, and how each is taxed.</span></a></li>
+        <li><a href="/guides/hijri-calendar-1448/"><span class="bt-all__name">Hijri calendar 1448 AH</span><span class="bt-all__line">The Gregorian dates of every Hijri month, Ramadan and both Eids.</span></a></li>
+      </ul>
+    </section>
+
     <section class="bt-hub-section bt-person" aria-labelledby="person">
       <div class="bt-hub-section__head">
         <h2 id="person">Checked by a person, not just published</h2>
@@ -524,6 +536,31 @@ const faqs = [
     font-size: 14px;
     line-height: 1.45;
     color: var(--muted);
+  }
+  .bt-all__guides {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 0 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .bt-all__guides li {
+    border-top: 1px solid var(--hair);
+  }
+  .bt-all__guides a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 0;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .bt-all__guides a:hover .bt-all__name,
+  .bt-all__guides a:focus-visible .bt-all__name {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
   .bt-person__body {
     max-width: 68ch;

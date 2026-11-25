@@ -16,6 +16,8 @@ import t from "../../i18n/en.json";
     heading="3x4 photo online"
     lead="Choose a photo from your phone, fit your face in the frame and download a 10x15 sheet with several 3x4 photos to print at a print shop or at home."
     updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html", label: "US Department of State: visa photo requirements" }]}
   >
     <PhotoTool client:visible presets={PRESETS_BR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="photo" />
 
@@ -40,6 +42,24 @@ import t from "../../i18n/en.json";
         <li>Natural light from the front, near a window.</li>
         <li>Phone at eye level, about a metre away.</li>
       </ul>
+
+      <h2>Photo sizes and how many fit on a sheet</h2>
+      <p>Pixels are for printing at 300 dpi. The last two columns show how many photos the tool fits on each sheet.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">Size</th><th class="py-2 text-end font-medium">Pixels</th><th class="py-2 text-end font-medium">10 × 15 cm sheet</th><th class="py-2 text-end font-medium">A4 sheet</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">3 × 4 cm (RG, CNH, work card, badges)</td><td class="py-2 text-end tabular-nums">354 × 472</td><td class="py-2 text-end tabular-nums">8</td><td class="py-2 text-end tabular-nums">36</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">5 × 7 cm (forms and some foreign passports)</td><td class="py-2 text-end tabular-nums">591 × 827</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">12</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">5 × 5 cm (US visa)</td><td class="py-2 text-end tabular-nums">600 × 600</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The Brazilian passport doesn't use a printed photo: the Federal Police take it at the appointment. For the US visa, the photo is also sent as a square digital file of at least 600 × 600 pixels.</p>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>Can I print at home?</summary><p>Yes, on photo paper with the actual size or 100% option. At a stationery shop, the 10 × 15 cm sheet prints on photo paper cheaply and looks better.</p></details>
+      <details class="bt-faq"><summary>What if the photo is rejected?</summary><p>The usual reasons are a shadowed or coloured background, a tilted face, glasses reflecting light and printing with “fit to page”, which changes the size. Retake the photo by a window and print at 100%.</p></details>
+      <details class="bt-faq"><summary>Is my photo sent anywhere?</summary><p>No. Cropping and the sheet are done in your browser, and the photo never leaves your device.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

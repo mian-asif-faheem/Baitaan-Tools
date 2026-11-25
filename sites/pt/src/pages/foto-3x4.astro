@@ -9,12 +9,14 @@ import t from "../i18n/pt.json";
 <Layout
   bleed
   title="Foto 3x4 online grátis: recorte e imprima em casa | Baitaan"
-  description="Faça sua foto 3x4 no celular: recorte no tamanho certo e baixe uma folha 10x15 ou A4 pronta para imprimir. Grátis, sem cadastro e sem enviar sua foto."
+  description="Faça sua foto 3x4 no celular: recorte no tamanho certo e baixe uma folha 10 × 15 cm ou A4 pronta para imprimir. Grátis, sem cadastro e sem enviar sua foto."
 >
   <ToolPage
     heading="Foto 3x4 online"
-    lead="Escolha uma foto do celular, ajuste o rosto no quadro e baixe uma folha 10x15 com várias fotos 3x4 para imprimir na papelaria ou em casa."
+    lead="Escolha uma foto do celular, ajuste o rosto no quadro e baixe uma folha 10 × 15 cm com várias fotos 3x4 para imprimir na papelaria ou em casa."
     updated="Atualizado: novembro de 2026"
+    sourcesHeading="Fontes"
+    sources={[{ href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html", label: "Departamento de Estado dos EUA: requisitos da foto do visto" }]}
   >
     <PhotoTool client:visible presets={PRESETS_BR} t={t.photo} sheets={["10x15", "a4"]} filePrefix="foto" />
 
@@ -24,7 +26,7 @@ import t from "../i18n/pt.json";
 
       <h2>Como imprimir</h2>
       <ol class="ms-5 list-decimal space-y-1">
-        <li>Escolha a folha 10x15 para imprimir em papel fotográfico na papelaria ou num quiosque de fotos.</li>
+        <li>Escolha a folha 10 × 15 cm para imprimir em papel fotográfico na papelaria ou num quiosque de fotos.</li>
         <li>Para imprimir em casa, escolha A4.</li>
         <li>Na impressão, use tamanho real ou 100%, sem «ajustar à página».</li>
         <li>Recorte pelas linhas cinza.</li>
@@ -39,6 +41,24 @@ import t from "../i18n/pt.json";
         <li>Luz natural de frente, perto de uma janela.</li>
         <li>Celular na altura dos olhos, a cerca de um metro.</li>
       </ul>
+
+      <h2>Tamanhos de foto e quantas cabem por folha</h2>
+      <p>Os pixels são para impressão a 300 dpi. As duas últimas colunas mostram quantas fotos a ferramenta coloca em cada folha.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">Tamanho</th><th class="py-2 text-end font-medium">Pixels</th><th class="py-2 text-end font-medium">Folha 10 × 15 cm</th><th class="py-2 text-end font-medium">Folha A4</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">3 × 4 cm (RG, CNH, carteira de trabalho, crachás)</td><td class="py-2 text-end tabular-nums">354 × 472</td><td class="py-2 text-end tabular-nums">8</td><td class="py-2 text-end tabular-nums">36</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">5 × 7 cm (fichas e alguns passaportes estrangeiros)</td><td class="py-2 text-end tabular-nums">591 × 827</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">12</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">5 × 5 cm (visto americano)</td><td class="py-2 text-end tabular-nums">600 × 600</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>O passaporte brasileiro não usa foto impressa: a Polícia Federal tira a foto no atendimento. Para o visto americano, a foto também é enviada em arquivo digital quadrado, de no mínimo 600 × 600 pixels.</p>
+      <h2>Perguntas frequentes</h2>
+      <details class="bt-faq"><summary>Posso imprimir em casa?</summary><p>Pode, em papel fotográfico e com a opção tamanho real ou 100%. Na papelaria, a folha 10 × 15 cm sai em papel de foto por pouco dinheiro e com qualidade melhor.</p></details>
+      <details class="bt-faq"><summary>E se a foto for recusada?</summary><p>Os motivos mais comuns são fundo com sombra ou colorido, rosto inclinado, óculos refletindo a luz e impressão com «ajustar à página», que muda o tamanho. Refaça a foto perto de uma janela e imprima em 100%.</p></details>
+      <details class="bt-faq"><summary>Minha foto é enviada para algum lugar?</summary><p>Não. O recorte e a folha são feitos no seu navegador, e a foto não sai do seu aparelho.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

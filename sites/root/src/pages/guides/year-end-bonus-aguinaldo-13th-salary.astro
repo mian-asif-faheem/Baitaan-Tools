@@ -1,0 +1,60 @@
+---
+import Guide from "./_Guide.astro";
+import { aguinaldo, MX_2026 } from "@bt/tools/mx";
+import { decimoTerceiro } from "@bt/tools/br";
+import { SITES } from "@bt/ui/sites";
+
+const mxn = new Intl.NumberFormat("en-US", { style: "currency", currency: "MXN", currencyDisplay: "code" });
+const brl = new Intl.NumberFormat("en-US", { style: "currency", currency: "BRL", currencyDisplay: "code" });
+const exempt = Math.round(MX_2026.uma.daily * 30 * 100) / 100;
+const mx = aguinaldo({ dailySalary: 500, daysWorked: 365 }).fullYearAmount; // MXN 15,000 a month
+const mxHalf = aguinaldo({ dailySalary: 500, daysWorked: 184 }).proportionalAmount; // started 1 July
+const br = decimoTerceiro({ monthlySalary: 3000, monthsWorked: 12 });
+const brHalf = decimoTerceiro({ monthlySalary: 3000, monthsWorked: 6 });
+---
+<Guide
+  title="Year-end bonus 2026: aguinaldo vs 13th salary, and the Gulf | Baitaan"
+  description="Mexico's aguinaldo and Brazil's 13th salary compared: how much, when it is paid in 2026, how it is taxed and what you get after part of a year. Plus why Saudi Arabia and the UAE have no legal year-end bonus."
+  heading="Year-end bonus 2026: Mexico's aguinaldo and Brazil's 13th salary"
+  lead="Mexico and Brazil both oblige employers to pay a bonus at the end of the year, but Brazil's is twice as generous: a full month's pay, against at least 15 days' pay in Mexico. Saudi Arabia and the UAE have no legal year-end bonus at all; any bonus there comes from your contract."
+  updated="Last checked: November 2026"
+  sources={[
+    { href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf", label: "Mexico: Ley Federal del Trabajo, article 87" },
+    { href: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf", label: "Mexico: Income Tax Law, article 93, section XIV (aguinaldo exemption)" },
+    { href: "https://www.planalto.gov.br/ccivil_03/leis/l4090.htm", label: "Brazil: Law 4.090/1962 (13th salary)" },
+    { href: "https://www.planalto.gov.br/ccivil_03/leis/l4749.htm", label: "Brazil: Law 4.749/1965 (payment in two instalments)" },
+    { href: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15270.htm", label: "Brazil: Law 15.270/2025 (income tax reduction, also on the 13th)" },
+  ]}
+>
+  <h2>Side by side</h2>
+  <div class="overflow-x-auto">
+    <table>
+      <thead><tr><th></th><th>Mexico: aguinaldo</th><th>Brazil: 13th salary</th></tr></thead>
+      <tbody>
+        <tr><td>How much</td><td>At least 15 days of salary</td><td>One month's salary, plus the average of overtime and commissions</td></tr>
+        <tr><td>2026 deadline</td><td>Before 20 December, so by Saturday 19 December</td><td>1st half by Monday 30 November; 2nd by Friday 18 December (the 20th is a Sunday)</td></tr>
+        <tr><td>Part of the year</td><td>In proportion to days worked</td><td>1/12 per month with 15 or more days worked</td></tr>
+        <tr><td>Tax</td><td>No ISR up to 30 UMA ({mxn.format(exempt)}); ISR on the rest</td><td>INSS and income tax on the whole 13th, all taken from the 2nd instalment</td></tr>
+        <tr><td>If you leave</td><td>Paid in your finiquito, whatever the reason</td><td>Paid in your rescisão, except dismissal for just cause</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Worked examples</h2>
+  <p><strong>Mexico, MXN 15,000 a month (MXN 500 a day).</strong> A full year: 500 × 15 = <strong>{mxn.format(mx)}</strong>. {mxn.format(exempt)} of it is tax-free. Started on 1 July (184 days in the year): 500 × 15 × 184 ÷ 365 = <strong>{mxn.format(mxHalf)}</strong>.</p>
+  <p><strong>Brazil, BRL 3,000 a month.</strong> A full year: {brl.format(br.gross)}. The 1st instalment is half, {brl.format(br.firstInstallment)}, with no deductions. The 2nd carries INSS of {brl.format(br.inss)} on the whole 13th, so it is <strong>{brl.format(br.secondInstallment)}</strong>. No income tax: since 2026 there is none up to BRL 5,000. Six months worked: {brl.format(brHalf.gross)} gross.</p>
+  <p>Rule of thumb: a full year's aguinaldo is half a month's salary; a full year's 13th is a whole month's.</p>
+  <p>
+    <a class="text-link underline" href={SITES.es.url + "/en/calculadora-aguinaldo/"}>Aguinaldo calculator</a> ·
+    <a class="text-link underline" href={SITES.pt.url + "/en/calculadora-13-salario/"}>13th salary calculator</a>
+  </p>
+
+  <h2>Saudi Arabia and the UAE</h2>
+  <p>Neither the Saudi Labour Law nor the UAE's Federal Decree-Law No. 33 of 2021 requires a year-end or 13th-month bonus. Many employers pay an annual bonus or a Ramadan or Eid bonus, but it is set by your contract or company policy, not by law. What the law does guarantee in both countries is the end-of-service award when you leave; see <a class="text-link underline" href="/guides/severance-pay-mexico-brazil-gulf/">severance pay compared</a>.</p>
+
+  <h2>If it isn't paid on time</h2>
+  <ul class="ms-5 list-disc space-y-1">
+    <li><strong>Mexico:</strong> ask in writing, then go to PROFEDET, which helps workers free of charge. You have one year to claim it.</li>
+    <li><strong>Brazil:</strong> raise it with HR in writing, then your union or the Ministry of Labour. You can claim it in the Labour Court for up to 5 years, within 2 years of leaving the job.</li>
+  </ul>
+</Guide>

@@ -15,6 +15,8 @@ import t from "../../i18n/en.json";
     heading="Compress PDF"
     lead="Choose the file and the maximum size the portal asks for. The tool shrinks it in your browser, without uploading it to any server."
     updated="Updated: November 2026"
+    sourcesHeading="How it's built"
+    sources={[{ href: "https://mozilla.github.io/pdf.js/", label: "Mozilla's PDF.js: reads and draws each page in your browser" }, { href: "https://pdf-lib.js.org/", label: "pdf-lib: builds the new PDF, also in your browser" }]}
   >
     <PdfCompressTool client:visible t={t.pdf} targets={[0.5, 1, 2, 5]} defaultTarget={1} locale="en-US" />
 
@@ -46,6 +48,9 @@ import t from "../../i18n/en.json";
       <details class="bt-faq"><summary>Will it still be readable?</summary><p>It keeps the best quality that fits the size you chose. Before sending, zoom in on numbers and signatures; if they look blurry, choose a bigger size or remove pages.</p></details>
       <details class="bt-faq"><summary>Does it work on my phone?</summary><p>Yes, in your phone's browser, with nothing to install.</p></details>
       <details class="bt-faq"><summary>Is my document stored anywhere?</summary><p>No. It is processed on your device and gone when you close the page.</p></details>
+
+      <h2>Example</h2>
+      <p>A 6-page phone scan is 4 MB, and the portal takes only 1 MB. The tool turns each page into a JPG image and tries quality levels from highest to lowest until the file is under 1 MB, about 170 KB a page. The text stays readable, but becomes part of the image, so it can't be copied or searched after compressing.</p>
     </Fragment>
   </ToolPage>
 </Layout>

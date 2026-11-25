@@ -14,6 +14,8 @@ import DateDiffCalc from "../../components/DateDiffCalc.tsx";
     heading="Days between two dates"
     lead="Enter two Hijri or Gregorian dates to see the number of days between them, the time in years, months and days in both calendars, and the number of working days."
     updated="Updated: November 2026"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar" }]}
   >
     <DateDiffCalc client:load lang="en" />
 
@@ -26,13 +28,29 @@ import DateDiffCalc from "../../components/DateDiffCalc.tsx";
       </ul>
 
       <h2>Why do Hijri and Gregorian results differ?</h2>
-      <p>A Hijri month has 29 or 30 days and a Hijri year about 354 days. So the same period can be “1 year” in Hijri and “11 months and 20 days” in Gregorian.</p>
+      <p>A Hijri month has 29 or 30 days and a Hijri year about 354 days. So the same period can be “1 year” in Hijri and “11 months and 21 days” in Gregorian.</p>
 
       <AdSlot unit="0000000000" label="Advertisement" />
 
       <h2>Working days</h2>
       <p>The tool counts working days excluding Friday and Saturday, the weekend in Saudi Arabia and most Gulf countries. For the UAE, choose Saturday and Sunday. It does not remove public holidays, so subtract them yourself if needed.</p>
       <p>Want your Hijri age? Use the <a class="text-link underline" href="/en/hisab-alumr-bilhijri/">Hijri age calculator</a>.</p>
+
+      <h2>Examples worked out with the tool</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">From</th><th class="py-2 text-end font-medium">To</th><th class="py-2 text-end font-medium">Result</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">1 Muharram 1447 (26 June 2025)</td><td class="py-2 text-end tabular-nums">1 Muharram 1448 (16 June 2026)</td><td class="py-2 text-end tabular-nums">1 Hijri year = 355 days = 11 months and 21 days in Gregorian</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">1 December 2026</td><td class="py-2 text-end tabular-nums">31 December 2026</td><td class="py-2 text-end tabular-nums">30 days, or 31 counting the last day</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">1 December 2026</td><td class="py-2 text-end tabular-nums">31 December 2026</td><td class="py-2 text-end tabular-nums">22 working days, or 23 counting the last day (Friday–Saturday weekend)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>Frequently asked questions</h2>
+      <details class="bt-faq"><summary>Is the last day counted?</summary><p>Not by default: 1 to 31 December is 30 days. Turn on the option to count the last day when the period includes both days, as with leave: 1 to 31 December is then 31 days.</p></details>
+      <details class="bt-faq"><summary>Which days are the weekend?</summary><p>Friday and Saturday in Saudi Arabia and most of the Gulf; Saturday and Sunday in the UAE. Choose yours before counting working days.</p></details>
+      <details class="bt-faq"><summary>Why do Hijri and Gregorian periods differ?</summary><p>A Hijri month has 29 or 30 days in the Umm al-Qura calendar, and a Hijri year 354 or 355 days, about 11 days shorter than a Gregorian year.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

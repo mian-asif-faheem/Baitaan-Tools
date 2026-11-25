@@ -20,6 +20,8 @@ const dateText = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numer
     heading={`How long until Ramadan ${gYear}?`}
     lead={`Under the Umm al-Qura calendar, Ramadan ${y} AH starts on the date shown below. The official date is announced after the moon sighting on the evening of 29 Shaban.`}
     updated="The countdown updates every second"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar" }]}
   >
     <Countdown client:load month={9} day={1} name="Ramadan" lang="en" />
 

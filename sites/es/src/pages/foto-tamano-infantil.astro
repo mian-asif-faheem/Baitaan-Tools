@@ -15,6 +15,8 @@ import t from "../i18n/es.json";
     heading="Foto tamaño infantil y otros tamaños"
     lead="Sube una foto con tu celular, ajústala al tamaño que necesitas y descarga una hoja de 10 × 15 cm o tamaño carta lista para imprimir. Tu foto no sale de tu dispositivo."
     updated="Actualizado: noviembre de 2026"
+    sourcesHeading="Fuentes"
+    sources={[{ href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html", label: "Departamento de Estado de EE. UU.: requisitos de la foto para visa" }]}
   >
     <PhotoTool client:visible presets={PRESETS_MX_ES} t={t.photo} sheets={["10x15", "carta"]} />
 
@@ -47,6 +49,33 @@ import t from "../i18n/es.json";
         <li>Buena luz de frente: junto a una ventana funciona bien.</li>
       </ul>
       <p>Cada institución puede pedir algo distinto (fondo blanco o color, con o sin lentes). Revisa sus requisitos antes de imprimir.</p>
+
+      <h2>Cuántas fotos caben en cada hoja</h2>
+      <p>Los pixeles son para imprimir a 300 dpi. Las dos últimas columnas dicen cuántas fotos acomoda la herramienta en cada hoja.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-muted"><th class="py-2 text-start font-medium">Tamaño</th><th class="py-2 text-end font-medium">Pixeles</th><th class="py-2 text-end font-medium">Hoja 10 × 15 cm</th><th class="py-2 text-end font-medium">Hoja carta</th></tr></thead>
+          <tbody>
+            <tr class="border-t border-hair"><td class="py-2 ">Infantil 2.5 × 3 cm</td><td class="py-2 text-end tabular-nums">295 × 354</td><td class="py-2 text-end tabular-nums">12</td><td class="py-2 text-end tabular-nums">56</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Pasaporte 3.5 × 4.5 cm</td><td class="py-2 text-end tabular-nums">413 × 531</td><td class="py-2 text-end tabular-nums">6</td><td class="py-2 text-end tabular-nums">28</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Credencial 3.5 × 5 cm</td><td class="py-2 text-end tabular-nums">413 × 591</td><td class="py-2 text-end tabular-nums">4</td><td class="py-2 text-end tabular-nums">25</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Título 6 × 9 cm</td><td class="py-2 text-end tabular-nums">709 × 1063</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">8</td></tr>
+            <tr class="border-t border-hair"><td class="py-2 ">Visa EE. UU. 5 × 5 cm</td><td class="py-2 text-end tabular-nums">600 × 600</td><td class="py-2 text-end tabular-nums">2</td><td class="py-2 text-end tabular-nums">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>¿Qué tamaño piden para cada trámite?</h2>
+      <ul class="ms-5 list-disc space-y-1">
+        <li><strong>Infantil:</strong> inscripciones escolares, credenciales de escuela y de trabajo, solicitudes de empleo y la mayoría de los formularios en papel.</li>
+        <li><strong>Credencial:</strong> algunas credenciales de clubes, gimnasios y empresas. Si no te dicen el tamaño, casi siempre es infantil.</li>
+        <li><strong>Título:</strong> títulos impresos de algunas escuelas y universidades; varias lo piden en óvalo y con ropa formal, así que confirma con tu institución.</li>
+        <li><strong>Pasaporte y visas:</strong> el pasaporte mexicano no lleva foto impresa, pero muchas visas de otros países sí piden 3.5 × 4.5 cm.</li>
+      </ul>
+      <p>La credencial del INE y el pasaporte mexicano tampoco piden foto: te la toman en el módulo o en la oficina.</p>
+      <h2>Preguntas frecuentes</h2>
+      <details class="bt-faq"><summary>¿Qué hago si me rechazan la foto?</summary><p>Las causas más comunes son fondo con sombras o de color, cara inclinada, lentes que reflejan la luz e imprimir con «ajustar a la página», que cambia la medida. Repite la foto junto a una ventana e imprime al 100 %.</p></details>
+      <details class="bt-faq"><summary>¿Imprimo en casa o en una tienda?</summary><p>En una tienda de revelado, la hoja de 10 × 15 cm sale barata y en papel fotográfico. En casa usa papel fotográfico y la hoja carta.</p></details>
+      <details class="bt-faq"><summary>¿Mi foto se sube a algún lado?</summary><p>No. El recorte y la hoja se hacen en tu navegador y la foto no sale de tu dispositivo.</p></details>
     </Fragment>
   </ToolPage>
 </Layout>

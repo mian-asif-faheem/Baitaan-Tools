@@ -121,6 +121,7 @@ export default function RescisaoCalc({ lang = "pt" }: { lang?: Lang }) {
                   { label: L.fgtsDeposit, value: brl.format(r.fgts.monthDeposit), muted: true },
                   { label: `${L.fgtsFine} (${r.fgts.fineRate * 100}%)`, value: brl.format(r.fgts.fine) },
                   { label: `${L.fgtsWithdraw} (${r.fgts.withdrawRate * 100}%)`, value: brl.format(r.fgts.withdrawable), muted: true },
+                  { label: L.fgtsTotal, value: brl.format(Math.round((r.fgts.withdrawable + r.fgts.fine) * 100) / 100) },
                   { label: L.totalWithFine, value: brl.format(r.totalWithFine), strong: true },
                 ]}
               />

@@ -20,6 +20,8 @@ const dateText = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numer
     heading={`How long until Eid al-Fitr ${gYear}?`}
     lead={`Eid al-Fitr is the first day of Shawwal. This is its expected date for ${y} AH under the Umm al-Qura calendar; it is announced officially after the Shawwal moon sighting on the evening of 29 Ramadan.`}
     updated="The countdown updates every second"
+    sourcesHeading="Sources"
+    sources={[{ href: "https://www.ummulqura.org.sa/", label: "Umm al-Qura calendar" }]}
   >
     <Countdown client:load month={10} day={1} name="Eid al-Fitr" lang="en" />
 

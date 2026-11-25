@@ -15,6 +15,8 @@ import t from "../../i18n/en.json";
     heading="Merge PDF files"
     lead="Choose your files and photos, put them in order and download them as one PDF. Your documents never leave your device."
     updated="Updated: November 2026"
+    sourcesHeading="How it's built"
+    sources={[{ href: "https://pdf-lib.js.org/", label: "pdf-lib: copies the pages and builds the PDF in your browser" }]}
   >
     <MergePdfTool client:visible t={t.merge} outputName="documents.pdf" locale="en-US" />
 
@@ -39,6 +41,9 @@ import t from "../../i18n/en.json";
       <details class="bt-faq"><summary>Is there a limit on the number of files?</summary><p>There is no fixed limit; it depends on your device's memory. On older phones very large files can be slow, so merge in two parts if needed.</p></details>
       <details class="bt-faq"><summary>Does it work with password-protected PDFs?</summary><p>Not reliably: a protected file may fail or come out with blank pages. Remove the password first, in the app the PDF was created with.</p></details>
       <details class="bt-faq"><summary>Are my documents sent anywhere?</summary><p>No. Everything happens on your device, and nothing is sent to our servers.</p></details>
+
+      <h2>Example</h2>
+      <p>You photographed 3 pages of a contract with your phone (3 JPG files) and have a letter as a PDF. Choose the 4 files, put them in order with the arrows and press “Merge files”: you get a single 4-page PDF, each photo on its own A4 page. The PDF's pages are copied as they are, with no loss of quality.</p>
     </Fragment>
   </ToolPage>
 </Layout>

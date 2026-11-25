@@ -115,7 +115,8 @@
     "avisoDays": "Notice period",
     "disclaimer": "Simulation with the CLT rules and the 2026 tables. The employer must pay within 10 days after the contract ends (art. 477). Check with your union or an employment lawyer.",
     "extrasSummary": "Overtime, commissions and dependents",
-    "fgtsDeposit": "Deposit on termination pay (8%)"
+    "fgtsDeposit": "Deposit on termination pay (8%)",
+    "fgtsTotal": "Total FGTS for you (balance + fine)"
   },
   "ferias": {
     "absences": "Unexcused absences in the accrual period",
